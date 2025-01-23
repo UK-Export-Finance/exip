@@ -43,7 +43,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
+      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnoverCurrency' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
@@ -55,7 +55,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
+  it(`should render a ${FINANCIAL_YEAR_END_DATE} section`, () => {
     cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
     cy.checkText(turnoverPage[fieldId](), expectedValue);
@@ -76,7 +76,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
     }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
+      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnoverCurrency' });
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 

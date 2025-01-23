@@ -5,7 +5,6 @@ export * from './errorSummaryList';
 export * from './expandable';
 export * from './footer';
 export * from './header';
-export * from './headingCaption';
 export * from './html';
 export * from './insurance';
 export * from './pagination';

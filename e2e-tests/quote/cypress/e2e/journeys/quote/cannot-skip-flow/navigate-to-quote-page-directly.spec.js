@@ -1,7 +1,7 @@
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  QUOTE: { YOUR_QUOTE, NEED_TO_START_AGAIN },
+  QUOTE: { YOUR_QUOTE, NEED_TO_START_AGAIN_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -12,7 +12,7 @@ context('Manually going to the `Your quote` page via URL without completing the 
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
     cy.assertUrl(expectedUrl);
   });
 });

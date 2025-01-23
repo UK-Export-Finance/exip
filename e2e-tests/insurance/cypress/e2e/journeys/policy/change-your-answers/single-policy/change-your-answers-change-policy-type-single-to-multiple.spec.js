@@ -81,7 +81,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
         cy.navigateToUrl(checkYourAnswersUrl);
         cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
 
-        cy.completeAndSubmitExportValueForm();
+        cy.completeAndSubmitExportValueForm({});
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

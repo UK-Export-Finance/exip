@@ -25,7 +25,6 @@ const ordnanceSurvey = {
         },
       });
 
-      // if no data in response or status is not 200 then return success as false
       if (!response?.data?.results || response.status !== 200) {
         return {
           success: false,

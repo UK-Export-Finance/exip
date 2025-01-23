@@ -26,7 +26,7 @@ context('Insurance - Name fields - Export contract - Name field should render an
       // go to the page we want to test.
       cy.completeAndSubmitExportContractForms({
         isUsingAgent: true,
-        formToStopAt: 'agent',
+        stopSubmittingAfter: 'agent',
       });
 
       agentDetailsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;

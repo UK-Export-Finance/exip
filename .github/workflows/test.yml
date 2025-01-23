@@ -111,7 +111,7 @@ jobs:
         run: npm run test
 
       - name: Coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit-test
@@ -180,7 +180,7 @@ jobs:
           npm run test --prefix ./src/api
 
       - name: Coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: api-test
@@ -234,14 +234,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -292,14 +294,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -358,14 +362,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -431,14 +437,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
     
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -486,14 +494,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -522,7 +532,6 @@ jobs:
             'eligibility/cannot-apply/**/*.spec.js',
             'eligibility/cannot-apply-multiple-risks/**/*.spec.js',
             'eligibility/cannot-skip-flow/**/*.spec.js',
-            'eligibility/contract-too-short/**/*.spec.js',
             'eligibility/change-your-answers/**/*.spec.js',
             'eligibility/check-your-answers/**/*.spec.js',
             'eligibility/companies-house/**/*.spec.js',
@@ -536,6 +545,7 @@ jobs:
             'eligibility/member-of-a-group/**/*.spec.js',
             'eligibility/no-companies-house-number/**/*.spec.js',
             'eligibility/party-to-consortium/**/*.spec.js',
+            'eligibility/talk-to-an-export-finance-manager/**/*.spec.js',
             'eligibility/total-value-insured/**/*.spec.js',
             'eligibility/uk-goods-or-services/**/*.spec.js',
           ]
@@ -558,14 +568,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -629,14 +641,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -706,14 +720,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -766,14 +782,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -829,14 +847,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -863,7 +883,7 @@ jobs:
             '/*.spec.js',
             'cookies-consent/**/*.spec.js',
             'quote/*.spec.js',
-            'quote/buyer-body/*.spec.js',
+            'quote/type-of-buyer/*.spec.js',
             'quote/buyer-country/*.spec.js',
             'quote/cannot-skip-flow/*.spec.js',
             'quote/change-your-answers/*.spec.js',
@@ -893,14 +913,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -942,14 +964,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s

@@ -12,13 +12,13 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME_UNSUPPORTED = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_1.NAME;
+const COUNTRY_NAME_UNSUPPORTED = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
+    cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
 
     cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
     const results = autoCompleteField(FIELD_ID).results();

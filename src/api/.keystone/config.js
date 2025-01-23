@@ -589,7 +589,6 @@ var DEFAULT_RESOLVERS = [
   'updateAccount',
   // misc
   'countries',
-  'page',
 ];
 var CUSTOM_RESOLVERS = [
   // account
@@ -617,8 +616,10 @@ var CUSTOM_RESOLVERS = [
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
+  // countries and currencies
   'getApimCisCountries',
   'getApimCurrencies',
+  'getCountriesAndCurrencies',
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(
@@ -662,6 +663,9 @@ var VERSION_3 = {
   ...VERSION_2,
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+  SMALL_EXPORT_BUILDER: {
+    MAXIMUM_BUYER_WILL_OWE: 25e3,
+  },
 };
 var VERSION_4 = {
   ...VERSION_3,
@@ -852,12 +856,13 @@ var EXPORT_CONTRACT_AWARD_METHOD = {
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard Risk',
+      NONE: 'None',
     },
-    SHORT_TERM_COVER_AVAILABLE: {
+    SHORT_TERM_COVER: {
       YES: 'Yes',
       NO: 'No',
       ILC: 'ILC Only',
@@ -880,6 +885,13 @@ var EXTERNAL_API_DEFINITIONS = {
       'Third Country',
     ],
     INVALID_CURRENCIES: ['Gold'],
+    COUNTRY_RATINGS: {
+      A: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-'],
+      B: ['BBB+', 'BBB', 'BBB-', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-'],
+      C: ['CCC+', 'CCC', 'CCC-', 'CC', 'C'],
+      D: ['D'],
+      NOT_APPLICABLE: 'N/A',
+    },
   },
   COMPANIES_HOUSE: {
     COMPANY_STATUS: {
@@ -889,7 +901,7 @@ var EXTERNAL_API_DEFINITIONS = {
 };
 var EXTERNAL_API_MAPPINGS = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard',
@@ -899,6 +911,7 @@ var EXTERNAL_API_MAPPINGS = {
 var EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
     CURRENCY: '/currencies',
+    CURRENCY_EXCHANGE: '/currencies/exchange',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
   },
@@ -1128,7 +1141,12 @@ var EMAIL_TEMPLATE_IDS = {
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+        CONFIRMATION: {
+          SINGLE_OR_MULTIPLE_CONTRACT_POLICY: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+          MULTIPLE_CONTRACT_POLICY: {
+            ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+          },
+        },
         SEND_DOCUMENTS: {
           TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
           ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
@@ -1147,6 +1165,7 @@ var EMAIL_TEMPLATE_IDS = {
   FEEDBACK: {
     INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: 'UNABLE_TO_DETERMINE_TEMPLATE_ID',
 };
 var FEEDBACK = {
   VERY_SATISFIED: 'verySatisfied',
@@ -1461,6 +1480,63 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
   }
 };
 
+// helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// emails/application/get-submitted-confirmation-template-id/multiple-policy-type/index.ts
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION },
+    },
+  },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID,
+} = EMAIL_TEMPLATE_IDS;
+var get = (policyType) => {
+  try {
+    console.info('Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper)');
+    if (isMultiplePolicyType(policyType)) {
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) ${error}`);
+  }
+};
+var multiplePolicyTypeTemplateId = {
+  get,
+};
+var multiple_policy_type_default = multiplePolicyTypeTemplateId;
+
+// emails/application/get-submitted-confirmation-template-id/index.ts
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION: CONFIRMATION2 },
+    },
+  },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: UNABLE_TO_DETERMINE_TEMPLATE_ID2,
+} = EMAIL_TEMPLATE_IDS;
+var getSubmittedConfirmationTemplateId = (policy) => {
+  try {
+    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
+    const { maximumBuyerWillOwe, policyType } = policy;
+    if (isSinglePolicyType(policyType)) {
+      return CONFIRMATION2.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+      return multiple_policy_type_default.get(policyType);
+    }
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID2;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${error}`);
+  }
+};
+var get_submitted_confirmation_template_id_default = getSubmittedConfirmationTemplateId;
+
 // file-system/index.ts
 var import_fs = require('fs');
 var import_path = __toESM(require('path'));
@@ -1518,12 +1594,13 @@ var application = {
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @param {ApplicationPolicy} policy: Application policy
    * @returns {Promise<Object>} callNotify response
    */
-  submittedEmail: async (variables) => {
+  submittedEmail: async (variables, policy) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const templateId = get_submitted_confirmation_template_id_default(policy);
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
@@ -2886,18 +2963,20 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type Country {
+    isoCode: String!
+    name: String!
+  }
+
   type MappedCisCountry {
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    riskCategory: String
-    nbiIssueAvailable: Boolean
+    esraClassification: String
     canGetAQuoteOnline: Boolean
-    canGetAQuoteOffline: Boolean
-    canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
+    noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
   }
 
@@ -2907,6 +2986,13 @@ var typeDefs = `
   }
 
   type GetApimCurrencyResponse {
+    supportedCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
+  }
+
+  type GetCountriesAndCurrenciesResponse {
+    countries: [Country]
     supportedCurrencies: [MappedCurrency]
     alternativeCurrencies: [MappedCurrency]
     allCurrencies: [MappedCurrency]
@@ -3124,9 +3210,6 @@ var typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
-    """ get CIS countries from APIM """
-    getApimCisCountries: [MappedCisCountry]
-
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
@@ -3150,6 +3233,9 @@ var typeDefs = `
 
     """ get currencies from APIM """
     getApimCurrencies: GetApimCurrencyResponse
+
+    """ get countries and currencies """
+    getCountriesAndCurrencies: GetCountriesAndCurrenciesResponse
   }
 `;
 var type_defs_default = typeDefs;
@@ -4141,7 +4227,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
           };
         }
       } catch (error) {
-        console.error('Error blocking account $O', error);
+        console.error('Error blocking account %o', error);
         return { success: false };
       }
     }
@@ -4161,7 +4247,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     }
     return { success: false };
   } catch (error) {
-    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', error);
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) %o', error);
     throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${error}`);
   }
 };
@@ -6319,34 +6405,33 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 var send4 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
+    const { requestedStartDate } = policy;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replace_character_codes_with_characters_default(company.companyName),
-      requestedStartDate: format_date_default(policy.requestedStartDate),
+      requestedStartDate: format_date_default(requestedStartDate),
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(owner)),
       emailAddress: email,
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(policyContact)),
       emailAddress: policyContact.email,
     };
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars, policy);
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars, policy);
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
@@ -6511,6 +6596,7 @@ var LINKS = {
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
     OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS:
       'https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-human-rights',
+    SMALL_EXPORT_BUILDER: 'Small Export Builder',
   },
 };
 
@@ -6536,7 +6622,7 @@ var {
   HAS_COMPANIES_HOUSE_NUMBER,
 } = insurance_default.ELIGIBILITY;
 var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
-var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 var ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -6762,9 +6848,12 @@ var {
 } = insurance_default;
 var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
+var maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+var SMALL_EXPORT_BUILDER_THRESHOLD = format_currency_default(maxBuyerWillOweThreshold, GBP_CURRENCY_CODE);
 var POLICY_FIELDS = {
   [POLICY_TYPE3]: {
     ID: POLICY_TYPE3,
@@ -6872,6 +6961,13 @@ var POLICY_FIELDS = {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.',
+          INITIAL_CREDIT_LIMIT: {
+            INTRO: `If your initial credit limit request is ${SMALL_EXPORT_BUILDER_THRESHOLD} or less you could be eligible for the`,
+            LINK: {
+              TEXT: 'Small Export Builder.',
+              HREF: LINKS.EXTERNAL.SMALL_EXPORT_BUILDER,
+            },
+          },
           NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
         },
         SUMMARY: {
@@ -7691,10 +7787,6 @@ var mapKeyInformation = (application2) => {
   return mapped;
 };
 var map_key_information_default = mapKeyInformation;
-
-// helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
 var {
@@ -8812,49 +8904,77 @@ var XLSX_ROW_INDEXES = {
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 
-// generate-xlsx/styled-columns/index.ts
-var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
-var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
-var worksheetRowHeights = (rowIndexes, worksheet, sheetName) => {
-  const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-  if (isInformationSheet) {
-    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  }
-  rowIndexes.forEach((rowIndex) => {
-    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  });
-  return modifiedWorksheet;
+// constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION/index.ts
+var APPLICATION_INFORMATION_INDEXES = {
+  EXPORTER_CONTACT_DETAILS: 8,
+  KEY_INFORMATION: 13,
 };
-var styledColumns = (application2, worksheet, sheetName) => {
-  let modifiedWorksheet = worksheet;
-  modifiedWorksheet.eachRow((row, rowNumber) => {
+var APPLICATION_INFORMATION_default = APPLICATION_INFORMATION_INDEXES;
+
+// generate-xlsx/styled-columns/is-title-row/index.ts
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_default;
+var isTitleRow = (sheetName, rowNumber) => {
+  const isInfoSheet = sheetName === APPLICATION_INFORMATION2;
+  const isInfoTitle = isInfoSheet && (rowNumber === EXPORTER_CONTACT_DETAILS || rowNumber === KEY_INFORMATION);
+  const result = rowNumber === 1 || isInfoTitle;
+  return result;
+};
+var is_title_row_default = isTitleRow;
+
+// generate-xlsx/styled-columns/modify-row-styles/index.ts
+var { FONT_SIZE } = XLSX_CONFIG;
+var modifyRowStyles = (worksheet, sheetName) => {
+  worksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
       modifiedRow.getCell(colNumber).alignment = {
         vertical: 'top',
         wrapText: true,
       };
-      const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
-      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
-      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
-      const isTitleRow = rowNumber === 1 || isInformationTitle;
+      const isATitleRow = is_title_row_default(sheetName, rowNumber);
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isTitleRow),
-        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
+        bold: isATitleRow,
+        size: isATitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });
   });
+  return worksheet;
+};
+var modify_row_styles_default = modifyRowStyles;
+
+// generate-xlsx/styled-columns/modify-row-heights/index.ts
+var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT } = XLSX_CONFIG;
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION3 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS: EXPORTER_CONTACT_DETAILS2, KEY_INFORMATION: KEY_INFORMATION2 } = APPLICATION_INFORMATION_default;
+var modifyRowHeights = (rowIndexes, worksheet, sheetName) => {
+  const modifiedWorksheet = worksheet;
+  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  if (sheetName === APPLICATION_INFORMATION3) {
+    modifiedWorksheet.getRow(EXPORTER_CONTACT_DETAILS2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    modifiedWorksheet.getRow(KEY_INFORMATION2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  }
+  rowIndexes.forEach((rowIndex) => {
+    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  });
+  return modifiedWorksheet;
+};
+var modify_row_heights_default = modifyRowHeights;
+
+// generate-xlsx/styled-columns/index.ts
+var getAdditionalRowHeightIndexes = (application2, sheetName) => {
   let INDEXES = [];
   if (INDEXES_default[sheetName]) {
     const sheetIndexes = INDEXES_default[sheetName](application2);
     INDEXES = Object.values(sheetIndexes);
   }
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
-  return modifiedWorksheet;
+  return INDEXES;
+};
+var styledColumns = (application2, worksheet, sheetName) => {
+  const withRowStyles = modify_row_styles_default(worksheet, sheetName);
+  const indexes = getAdditionalRowHeightIndexes(application2, sheetName);
+  const withRowHeights = modify_row_heights_default(indexes, withRowStyles, sheetName);
+  return withRowHeights;
 };
 var styled_columns_default = styledColumns;
 
@@ -9337,6 +9457,36 @@ var APIM = {
       throw new Error(`Calling APIM - currencies ${error}`);
     }
   },
+  getCurrenciesExchange: async (source, target) => {
+    try {
+      console.info('Calling APIM - currencies exchange');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY_EXCHANGE}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        params: { source, target },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies exchange %o', error);
+      throw new Error(`Calling APIM - currencies exchange ${error}`);
+    }
+  },
 };
 var APIM_default = APIM;
 
@@ -9347,124 +9497,249 @@ var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
 };
 var filter_cis_entries_default = filterCisEntries;
 
-// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
-var { CIS } = EXTERNAL_API_DEFINITIONS;
-var mapRiskCategory = (str) => {
-  if (str === CIS.RISK.STANDARD) {
-    return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
+// helpers/map-CIS-countries/map-CIS-country/map-esra-classification/index.ts
+var {
+  CIS: { ESRA_CLASSIFICATION },
+} = EXTERNAL_API_DEFINITIONS;
+var mapEsraClassification = (str) => {
+  if (str === ESRA_CLASSIFICATION.STANDARD) {
+    return EXTERNAL_API_MAPPINGS.CIS.ESRA_CLASSIFICATION.STANDARD;
   }
-  if (str === CIS.RISK.HIGH) {
+  if (str === ESRA_CLASSIFICATION.HIGH) {
     return str;
   }
-  if (str === CIS.RISK.VERY_HIGH) {
+  if (str === ESRA_CLASSIFICATION.VERY_HIGH) {
     return str;
   }
   return null;
 };
-var map_risk_category_default = mapRiskCategory;
+var map_esra_classification_default = mapEsraClassification;
 
-// helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
+// helpers/map-CIS-countries/map-CIS-country/country-rating-is-a-or-b/index.ts
 var {
-  CIS: { SHORT_TERM_COVER_AVAILABLE },
+  CIS: { COUNTRY_RATINGS },
 } = EXTERNAL_API_DEFINITIONS;
-var mapShortTermCoverAvailable = (str) => {
-  switch (str) {
-    case SHORT_TERM_COVER_AVAILABLE.YES:
+var countryRatingIsAorB = (rating) => {
+  if (COUNTRY_RATINGS.A.includes(rating)) {
+    return true;
+  }
+  if (COUNTRY_RATINGS.B.includes(rating)) {
+    return true;
+  }
+  return false;
+};
+var country_rating_is_a_or_b_default = countryRatingIsAorB;
+
+// helpers/map-CIS-countries/map-CIS-country/country-rating-is-c-or-d/index.ts
+var {
+  CIS: { COUNTRY_RATINGS: COUNTRY_RATINGS2 },
+} = EXTERNAL_API_DEFINITIONS;
+var countryRatingIsCorD = (rating) => {
+  if (COUNTRY_RATINGS2.C.includes(rating)) {
+    return true;
+  }
+  if (COUNTRY_RATINGS2.D.includes(rating)) {
+    return true;
+  }
+  return false;
+};
+var country_rating_is_c_or_d_default = countryRatingIsCorD;
+
+// helpers/map-CIS-countries/map-CIS-country/esra-classification-is-standard-high-or-very-high/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var esraClassificationIsStandardHighOrVeryHigh = (esraClassification) => {
+  switch (esraClassification) {
+    case STANDARD:
       return true;
-    case SHORT_TERM_COVER_AVAILABLE.ILC:
+    case HIGH:
       return true;
-    case SHORT_TERM_COVER_AVAILABLE.CILC:
-      return true;
-    case SHORT_TERM_COVER_AVAILABLE.REFER:
+    case VERY_HIGH:
       return true;
     default:
       return false;
   }
 };
-var map_short_term_cover_available_default = mapShortTermCoverAvailable;
+var esra_classification_is_standard_high_or_very_high_default = esraClassificationIsStandardHighOrVeryHigh;
 
-// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
-var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
-var mapNbiIssueAvailable = (str) => {
-  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
+// helpers/map-CIS-countries/map-CIS-country/has-no-support/index.ts
+var {
+  CIS: {
+    COUNTRY_RATINGS: { NOT_APPLICABLE },
+    ESRA_CLASSIFICATION: { NONE },
+    SHORT_TERM_COVER: { UNLISTED, CILC },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var hasNoSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+  const shortTermCoverIsUnlisted = shortTermCover === UNLISTED;
+  const esraClassificationIsNone = esraClassification === NONE;
+  const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
+  const countryRatingConditions =
+    country_rating_is_a_or_b_default(countryRating) || country_rating_is_c_or_d_default(countryRating) || countryRatingIsNotApplicable;
+  if (shortTermCoverIsUnlisted && esraClassificationIsNone && countryRatingConditions) {
+    return true;
+  }
+  const esraClassificationConditions = esra_classification_is_standard_high_or_very_high_default(esraClassification) || esraClassificationIsNone;
+  if (shortTermCover === CILC && countryRatingIsNotApplicable && esraClassificationConditions) {
     return true;
   }
   return false;
 };
-var map_NBI_issue_available_default = mapNbiIssueAvailable;
+var has_no_support_default = hasNoSupport;
 
-// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = (country) => {
-  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/a-and-b-rating-conditions/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD: STANDARD2, HIGH: HIGH2, VERY_HIGH: VERY_HIGH2, NONE: NONE2 },
+    SHORT_TERM_COVER: { NO: NO2, ILC, CILC: CILC2 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
+  if (!country_rating_is_a_or_b_default(countryRating)) {
+    return false;
+  }
+  if (esraClassification === STANDARD2 || esraClassification === HIGH2 || esraClassification === VERY_HIGH2) {
+    if (shortTermCover === ILC) {
+      return true;
+    }
+    if (shortTermCover === CILC2) {
+      return true;
+    }
+    if (shortTermCover === NO2) {
+      return true;
+    }
+  }
+  if (esraClassification === NONE2 && shortTermCover === NO2) {
     return true;
   }
   return false;
+};
+var a_and_b_rating_conditions_default = aAndBRatingConditions;
+
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/c-and-d-rating-conditions/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD: STANDARD3, HIGH: HIGH3, VERY_HIGH: VERY_HIGH3, NONE: NONE3 },
+    SHORT_TERM_COVER: { YES: YES2, NO: NO3, ILC: ILC2, CILC: CILC3, REFER, UNLISTED: UNLISTED2 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
+  if (!country_rating_is_c_or_d_default(countryRating)) {
+    return false;
+  }
+  if (esraClassification === STANDARD3 || esraClassification === HIGH3 || esraClassification === VERY_HIGH3) {
+    if (shortTermCover === YES2) {
+      return true;
+    }
+    if (shortTermCover === ILC2) {
+      return true;
+    }
+    if (shortTermCover === CILC3) {
+      return true;
+    }
+    if (shortTermCover === REFER) {
+      return true;
+    }
+    if (shortTermCover === UNLISTED2) {
+      return true;
+    }
+    if (shortTermCover === NO3) {
+      return true;
+    }
+  }
+  if (esraClassification === NONE3 && shortTermCover === NO3) {
+    return true;
+  }
+  return false;
+};
+var c_and_d_rating_conditions_default = cAndDRatingConditions;
+
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/index.ts
+var hasNoOnlineSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+  const aAndBConditions = a_and_b_rating_conditions_default({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+  const cAndDConditions = c_and_d_rating_conditions_default({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+  const conditions = aAndBConditions || cAndDConditions;
+  return conditions;
+};
+var has_no_online_support_default = hasNoOnlineSupport;
+
+// helpers/map-CIS-countries/map-CIS-country/short-term-cover-is-yes-refer-or-unlisted/index.ts
+var {
+  CIS: {
+    SHORT_TERM_COVER: { YES: YES3, REFER: REFER2, UNLISTED: UNLISTED3 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var shortTermCoverIsYesReferOrUnlisted = (shortTermCover) => {
+  switch (shortTermCover) {
+    case YES3:
+      return true;
+    case REFER2:
+      return true;
+    case UNLISTED3:
+      return true;
+    default:
+      return false;
+  }
+};
+var short_term_cover_is_yes_refer_or_unlisted_default = shortTermCoverIsYesReferOrUnlisted;
+
+// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
+var canGetAQuoteOnline = (cisCountry) => {
+  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
+  const conditions =
+    esra_classification_is_standard_high_or_very_high_default(ESRAClassificationDesc) &&
+    short_term_cover_is_yes_refer_or_unlisted_default(shortTermCoverAvailabilityDesc) &&
+    country_rating_is_a_or_b_default(countryRatingDesc);
+  return conditions;
 };
 var can_get_a_quote_online_default = canGetAQuoteOnline;
 
-// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
-var canGetAQuoteByEmail = (country) => {
-  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
-    return true;
-  }
-  return false;
-};
-var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
-
-// helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = (country) => {
-  if (!country.riskCategory || (!country.shortTermCover && !country.nbiIssueAvailable)) {
-    return true;
-  }
-  return false;
-};
-var cannot_get_a_quote_default = cannotGetAQuote;
-
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var canApplyForInsuranceOnline = (shortTermCover, riskCategory) => {
-  if (riskCategory && shortTermCover) {
-    return true;
-  }
-  return false;
+var canApplyForInsuranceOnline = (cisCountry) => {
+  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
+  const conditions =
+    esra_classification_is_standard_high_or_very_high_default(ESRAClassificationDesc) &&
+    short_term_cover_is_yes_refer_or_unlisted_default(shortTermCoverAvailabilityDesc) &&
+    country_rating_is_a_or_b_default(countryRatingDesc);
+  return conditions;
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.ILC) {
-    return true;
-  }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.CILC) {
-    return true;
-  }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.REFER) {
-    return true;
-  }
-  return false;
-};
-var can_apply_offline_default = canApplyOffline;
-
-// helpers/map-CIS-countries/map-CIS-country/no-insurance-support/index.ts
-var { NO_COVER } = EXTERNAL_API_DEFINITIONS.CIS;
-var noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc) => marketRiskAppetitePublicDesc === NO_COVER;
-var no_insurance_support_default = noInsuranceSupportAvailable;
-
 // helpers/map-CIS-countries/map-CIS-country/index.ts
-var mapCisCountry = (country) => {
+var mapCisCountry = (cisCountry) => {
+  const { countryRatingDesc: countryRating, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc: shortTermCover } = cisCountry;
+  const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
+  const noSupport = has_no_support_default({
+    countryRating,
+    esraClassification: ESRAClassificationDesc,
+    shortTermCover,
+  });
   const mapped = {
-    name: country.marketName,
-    isoCode: country.isoCode,
-    riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
-    shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue),
+    countryRating,
+    esraClassification,
+    isoCode,
+    name: marketName,
+    noOnlineSupport: has_no_online_support_default({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover,
+    }),
+    canGetAQuoteOnline: can_get_a_quote_online_default(cisCountry),
+    cannotGetAQuote: noSupport,
+    canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
+    noInsuranceSupport: noSupport,
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
-  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
-  mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(mapped.shortTermCover, mapped.riskCategory);
-  mapped.noInsuranceSupport = no_insurance_support_default(country.marketRiskAppetitePublicDesc);
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
@@ -9477,34 +9752,56 @@ var sortArrayAlphabetically = (arr, field) => {
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
-var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
+var { CIS } = EXTERNAL_API_DEFINITIONS;
 var mapCisCountries = (countries) => {
-  const filteredCountries = filter_cis_entries_default(countries, CIS4.INVALID_COUNTRIES, 'marketName');
+  const filteredCountries = filter_cis_entries_default(countries, CIS.INVALID_COUNTRIES, 'marketName');
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, 'name');
   return sorted;
 };
 var map_CIS_countries_default = mapCisCountries;
 
-// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
-var getApimCisCountries = async () => {
+// helpers/get-APIM-CIS-countries/index.ts
+var get2 = async () => {
   try {
-    console.info('Getting and mapping CIS countries from APIM');
+    console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
     if (response.data) {
       const mapped = map_CIS_countries_default(response.data);
-      return mapped;
+      return {
+        success: true,
+        countries: mapped,
+      };
     }
     return { success: false };
   } catch (error) {
-    console.error('Error Getting and mapping CIS countries from APIM %o', error);
-    throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
+    console.error('Error Getting and mapping CIS countries from APIM (apimCisCountries helper) %o', error);
+    throw new Error(`Getting and mapping CIS countries from APIM (apimCisCountries helper) ${error}`);
   }
 };
-var get_APIM_CIS_countries_default = getApimCisCountries;
+var apimCisCountries = {
+  get: get2,
+};
+var get_APIM_CIS_countries_default = apimCisCountries;
+
+// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
+var getApimCisCountriesQuery = async () => {
+  try {
+    console.info('Getting CIS countries from APIM');
+    const response = await get_APIM_CIS_countries_default.get();
+    if (response.success) {
+      return response.countries;
+    }
+    return [];
+  } catch (error) {
+    console.error('Error Getting CIS countries from APIM %o', error);
+    throw new Error(`Getting CIS countries from APIM ${error}`);
+  }
+};
+var get_APIM_CIS_countries_default2 = getApimCisCountriesQuery;
 
 // helpers/map-currencies/index.ts
-var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
@@ -9514,7 +9811,7 @@ var getAlternativeCurrencies = (currencies) => {
   return alternate;
 };
 var mapCurrencies = (currencies, alternativeCurrencies) => {
-  let currenciesArray = filter_cis_entries_default(currencies, CIS5.INVALID_CURRENCIES, 'name');
+  let currenciesArray = filter_cis_entries_default(currencies, CIS2.INVALID_CURRENCIES, 'name');
   if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {
@@ -9525,16 +9822,17 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 };
 var map_currencies_default = mapCurrencies;
 
-// custom-resolvers/queries/get-APIM-currencies/index.ts
-var getApimCurrencies = async () => {
+// helpers/get-APIM-currencies/index.ts
+var get3 = async () => {
   try {
-    console.info('Getting and mapping currencies from APIM');
+    console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
     if (response.data) {
       const supportedCurrencies = map_currencies_default(response.data, false);
       const alternativeCurrencies = map_currencies_default(response.data, true);
       const allCurrencies = [...supportedCurrencies, ...alternativeCurrencies];
       return {
+        success: true,
         supportedCurrencies,
         alternativeCurrencies,
         allCurrencies,
@@ -9542,11 +9840,52 @@ var getApimCurrencies = async () => {
     }
     return { success: false };
   } catch (error) {
+    console.error('Error Getting and mapping currencies from APIM (apimCurrencies helper) %o', error);
+    throw new Error(`Getting and mapping currencies from APIM (apimCurrencies helper) ${error}`);
+  }
+};
+var apimCurrencies = {
+  get: get3,
+};
+var get_APIM_currencies_default = apimCurrencies;
+
+// custom-resolvers/queries/get-APIM-currencies/index.ts
+var getApimCurrenciesQuery = async () => {
+  try {
+    console.info('Getting and mapping currencies from APIM');
+    const response = await get_APIM_currencies_default.get();
+    if (response.success) {
+      return response;
+    }
+    return {};
+  } catch (error) {
     console.error('Error Getting and mapping currencies from APIM %o', error);
     throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
-var get_APIM_currencies_default = getApimCurrencies;
+var get_APIM_currencies_default2 = getApimCurrenciesQuery;
+
+// custom-resolvers/queries/get-countries-and-currencies/index.ts
+var getCountriesAndCurrencies = async (root, variables, context) => {
+  try {
+    console.info('Getting countries and currencies (getCountriesAndCurrencies resolver)');
+    const [countries, currenciesResponse] = await Promise.all([await get_countries_default(context), await get_APIM_currencies_default.get()]);
+    if (!currenciesResponse.success) {
+      throw new Error('Getting currencies (getCountriesAndCurrencies resolver)');
+    }
+    const { allCurrencies, alternativeCurrencies, supportedCurrencies } = currenciesResponse;
+    return {
+      countries,
+      allCurrencies,
+      alternativeCurrencies,
+      supportedCurrencies,
+    };
+  } catch (error) {
+    console.error('Error getting countries and currencies (getCountriesAndCurrencies resolver) %o', error);
+    throw new Error(`Getting countries and currencies (getCountriesAndCurrencies resolver) ${error}`);
+  }
+};
+var get_countries_and_currencies_default = getCountriesAndCurrencies;
 
 // helpers/remove-white-space/index.ts
 var removeWhiteSpace = (string) => string.replace(' ', '');
@@ -9921,8 +10260,9 @@ var customResolvers = {
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
-    getApimCisCountries: get_APIM_CIS_countries_default,
-    getApimCurrencies: get_APIM_currencies_default,
+    getApimCisCountries: get_APIM_CIS_countries_default2,
+    getApimCurrencies: get_APIM_currencies_default2,
+    getCountriesAndCurrencies: get_countries_and_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
     getApplicationByReferenceNumber: get_application_by_reference_number_default2,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,

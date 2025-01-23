@@ -36,7 +36,7 @@ context(
          */
         cy.completeAndSubmitCheckYourAnswers();
 
-        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
+        cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'confidentiality', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
@@ -153,11 +153,8 @@ context(
         });
 
         it('should render a validation error', () => {
-          const expectedErrorsCount = 1;
-
           cy.submitAndAssertFieldErrors({
             field,
-            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
             clearInput: false,
           });

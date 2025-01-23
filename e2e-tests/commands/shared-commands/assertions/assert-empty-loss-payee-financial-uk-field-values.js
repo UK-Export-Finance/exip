@@ -1,4 +1,3 @@
-import { field, autoCompleteField } from '../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 
 const {
@@ -11,9 +10,9 @@ const {
  * Assert all field values in the "loss payee financial uk" form are empty.
  */
 const assertEmptyLossPayeeFinancialUkFieldValues = () => {
-  cy.checkValue(field(ACCOUNT_NUMBER), '');
+  cy.assertEmptyFieldValue(ACCOUNT_NUMBER);
 
-  cy.checkValue(autoCompleteField(SORT_CODE), '');
+  cy.assertEmptyAutocompleteFieldValue(SORT_CODE);
 
   cy.checkTextareaValue({
     fieldId: FINANCIAL_ADDRESS,

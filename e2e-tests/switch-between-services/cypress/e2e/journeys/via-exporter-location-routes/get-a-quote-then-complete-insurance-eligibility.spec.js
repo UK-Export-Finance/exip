@@ -1,7 +1,7 @@
 import { ROUTES } from '../../../../../constants';
 
 const {
-  QUOTE: { BUYER_COUNTRY, BUYER_BODY, YOUR_QUOTE },
+  QUOTE: { BUYER_COUNTRY, TYPE_OF_BUYER, YOUR_QUOTE },
   INSURANCE: { ELIGIBILITY },
 } = ROUTES;
 
@@ -36,7 +36,7 @@ context(
 
       cy.completeAndSubmitBuyerCountryForm({});
 
-      const expectedUrl = `${baseUrl}${BUYER_BODY}`;
+      const expectedUrl = `${baseUrl}${TYPE_OF_BUYER}`;
 
       cy.assertUrl(expectedUrl);
     });

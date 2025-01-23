@@ -24,7 +24,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'natureOfYourBusiness' });
+      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'natureOfYourBusiness' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`;
 

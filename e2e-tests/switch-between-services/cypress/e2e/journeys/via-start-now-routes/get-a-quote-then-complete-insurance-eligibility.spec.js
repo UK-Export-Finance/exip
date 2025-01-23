@@ -2,7 +2,7 @@ import { ROUTES } from '../../../../../constants';
 
 const {
   ROOT,
-  QUOTE: { BUYER_BODY, YOUR_QUOTE },
+  QUOTE: { TYPE_OF_BUYER, YOUR_QUOTE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -34,7 +34,7 @@ context('Get a quote, Complete insurance eligibility and then re-visit the quote
 
     cy.completeAndSubmitBuyerCountryForm({});
 
-    const expectedUrl = `${baseUrl}${BUYER_BODY}`;
+    const expectedUrl = `${baseUrl}${TYPE_OF_BUYER}`;
 
     cy.assertUrl(expectedUrl);
   });

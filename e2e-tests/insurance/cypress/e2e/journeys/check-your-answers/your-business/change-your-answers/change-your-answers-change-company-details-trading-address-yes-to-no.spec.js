@@ -1,4 +1,4 @@
-import { field, status, summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -96,7 +96,7 @@ context(`Insurance - Check your answers - Company details - Your business - ${FI
 
         cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
 
-        cy.checkText(field(FULL_ADDRESS).textarea(), '');
+        cy.assertEmptyTextareaFieldValue(FULL_ADDRESS);
       });
     });
   });

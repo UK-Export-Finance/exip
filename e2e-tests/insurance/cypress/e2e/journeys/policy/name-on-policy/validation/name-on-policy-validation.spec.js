@@ -35,7 +35,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'totalContractValue' });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'totalContractValue' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
@@ -56,14 +56,10 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       cy.navigateToUrl(url);
     });
 
-    it('should display validation error', () => {
-      const expectedErrorsCount = 1;
-      const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
-
+    it('should render a validation error', () => {
       cy.submitAndAssertRadioErrors({
         field: fieldSelector(SAME_NAME),
-        expectedErrorsCount,
-        expectedErrorMessage,
+        expectedErrorMessage: NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY,
       });
     });
   });

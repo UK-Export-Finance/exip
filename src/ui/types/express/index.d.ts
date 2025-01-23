@@ -106,6 +106,9 @@ interface Response {
   setHeader: (str1: string, str2?: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
   removeHeader: (str1: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
   status: (status: number) => any;
+  type: (type: string) => any;
+  write: (str: string) => any;
+  send: () => any;
 }
 
 declare module 'express-session' {

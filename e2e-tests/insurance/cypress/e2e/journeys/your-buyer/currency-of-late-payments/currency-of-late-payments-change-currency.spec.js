@@ -21,7 +21,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradingHistoryWithBuyer', outstandingPayments: true, exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradingHistoryWithBuyer', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`;
 

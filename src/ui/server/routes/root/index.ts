@@ -1,6 +1,7 @@
 import express from 'express';
 import { ROUTES } from '../../constants';
 import rootGet from '../../controllers/root';
+import { get as thankYouGet } from '../../controllers/root/thank-you';
 import { get as accessibilityStatementGet } from '../../controllers/root/accessibility-statement';
 import { get as cookiesGet, post as cookiesPost } from '../../controllers/root/cookies';
 import { get as cookiesSavedGet } from '../../controllers/root/cookies/saved';
@@ -12,6 +13,7 @@ import problemWithServiceGet from '../../controllers/root/problem-with-service';
 const rootRouter = express.Router();
 
 rootRouter.get(ROUTES.ROOT, rootGet);
+rootRouter.get(ROUTES.THANK_YOU, thankYouGet);
 
 rootRouter.get(ROUTES.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
 rootRouter.get(ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);

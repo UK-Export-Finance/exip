@@ -33,7 +33,7 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'anotherCompany', otherCompanyInvolved: true });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'anotherCompany', otherCompanyInvolved: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
       brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
@@ -77,7 +77,10 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
     });
 
     describe(`searchable autocomplete input (${COUNTRY_CODE})`, () => {
-      assertCountryAutocompleteInput({ fieldId: COUNTRY_CODE });
+      assertCountryAutocompleteInput({
+        fieldId: COUNTRY_CODE,
+        assertFilteredCisCountries: false,
+      });
     });
 
     it(`renders ${COMPANY_NUMBER} label and input`, () => {
