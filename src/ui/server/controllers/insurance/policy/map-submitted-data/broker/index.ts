@@ -18,13 +18,19 @@ const {
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker): object => {
+  /**
+   * Freeze an instance of the form body,
+   * so that we can check the original data at any stage.
+   */
+  const formBodyData = Object.freeze({ ...formBody });
+
   const populatedData = formBody;
 
   /**
    * If USING_BROKER is false,
    * nullify/wipe all USING_BROKER and address lookup related fields.
    */
-  if (formBody[USING_BROKER] === 'false') {
+  if (formBodyData[USING_BROKER] === 'false') {
     populatedData[NAME] = '';
     populatedData[EMAIL] = '';
     populatedData[IS_BASED_IN_UK] = null;
@@ -42,7 +48,7 @@ const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker):
    * If USING_BROKER is an empty string,
    * delete the field.
    */
-  if (isEmptyString(formBody[USING_BROKER])) {
+  if (isEmptyString(formBodyData[USING_BROKER])) {
     delete populatedData[USING_BROKER];
   }
 
@@ -50,7 +56,7 @@ const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker):
    * If IS_BASED_IN_UK is an empty string,
    * make the field null.
    */
-  if (isEmptyString(formBody[IS_BASED_IN_UK])) {
+  if (isEmptyString(formBodyData[IS_BASED_IN_UK])) {
     populatedData[IS_BASED_IN_UK] = null;
   }
 
@@ -58,7 +64,7 @@ const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker):
    * If IS_BASED_IN_UK is false,
    * nullify/wipe all address lookup related fields
    */
-  if (formBody[IS_BASED_IN_UK] === 'false') {
+  if (formBodyData[IS_BASED_IN_UK] === 'false') {
     populatedData[POSTCODE] = '';
     populatedData[BUILDING_NUMBER_OR_NAME] = '';
     populatedData[ADDRESS_LINE_1] = '';
@@ -73,7 +79,7 @@ const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker):
    * wipe all address lookup related fields.
    */
 
-  const fullAddressValue = formBody[FULL_ADDRESS];
+  const fullAddressValue = formBodyData[FULL_ADDRESS];
 
   const fullAddressIsPopulated = fullAddressValue && !isEmptyString(fullAddressValue);
 
@@ -87,11 +93,19 @@ const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker):
   }
 
   /**
+   * If POSTCODE is provided,
+   * wipe the FULL_ADDRESS field.
+   */
+  if (objectHasProperty(formBodyData, POSTCODE)) {
+    populatedData[FULL_ADDRESS] = '';
+  }
+
+  /**
    * If SELECT_THE_ADDRESS is provided,
    * or is an empty string,
    * delete the field.
    */
-  if (objectHasProperty(formBody, SELECT_THE_ADDRESS) || isEmptyString(formBody[SELECT_THE_ADDRESS])) {
+  if (objectHasProperty(formBodyData, SELECT_THE_ADDRESS) || isEmptyString(formBodyData[SELECT_THE_ADDRESS])) {
     delete populatedData[SELECT_THE_ADDRESS];
   }
 

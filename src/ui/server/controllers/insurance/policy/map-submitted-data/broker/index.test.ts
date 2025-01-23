@@ -72,7 +72,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
   });
 
   describe(`when ${USING_BROKER} is provided as an empty string`, () => {
-    it(`should delete ${USING_BROKER}`, () => {
+    it(`should wipe ${USING_BROKER}`, () => {
       const mockFormBody = {
         [USING_BROKER]: '',
       };
@@ -177,8 +177,21 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
     });
   });
 
+  describe(`when ${POSTCODE} is populated`, () => {
+    it(`should wipe ${SELECT_THE_ADDRESS}`, () => {
+      const mockFormBody = {
+        [FULL_ADDRESS]: 'Mock full broker address',
+        [POSTCODE]: 'Mock postcode',
+      };
+
+      const result = mapSubmittedData(mockFormBody, mockBroker);
+
+      expect(result[FULL_ADDRESS]).toEqual('');
+    });
+  });
+
   describe(`when ${SELECT_THE_ADDRESS} is provided as an empty string`, () => {
-    it(`should delete ${SELECT_THE_ADDRESS}`, () => {
+    it(`should wipe ${SELECT_THE_ADDRESS}`, () => {
       const mockFormBody = {
         [SELECT_THE_ADDRESS]: '',
         [POSTCODE]: '',
@@ -195,7 +208,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
   });
 
   describe(`when ${SELECT_THE_ADDRESS} is provided with a value`, () => {
-    it(`should delete ${SELECT_THE_ADDRESS}`, () => {
+    it(`should wipe ${SELECT_THE_ADDRESS}`, () => {
       const mockFormBody = {
         [SELECT_THE_ADDRESS]: '0',
         [POSTCODE]: '',
