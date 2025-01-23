@@ -9,6 +9,7 @@ const {
   USING_BROKER,
   BROKER_DETAILS: { NAME, EMAIL },
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -55,5 +56,9 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
 
   it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
     checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
+  });
+
+  it(`should NOT render a ${FULL_ADDRESS} summary list row`, () => {
+    checkSummaryList.BROKER[FULL_ADDRESS]({});
   });
 });
