@@ -562,12 +562,12 @@ export const ERROR_MESSAGES = {
             ABOVE_MAXIMUM: `The  explanation of why you cannot adhere cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
           },
           [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.OFFENSES_OR_INVESTIGATIONS]: {
-            IS_EMPTY: 'Enter full details of why you cannot adhere',
-            ABOVE_MAXIMUM: `The  explanation of why you cannot adhere cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+            IS_EMPTY: 'Enter full details of why you cannot confirm',
+            ABOVE_MAXIMUM: `The  explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
           },
           [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.AWARE_OF_EXISTING_SLAVERY]: {
-            IS_EMPTY: 'Enter full details of why you cannot adhere',
-            ABOVE_MAXIMUM: `The  explanation of why you cannot adhere cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+            IS_EMPTY: 'Enter full details of why you cannot confirm',
+            ABOVE_MAXIMUM: `The  explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
           },
         },
       },
