@@ -45,6 +45,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {String} brokerBuildingNumberOrName: Broker building name or number.
  * @param {String} brokerPostcode: Broker postcode.
  * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey.
+ * @param {Boolean} provideBrokerAddressManually: Provide a broker address manually, instead of selecting a result from Ordnance Survey
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -86,6 +87,7 @@ const completeSignInAndSubmitAnApplication = ({
   brokerBuildingNumberOrName,
   brokerPostcode,
   multipleBrokerAddressesAvailable,
+  provideBrokerAddressManually,
 }) => {
   completeSignInAndGoToApplication({
     companyNumber,
@@ -128,6 +130,7 @@ const completeSignInAndSubmitAnApplication = ({
         brokerBuildingNumberOrName,
         brokerPostcode,
         multipleBrokerAddressesAvailable,
+        provideBrokerAddressManually,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -164,6 +167,7 @@ const completeSignInAndSubmitAnApplication = ({
         brokerBuildingNumberOrName,
         brokerPostcode,
         multipleBrokerAddressesAvailable,
+        provideBrokerAddressManually,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

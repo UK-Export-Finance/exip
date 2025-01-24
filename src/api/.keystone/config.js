@@ -7837,16 +7837,15 @@ var based_in_the_uk_default = mapBrokerAddressBasedInTheUk;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-broker/map-broker-address/index.ts
 var {
-  BROKER_DETAILS: { IS_BASED_IN_UK },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS3 },
 } = POLICY;
 var { FIELDS: FIELDS11 } = XLSX;
 var mapBrokerAddress = (broker) => {
   let fieldValue = '';
-  if (broker[IS_BASED_IN_UK]) {
-    fieldValue = based_in_the_uk_default(broker);
-  } else {
+  if (broker[FULL_ADDRESS3]) {
     fieldValue = broker[FULL_ADDRESS3];
+  } else {
+    fieldValue = based_in_the_uk_default(broker);
   }
   return xlsx_row_default(String(FIELDS11[FULL_ADDRESS3]), fieldValue);
 };

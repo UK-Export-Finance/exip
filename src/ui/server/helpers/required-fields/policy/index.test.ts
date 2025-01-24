@@ -9,7 +9,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
-  BROKER_DETAILS: { BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE },
+  BROKER_DETAILS: { BROKER_NAME, BROKER_EMAIL, IS_BASED_IN_UK, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE },
   BROKER_MANUAL_ADDRESS: { BROKER_FULL_ADDRESS },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
@@ -117,27 +117,29 @@ describe('server/helpers/required-fields/policy', () => {
   });
 
   describe('getBrokerTasks', () => {
-    describe('when isUsingBroker is true, brokerIsBasedInUk is false', () => {
+    describe('when isUsingBroker is true, brokerIsBasedInUk is false, brokerFullAddress is a populated string', () => {
       it('should return multiple field ids in an array', () => {
         const isUsingBrokerFlag = true;
         const brokerIsBasedInUkFlag = false;
+        const brokerFullAddress = 'Mock broker full address';
 
-        const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag);
+        const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag, brokerFullAddress);
 
-        const expected = [BROKER_NAME, BROKER_EMAIL, BROKER_FULL_ADDRESS];
+        const expected = [BROKER_NAME, BROKER_EMAIL, IS_BASED_IN_UK, BROKER_FULL_ADDRESS];
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe('when isUsingBroker is true, brokerIsBasedInUk is true', () => {
+    describe('when isUsingBroker is true, brokerIsBasedInUk is true, brokerFullAddress is an empty string', () => {
       it('should return multiple field ids in an array', () => {
         const isUsingBrokerFlag = true;
         const brokerIsBasedInUkFlag = true;
+        const brokerFullAddress = '';
 
-        const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag);
+        const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag, brokerFullAddress);
 
-        const expected = [BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
+        const expected = [BROKER_NAME, BROKER_EMAIL, IS_BASED_IN_UK, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
 
         expect(result).toEqual(expected);
       });

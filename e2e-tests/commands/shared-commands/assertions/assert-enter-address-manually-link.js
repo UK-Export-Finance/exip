@@ -13,13 +13,14 @@ const baseUrl = Cypress.config('baseUrl');
  * assertEnterAddressManuallyLink
  * Check the "enter address manually" link and redirection
  * @param {Number} referenceNumber: Application reference number
+ * @param {Number} expectedText: Expected link text
  */
-const assertEnterAddressManuallyLink = ({ referenceNumber }) => {
+const assertEnterAddressManuallyLink = ({ referenceNumber, expectedText = LINKS.ENTER_ADDRESS_MANUALLY }) => {
   const expectedRoute = `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
-  cy.checkLink(enterAddressManuallyLink(), expectedRoute, LINKS.ENTER_ADDRESS_MANUALLY);
+  cy.checkLink(enterAddressManuallyLink(), expectedRoute, expectedText);
 
-  enterAddressManuallyLink().click();
+  cy.clickEnterAddressManuallyLink();
 
   const expectedUrl = `${baseUrl}${expectedRoute}`;
 

@@ -46,6 +46,7 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {String} brokerBuildingNumberOrName: Broker building name or number.
  * @param {String} brokerPostcode: Broker postcode.
  * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey.
+ * @param {Boolean} provideBrokerAddressManually: Provide a broker address manually, instead of selecting a result from Ordnance Survey
  */
 const completePrepareApplicationMultiplePolicyType = ({
   agentChargeMethodFixedSum = false,
@@ -88,6 +89,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   brokerBuildingNumberOrName,
   brokerPostcode,
   multipleBrokerAddressesAvailable,
+  provideBrokerAddressManually,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -121,6 +123,7 @@ const completePrepareApplicationMultiplePolicyType = ({
     brokerBuildingNumberOrName,
     brokerPostcode,
     multipleBrokerAddressesAvailable,
+    provideBrokerAddressManually,
     otherCompanyInvolved,
     needPreCreditPeriod,
     isAppointingLossPayee,
