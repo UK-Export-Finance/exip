@@ -171,6 +171,16 @@ export const mockSectionReview = {
   buyer: true,
 };
 
+export const mockApplicationDeclarationModernSlavery = {
+  id: 'clf3te7vx1432cfoqp9rbop74',
+  willAdhereToAllRequirements: true,
+  hasNoOffensesOrInvestigations: true,
+  isNotAwareOfExistingSlavery: true,
+  cannotAdhereToAllRequirements: '',
+  offensesOrInvestigations: '',
+  awareOfExistingSlavery: '',
+};
+
 export const mockApplicationDeclaration = {
   id: 'clf3te7vx1432cfoqp9rbop73',
   agreeToConfidentiality: true,
@@ -179,6 +189,7 @@ export const mockApplicationDeclaration = {
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: null,
+  modernSlavery: mockApplicationDeclarationModernSlavery,
 };
 
 export const mockLossPayeeFinancialDetailsUkVector = {

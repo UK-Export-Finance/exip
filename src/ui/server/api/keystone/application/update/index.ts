@@ -4,8 +4,9 @@ import buyer from './buyer';
 import buyerTradingHistory from './buyerTradingHistory';
 import buyerRelationship from './buyerRelationship';
 import company from './company';
-import declarations from '../declarations';
 import companyDifferentTradingAddress from './companyDifferentTradingAddress';
+import declaration from './declaration';
+import declarationModernSlavery from './declarationModernSlavery';
 import exportContract from './exportContract';
 import exportContractAgent from './exportContractAgent';
 import exportContractAgentService from './exportContractAgentService';
@@ -31,7 +32,8 @@ const update = {
   buyerRelationship,
   buyerTradingHistory,
   company,
-  declarations: declarations.update,
+  declaration,
+  declarationModernSlavery,
   companyDifferentTradingAddress,
   exportContract,
   exportContractAgent,

@@ -27,13 +27,13 @@ describe('server/helpers/task-list/submit-application', () => {
     const { isUsingBroker } = broker;
     const { hasAntiBriberyCodeOfConduct } = declaration;
 
-    const groupsAndTasks = generateGroupsAndTasks(referenceNumber, policyType, isUsingBroker, hasAntiBriberyCodeOfConduct);
+    const groupsAndTasks = generateGroupsAndTasks(referenceNumber, declaration, policyType, isUsingBroker, hasAntiBriberyCodeOfConduct);
 
     const [initialChecksGroup, prepareApplicationGroup] = groupsAndTasks;
 
     const previousGroups = [initialChecksGroup, prepareApplicationGroup];
 
-    const result = createSubmitApplicationTasks(referenceNumber, previousGroups, declaration.hasAntiBriberyCodeOfConduct);
+    const result = createSubmitApplicationTasks(referenceNumber, previousGroups, declaration);
 
     const initialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
     const prepareApplicationFields = getAllTasksFieldsInAGroup(prepareApplicationGroup);
@@ -52,7 +52,7 @@ describe('server/helpers/task-list/submit-application', () => {
       href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
       title: SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT,
       id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS_AND_SUBMIT,
-      fields: declarationsRequiredFields(declaration.hasAntiBriberyCodeOfConduct),
+      fields: declarationsRequiredFields(declaration),
       dependencies: [...expectedCoreDependencies, ...CHECK_ANSWERS.fields],
     };
 

@@ -1,0 +1,69 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% import '../../components/declarations/anti-bribery/expandable-content.njk' as expandableContent %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        <p class="govuk-body">
+          <span data-cy="intro-answer-the-questions">{{ CONTENT_STRINGS.INTRO.ANSWER_THE_QUESTIONS }}</span>
+          <a class="govuk-link" data-cy="intro-guiding-principles-link" href="{{ CONTENT_STRINGS.INTRO.GUIDING_PRINCIPLES_LINK.HREF }}">{{ CONTENT_STRINGS.INTRO.GUIDING_PRINCIPLES_LINK.TEXT }}</a>
+          <span data-cy="intro-if-you-say-no">{{ CONTENT_STRINGS.INTRO.IF_YOU_SAY_NO }}</span>
+        </p>
+
+        {% include "partials/insurance/declarations/modern-slavery/will-adhere-to-all-requirements.njk" %}
+
+        {% include "partials/insurance/declarations/modern-slavery/has-no-offenses-or-investigations.njk" %}
+
+        {% include "partials/insurance/declarations/modern-slavery/is-not-aware-of-existing-slavery.njk" %}
+
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-width">
+
+        {{ expandableContent.render({
+          CONTENT: CONTENT_STRINGS.EXPANDABLE
+        }) }}
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+
+  </form>
+
+{% endblock %}

@@ -9,10 +9,11 @@ import getPopulatedCompany from '../get-populated-company';
 import getBusinessById from '../get-business-by-id';
 import getBrokerById from '../get-broker-by-id';
 import getPopulatedBuyer from '../get-populated-buyer';
-import getDeclarationById from '../get-declaration-by-id';
+import getPopulatedDeclaration from '../get-populated-declaration';
 import getSectionReviewById from '../get-section-review-by-id';
 import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import mapPolicy from './map-policy';
+import { objectHasKeysAndValues } from '../object';
 import { Application } from '../../types';
 
 interface GetPopulatedApplicationParams {
@@ -21,6 +22,25 @@ interface GetPopulatedApplicationParams {
   decryptFinancialUk?: boolean;
   decryptFinancialInternational?: boolean;
 }
+
+/**
+ * EXPECTED_RELATIONSHIPS
+ * Relationships that are expected to be populated with an application.
+ */
+export const EXPECTED_RELATIONSHIPS: Array<string> = [
+  'eligibility',
+  'broker',
+  'business',
+  'buyer',
+  'company',
+  'declaration',
+  'exportContract',
+  'owner',
+  'policy',
+  'policyContact',
+  'nominatedLossPayee',
+  'sectionReview',
+];
 
 /**
  * getPopulatedApplication
@@ -75,7 +95,7 @@ const getPopulatedApplication = async ({
 
     const broker = await getBrokerById(context, brokerId);
 
-    const declaration = await getDeclarationById(context, declarationId);
+    const declaration = await getPopulatedDeclaration(context, declarationId);
 
     const sectionReview = await getSectionReviewById(context, sectionReviewId);
 
@@ -99,11 +119,26 @@ const getPopulatedApplication = async ({
       totalContractValueOverThreshold,
     };
 
+    /**
+     * Check that all expected relationships are populated.
+     * If not, throw an error.
+     * Otherwise, unexpected behaviours could occur.
+     */
+    Object.keys(populatedApplication).forEach((relationshipKey: string) => {
+      if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
+        const populatedRelationship = populatedApplication[relationshipKey];
+
+        if (!objectHasKeysAndValues(populatedRelationship)) {
+          throw new Error(`Error getting '${relationshipKey}' relationship`);
+        }
+      }
+    });
+
     return populatedApplication;
   } catch (error) {
     console.error('Getting populated application (helper) %s %o', application.id, error);
 
-    throw new Error(`Error Getting populated application (helper) ${application.id} ${error}`);
+    throw new Error(`Error getting populated application (helper) ${application.id} ${error}`);
   }
 };
 

@@ -7,10 +7,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDG
 
 const {
   APPLICATION_SUBMITTED,
-  DECLARATIONS: {
-    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-  },
+  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS, MODERN_SLAVERY },
   ROOT: INSURANCE_ROOT,
 } = INSURANCE_ROUTES;
 
@@ -30,7 +27,9 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'exportingWithCodeOfConduct', referenceNumber });
+        cy.completePrepareApplicationSinglePolicyType({});
+
+        cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'modernSlavery', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
@@ -50,7 +49,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
-        backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
+        backLink: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`,
         submitButtonCopy: BUTTONS.SUBMIT_APPLICATION,
       });
     });

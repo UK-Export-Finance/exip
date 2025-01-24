@@ -37,7 +37,7 @@ context(`Insurance - Change your answers - ${HAS_DIFFERENT_TRADING_ADDRESS} and 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.clickTaskCheckAnswers();
 

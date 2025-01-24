@@ -8,6 +8,7 @@ const {
   DECLARATIONS: {
     CONFIDENTIALITY,
     ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT, CODE_OF_CONDUCT, EXPORTING_WITH_CODE_OF_CONDUCT },
+    MODERN_SLAVERY,
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
 } = INSURANCE_ROUTES;
@@ -23,6 +24,7 @@ describe('middleware/insurance/application-status/is-submit-your-application-rou
         ANTI_BRIBERY_ROOT,
         CODE_OF_CONDUCT,
         EXPORTING_WITH_CODE_OF_CONDUCT,
+        MODERN_SLAVERY,
         CONFIRMATION_AND_ACKNOWLEDGEMENTS,
       });
 

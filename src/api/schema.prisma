@@ -56,7 +56,7 @@ model Application {
   sectionReviewId                      String?               @map("sectionReview")
   version                              String                @default("")
   dealType                             String                @default("") @mysql.VarChar(4)
-  migratedV2toV3                       Boolean?
+  migratedTo                           Int?
   from_ReferenceNumber_application     ReferenceNumber[]     @relation("ReferenceNumber_application")
   from_NominatedLossPayee_application  NominatedLossPayee[]  @relation("NominatedLossPayee_application")
   from_Policy_application              Policy[]              @relation("Policy_application")
@@ -524,19 +524,21 @@ model SectionReview {
 }
 
 model Declaration {
-  id                                     String               @id @default(cuid())
-  application                            Application?         @relation("Declaration_application", fields: [applicationId], references: [id])
-  applicationId                          String?              @map("application")
-  version                                DeclarationVersion?  @relation("Declaration_version", fields: [versionId], references: [id])
-  versionId                              String?              @map("version")
+  id                                     String                    @id @default(cuid())
+  application                            Application?              @relation("Declaration_application", fields: [applicationId], references: [id])
+  applicationId                          String?                   @map("application")
+  version                                DeclarationVersion?       @relation("Declaration_version", fields: [versionId], references: [id])
+  versionId                              String?                   @map("version")
   agreeHowDataWillBeUsed                 Boolean?
   agreeToAntiBribery                     Boolean?
   agreeToConfidentiality                 Boolean?
   agreeToConfirmationAndAcknowledgements Boolean?
   hasAntiBriberyCodeOfConduct            Boolean?
   willExportWithAntiBriberyCodeOfConduct Boolean?
-  from_Application_declaration           Application[]        @relation("Application_declaration")
-  from_DeclarationVersion_declaration    DeclarationVersion[] @relation("DeclarationVersion_declaration")
+  modernSlavery                          DeclarationModernSlavery? @relation("Declaration_modernSlavery", fields: [modernSlaveryId], references: [id])
+  modernSlaveryId                        String?                   @unique @map("modernSlavery")
+  from_Application_declaration           Application[]             @relation("Application_declaration")
+  from_DeclarationVersion_declaration    DeclarationVersion[]      @relation("DeclarationVersion_declaration")
 
   @@index([applicationId])
   @@index([versionId])
@@ -555,6 +557,34 @@ model DeclarationVersion {
   from_Declaration_version               Declaration[] @relation("Declaration_version")
 
   @@index([declarationId])
+}
+
+model DeclarationModernSlavery {
+  id                                                            String                            @id @default(cuid())
+  declaration                                                   Declaration?                      @relation("Declaration_modernSlavery")
+  version                                                       DeclarationModernSlaveryVersion?  @relation("DeclarationModernSlavery_version", fields: [versionId], references: [id])
+  versionId                                                     String?                           @map("version")
+  willAdhereToAllRequirements                                   Boolean?
+  hasNoOffensesOrInvestigations                                 Boolean?
+  isNotAwareOfExistingSlavery                                   Boolean?
+  cannotAdhereToAllRequirements                                 String                            @default("") @mysql.VarChar(1000)
+  offensesOrInvestigations                                      String                            @default("") @mysql.VarChar(1000)
+  awareOfExistingSlavery                                        String                            @default("") @mysql.VarChar(1000)
+  from_DeclarationModernSlaveryVersion_declarationModernSlavery DeclarationModernSlaveryVersion[] @relation("DeclarationModernSlaveryVersion_declarationModernSlavery")
+
+  @@index([versionId])
+}
+
+model DeclarationModernSlaveryVersion {
+  id                                    String                     @id @default(cuid())
+  declarationModernSlavery              DeclarationModernSlavery?  @relation("DeclarationModernSlaveryVersion_declarationModernSlavery", fields: [declarationModernSlaveryId], references: [id])
+  declarationModernSlaveryId            String?                    @map("declarationModernSlavery")
+  willAdhereToAllRequirements           String                     @default("") @mysql.VarChar(3)
+  hasNoOffensesOrInvestigations         String                     @default("") @mysql.VarChar(3)
+  isNotAwareOfExistingSlavery           String                     @default("") @mysql.VarChar(3)
+  from_DeclarationModernSlavery_version DeclarationModernSlavery[] @relation("DeclarationModernSlavery_version")
+
+  @@index([declarationModernSlaveryId])
 }
 
 model Page {

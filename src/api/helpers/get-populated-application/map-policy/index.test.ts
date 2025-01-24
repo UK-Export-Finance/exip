@@ -53,7 +53,7 @@ describe('api/helpers/get-populated-application', () => {
       });
     });
 
-    it('should return a policy with date fields as empty strings', () => {
+    it('should return a policy with null date fields', () => {
       const result = mapPolicy(policy);
 
       const expected = {

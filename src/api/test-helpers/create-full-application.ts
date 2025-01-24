@@ -66,6 +66,8 @@ export const createFullApplication = async (context: Context, policyType?: strin
     totalValueOfContract: 456,
     maximumBuyerWillOwe: 789,
     policyCurrencyCode: GBP_CURRENCY_CODE,
+    requestedStartDate: new Date(),
+    contractCompletionDate: new Date(),
   };
 
   if (policyType === POLICY_TYPE.MULTIPLE) {

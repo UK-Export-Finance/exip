@@ -10,5 +10,4 @@ import '@cypress-audit/lighthouse/commands';
 import './account';
 import './application';
 import './assertions';
-import './declarations';
 import './eligibility';
