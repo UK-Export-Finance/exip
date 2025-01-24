@@ -25,6 +25,7 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * @param {String} policyType: Application "Policy type"
  * @param {Boolean} isUsingBroker: "Is using broker" flag
  * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {String} brokerFullAddress: Broker "full address" data
  * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
  * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
@@ -43,6 +44,7 @@ const createPrepareApplicationTasks = ({
   jointlyInsuredParty,
   isUsingBroker,
   brokerIsBasedInUk,
+  brokerFullAddress,
   isAppointingLossPayee,
   lossPayeeIsLocatedInUk,
   lossPayeeIsLocatedInternationally,
@@ -95,6 +97,7 @@ const createPrepareApplicationTasks = ({
       jointlyInsuredParty,
       isUsingBroker,
       brokerIsBasedInUk,
+      brokerFullAddress,
       isAppointingLossPayee,
       lossPayeeIsLocatedInUk,
       lossPayeeIsLocatedInternationally,

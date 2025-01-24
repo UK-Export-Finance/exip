@@ -26,11 +26,12 @@ const { broker } = mockApplication;
 
 describe('server/helpers/flatten-application-data/map-broker', () => {
   describe(`when ${USING_BROKER} is true`, () => {
-    describe(`when ${IS_BASED_IN_UK} is true`, () => {
+    describe(`when ${IS_BASED_IN_UK} is true and ${FULL_ADDRESS} is not populated`, () => {
       const mockBroker = {
         ...broker,
         [USING_BROKER]: true,
         [IS_BASED_IN_UK]: true,
+        [FULL_ADDRESS]: '',
       };
 
       it('should return mapped broker IDs', () => {
@@ -46,6 +47,30 @@ describe('server/helpers/flatten-application-data/map-broker', () => {
           [BROKER_ADDRESS_LINE_1]: mockBroker[ADDRESS_LINE_1],
           [BROKER_ADDRESS_LINE_2]: mockBroker[ADDRESS_LINE_2],
           [BROKER_POSTCODE]: mockBroker[POSTCODE],
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${IS_BASED_IN_UK} is true and ${FULL_ADDRESS} is populated`, () => {
+      const mockBroker = {
+        ...broker,
+        [USING_BROKER]: true,
+        [IS_BASED_IN_UK]: true,
+        [FULL_ADDRESS]: 'Mock full address',
+      };
+
+      it('should return mapped broker IDs', () => {
+        const result = mapBroker(mockBroker);
+
+        const expected = {
+          id: mockBroker.id,
+          [USING_BROKER]: mockBroker[USING_BROKER],
+          [IS_BASED_IN_UK]: mockBroker[IS_BASED_IN_UK],
+          [BROKER_NAME]: mockBroker[NAME],
+          [BROKER_EMAIL]: mockBroker[EMAIL],
+          [BROKER_FULL_ADDRESS]: mockBroker[FULL_ADDRESS],
         };
 
         expect(result).toEqual(expected);

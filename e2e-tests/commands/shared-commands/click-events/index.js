@@ -10,7 +10,7 @@ Cypress.Commands.add('clickYesRadioInput', require('./click-yes-radio-input'));
 
 Cypress.Commands.add('clickAlternativeCurrencyRadioOption', require('./click-alternative-currency-radio-option'));
 
-Cypress.Commands.add('clickZeroAddressesEntryManuallyLink', require('./click-zero-addresses-enter-manually-link'));
+Cypress.Commands.add('clickEnterAddressManuallyLink', require('./click-enter-address-manually-link'));
 
 Cypress.Commands.add('clickFooterAccessibilityStatementLink', require('./click-footer-accessibility-statement-link'));
 Cypress.Commands.add('clickFooterCookiesLink', require('./click-footer-cookies-link'));

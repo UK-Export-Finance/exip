@@ -13,7 +13,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_CHANGE, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -82,6 +82,35 @@ context(
 
       it(`should NOT render ${FULL_ADDRESS} field`, () => {
         checkSummaryList.BROKER[FULL_ADDRESS]({ shouldRender: false });
+      });
+
+      describe(`when going back to ${BROKER_DETAILS_ROOT}`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(NAME).changeLink().click();
+        });
+
+        it('should retain the new values', () => {
+          cy.assertBrokerDetailsFieldValues({ isBasedInUk: true });
+        });
+      });
+
+      describe(`when going to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(SELECT_THE_ADDRESS).changeLink().click();
+
+          cy.clickEnterAddressManuallyLink();
+        });
+
+        it(`should have an empty ${FULL_ADDRESS} value`, () => {
+          cy.checkTextareaValue({
+            fieldId: FULL_ADDRESS,
+            expectedValue: '',
+          });
+        });
       });
     });
   },
