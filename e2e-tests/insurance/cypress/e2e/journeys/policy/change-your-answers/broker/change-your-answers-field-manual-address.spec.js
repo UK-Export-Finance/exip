@@ -1,5 +1,4 @@
 import { insetTextHtml, summaryList } from '../../../../../../../pages/shared';
-import { brokerConfirmAddressPage } from '../../../../../../../pages/insurance/policy';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
@@ -50,7 +49,7 @@ context('Insurance - Policy - Change your answers - Broker manual address - As a
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       summaryList.field(FULL_ADDRESS).changeLink().click();
 
-      brokerConfirmAddressPage.useDifferentAddressLink().click();
+      cy.clickUseDifferentAddressLink();
 
       cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
 
@@ -80,7 +79,7 @@ context('Insurance - Policy - Change your answers - Broker manual address - As a
 
         summaryList.field(FULL_ADDRESS).changeLink().click();
 
-        brokerConfirmAddressPage.useDifferentAddressLink().click();
+        cy.clickUseDifferentAddressLink();
 
         cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
       });

@@ -1,6 +1,5 @@
-import { headingCaption } from '../../../../../../partials';
+import { headingCaption, useDifferentAddressLink } from '../../../../../../partials';
 import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
-import { brokerConfirmAddressPage } from '../../../../../../pages/insurance/policy';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import {
   ADDRESS_LOOKUP_INPUT_EXAMPLES,
@@ -104,7 +103,7 @@ context(
           beforeEach(() => {
             cy.navigateToUrl(url);
 
-            brokerConfirmAddressPage.useDifferentAddressLink().click();
+            cy.clickUseDifferentAddressLink();
 
             cy.completeAndSubmitBrokerDetailsForm({
               isBasedInUk: true,
@@ -129,15 +128,14 @@ context(
 
       describe('`use a different address` link', () => {
         it('should render', () => {
-          cy.checkLink(
-            brokerConfirmAddressPage.useDifferentAddressLink(),
-            `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-            CONTENT_STRINGS.USE_DIFFERENT_ADDRESS,
-          );
+          const expectedUrl = `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+          const expectedText = CONTENT_STRINGS.USE_DIFFERENT_ADDRESS;
+
+          cy.checkLink(useDifferentAddressLink(), expectedUrl, expectedText);
         });
 
         it(`should redirect to ${BROKER_DETAILS_ROOT}`, () => {
-          brokerConfirmAddressPage.useDifferentAddressLink().click();
+          cy.clickUseDifferentAddressLink();
 
           cy.assertUrl(brokerDetailsUrl);
         });
