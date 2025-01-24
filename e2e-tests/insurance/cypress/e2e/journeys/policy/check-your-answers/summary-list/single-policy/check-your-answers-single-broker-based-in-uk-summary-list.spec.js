@@ -54,6 +54,6 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it(`should NOT render a ${FULL_ADDRESS} summary list row`, () => {
-    checkSummaryList.BROKER[FULL_ADDRESS]({});
+    checkSummaryList.BROKER[FULL_ADDRESS]({ shouldRender: false });
   });
 });

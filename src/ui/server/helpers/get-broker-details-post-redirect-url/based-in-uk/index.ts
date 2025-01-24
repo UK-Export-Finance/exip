@@ -2,7 +2,7 @@ import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { BrokerDetailsBasedInUkRedirectUrlParams } from '../../../../types';
 
 const {
-  POLICY: { BROKER_ADDRESSES_ROOT, BROKER_ADDRESSES_CHANGE, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_ADDRESSES_ROOT, BROKER_ADDRESSES_CHANGE, BROKER_ADDRESSES_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -26,7 +26,7 @@ const basedInUkRedirectUrl = ({
   }
 
   if (isACheckAndChangeRoute) {
-    return `${baseUrl}${CHECK_AND_CHANGE_ROUTE}`;
+    return postcodeOrBuildingNumberNameHasChanged ? `${baseUrl}${BROKER_ADDRESSES_CHECK_AND_CHANGE}` : `${baseUrl}${CHECK_AND_CHANGE_ROUTE}`;
   }
 
   return `${baseUrl}${BROKER_ADDRESSES_ROOT}`;

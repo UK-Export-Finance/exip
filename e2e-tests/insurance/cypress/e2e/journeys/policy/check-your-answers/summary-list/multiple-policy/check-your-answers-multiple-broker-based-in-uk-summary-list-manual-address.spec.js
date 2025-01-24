@@ -26,6 +26,7 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
         policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         usingBroker: true,
         brokerIsBasedInUk: true,
+        provideBrokerAddressManually: true,
       });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;

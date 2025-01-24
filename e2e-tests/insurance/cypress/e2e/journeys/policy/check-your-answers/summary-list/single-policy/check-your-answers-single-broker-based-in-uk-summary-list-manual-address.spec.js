@@ -21,7 +21,11 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ usingBroker: true, brokerIsBasedInUk: true });
+      cy.completePolicySection({
+        usingBroker: true,
+        brokerIsBasedInUk: true,
+        provideBrokerAddressManually: true,
+      });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
