@@ -25,7 +25,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'antiBribery', referenceNumber });
 
