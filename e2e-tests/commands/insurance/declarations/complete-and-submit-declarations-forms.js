@@ -23,6 +23,8 @@ const completeAndSubmitDeclarationsForms = ({
   cannotAdhereToAllRequirements,
   offensesOrInvestigations,
 }) => {
+  cy.completePrepareApplicationSinglePolicyType({});
+
   cy.completeAndSubmitCheckYourAnswers();
 
   cy.clickTaskDeclarationsAndSubmit();
