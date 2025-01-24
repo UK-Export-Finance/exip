@@ -8,7 +8,7 @@ const {
 
 /**
  * basedInUkRedirectUrl
- * Get a redirect URL for "Broker details - based in UK" conditions.
+ * Get a redirect URL for "Broker details - Based in UK" conditions.
  * @param {String} baseUrl: Base URL, e.g /apply/:referenceNumber
  * @param {Boolean} isAChangeRoute: If the route is a "change" route
  * @param {Boolean} isACheckAndChangeRoute: If the route is a "check and change" route
