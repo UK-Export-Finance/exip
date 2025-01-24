@@ -10,6 +10,8 @@
 
 ## [2.39.4](https://github.com/UK-Export-Finance/exip/compare/v2.39.3...v2.39.4) (2025-01-16)
 
+## [2.39.4](https://github.com/UK-Export-Finance/exip/compare/v2.39.3...v2.39.4) (2025-01-16)
+
 ### Bug Fixes
 
 - **EMS-4125:** updated keystone config ([#3483](https://github.com/UK-Export-Finance/exip/issues/3483)) ([4fe462f](https://github.com/UK-Export-Finance/exip/commit/4fe462f99d5ada5c2c5eaa477622946afe5883ac))
