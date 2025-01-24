@@ -21,3 +21,8 @@ export interface BrokerDetailsNotBasedInUkRedirectUrlParams extends BrokerDetail
 export interface BrokerDetailsBasedInUkRedirectUrlParams extends BrokerDetailsRedirectUrlChildParams {
   postcodeOrBuildingNumberNameHasChanged: boolean;
 }
+
+export interface BrokerDetailsDataChangeFlagsParams {
+  postcodeOrBuildingNumberNameHasChanged: boolean;
+  manualAddressRequired: boolean;
+}
