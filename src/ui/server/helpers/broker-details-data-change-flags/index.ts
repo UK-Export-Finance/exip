@@ -4,7 +4,6 @@ import { ApplicationBroker, RequestBody } from '../../../types';
 
 const {
   BROKER_DETAILS: { IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
-  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 interface BrokerDetailsDataChangeFlagsParams {
@@ -35,7 +34,7 @@ const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: Applica
   }
 
   if (!isBasedInUk) {
-    manualAddressRequired = isEmptyString(brokerData[FULL_ADDRESS]);
+    manualAddressRequired = isEmptyString(brokerData[POSTCODE]);
   }
 
   return {
