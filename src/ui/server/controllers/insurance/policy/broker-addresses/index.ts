@@ -49,9 +49,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_ADDRESSES;
  * @param {Number} referenceNumber: Application reference number
  * @param {Number} totalAddresses: Total amount of addresses found
  * @param {Boolean} isAChangeRoute: If the last part of a string/URL is 'change'
+ * @param {Boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, totalAddresses: number, isAChangeRoute: boolean) => {
+export const pageVariables = (referenceNumber: number, totalAddresses: number, isAChangeRoute: boolean, isACheckAndChangeRoute: boolean) => {
   let ADDRESS_STRING = PAGE_CONTENT_STRINGS.INTRO.ADDRESSES;
 
   if (totalAddresses === 1) {
@@ -68,7 +69,7 @@ export const pageVariables = (referenceNumber: number, totalAddresses: number, i
       ADDRESSES_FOUND: `${totalAddresses} ${ADDRESS_STRING} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
     },
     SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-    ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute),
+    ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute),
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_SAVE_AND_BACK}`,
   };
 };
@@ -150,7 +151,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(referenceNumber, addresses.length, isAChangeRoute),
+      ...pageVariables(referenceNumber, addresses.length, isAChangeRoute, isCheckAndChangeRoute(req.originalUrl)),
       userName: getUserNameFromSession(req.session.user),
       mappedAddresses,
       postcode,
@@ -192,6 +193,7 @@ export const post = async (req: Request, res: Response) => {
     const mappedAddresses = mapOrdnanceSurveyAddresses(addresses, broker);
 
     const isAChangeRoute = isChangeRoute(req.originalUrl);
+    const isACheckAndChangeRoute = isCheckAndChangeRoute(req.originalUrl);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -199,7 +201,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, addresses.length, isAChangeRoute),
+        ...pageVariables(referenceNumber, addresses.length, isAChangeRoute, isACheckAndChangeRoute),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
         postcode,
@@ -219,7 +221,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
-    if (isCheckAndChangeRoute(req.originalUrl)) {
+    if (isACheckAndChangeRoute) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 

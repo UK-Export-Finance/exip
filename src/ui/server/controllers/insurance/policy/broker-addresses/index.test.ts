@@ -15,6 +15,7 @@ import getOrdnanceSurveyAddressByIndex from '../../../../helpers/get-chosen-ordn
 import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
@@ -46,6 +47,7 @@ const { postcode, buildingNumberOrName } = broker;
 const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, broker);
 
 let isAChangeRoute = false;
+let isACheckAndChangeRoute = false;
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
@@ -61,6 +63,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
     isAChangeRoute = isChangeRoute(req.originalUrl);
+    isACheckAndChangeRoute = isCheckAndChangeRoute(req.originalUrl);
   });
 
   afterAll(() => {
@@ -102,7 +105,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
       },
       SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-      ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute),
+      ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute),
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_SAVE_AND_BACK}`,
     };
 
@@ -110,7 +113,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       it('should have correct properties', () => {
         const mockTotalAddresses = 1;
 
-        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute);
+        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute, isACheckAndChangeRoute);
 
         const expected = {
           ...expectedGenericProperties,
@@ -128,7 +131,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       it('should have correct properties', () => {
         const mockTotalAddresses = 2;
 
-        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute);
+        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute, isACheckAndChangeRoute);
 
         const expected = {
           ...expectedGenericProperties,
@@ -263,7 +266,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute),
+        ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute, isACheckAndChangeRoute),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
         postcode,
@@ -374,7 +377,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute),
+          ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute, isACheckAndChangeRoute),
           userName: getUserNameFromSession(req.session.user),
           mappedAddresses,
           postcode,
