@@ -19,7 +19,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'modernSlavery', referenceNumber });
 
