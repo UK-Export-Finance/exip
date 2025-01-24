@@ -54,7 +54,7 @@ describe('controllers/insurance/all-sections', () => {
         },
       } = exportContract;
 
-      const { isUsingBroker, isBasedInUk: brokerIsBasedInUk } = broker;
+      const { isUsingBroker, isBasedInUk: brokerIsBasedInUk, fullAddress: brokerFullAddress } = broker;
       const { hasDifferentTradingName } = company;
       const { hasAntiBriberyCodeOfConduct } = declaration;
       const { buyerTradingHistory, relationship } = buyer;
@@ -71,6 +71,7 @@ describe('controllers/insurance/all-sections', () => {
         jointlyInsuredParty.requested,
         isUsingBroker,
         brokerIsBasedInUk,
+        brokerFullAddress,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUk,
         lossPayeeIsLocatedInternationally,

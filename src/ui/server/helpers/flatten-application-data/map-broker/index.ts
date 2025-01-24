@@ -29,7 +29,7 @@ const {
  * @returns {Object} ApplicationBroker with slightly different field IDs
  */
 const mapBroker = (broker: ApplicationBroker) => {
-  const { isUsingBroker, isBasedInUk } = broker;
+  const { isUsingBroker, isBasedInUk, fullAddress } = broker;
 
   const mapped = {
     id: broker.id,
@@ -41,7 +41,7 @@ const mapBroker = (broker: ApplicationBroker) => {
     mapped[BROKER_NAME] = broker[NAME];
     mapped[BROKER_EMAIL] = broker[EMAIL];
 
-    if (isBasedInUk) {
+    if (isBasedInUk && !fullAddress) {
       mapped[BROKER_BUILDING_NUMBER_OR_NAME] = broker[BUILDING_NUMBER_OR_NAME];
       mapped[BROKER_ADDRESS_LINE_1] = broker[ADDRESS_LINE_1];
       mapped[BROKER_ADDRESS_LINE_2] = broker[ADDRESS_LINE_2];

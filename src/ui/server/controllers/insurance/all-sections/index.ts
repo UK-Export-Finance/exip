@@ -46,7 +46,7 @@ export const get = (req: Request, res: Response) => {
     },
   } = exportContract;
 
-  const { isUsingBroker, isBasedInUk: brokerIsBasedInUk } = broker;
+  const { isUsingBroker, isBasedInUk: brokerIsBasedInUk, fullAddress: brokerFullAddress } = broker;
   const { hasDifferentTradingName } = company;
   const { hasAntiBriberyCodeOfConduct } = declaration;
   const { buyerTradingHistory, relationship } = buyer;
@@ -63,6 +63,7 @@ export const get = (req: Request, res: Response) => {
     jointlyInsuredParty.requested,
     isUsingBroker,
     brokerIsBasedInUk,
+    brokerFullAddress,
     isAppointingLossPayee,
     lossPayeeIsLocatedInUk,
     lossPayeeIsLocatedInternationally,

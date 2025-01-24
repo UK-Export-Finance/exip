@@ -8,7 +8,6 @@ import generateMultipleFieldHtml from '../../../../generate-multiple-field-html'
 import { ApplicationBroker } from '../../../../../../types';
 
 const {
-  BROKER_DETAILS: { IS_BASED_IN_UK },
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
@@ -32,7 +31,12 @@ const brokerAddressField = (answers: ApplicationBroker, referenceNumber: number,
   const changeRoute = BROKER_CONFIRM_ADDRESS_CHANGE;
   const checkAndChangeRoute = BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE;
 
-  if (answers[IS_BASED_IN_UK]) {
+  if (answers[FULL_ADDRESS]) {
+    field = getFieldById(POLICY_FIELDS.BROKER_MANUAL_ADDRESS, FULL_ADDRESS);
+    fieldValue = answers[FULL_ADDRESS];
+
+    href = generateChangeLink(changeRoute, checkAndChangeRoute, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange);
+  } else {
     field = getFieldById(POLICY_FIELDS.BROKER_ADDRESSES, SELECT_THE_ADDRESS);
 
     const { addressLine1, addressLine2, town, county, postcode } = answers;
@@ -46,11 +50,6 @@ const brokerAddressField = (answers: ApplicationBroker, referenceNumber: number,
     });
 
     href = generateChangeLink(changeRoute, checkAndChangeRoute, `#${SELECT_THE_ADDRESS}-label`, referenceNumber, checkAndChange);
-  } else {
-    field = getFieldById(POLICY_FIELDS.BROKER_MANUAL_ADDRESS, FULL_ADDRESS);
-    fieldValue = answers[FULL_ADDRESS];
-
-    href = generateChangeLink(changeRoute, checkAndChangeRoute, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange);
   }
 
   const groupItem = fieldGroupItem(
