@@ -28,6 +28,7 @@ const {
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
     BROKER_CONFIRM_ADDRESS_CHANGE,
+    BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -116,6 +117,7 @@ export const get = async (req: Request, res: Response) => {
     }
 
     const isAChangeRoute = isChangeRoute(req.originalUrl);
+    const isACheckAndChangeRoute = isCheckAndChangeRoute(req.originalUrl);
 
     const { addresses } = response;
 
@@ -142,6 +144,12 @@ export const get = async (req: Request, res: Response) => {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHANGE}`);
       }
 
+      if (isACheckAndChangeRoute) {
+        console.info(`Policy - broker addresses - Redirecting to ${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`);
+
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`);
+      }
+
       console.info(`Policy - broker addresses - Redirecting to ${BROKER_CONFIRM_ADDRESS_ROOT}`);
 
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
@@ -151,7 +159,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(referenceNumber, addresses.length, isAChangeRoute, isCheckAndChangeRoute(req.originalUrl)),
+      ...pageVariables(referenceNumber, addresses.length, isAChangeRoute, isACheckAndChangeRoute),
       userName: getUserNameFromSession(req.session.user),
       mappedAddresses,
       postcode,

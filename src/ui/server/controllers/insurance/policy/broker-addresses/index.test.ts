@@ -28,12 +28,15 @@ const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   POLICY: {
+    BROKER_ADDRESSES_ROOT,
     BROKER_ADDRESSES_SAVE_AND_BACK,
     BROKER_ADDRESSES_CHANGE,
     BROKER_ADDRESSES_CHECK_AND_CHANGE,
     BROKER_DETAILS_ROOT,
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
+    BROKER_CONFIRM_ADDRESS_CHANGE,
+    BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -206,11 +209,11 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
         api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockResponse));
         mapAndSave.broker = jest.fn(() => Promise.resolve(true));
-
-        await get(req, res);
       });
 
-      it('should call mapAndSave.broker once with address data and application data', () => {
+      it('should call mapAndSave.broker once with address data and application data', async () => {
+        await get(req, res);
+
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
         const addressToSave = getOrdnanceSurveyAddressByIndex({
@@ -221,8 +224,36 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         expect(mapAndSave.broker).toHaveBeenCalledWith(addressToSave, mockApplication);
       });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_CHANGE}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_CHANGE;
+
+          await get(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHANGE}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_CHECK_AND_CHANGE;
+
+          await get(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is not `change` or `check-and-change`", () => {
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_ROOT;
+
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+        });
       });
 
       describe('api error handling', () => {
