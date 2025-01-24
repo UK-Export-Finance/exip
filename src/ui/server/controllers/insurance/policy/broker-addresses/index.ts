@@ -3,6 +3,7 @@ import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
+import generateEnterBrokerAddressManuallyUrl from '../../../../helpers/generate-enter-broker-address-manually-url';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
@@ -27,7 +28,6 @@ const {
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
     BROKER_CONFIRM_ADDRESS_CHANGE,
-    BROKER_MANUAL_ADDRESS_ROOT,
     CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -48,9 +48,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_ADDRESSES;
  * Page fields and "save and go back" URL
  * @param {Number} referenceNumber: Application reference number
  * @param {Number} totalAddresses: Total amount of addresses found
+ * @param {Boolean} isAChangeRoute: If the last part of a string/URL is 'change'
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, totalAddresses: number) => {
+export const pageVariables = (referenceNumber: number, totalAddresses: number, isAChangeRoute: boolean) => {
   let ADDRESS_STRING = PAGE_CONTENT_STRINGS.INTRO.ADDRESSES;
 
   if (totalAddresses === 1) {
@@ -67,7 +68,7 @@ export const pageVariables = (referenceNumber: number, totalAddresses: number) =
       ADDRESSES_FOUND: `${totalAddresses} ${ADDRESS_STRING} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
     },
     SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-    ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
+    ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute),
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_SAVE_AND_BACK}`,
   };
 };
@@ -113,6 +114,8 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`);
     }
 
+    const isAChangeRoute = isChangeRoute(req.originalUrl);
+
     const { addresses } = response;
 
     /**
@@ -132,7 +135,7 @@ export const get = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      if (isChangeRoute(req.originalUrl)) {
+      if (isAChangeRoute) {
         console.info(`Policy - broker addresses - Redirecting to ${BROKER_CONFIRM_ADDRESS_CHANGE}`);
 
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHANGE}`);
@@ -147,7 +150,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(referenceNumber, addresses.length),
+      ...pageVariables(referenceNumber, addresses.length, isAChangeRoute),
       userName: getUserNameFromSession(req.session.user),
       mappedAddresses,
       postcode,
@@ -188,13 +191,15 @@ export const post = async (req: Request, res: Response) => {
 
     const mappedAddresses = mapOrdnanceSurveyAddresses(addresses, broker);
 
+    const isAChangeRoute = isChangeRoute(req.originalUrl);
+
     if (validationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, addresses.length),
+        ...pageVariables(referenceNumber, addresses.length, isAChangeRoute),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
         postcode,
@@ -210,7 +215,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    if (isChangeRoute(req.originalUrl)) {
+    if (isAChangeRoute) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 

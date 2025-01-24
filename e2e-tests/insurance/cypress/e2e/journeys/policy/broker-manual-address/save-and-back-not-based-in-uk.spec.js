@@ -14,7 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Broker manual address page - Save and back', () => {
+context('Insurance - Policy - Broker manual address page - Not based in UK - Save and back', () => {
   let referenceNumber;
   let url;
 
@@ -26,11 +26,9 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
       cy.completeAndSubmitPolicyForms({
         stopSubmittingAfter: 'brokerDetails',
         usingBroker: true,
-        isBasedInUk: true,
+        isBasedInUk: false,
         buildingNumberOrName: '123456789',
       });
-
-      cy.clickZeroAddressesEntryManuallyLink();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
@@ -68,6 +66,7 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
 
       // submit the form via 'save and go back' button
       cy.keyboardInput(field(FIELD_ID).textarea(), application.BROKER[FIELD_ID]);
+
       cy.clickSaveAndBackButton();
     });
 
@@ -86,9 +85,6 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
 
       // go through 8 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 8 });
-
-      // go to the "enter manually" page.
-      cy.clickZeroAddressesEntryManuallyLink();
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,

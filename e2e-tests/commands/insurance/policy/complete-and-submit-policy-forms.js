@@ -68,7 +68,7 @@ const completeAndSubmitPolicyForms = ({
 
       steps.push({ name: 'brokerConfirmAddress', action: () => cy.clickSubmitButton() });
     } else {
-      cy.completeAndSubmitBrokerManualAddressForm({});
+      steps.push({ name: 'brokerManualAddress', action: () => cy.completeAndSubmitBrokerManualAddressForm({}) });
     }
   }
 

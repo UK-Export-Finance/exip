@@ -10,7 +10,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_ZERO_ADDRESSES;
 
 const {
   ROOT,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, BROKER_ZERO_ADDRESSES_ROOT },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -92,9 +92,10 @@ context(
       });
 
       it('renders outro `enter manually` link', () => {
-        const expectedHref = `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
-
-        cy.checkLink(outro.enterManuallyLink(), expectedHref, CONTENT_STRINGS.OUTRO.ENTER_MANUALLY);
+        cy.assertEnterAddressManuallyLink({
+          referenceNumber,
+          expectedText: CONTENT_STRINGS.OUTRO.ENTER_MANUALLY,
+        });
       });
     });
   },

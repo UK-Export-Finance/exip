@@ -9,7 +9,6 @@ import generateMultipleFieldHtml from '../../../../generate-multiple-field-html'
 import { mockBroker, referenceNumber } from '../../../../../test-mocks/mock-application';
 
 const {
-  BROKER_DETAILS: { IS_BASED_IN_UK },
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
@@ -21,11 +20,40 @@ const checkAndChange = false;
 const { addressLine1, addressLine2, town, county, postcode } = mockBroker;
 
 describe('server/helpers/summary-lists/policy/broker-fields/address-field', () => {
-  describe(`when ${IS_BASED_IN_UK} is true`, () => {
-    it('should return a UK address field', () => {
+  describe(`when ${FULL_ADDRESS} is a populated string`, () => {
+    it(`should return an ${FULL_ADDRESS} field`, () => {
       const mockAnswers = {
         ...mockBroker,
-        [IS_BASED_IN_UK]: true,
+        [FULL_ADDRESS]: 'Mock broker full address',
+      };
+
+      const result = brokerAddressField(mockAnswers, referenceNumber, checkAndChange);
+
+      const expected = fieldGroupItem(
+        {
+          field: getFieldById(POLICY_FIELDS.BROKER_MANUAL_ADDRESS, FULL_ADDRESS),
+          data: mockAnswers,
+          href: generateChangeLink(
+            BROKER_CONFIRM_ADDRESS_CHANGE,
+            BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
+            `#${FULL_ADDRESS}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+          renderChangeLink: true,
+        },
+        mockAnswers[FULL_ADDRESS],
+      );
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${FULL_ADDRESS} is an empty string`, () => {
+    it(`should return a ${SELECT_THE_ADDRESS} field with a value via generateMultipleFieldHtml`, () => {
+      const mockAnswers = {
+        ...mockBroker,
+        [FULL_ADDRESS]: '',
       };
 
       const result = brokerAddressField(mockAnswers, referenceNumber, checkAndChange);
@@ -50,35 +78,6 @@ describe('server/helpers/summary-lists/policy/broker-fields/address-field', () =
           county,
           postcode,
         }),
-      );
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when ${IS_BASED_IN_UK} is false`, () => {
-    it('should return a non-UK address field', () => {
-      const mockAnswers = {
-        ...mockBroker,
-        [IS_BASED_IN_UK]: false,
-      };
-
-      const result = brokerAddressField(mockAnswers, referenceNumber, checkAndChange);
-
-      const expected = fieldGroupItem(
-        {
-          field: getFieldById(POLICY_FIELDS.BROKER_MANUAL_ADDRESS, FULL_ADDRESS),
-          data: mockAnswers,
-          href: generateChangeLink(
-            BROKER_CONFIRM_ADDRESS_CHANGE,
-            BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
-            `#${FULL_ADDRESS}-label`,
-            referenceNumber,
-            checkAndChange,
-          ),
-          renderChangeLink: true,
-        },
-        mockAnswers[FULL_ADDRESS],
       );
 
       expect(result).toEqual(expected);

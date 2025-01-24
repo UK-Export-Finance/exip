@@ -4,6 +4,7 @@ import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
+import generateEnterBrokerAddressManuallyUrl from '../../../../helpers/generate-enter-broker-address-manually-url';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
@@ -13,6 +14,7 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import getOrdnanceSurveyAddressByIndex from '../../../../helpers/get-chosen-ordnance-survey-address/by-index';
 import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../map-and-save/broker';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
@@ -31,7 +33,6 @@ const {
     BROKER_DETAILS_ROOT,
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
-    BROKER_MANUAL_ADDRESS_ROOT,
     CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -43,6 +44,8 @@ const { broker } = mockApplication;
 const { postcode, buildingNumberOrName } = broker;
 
 const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, broker);
+
+let isAChangeRoute = false;
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
@@ -56,6 +59,8 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
     api.keystone.getOrdnanceSurveyAddresses = getOrdnanceSurveyAddressesSpy;
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
+
+    isAChangeRoute = isChangeRoute(req.originalUrl);
   });
 
   afterAll(() => {
@@ -97,7 +102,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
       },
       SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-      ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
+      ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute),
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_SAVE_AND_BACK}`,
     };
 
@@ -105,7 +110,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       it('should have correct properties', () => {
         const mockTotalAddresses = 1;
 
-        const result = pageVariables(referenceNumber, mockTotalAddresses);
+        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute);
 
         const expected = {
           ...expectedGenericProperties,
@@ -123,7 +128,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       it('should have correct properties', () => {
         const mockTotalAddresses = 2;
 
-        const result = pageVariables(referenceNumber, mockTotalAddresses);
+        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute);
 
         const expected = {
           ...expectedGenericProperties,
@@ -258,7 +263,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length),
+        ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
         postcode,
@@ -369,7 +374,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length),
+          ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute),
           userName: getUserNameFromSession(req.session.user),
           mappedAddresses,
           postcode,

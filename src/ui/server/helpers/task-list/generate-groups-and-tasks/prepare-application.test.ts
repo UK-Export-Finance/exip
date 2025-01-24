@@ -23,7 +23,7 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/prepare-application', () => {
   const {
-    broker: { isUsingBroker, isBasedInUk: brokerIsBasedInUk },
+    broker: { isUsingBroker, isBasedInUk: brokerIsBasedInUk, fullAddress: brokerFullAddress },
     buyer: {
       relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer },
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments },
@@ -71,6 +71,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         jointlyInsuredParty: jointlyInsuredParty.requested,
         isUsingBroker,
         brokerIsBasedInUk,
+        brokerFullAddress,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUk,
         lossPayeeIsLocatedInternationally,
@@ -120,6 +121,7 @@ describe('server/helpers/task-list/prepare-application', () => {
           jointlyInsuredParty: jointlyInsuredParty.requested,
           isUsingBroker,
           brokerIsBasedInUk,
+          brokerFullAddress,
           isAppointingLossPayee,
           lossPayeeIsLocatedInUk,
           lossPayeeIsLocatedInternationally,

@@ -3,7 +3,7 @@ import mapSubmittedData from '../../map-submitted-data/broker';
 import save from '../../save-data/broker';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
-import { mockApplication, mockBroker, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { NAME },
@@ -14,13 +14,13 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
 
   const mockFormBody = {
     _csrf: '1234',
-    ...mockBroker,
+    ...mockApplication.broker,
   };
 
   const mockSaveBroker = mockSpyPromise();
   save.broker = mockSaveBroker;
 
-  const populatedData = mapSubmittedData(mockFormBody);
+  const populatedData = mapSubmittedData(mockFormBody, mockApplication.broker);
 
   const mockValidationErrors = generateValidationErrors(NAME, 'error', {});
 
