@@ -1,4 +1,4 @@
-import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
+import { expandable } from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -11,15 +11,9 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { expandable } = antiBriberyPage;
-
 const { INTRO, TABLE } = CONTENT_STRINGS.EXPANDABLE;
 
 const baseUrl = Cypress.config('baseUrl');
-
-const assertTermColumn = (selector, content) => {
-  cy.checkText(selector, content.TERM);
-};
 
 context('Insurance - Declarations - Anti-bribery page - expandable `definition` content', () => {
   let referenceNumber;
@@ -30,6 +24,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
+
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'confidentiality', referenceNumber });
 
@@ -64,7 +60,6 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
     const { BODY, HEADERS } = TABLE;
 
     let row;
-    let content;
 
     it('renders table headers', () => {
       expandable.summary().click();
@@ -74,205 +69,195 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
     });
 
     describe('body row 1', () => {
+      const { 0: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(1);
-
-        const { 0: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
-        cy.checkText(row.definition(), content.DEFINITION[0]);
+        cy.checkText(row.definition(), content.DEFINITION[0].TEXT);
       });
     });
 
     describe('body row 2', () => {
+      const { 1: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(2);
-
-        const { 1: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column list items', () => {
-        cy.checkText(row.definitionListItem(1), content.DEFINITION[0]);
-        cy.checkText(row.definitionListItem(2), content.DEFINITION[1]);
+        cy.checkText(row.definitionListItem(1), content.DEFINITION[0].TEXT);
+        cy.checkText(row.definitionListItem(2), content.DEFINITION[1].TEXT);
       });
     });
 
     describe('body row 3', () => {
+      const { 2: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(3);
-
-        const { 2: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column list items', () => {
-        cy.checkText(row.definitionListItem(1), content.DEFINITION[0]);
-        cy.checkText(row.definitionListItem(2), content.DEFINITION[1]);
-        cy.checkText(row.definitionListItem(3), content.DEFINITION[2]);
-        cy.checkText(row.definitionListItem(4), content.DEFINITION[3]);
-        cy.checkText(row.definitionListItem(5), content.DEFINITION[4]);
-        cy.checkText(row.definitionListItem(6), content.DEFINITION[5]);
-        cy.checkText(row.definitionListItem(7), content.DEFINITION[6]);
-        cy.checkText(row.definitionListItem(8), content.DEFINITION[7]);
+        cy.checkText(row.definitionListItem(1), content.DEFINITION[0].TEXT);
+        cy.checkText(row.definitionListItem(2), content.DEFINITION[1].TEXT);
+        cy.checkText(row.definitionListItem(3), content.DEFINITION[2].TEXT);
+        cy.checkText(row.definitionListItem(4), content.DEFINITION[3].TEXT);
+        cy.checkText(row.definitionListItem(5), content.DEFINITION[4].TEXT);
+        cy.checkText(row.definitionListItem(6), content.DEFINITION[5].TEXT);
+        cy.checkText(row.definitionListItem(7), content.DEFINITION[6].TEXT);
+        cy.checkText(row.definitionListItem(8), content.DEFINITION[7].TEXT);
       });
     });
 
     describe('body row 4', () => {
+      const { 3: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(4);
-
-        const { 3: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
-        cy.checkText(row.definition(), content.DEFINITION[0]);
+        cy.checkText(row.definition(), content.DEFINITION[0].TEXT);
       });
     });
 
     describe('body row 5', () => {
+      const { 4: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(5);
-
-        const { 4: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column list items', () => {
-        cy.checkText(row.definitionListItem(1), content.DEFINITION[0]);
-        cy.checkText(row.definitionListItem(2), content.DEFINITION[1]);
-        cy.checkText(row.definitionListItem(3), content.DEFINITION[2]);
-        cy.checkText(row.definitionListItem(4), content.DEFINITION[3]);
+        cy.checkText(row.definitionListItem(1), content.DEFINITION[0].TEXT);
+        cy.checkText(row.definitionListItem(2), content.DEFINITION[1].TEXT);
+        cy.checkText(row.definitionListItem(3), content.DEFINITION[2].TEXT);
+        cy.checkText(row.definitionListItem(4), content.DEFINITION[3].TEXT);
       });
     });
 
     describe('body row 6', () => {
+      const { 5: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(6);
-
-        const { 5: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
-        cy.checkText(row.definition(), content.DEFINITION[0]);
+        cy.checkText(row.definition(), content.DEFINITION[0].TEXT);
       });
     });
 
     describe('body row 7', () => {
+      const { 6: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(7);
-
-        const { 6: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column list items', () => {
-        cy.checkText(row.definitionListItem(1), content.DEFINITION[0]);
+        cy.checkText(row.definitionListItem(1), content.DEFINITION[0].TEXT);
       });
     });
 
     describe('body row 8', () => {
+      const { 7: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(8);
-
-        const { 7: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
-        cy.checkText(row.definition(), content.DEFINITION[0]);
+        cy.checkText(row.definition(), content.DEFINITION[0].TEXT);
       });
     });
 
     describe('body row 9', () => {
+      const { 8: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(9);
-
-        const { 8: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
-        cy.checkText(row.definition(), content.DEFINITION[0]);
+        cy.checkText(row.definition(), content.DEFINITION[0].TEXT);
       });
     });
 
     describe('body row 10', () => {
+      const { 9: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(10);
-
-        const { 9: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column list items', () => {
-        cy.checkText(row.definitionListItem(1), content.DEFINITION[0]);
-        cy.checkText(row.definitionListItem(2), content.DEFINITION[1]);
-        cy.checkText(row.definitionListItem(3), content.DEFINITION[2]);
+        cy.checkText(row.definitionListItem(1), content.DEFINITION[0].TEXT);
+        cy.checkText(row.definitionListItem(2), content.DEFINITION[1].TEXT);
+        cy.checkText(row.definitionListItem(3), content.DEFINITION[2].TEXT);
       });
     });
   });

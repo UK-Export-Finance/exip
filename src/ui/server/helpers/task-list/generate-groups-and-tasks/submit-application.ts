@@ -1,9 +1,9 @@
-import { TaskListDataTask, TaskListData } from '../../../../types';
 import { FIELD_IDS, GROUP_IDS, TASK_IDS } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 import declarationsRequiredFields from '../../required-fields/declarations';
+import { TaskListDataTask, TaskListData, ApplicationDeclaration } from '../../../../types';
 
 const { SUBMIT_APPLICATION } = TASKS.LIST;
 
@@ -21,14 +21,10 @@ const {
  * createSubmitApplicationTasks
  * @param {Number} referenceNumber: Application reference number
  * @param {TaskListData} otherGroups: Task list groups
- * @param {Boolean} hasAntiBriberyCodeOfConduct: "Has anti-bribery code of conduct" flag
+ * @param {ApplicationDeclaration} declaration: Application declaration answers
  * @returns {Array} Submit application tasks
  */
-const createSubmitApplicationTasks = (
-  referenceNumber: number,
-  otherGroups: TaskListData,
-  hasAntiBriberyCodeOfConduct?: boolean | null,
-): Array<TaskListDataTask> => {
+const createSubmitApplicationTasks = (referenceNumber: number, otherGroups: TaskListData, declaration: ApplicationDeclaration): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
   const prepareApplicationGroup = getGroupById(otherGroups, GROUP_IDS.PREPARE_APPLICATION);
 
@@ -49,7 +45,7 @@ const createSubmitApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
     title: SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT,
     id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS_AND_SUBMIT,
-    fields: declarationsRequiredFields(hasAntiBriberyCodeOfConduct),
+    fields: declarationsRequiredFields(declaration),
     dependencies: [...dependencies, ...CHECK_ANSWERS.fields],
   };
 

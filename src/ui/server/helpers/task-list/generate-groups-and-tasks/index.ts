@@ -1,15 +1,16 @@
-import { TaskListData } from '../../../../types';
 import initialChecksTasks from './initial-checks';
 import prepareApplicationTasks from './prepare-application';
 import submitApplicationTasks from './submit-application';
 import { TASKS } from '../../../content-strings';
 import { GROUP_IDS } from '../../../constants';
+import { TaskListData, ApplicationDeclaration } from '../../../../types';
 
 const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 /**
  * generateGroupsAndTasks
  * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} declaration: Application declaration answers
  * @param {String} policyType: "Policy type"
  * @param {Boolean} finalDestinationKnown: "Final destination known" flag
  * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
@@ -18,7 +19,6 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
  * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
  * @param {Boolean} hasDifferentTradingName "Has different trading name" flag
- * @param {Boolean} hasAntiBriberyCodeOfConduct: "Has anti-bribery code of conduct" flag
  * @param {Boolean} connectionWithBuyer: "Exporter has a connection with the buyer" flag
  * @param {Boolean} tradedWithBuyer: "Exporter has a traded with the buyer" flag
  * @param {Boolean} outstandingPayments: "Buyer has outstanding payments" flag
@@ -33,6 +33,7 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  */
 const generateGroupsAndTasks = (
   referenceNumber: number,
+  declaration: ApplicationDeclaration,
   policyType?: string,
   finalDestinationKnown?: boolean,
   jointlyInsuredParty?: boolean,
@@ -41,7 +42,6 @@ const generateGroupsAndTasks = (
   lossPayeeIsLocatedInUk?: boolean,
   lossPayeeIsLocatedInternationally?: boolean,
   hasDifferentTradingName?: boolean,
-  hasAntiBriberyCodeOfConduct?: boolean | null,
   connectionWithBuyer?: boolean,
   tradedWithBuyer?: boolean,
   outstandingPayments?: boolean,
@@ -97,7 +97,7 @@ const generateGroupsAndTasks = (
     {
       title: SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
-      tasks: submitApplicationTasks(referenceNumber, groups, hasAntiBriberyCodeOfConduct),
+      tasks: submitApplicationTasks(referenceNumber, groups, declaration),
     },
   ] as TaskListData;
 

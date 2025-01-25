@@ -1,11 +1,9 @@
 import applicationIsComplete from '.';
-import flattenApplicationData from '../flatten-application-data';
 import { mockApplication } from '../../test-mocks';
 
 describe('server/helpers/application-is-complete', () => {
   it('should return true', () => {
-    const flatApplicationData = flattenApplicationData(mockApplication);
-    const result = applicationIsComplete(flatApplicationData);
+    const result = applicationIsComplete(mockApplication);
 
     expect(result).toEqual(true);
   });
@@ -14,12 +12,13 @@ describe('server/helpers/application-is-complete', () => {
     it('should return false', () => {
       const mockApplicationIncomplete = {
         ...mockApplication,
-        declaration: { id: mockApplication.declaration.id },
+        declaration: {
+          ...mockApplication.declaration,
+          agreeToConfidentiality: undefined,
+        },
       };
 
-      const flatApplicationData = flattenApplicationData(mockApplicationIncomplete);
-
-      const result = applicationIsComplete(flatApplicationData);
+      const result = applicationIsComplete(mockApplicationIncomplete);
 
       expect(result).toEqual(false);
     });

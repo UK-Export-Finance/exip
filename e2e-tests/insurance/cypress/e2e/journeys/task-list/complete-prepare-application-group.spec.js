@@ -16,7 +16,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
 
       cy.assertUrl(url);
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
     });
   });
 

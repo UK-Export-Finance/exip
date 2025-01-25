@@ -2,10 +2,7 @@
 
 This directory contains source code for migrating version 1 of EXIP data into the version 2 data structure.
 
-- Version 1 is MVP. This is the first release with account and application functionalities.
-- Version 2 is "No PDF". This is a large iteration of MVP, where we allow more applications through and collect more information, depending on answers a user provides.
-
-## In version 2, the following data has changed
+## In version 2, the following has changed
 
 - `Account` table - 2x fields have been moved to a new `AccountStatus` table.
 - `Application` table - 1x new relationship - `nominatedLossPayee`.
@@ -51,20 +48,6 @@ Note - there are 2 new fields that are created with a default currency code (GBP
 
 1. BuyerTradingHistory table - `currencyCode` column.
 2. Business table - `turnoverCurrencyCode` column.
-
-## Prerequisites :gear:
-
-To set up and run the API locally to test this data migration, you'll need the following prerequisites:
-
-- Node.js version 16.17.0 or higher along with the corresponding `npm` package manager.
-- A MySQL database with the version 1 (MVP) data structure.
-- An operational API (parent directory - see the API's README).
-- The `DATABASE_URL` environment variable should be configured to point to your local MySQL database, for example: `mysql://root:@localhost:1234/db-name`.
-- The local `DATABASE_USER` environment variable
-- The local `DATABASE_PASSWORD` environment variable
-- The local `CUID_FINGERPRINT` environment variable
-- `mysql2` and `@paralleldrive/cuid2` installed as API NPM package dependencies.
-- `ts-node` NPM package installed locally.
 
 ## Running Locally :computer:
 

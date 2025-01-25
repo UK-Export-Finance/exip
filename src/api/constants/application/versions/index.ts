@@ -29,6 +29,12 @@ const VERSION_3: ApplicationVersion = {
   },
 };
 
+const VERSION_4: ApplicationVersion = {
+  ...VERSION_3,
+  VERSION_NUMBER: '4',
+  DECLARATIONS_MODERN_SLAVERY: true,
+};
+
 /**
  * VERSIONS
  * All possible application versions.
@@ -41,9 +47,10 @@ const VERSION_3: ApplicationVersion = {
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
  * - Version number 3: Design and content iterations. 1x new database field.
- * - Version number 4: Payments integration
+ * - Version number 4: New declaration - "Modern slavery".
+ * - Version number 5: Payments integration
  * @returns {Array<ApplicationVersion>} All application versions
  */
-const VERSIONS: Array<ApplicationVersion> = [VERSION_1, VERSION_2, VERSION_3];
+const VERSIONS: Array<ApplicationVersion> = [VERSION_1, VERSION_2, VERSION_3, VERSION_4];
 
 export default VERSIONS;

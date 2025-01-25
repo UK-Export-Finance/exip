@@ -67,7 +67,7 @@ export const lists = {
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
-      migratedV2toV3: nullableCheckbox(),
+      migratedTo: integer(),
     },
     access: allowAll,
   },
@@ -673,6 +673,7 @@ export const lists = {
       agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
       hasAntiBriberyCodeOfConduct: nullableCheckbox(),
       willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
+      modernSlavery: relationship({ ref: 'DeclarationModernSlavery.declaration' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -702,6 +703,47 @@ export const lists = {
         db: { nativeType: 'VarChar(3)' },
       }),
       agreeHowDataWillBeUsed: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+    },
+    access: allowAll,
+  }),
+  DeclarationModernSlavery: list({
+    fields: {
+      declaration: relationship({ ref: 'Declaration.modernSlavery' }),
+      version: relationship({ ref: 'DeclarationModernSlaveryVersion' }),
+      willAdhereToAllRequirements: nullableCheckbox(),
+      hasNoOffensesOrInvestigations: nullableCheckbox(),
+      isNotAwareOfExistingSlavery: nullableCheckbox(),
+      cannotAdhereToAllRequirements: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      offensesOrInvestigations: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      awareOfExistingSlavery: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
+  DeclarationModernSlaveryVersion: list({
+    fields: {
+      declarationModernSlavery: relationship({ ref: 'DeclarationModernSlavery' }),
+      willAdhereToAllRequirements: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      hasNoOffensesOrInvestigations: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      isNotAwareOfExistingSlavery: text({
         db: { nativeType: 'VarChar(3)' },
       }),
     },

@@ -33,6 +33,19 @@ describe('api/constants/application/versions', () => {
           MAXIMUM_BUYER_WILL_OWE: 25000,
         },
       },
+      {
+        VERSION_NUMBER: '4',
+        OVER_500K_SUPPORT: true,
+        DEFAULT_FINAL_DESTINATION_KNOWN: null,
+        DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+        DEFAULT_CURRENCY: GBP,
+        BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
+        REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+        SMALL_EXPORT_BUILDER: {
+          MAXIMUM_BUYER_WILL_OWE: 25000,
+        },
+        DECLARATIONS_MODERN_SLAVERY: true,
+      },
     ];
 
     expect(VERSIONS).toEqual(expected);

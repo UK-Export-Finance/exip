@@ -32,6 +32,7 @@ describe('controllers/insurance/check-your-answers/save-data', () => {
     expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
     const expectedSanitisedData = sanitiseData(mockFormBody);
+
     expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.sectionReview.id, expectedSanitisedData);
   });
 
@@ -44,7 +45,7 @@ describe('controllers/insurance/check-your-answers/save-data', () => {
   describe('when there is an error calling the API', () => {
     beforeAll(() => {
       updateApplicationSpy = mockSpyPromiseRejection;
-      api.keystone.application.update.declarations = updateApplicationSpy;
+      api.keystone.application.update.sectionReview = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
