@@ -22,7 +22,7 @@ run-name: 🚀 Deploying from ${{ github.ref_name }}
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 2 * * *'
 
   push:
     branches:
