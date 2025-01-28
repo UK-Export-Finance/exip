@@ -9,16 +9,26 @@ import { Application, Context } from '../types';
  * @returns {Array<Application>} Applications array
  */
 export const createMultipleFullApplications = async (context: Context): Promise<Array<Application>> => {
-  await applications.deleteAll(context);
+  try {
+    console.info('Creating multiple full applications (test helpers)');
 
-  const application1 = await createFullApplication(context);
-  const application2 = await createFullApplication(context);
-  const application3 = await createFullApplication(context);
-  const application4 = await createFullApplication(context);
-  const application5 = await createFullApplication(context);
-  const application6 = await createFullApplication(context);
+    await applications.deleteAll(context);
 
-  return [application1, application2, application3, application4, application5, application6];
+    const promises = (await Promise.all([
+      await createFullApplication(context),
+      await createFullApplication(context),
+      await createFullApplication(context),
+      await createFullApplication(context),
+      await createFullApplication(context),
+      await createFullApplication(context),
+    ])) as Array<Application>;
+
+    return promises;
+  } catch (error) {
+    console.error('Error creating multiple full applications (test helpers)');
+
+    throw new Error('Error creating multiple full applications (test helpers)');
+  }
 };
 
 export default createMultipleFullApplications;

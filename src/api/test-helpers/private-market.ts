@@ -9,13 +9,13 @@ import { ApplicationPrivateMarket } from '../types';
  */
 const create = async (context: Context) => {
   try {
-    console.info('Creating an privateMarket (test helpers)');
+    console.info('Creating a privateMarket (test helpers)');
 
     const agent = (await context.query.PrivateMarket.createOne({ data: {} })) as ApplicationPrivateMarket;
 
     return agent;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a privateMarket (test helpers)');
 
     return error;
   }
@@ -38,7 +38,7 @@ const get = async (context: Context, agentId: string) => {
 
     return agent;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting a privateMarket by ID (test helpers)');
 
     throw new Error(`Getting an privateMarket by ID (test helpers) ${error}`);
   }

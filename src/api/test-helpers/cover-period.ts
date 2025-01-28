@@ -23,7 +23,7 @@ const create = async (context: Context) => {
 
     return coverPeriod;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a coverPeriod (test helpers)');
 
     return error;
   }

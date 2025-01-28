@@ -16,7 +16,7 @@ const create = async (context: Context, data = {}) => {
 
     return agent;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating an exportContractAgent (test helpers)');
 
     return error;
   }
@@ -39,7 +39,7 @@ const get = async (context: Context, agentId: string) => {
 
     return agent;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting an exportContractAgent by ID (test helpers)');
 
     throw new Error(`Getting an exportContractAgent by ID (test helpers) ${error}`);
   }

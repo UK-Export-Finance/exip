@@ -16,7 +16,7 @@ const create = async (context: Context, data = {}) => {
 
     return exportContract;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating an exportContract (test helpers)');
 
     return error;
   }
@@ -39,7 +39,7 @@ const get = async (context: Context, exportContractId: string) => {
 
     return exportContract;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting an exportContract by ID (test helpers)');
 
     throw new Error(`Getting an exportContract by ID (test helpers) ${error}`);
   }

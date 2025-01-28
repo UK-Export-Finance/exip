@@ -17,7 +17,7 @@ const create = async (context: Context, data = {}) => {
 
     return buyerRelationship;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a buyer relationship (test helpers)');
 
     return error;
   }

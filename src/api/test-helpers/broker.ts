@@ -15,7 +15,7 @@ const create = async (context: Context) => {
 
     return broker;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a broker (test helpers)');
 
     return error;
   }
@@ -38,7 +38,7 @@ const get = async (context: Context, brokerId: string) => {
 
     return broker;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting a broker by ID (test helpers)');
 
     throw new Error(`Getting an broker by ID (test helpers) ${error}`);
   }

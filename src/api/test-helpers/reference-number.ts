@@ -14,7 +14,7 @@ const getAll = async (context: Context) => {
 
     return buyers;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting all reference numbers (test helpers)');
 
     throw new Error(`Getting all reference numbers (test helpers) ${error}`);
   }
@@ -42,7 +42,7 @@ const deleteAll = async (context: Context) => {
 
     return [];
   } catch (error) {
-    console.error(error);
+    console.error('Error getting and deleting all reference numbers (test helpers)');
 
     throw new Error(`Getting and deleting all reference numbers (test helpers) ${error}`);
   }

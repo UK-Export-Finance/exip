@@ -8,14 +8,24 @@ import { Account, Context } from '../types';
  * @returns {Promise<Array<Account>>} Accounts array
  */
 export const createMultipleAccounts = async (context: Context): Promise<Array<Account>> => {
-  const account0 = (await accounts.create({ context })) as Account;
-  const account1 = (await accounts.create({ context, deleteAccounts: false })) as Account;
-  const account2 = (await accounts.create({ context, deleteAccounts: false })) as Account;
-  const account3 = (await accounts.create({ context, deleteAccounts: false })) as Account;
-  const account4 = (await accounts.create({ context, deleteAccounts: false })) as Account;
-  const account5 = (await accounts.create({ context, deleteAccounts: false })) as Account;
+  try {
+    console.info('Creating multiple accounts (test helpers)');
 
-  return [account0, account1, account2, account3, account4, account5];
+    const promises = (await Promise.all([
+      await accounts.create({ context }),
+      await accounts.create({ context, deleteAccounts: false }),
+      await accounts.create({ context, deleteAccounts: false }),
+      await accounts.create({ context, deleteAccounts: false }),
+      await accounts.create({ context, deleteAccounts: false }),
+      await accounts.create({ context, deleteAccounts: false }),
+    ])) as Array<Account>;
+
+    return promises;
+  } catch (error) {
+    console.error('Error creating multiple accounts (test helpers)');
+
+    throw new Error('Error creating multiple accounts (test helpers)');
+  }
 };
 
 export default createMultipleAccounts;
