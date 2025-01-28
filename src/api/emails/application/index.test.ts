@@ -1,5 +1,5 @@
 import application from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import fileSystem from '../../file-system';
@@ -38,13 +38,13 @@ describe('emails/application', () => {
     beforeEach(() => {
       jest.clearAllMocks();
 
-      notify.sendEmail = sendEmailSpy;
+      APIM.sendEmail = sendEmailSpy;
       fileSystem.readFile = readFileSpy;
       fileSystem.unlink = unlinkSpy;
     });
 
-    it('should call notify.sendEmail and return the response', async () => {
-      notify.sendEmail = sendEmailSpy;
+    it('should call APIM.sendEmail and return the response', async () => {
+      APIM.sendEmail = sendEmailSpy;
 
       const result = await application.submittedEmail(variables);
 
@@ -58,7 +58,7 @@ describe('emails/application', () => {
 
     describe('error handling', () => {
       beforeAll(async () => {
-        notify.sendEmail = mockSpyPromiseRejection;
+        APIM.sendEmail = mockSpyPromiseRejection;
       });
 
       it('should throw an error', async () => {
@@ -81,13 +81,13 @@ describe('emails/application', () => {
     beforeEach(() => {
       jest.clearAllMocks();
 
-      notify.sendEmail = sendEmailSpy;
+      APIM.sendEmail = sendEmailSpy;
       fileSystem.readFile = readFileSpy;
       fileSystem.unlink = unlinkSpy;
     });
 
-    it('should call notify.sendEmail and return the response', async () => {
-      notify.sendEmail = sendEmailSpy;
+    it('should call APIM.sendEmail and return the response', async () => {
+      APIM.sendEmail = sendEmailSpy;
 
       const result = await application.underwritingTeam(variables, mockFilePath, templateId);
 
@@ -95,9 +95,12 @@ describe('emails/application', () => {
 
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
 
-      const expectedFileBuffer = Buffer.from(mockFileSystemResponse);
+      const expectedVariables = {
+        ...variables,
+        file: Buffer.from(mockFileSystemResponse),
+      };
 
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, variables, expectedFileBuffer);
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, expectedVariables);
 
       const expected = mockSendEmailResponse;
 
@@ -106,7 +109,7 @@ describe('emails/application', () => {
 
     describe('error handling', () => {
       beforeAll(async () => {
-        notify.sendEmail = mockSpyPromiseRejection;
+        APIM.sendEmail = mockSpyPromiseRejection;
       });
 
       it('should throw an error', async () => {

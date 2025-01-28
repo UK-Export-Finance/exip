@@ -1,5 +1,5 @@
 import { reactivateAccountLink } from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
@@ -22,11 +22,11 @@ describe('emails/reactivate-account-link', () => {
   };
 
   beforeAll(async () => {
-    notify.sendEmail = sendEmailSpy;
+    APIM.sendEmail = sendEmailSpy;
   });
 
-  it('should call notify.sendEmail and return the response', async () => {
-    notify.sendEmail = sendEmailSpy;
+  it('should call APIM.sendEmail and return the response', async () => {
+    APIM.sendEmail = sendEmailSpy;
 
     const result = await reactivateAccountLink(mockUrlOrigin, email, fullName, mockReactivationHash);
 
@@ -40,14 +40,14 @@ describe('emails/reactivate-account-link', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = mockSpyPromiseRejection;
+      APIM.sendEmail = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {
       try {
         await reactivateAccountLink(mockUrlOrigin, email, fullName, mockReactivationHash);
       } catch (error) {
-        const expected = new Error(`Sending email for account reactivation Error: Sending email ${new Error(mockErrorMessage)}`);
+        const expected = new Error(`Sending email for account reactivation ${new Error(mockErrorMessage)}`);
 
         expect(error).toEqual(expected);
       }

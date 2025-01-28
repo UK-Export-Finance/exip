@@ -899,6 +899,7 @@ var EXTERNAL_API_MAPPINGS = {
 var EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
     CURRENCY: '/currencies',
+    EMAIL: '/emails',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
   },
@@ -1343,63 +1344,117 @@ var map_application_submission_deadline_variables_default = mapApplicationSubmis
 // emails/index.ts
 var import_dotenv7 = __toESM(require('dotenv'));
 
-// integrations/notify/index.ts
+// integrations/APIM/index.ts
+var import_axios = __toESM(require('axios'));
 var import_dotenv5 = __toESM(require('dotenv'));
-var import_notifications_node_client = require('notifications-node-client');
 import_dotenv5.default.config();
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
-var notify = {
+var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE, GOV_NOTIFY_API_KEY } = process.env;
+var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
+var APIM = {
+  getCisCountries: async () => {
+    try {
+      console.info('Calling APIM - CIS countries');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - CIS countries %o', error);
+      throw new Error(`Calling APIM - CIS countries ${error}`);
+    }
+  },
+  getCurrencies: async () => {
+    try {
+      console.info('Calling APIM - currencies');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies %o', error);
+      throw new Error(`Calling APIM - currencies ${error}`);
+    }
+  },
   /**
    * sendEmail
-   * Send an email via Notify API
-   * @param {String} Template ID
-   * @param {String} Email address
-   * @param {Object} Custom variables for the email template
-   * @param {Buffer} File buffer
-   * @returns {Object} Success flag and email recipient
+   * Send an email via APIM
+   * @param {String} templateId: Template ID
+   * @param {String} sendToEmailAddress: Email recipient
+   * @param {Object} personalisation: Custom variables for the email template
+   * @returns {ApimSendEmailHelperResponse}
    */
-  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
+  sendEmail: async (templateId, sendToEmailAddress, personalisation) => {
     try {
-      console.info('Calling Notify API. templateId: %s', templateId);
-      const personalisation = variables;
-      if (file) {
-        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
-      }
-      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-        personalisation,
-        reference: null,
+      console.info('Calling APIM - send email - templateId %s', templateId);
+      const response = await (0, import_axios.default)({
+        method: 'post',
+        url: `${APIM_MDM_URL}${APIM_MDM.EMAIL}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+          govUkNotifyKey: GOV_NOTIFY_API_KEY,
+        },
+        data: {
+          templateId,
+          sendToEmailAddress,
+          personalisation,
+        },
+        validateStatus(status) {
+          const acceptableStatus = [201];
+          return acceptableStatus.includes(status);
+        },
       });
+      if (response.data && response.status === 201) {
+        return {
+          success: true,
+          emailRecipient: sendToEmailAddress,
+        };
+      }
       return {
-        success: true,
+        success: false,
         emailRecipient: sendToEmailAddress,
       };
     } catch (error) {
-      console.error('Error calling Notify API. Unable to send email %o', error);
-      throw new Error(`Calling Notify API. Unable to send email ${error}`);
+      console.error('Error calling APIM - send email %o', error);
+      throw new Error(`Calling APIM - send email ${error}`);
     }
   },
 };
-var notify_default = notify;
-
-// emails/call-notify/index.ts
-var callNotify = async (templateId, emailAddress, variables, file) => {
-  try {
-    let emailResponse;
-    if (file) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
-    } else {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
-    }
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-    throw new Error(`Sending email ${emailResponse}`);
-  } catch (error) {
-    console.error('Error sending email %o', error);
-    throw new Error(`Sending email ${error}`);
-  }
-};
+var APIM_default = APIM;
 
 // emails/confirm-email-address/index.ts
 var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
@@ -1407,7 +1462,7 @@ var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash
     console.info('Sending confirm email address email');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
     const variables = { urlOrigin, name, confirmToken: verificationHash, id };
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM_default.sendEmail(templateId, emailAddress, variables);
     return response;
   } catch (error) {
     console.error('Error sending confirm email address email %o', error);
@@ -1421,7 +1476,7 @@ var accessCodeEmail = async (emailAddress, name, securityCode) => {
     console.info('Sending access code email for account sign in');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.ACCESS_CODE;
     const variables = { name, securityCode };
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM_default.sendEmail(templateId, emailAddress, variables);
     return response;
   } catch (error) {
     console.error('Error sending access code email for account sign in %o', error);
@@ -1435,7 +1490,7 @@ var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash)
     console.info('Sending email for account password reset');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
     const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM_default.sendEmail(templateId, emailAddress, variables);
     return response;
   } catch (error) {
     console.error('Error sending email for account password reset %o', error);
@@ -1449,7 +1504,7 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
     console.info('Sending email for account reactivation');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.REACTIVATE_ACCOUNT_CONFIRM_EMAIL;
     const variables = { urlOrigin, name, reactivationToken: reactivationHash };
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM_default.sendEmail(templateId, emailAddress, variables);
     return response;
   } catch (error) {
     console.error('Error sending email for account reactivation %o', error);
@@ -1514,14 +1569,14 @@ var application = {
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
-   * @returns {Promise<Object>} callNotify response
+   * @returns {Promise<ApimSendEmailHelperResponse>}
    */
   submittedEmail: async (variables) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
       const { emailAddress } = variables;
-      const response = await callNotify(templateId, emailAddress, variables);
+      const response = await APIM_default.sendEmail(templateId, emailAddress, variables);
       return response;
     } catch (error) {
       console.error('Error sending application submitted email to to application owner or provided business contact %o', error);
@@ -1530,11 +1585,11 @@ var application = {
   },
   /**
    * application.underwritingTeam
-   * Read CSV file, generate a file buffer
-   * Send "application submitted" email to the underwriting team with a link to CSV
-   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
+   * Read XLSX file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to XLSX
+   * We send a file buffer to APIM - in turn, Notify generates a unique URL that is then rendered in the email.
    * @param {ApplicationSubmissionEmailVariables}
-   * @returns {Promise<Object>} callNotify response
+   * @returns {Promise<ApimSendEmailHelperResponse>}
    */
   underwritingTeam: async (variables, filePath, templateId) => {
     try {
@@ -1543,7 +1598,11 @@ var application = {
       const file = await file_system_default.readFile(filePath);
       if (file) {
         const fileBuffer = Buffer.from(file);
-        const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        const variablesWithFileBuffer = {
+          ...variables,
+          file: fileBuffer,
+        };
+        const response = await APIM_default.sendEmail(templateId, emailAddress, variablesWithFileBuffer);
         await file_system_default.unlink(filePath);
         return response;
       }
@@ -1561,7 +1620,7 @@ var documentsEmail = async (variables, templateId) => {
   try {
     console.info('Sending documents email');
     const { emailAddress } = variables;
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM_default.sendEmail(templateId, emailAddress, variables);
     return response;
   } catch (error) {
     console.error('Error sending documents email %o', error);
@@ -1593,7 +1652,7 @@ var insuranceFeedbackEmail = async (variables) => {
     if (variables.satisfaction) {
       emailVariables.satisfaction = map_feedback_satisfaction_default(variables.satisfaction);
     }
-    const response = await callNotify(templateId, emailAddress, emailVariables);
+    const response = await APIM_default.sendEmail(templateId, emailAddress, emailVariables);
     return response;
   } catch (error) {
     console.error('Error sending insurance feedback email %o', error);
@@ -1606,7 +1665,7 @@ var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariab
   try {
     console.info('Sending submission deadline reminder email for %s', submissionDeadlineEmailVariables.referenceNumber);
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
-    const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
+    const response = await APIM_default.sendEmail(templateId, emailAddress, submissionDeadlineEmailVariables);
     return response;
   } catch (error) {
     console.error('Error sending submission deadline email for applicationId %s - %o', submissionDeadlineEmailVariables.referenceNumber, error);
@@ -8984,74 +9043,6 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 };
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
-// integrations/APIM/index.ts
-var import_axios = __toESM(require('axios'));
-var import_dotenv10 = __toESM(require('dotenv'));
-import_dotenv10.default.config();
-var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
-var APIM = {
-  getCisCountries: async () => {
-    try {
-      console.info('Calling APIM - CIS countries');
-      const response = await (0, import_axios.default)({
-        method: 'get',
-        url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
-        headers: {
-          'Content-Type': 'application/json',
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
-        },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
-      });
-      if (response.data && response.status === 200) {
-        return {
-          success: true,
-          data: response.data,
-        };
-      }
-      return {
-        success: false,
-      };
-    } catch (error) {
-      console.error('Error calling APIM - CIS countries %o', error);
-      throw new Error(`Calling APIM - CIS countries ${error}`);
-    }
-  },
-  getCurrencies: async () => {
-    try {
-      console.info('Calling APIM - currencies');
-      const response = await (0, import_axios.default)({
-        method: 'get',
-        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
-        headers: {
-          'Content-Type': 'application/json',
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
-        },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
-      });
-      if (response.data && response.status === 200) {
-        return {
-          success: true,
-          data: response.data,
-        };
-      }
-      return {
-        success: false,
-      };
-    } catch (error) {
-      console.error('Error calling APIM - currencies %o', error);
-      throw new Error(`Calling APIM - currencies ${error}`);
-    }
-  },
-};
-var APIM_default = APIM;
-
 // helpers/filter-cis-entries/index.ts
 var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
   const filtered = arr.filter((obj) => !invalidEntries.includes(obj[entityPropertyName]));
@@ -9334,8 +9325,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require('axios'));
-var import_dotenv11 = __toESM(require('dotenv'));
-import_dotenv11.default.config();
+var import_dotenv10 = __toESM(require('dotenv'));
+import_dotenv10.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -9375,8 +9366,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require('axios'));
-var import_dotenv12 = __toESM(require('dotenv'));
-import_dotenv12.default.config();
+var import_dotenv11 = __toESM(require('dotenv'));
+import_dotenv11.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -9535,8 +9526,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require('axios'));
-var import_dotenv13 = __toESM(require('dotenv'));
-import_dotenv13.default.config();
+var import_dotenv12 = __toESM(require('dotenv'));
+import_dotenv12.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
