@@ -48,13 +48,9 @@ describe('emails/documents', () => {
     });
 
     it('should throw an error', async () => {
-      try {
-        await documentsEmail(variables, templateId);
-      } catch (error) {
-        const expected = new Error(`Sending documents email ${new Error(mockErrorMessage)}`);
+      const response = documentsEmail(variables, templateId);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending documents email ${new Error(mockErrorMessage)}`);
     });
   });
 });

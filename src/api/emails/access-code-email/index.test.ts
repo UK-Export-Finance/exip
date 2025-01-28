@@ -42,13 +42,9 @@ describe('emails/access-code-email', () => {
     });
 
     it('should throw an error', async () => {
-      try {
-        await accessCodeEmail(email, fullName, mockSecurityCode);
-      } catch (error) {
-        const expected = new Error(`Sending access code email for account sign in ${new Error(mockErrorMessage)}`);
+      const response = accessCodeEmail(email, fullName, mockSecurityCode);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending access code email for account sign in ${new Error(mockErrorMessage)}`);
     });
   });
 });

@@ -44,13 +44,9 @@ describe('emails/reactivate-account-link', () => {
     });
 
     it('should throw an error', async () => {
-      try {
-        await reactivateAccountLink(mockUrlOrigin, email, fullName, mockReactivationHash);
-      } catch (error) {
-        const expected = new Error(`Sending email for account reactivation ${new Error(mockErrorMessage)}`);
+      const response = reactivateAccountLink(mockUrlOrigin, email, fullName, mockReactivationHash);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending email for account reactivation ${new Error(mockErrorMessage)}`);
     });
   });
 });

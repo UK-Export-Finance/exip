@@ -77,13 +77,9 @@ describe('emails/insurance-feedback-email', () => {
     });
 
     it('should throw an error', async () => {
-      try {
-        await insuranceFeedbackEmail(mockInsuranceFeedback);
-      } catch (error) {
-        const expected = new Error(`Sending insurance feedback email ${new Error(mockErrorMessage)}`);
+      const response = insuranceFeedbackEmail(mockInsuranceFeedback);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending insurance feedback email ${new Error(mockErrorMessage)}`);
     });
   });
 });

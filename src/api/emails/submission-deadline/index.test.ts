@@ -40,7 +40,9 @@ describe('emails/submission-deadline', () => {
     });
 
     it('should throw an error', async () => {
-      await expect(submissionDeadlineEmail(variables.email, variables)).rejects.toThrow(`Sending submission deadline email for ${variables.referenceNumber}`);
+      const response = submissionDeadlineEmail(variables.email, variables);
+
+      await expect(response).rejects.toThrow(`Sending submission deadline email for ${variables.referenceNumber}`);
     });
   });
 });

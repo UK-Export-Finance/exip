@@ -277,13 +277,9 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       it('should throw an error', async () => {
-        try {
-          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (error) {
-          const expected = new Error(`Sending application submitted emails Error: Sending application documents emails ${mockSendEmailResponse}`);
+        const response = sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
-          expect(error).toEqual(expected);
-        }
+        await expect(response).rejects.toThrow(`Sending application submitted emails Error: Sending application documents emails ${mockSendEmailResponse}`);
       });
     });
 
@@ -293,13 +289,9 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       it('should throw an error', async () => {
-        try {
-          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (error) {
-          const expected = new Error(`Sending application submitted emails ${new Error('Sending application submitted email to owner/account')}`);
+        const response = sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
-          expect(error).toEqual(expected);
-        }
+        await expect(response).rejects.toThrow(`Sending application submitted emails ${new Error('Sending application submitted email to owner/account')}`);
       });
     });
   });
