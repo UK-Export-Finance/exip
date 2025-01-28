@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import { ENVIRONMENTS } from '../../constants';
 
 dotenv.config();
+
 const { NODE_ENV } = process.env;
 
 /**
