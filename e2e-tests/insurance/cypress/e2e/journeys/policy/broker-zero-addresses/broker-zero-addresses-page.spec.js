@@ -1,6 +1,5 @@
-import { headingCaption } from '../../../../../../partials';
+import { headingCaption, body } from '../../../../../../pages/shared';
 import { brokerZeroAddressesPage } from '../../../../../../pages/insurance/policy';
-import { body } from '../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';

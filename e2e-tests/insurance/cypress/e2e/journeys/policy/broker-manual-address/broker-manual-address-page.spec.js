@@ -1,4 +1,4 @@
-import { headingCaption } from '../../../../../../partials';
+import { headingCaption } from '../../../../../../pages/shared';
 import { brokerManualAddressPage } from '../../../../../../pages/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
