@@ -3,17 +3,10 @@ import DECLARATIONS from '../../constants/declarations';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import declarations from '../../test-helpers/declarations';
 import { ApplicationDeclaration, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 
 const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
   DECLARATIONS.LATEST_DECLARATIONS;
-
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
-
-  expect(errorString.includes('Creating an application declaration version')).toEqual(true);
-};
 
 describe('helpers/create-a-declaration-version', () => {
   let context: Context;
@@ -52,11 +45,13 @@ describe('helpers/create-a-declaration-version', () => {
 
   describe('when an invalid declaration ID is passed', () => {
     it('should throw an error', async () => {
-      try {
-        await createADeclarationVersion(context, invalidId);
-      } catch (error) {
-        assertError(error);
-      }
+      await expect(createADeclarationVersion(context, mockInvalidId)).rejects.toThrow('Creating an application declaration version');
+    });
+  });
+
+  describe('when creation is not successful', () => {
+    it('should throw an error', async () => {
+      await expect(createADeclarationVersion({}, declaration.id)).rejects.toThrow('Creating an application declaration version');
     });
   });
 });

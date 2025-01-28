@@ -55,8 +55,8 @@ export const PARTIALS = {
     },
   },
   QUOTE: {
-    BUYER_BODY: {
-      CUSTOM_CONTENT_HTML: 'partials/quote/buyer-body-details.njk',
+    TYPE_OF_BUYER: {
+      CUSTOM_CONTENT_HTML: 'partials/quote/type-of-buyer-details.njk',
     },
   },
 };

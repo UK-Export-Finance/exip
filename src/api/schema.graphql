@@ -2679,6 +2679,7 @@ type Declaration {
   agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
+  modernSlavery: DeclarationModernSlavery
 }
 
 input DeclarationWhereUniqueInput {
@@ -2692,6 +2693,7 @@ input DeclarationWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   version: DeclarationVersionWhereInput
+  modernSlavery: DeclarationModernSlaveryWhereInput
 }
 
 input DeclarationOrderByInput {
@@ -2707,11 +2709,18 @@ input DeclarationUpdateInput {
   agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
+  modernSlavery: DeclarationModernSlaveryRelateToOneForUpdateInput
 }
 
 input DeclarationVersionRelateToOneForUpdateInput {
   create: DeclarationVersionCreateInput
   connect: DeclarationVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input DeclarationModernSlaveryRelateToOneForUpdateInput {
+  create: DeclarationModernSlaveryCreateInput
+  connect: DeclarationModernSlaveryWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -2729,11 +2738,17 @@ input DeclarationCreateInput {
   agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
+  modernSlavery: DeclarationModernSlaveryRelateToOneForCreateInput
 }
 
 input DeclarationVersionRelateToOneForCreateInput {
   create: DeclarationVersionCreateInput
   connect: DeclarationVersionWhereUniqueInput
+}
+
+input DeclarationModernSlaveryRelateToOneForCreateInput {
+  create: DeclarationModernSlaveryCreateInput
+  connect: DeclarationModernSlaveryWhereUniqueInput
 }
 
 type DeclarationVersion {
@@ -2798,6 +2813,128 @@ input DeclarationVersionCreateInput {
   willExportWithAntiBriberyCodeOfConduct: String
   agreeToConfirmationAndAcknowledgements: String
   agreeHowDataWillBeUsed: String
+}
+
+type DeclarationModernSlavery {
+  id: ID!
+  declaration: Declaration
+  version: DeclarationModernSlaveryVersion
+  willAdhereToAllRequirements: Boolean
+  hasNoOffensesOrInvestigations: Boolean
+  isNotAwareOfExistingSlavery: Boolean
+  cannotAdhereToAllRequirements: String
+  offensesOrInvestigations: String
+  awareOfExistingSlavery: String
+}
+
+input DeclarationModernSlaveryWhereUniqueInput {
+  id: ID
+}
+
+input DeclarationModernSlaveryWhereInput {
+  AND: [DeclarationModernSlaveryWhereInput!]
+  OR: [DeclarationModernSlaveryWhereInput!]
+  NOT: [DeclarationModernSlaveryWhereInput!]
+  id: IDFilter
+  declaration: DeclarationWhereInput
+  version: DeclarationModernSlaveryVersionWhereInput
+  cannotAdhereToAllRequirements: StringFilter
+  offensesOrInvestigations: StringFilter
+  awareOfExistingSlavery: StringFilter
+}
+
+input DeclarationModernSlaveryOrderByInput {
+  id: OrderDirection
+  cannotAdhereToAllRequirements: OrderDirection
+  offensesOrInvestigations: OrderDirection
+  awareOfExistingSlavery: OrderDirection
+}
+
+input DeclarationModernSlaveryUpdateInput {
+  declaration: DeclarationRelateToOneForUpdateInput
+  version: DeclarationModernSlaveryVersionRelateToOneForUpdateInput
+  willAdhereToAllRequirements: Boolean
+  hasNoOffensesOrInvestigations: Boolean
+  isNotAwareOfExistingSlavery: Boolean
+  cannotAdhereToAllRequirements: String
+  offensesOrInvestigations: String
+  awareOfExistingSlavery: String
+}
+
+input DeclarationModernSlaveryVersionRelateToOneForUpdateInput {
+  create: DeclarationModernSlaveryVersionCreateInput
+  connect: DeclarationModernSlaveryVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input DeclarationModernSlaveryUpdateArgs {
+  where: DeclarationModernSlaveryWhereUniqueInput!
+  data: DeclarationModernSlaveryUpdateInput!
+}
+
+input DeclarationModernSlaveryCreateInput {
+  declaration: DeclarationRelateToOneForCreateInput
+  version: DeclarationModernSlaveryVersionRelateToOneForCreateInput
+  willAdhereToAllRequirements: Boolean
+  hasNoOffensesOrInvestigations: Boolean
+  isNotAwareOfExistingSlavery: Boolean
+  cannotAdhereToAllRequirements: String
+  offensesOrInvestigations: String
+  awareOfExistingSlavery: String
+}
+
+input DeclarationModernSlaveryVersionRelateToOneForCreateInput {
+  create: DeclarationModernSlaveryVersionCreateInput
+  connect: DeclarationModernSlaveryVersionWhereUniqueInput
+}
+
+type DeclarationModernSlaveryVersion {
+  id: ID!
+  declarationModernSlavery: DeclarationModernSlavery
+  willAdhereToAllRequirements: String
+  hasNoOffensesOrInvestigations: String
+  isNotAwareOfExistingSlavery: String
+}
+
+input DeclarationModernSlaveryVersionWhereUniqueInput {
+  id: ID
+}
+
+input DeclarationModernSlaveryVersionWhereInput {
+  AND: [DeclarationModernSlaveryVersionWhereInput!]
+  OR: [DeclarationModernSlaveryVersionWhereInput!]
+  NOT: [DeclarationModernSlaveryVersionWhereInput!]
+  id: IDFilter
+  declarationModernSlavery: DeclarationModernSlaveryWhereInput
+  willAdhereToAllRequirements: StringFilter
+  hasNoOffensesOrInvestigations: StringFilter
+  isNotAwareOfExistingSlavery: StringFilter
+}
+
+input DeclarationModernSlaveryVersionOrderByInput {
+  id: OrderDirection
+  willAdhereToAllRequirements: OrderDirection
+  hasNoOffensesOrInvestigations: OrderDirection
+  isNotAwareOfExistingSlavery: OrderDirection
+}
+
+input DeclarationModernSlaveryVersionUpdateInput {
+  declarationModernSlavery: DeclarationModernSlaveryRelateToOneForUpdateInput
+  willAdhereToAllRequirements: String
+  hasNoOffensesOrInvestigations: String
+  isNotAwareOfExistingSlavery: String
+}
+
+input DeclarationModernSlaveryVersionUpdateArgs {
+  where: DeclarationModernSlaveryVersionWhereUniqueInput!
+  data: DeclarationModernSlaveryVersionUpdateInput!
+}
+
+input DeclarationModernSlaveryVersionCreateInput {
+  declarationModernSlavery: DeclarationModernSlaveryRelateToOneForCreateInput
+  willAdhereToAllRequirements: String
+  hasNoOffensesOrInvestigations: String
+  isNotAwareOfExistingSlavery: String
 }
 
 type Page {
@@ -3188,6 +3325,18 @@ type Mutation {
   updateDeclarationVersions(data: [DeclarationVersionUpdateArgs!]!): [DeclarationVersion]
   deleteDeclarationVersion(where: DeclarationVersionWhereUniqueInput!): DeclarationVersion
   deleteDeclarationVersions(where: [DeclarationVersionWhereUniqueInput!]!): [DeclarationVersion]
+  createDeclarationModernSlavery(data: DeclarationModernSlaveryCreateInput!): DeclarationModernSlavery
+  createDeclarationModernSlaveries(data: [DeclarationModernSlaveryCreateInput!]!): [DeclarationModernSlavery]
+  updateDeclarationModernSlavery(where: DeclarationModernSlaveryWhereUniqueInput!, data: DeclarationModernSlaveryUpdateInput!): DeclarationModernSlavery
+  updateDeclarationModernSlaveries(data: [DeclarationModernSlaveryUpdateArgs!]!): [DeclarationModernSlavery]
+  deleteDeclarationModernSlavery(where: DeclarationModernSlaveryWhereUniqueInput!): DeclarationModernSlavery
+  deleteDeclarationModernSlaveries(where: [DeclarationModernSlaveryWhereUniqueInput!]!): [DeclarationModernSlavery]
+  createDeclarationModernSlaveryVersion(data: DeclarationModernSlaveryVersionCreateInput!): DeclarationModernSlaveryVersion
+  createDeclarationModernSlaveryVersions(data: [DeclarationModernSlaveryVersionCreateInput!]!): [DeclarationModernSlaveryVersion]
+  updateDeclarationModernSlaveryVersion(where: DeclarationModernSlaveryVersionWhereUniqueInput!, data: DeclarationModernSlaveryVersionUpdateInput!): DeclarationModernSlaveryVersion
+  updateDeclarationModernSlaveryVersions(data: [DeclarationModernSlaveryVersionUpdateArgs!]!): [DeclarationModernSlaveryVersion]
+  deleteDeclarationModernSlaveryVersion(where: DeclarationModernSlaveryVersionWhereUniqueInput!): DeclarationModernSlaveryVersion
+  deleteDeclarationModernSlaveryVersions(where: [DeclarationModernSlaveryVersionWhereUniqueInput!]!): [DeclarationModernSlaveryVersion]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
@@ -3400,6 +3549,12 @@ type Query {
   declarationVersions(where: DeclarationVersionWhereInput! = {}, orderBy: [DeclarationVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationVersionWhereUniqueInput): [DeclarationVersion!]
   declarationVersion(where: DeclarationVersionWhereUniqueInput!): DeclarationVersion
   declarationVersionsCount(where: DeclarationVersionWhereInput! = {}): Int
+  declarationModernSlaveries(where: DeclarationModernSlaveryWhereInput! = {}, orderBy: [DeclarationModernSlaveryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationModernSlaveryWhereUniqueInput): [DeclarationModernSlavery!]
+  declarationModernSlavery(where: DeclarationModernSlaveryWhereUniqueInput!): DeclarationModernSlavery
+  declarationModernSlaveriesCount(where: DeclarationModernSlaveryWhereInput! = {}): Int
+  declarationModernSlaveryVersions(where: DeclarationModernSlaveryVersionWhereInput! = {}, orderBy: [DeclarationModernSlaveryVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationModernSlaveryVersionWhereUniqueInput): [DeclarationModernSlaveryVersion!]
+  declarationModernSlaveryVersion(where: DeclarationModernSlaveryVersionWhereUniqueInput!): DeclarationModernSlaveryVersion
+  declarationModernSlaveryVersionsCount(where: DeclarationModernSlaveryVersionWhereInput! = {}): Int
   pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   page(where: PageWhereUniqueInput!): Page
   pagesCount(where: PageWhereInput! = {}): Int
@@ -3746,14 +3901,11 @@ type MappedCisCountry {
   isoCode: String!
   name: String
   shortTermCover: Boolean
-  riskCategory: String
-  nbiIssueAvailable: Boolean
+  esraClassification: String
   canGetAQuoteOnline: Boolean
-  canGetAQuoteOffline: Boolean
-  canGetAQuoteByEmail: Boolean
   cannotGetAQuote: Boolean
-  cannotApply: Boolean
   canApplyForInsuranceOnline: Boolean
+  noOnlineSupport: Boolean
   noInsuranceSupport: Boolean
 }
 

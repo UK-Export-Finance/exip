@@ -14,7 +14,7 @@ const {
   INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT, CODE_OF_CONDUCT_SAVE_AND_BACK },
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
   },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
@@ -147,14 +147,14 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
       });
 
       describe('when the answer is false', () => {
-        it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
+        it(`should redirect to ${MODERN_SLAVERY}`, async () => {
           req.body = {
             [FIELD_ID]: 'false',
           };
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -192,7 +192,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
     describe('api error handling', () => {
       describe('save data call', () => {
-        describe('when the save data API call does not return anything', () => {
+        describe('when the save data API call returns false', () => {
           beforeEach(() => {
             mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
             save.declaration = mockSaveDeclaration;

@@ -511,6 +511,16 @@ var DECLARATIONS = {
   HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: 'hasAntiBriberyCodeOfConduct',
   WILL_EXPORT_WITH_CODE_OF_CONDUCT: 'willExportWithAntiBriberyCodeOfConduct',
   AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: 'agreeToConfirmationAndAcknowledgements',
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: 'willAdhereToAllRequirements',
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: 'hasNoOffensesOrInvestigations',
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: 'isNotAwareOfExistingSlavery',
+    CONDITIONAL_REASONS: {
+      CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 'cannotAdhereToAllRequirements',
+      OFFENSES_OR_INVESTIGATIONS: 'offensesOrInvestigations',
+      AWARE_OF_EXISTING_SLAVERY: 'awareOfExistingSlavery',
+    },
+  },
 };
 var declarations_default = DECLARATIONS;
 
@@ -578,6 +588,7 @@ var DEFAULT_RESOLVERS = [
   'updateBuyerTradingHistory',
   'updateCompany',
   'updateDeclaration',
+  'updateDeclarationModernSlavery',
   'updateNominatedLossPayee',
   'updateJointlyInsuredParty',
   'updatePolicy',
@@ -673,6 +684,9 @@ var VERSION_3 = {
   ...VERSION_2,
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+  SMALL_EXPORT_BUILDER: {
+    MAXIMUM_BUYER_WILL_OWE: 25e3,
+  },
 };
 var VERSION_4 = {
   ...VERSION_3,
@@ -793,30 +807,44 @@ var DATE_FORMAT = {
 };
 
 // constants/declarations/versions/index.ts
-var DECLARATION_VERSIONS = [
-  {
-    ANTI_BRIBERY: '1',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-    HOW_YOUR_DATA_WILL_BE_USED: '1',
-  },
-  {
-    ANTI_BRIBERY: '2',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-  },
-];
+var VERSION_12 = {
+  ANTI_BRIBERY: '1',
+  ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+  CONFIDENTIALITY: '1',
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+  HOW_YOUR_DATA_WILL_BE_USED: '1',
+};
+var VERSION_22 = {
+  ANTI_BRIBERY: '2',
+  ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+  CONFIDENTIALITY: '1',
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+};
+var VERSION_32 = {
+  ...VERSION_22,
+  MODERN_SLAVERY: '1',
+};
+var DECLARATION_VERSIONS = [VERSION_12, VERSION_22, VERSION_32];
 var versions_default2 = DECLARATION_VERSIONS;
+
+// constants/declarations/modern-slavery-versions/index.ts
+var VERSION_13 = {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: '1',
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: '1',
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: '1',
+};
+var DECLARATION_MODERN_SLAVERY_VERSIONS = [VERSION_13];
+var modern_slavery_versions_default = DECLARATION_MODERN_SLAVERY_VERSIONS;
 
 // constants/declarations/index.ts
 var DECLARATIONS2 = {
   VERSIONS: versions_default2,
   V1_DECLARATIONS: versions_default2[0],
   LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1],
+  MODREN_SLAVERY_VERSIONS: modern_slavery_versions_default,
+  LATEST_MODERN_SLAVERY_DECLARATIONS: modern_slavery_versions_default[modern_slavery_versions_default.length - 1],
 };
 var declarations_default2 = DECLARATIONS2;
 
@@ -854,12 +882,13 @@ var EXPORT_CONTRACT_AWARD_METHOD = {
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard Risk',
+      NONE: 'None',
     },
-    SHORT_TERM_COVER_AVAILABLE: {
+    SHORT_TERM_COVER: {
       YES: 'Yes',
       NO: 'No',
       ILC: 'ILC Only',
@@ -882,6 +911,13 @@ var EXTERNAL_API_DEFINITIONS = {
       'Third Country',
     ],
     INVALID_CURRENCIES: ['Gold'],
+    COUNTRY_RATINGS: {
+      A: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-'],
+      B: ['BBB+', 'BBB', 'BBB-', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-'],
+      C: ['CCC+', 'CCC', 'CCC-', 'CC', 'C'],
+      D: ['D'],
+      NOT_APPLICABLE: 'N/A',
+    },
   },
   COMPANIES_HOUSE: {
     COMPANY_STATUS: {
@@ -891,7 +927,7 @@ var EXTERNAL_API_DEFINITIONS = {
 };
 var EXTERNAL_API_MAPPINGS = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard',
@@ -901,6 +937,7 @@ var EXTERNAL_API_MAPPINGS = {
 var EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
     CURRENCY: '/currencies',
+    CURRENCY_EXCHANGE: '/currencies/exchange',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
   },
@@ -984,6 +1021,11 @@ var MAXIMUM_CHARACTERS = {
   COMPANY_DIFFERENT_TRADING_NAME: 200,
   CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
   CREDIT_PERIOD_WITH_BUYER: 1e3,
+  DECLARATIONS: {
+    MODERN_SLAVERY: {
+      CONDITIONAL_REASON: 1e3,
+    },
+  },
   DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
   DIFFERENT_NAME_ON_POLICY_POSITION: 50,
   DIFFERENT_NAME_ON_POLICY: 50,
@@ -1126,7 +1168,12 @@ var EMAIL_TEMPLATE_IDS = {
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+        CONFIRMATION: {
+          SINGLE_OR_MULTIPLE_CONTRACT_POLICY: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+          MULTIPLE_CONTRACT_POLICY: {
+            ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+          },
+        },
         SEND_DOCUMENTS: {
           TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
           ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
@@ -1145,6 +1192,7 @@ var EMAIL_TEMPLATE_IDS = {
   FEEDBACK: {
     INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: 'UNABLE_TO_DETERMINE_TEMPLATE_ID',
 };
 var FEEDBACK = {
   VERY_SATISFIED: 'verySatisfied',
@@ -1459,6 +1507,63 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
   }
 };
 
+// helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// emails/application/get-submitted-confirmation-template-id/multiple-policy-type/index.ts
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION },
+    },
+  },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID,
+} = EMAIL_TEMPLATE_IDS;
+var get = (policyType) => {
+  try {
+    console.info('Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper)');
+    if (isMultiplePolicyType(policyType)) {
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) ${error}`);
+  }
+};
+var multiplePolicyTypeTemplateId = {
+  get,
+};
+var multiple_policy_type_default = multiplePolicyTypeTemplateId;
+
+// emails/application/get-submitted-confirmation-template-id/index.ts
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION: CONFIRMATION2 },
+    },
+  },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: UNABLE_TO_DETERMINE_TEMPLATE_ID2,
+} = EMAIL_TEMPLATE_IDS;
+var getSubmittedConfirmationTemplateId = (policy) => {
+  try {
+    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
+    const { maximumBuyerWillOwe, policyType } = policy;
+    if (isSinglePolicyType(policyType)) {
+      return CONFIRMATION2.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+      return multiple_policy_type_default.get(policyType);
+    }
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID2;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${error}`);
+  }
+};
+var get_submitted_confirmation_template_id_default = getSubmittedConfirmationTemplateId;
+
 // file-system/index.ts
 var import_fs = require('fs');
 var import_path = __toESM(require('path'));
@@ -1516,12 +1621,13 @@ var application = {
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @param {ApplicationPolicy} policy: Application policy
    * @returns {Promise<Object>} callNotify response
    */
-  submittedEmail: async (variables) => {
+  submittedEmail: async (variables, policy) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const templateId = get_submitted_confirmation_template_id_default(policy);
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
@@ -2454,6 +2560,7 @@ var lists = {
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
       hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
       willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      modernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery.declaration' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2483,6 +2590,47 @@ var lists = {
         db: { nativeType: 'VarChar(3)' },
       }),
       agreeHowDataWillBeUsed: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+    },
+    access: import_access.allowAll,
+  }),
+  DeclarationModernSlavery: (0, import_core2.list)({
+    fields: {
+      declaration: (0, import_fields.relationship)({ ref: 'Declaration.modernSlavery' }),
+      version: (0, import_fields.relationship)({ ref: 'DeclarationModernSlaveryVersion' }),
+      willAdhereToAllRequirements: nullable_checkbox_default(),
+      hasNoOffensesOrInvestigations: nullable_checkbox_default(),
+      isNotAwareOfExistingSlavery: nullable_checkbox_default(),
+      cannotAdhereToAllRequirements: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      offensesOrInvestigations: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      awareOfExistingSlavery: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: import_access.allowAll,
+  }),
+  DeclarationModernSlaveryVersion: (0, import_core2.list)({
+    fields: {
+      declarationModernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery' }),
+      willAdhereToAllRequirements: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      hasNoOffensesOrInvestigations: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      isNotAwareOfExistingSlavery: (0, import_fields.text)({
         db: { nativeType: 'VarChar(3)' },
       }),
     },
@@ -2846,14 +2994,11 @@ var typeDefs = `
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    riskCategory: String
-    nbiIssueAvailable: Boolean
+    esraClassification: String
     canGetAQuoteOnline: Boolean
-    canGetAQuoteOffline: Boolean
-    canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
+    noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
   }
 
@@ -4104,7 +4249,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
           };
         }
       } catch (error) {
-        console.error('Error blocking account $O', error);
+        console.error('Error blocking account %o', error);
         return { success: false };
       }
     }
@@ -4124,7 +4269,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     }
     return { success: false };
   } catch (error) {
-    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', error);
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) %o', error);
     throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${error}`);
   }
 };
@@ -4574,6 +4719,53 @@ var createADeclarationVersion = async (context, declarationId) => {
 };
 var create_a_declaration_version_default = createADeclarationVersion;
 
+// helpers/create-a-declaration-modern-slavery-version/index.ts
+var { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY } =
+  declarations_default2.LATEST_MODERN_SLAVERY_DECLARATIONS;
+var createADeclarationModernSlaveryVersion = async (context, declarationModernSlaveryId) => {
+  console.info('Creating an application declaration modern slavery version for %s', declarationModernSlaveryId);
+  try {
+    const version = await context.db.DeclarationModernSlaveryVersion.createOne({
+      data: {
+        declarationModernSlavery: {
+          connect: { id: declarationModernSlaveryId },
+        },
+        willAdhereToAllRequirements: WILL_ADHERE_TO_ALL_REQUIREMENTS,
+        hasNoOffensesOrInvestigations: HAS_NO_OFFENSES_OR_INVESTIGATIONS,
+        isNotAwareOfExistingSlavery: IS_NOT_AWARE_OF_EXISTING_SLAVERY,
+      },
+    });
+    return version;
+  } catch (error) {
+    console.error('Error creating an application declaration modern slavery version %o', error);
+    throw new Error(`Creating an application declaration modern slavery version ${error}`);
+  }
+};
+var create_a_declaration_modern_slavery_version_default = createADeclarationModernSlaveryVersion;
+
+// helpers/create-a-declaration-modern-slavery/index.ts
+var createADeclarationModernSlavery = async (context, declarationId) => {
+  console.info('Creating an application declaration modern slavery for %s', declarationId);
+  try {
+    const declarationModernSlavery = await context.db.DeclarationModernSlavery.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId },
+        },
+      },
+    });
+    const declarationModernSlaveryVersion = await create_a_declaration_modern_slavery_version_default(context, declarationModernSlavery.id);
+    return {
+      ...declarationModernSlavery,
+      declarationModernSlaveryVersion,
+    };
+  } catch (error) {
+    console.error('Error creating an application declaration modern slavery %o', error);
+    throw new Error(`Creating an application declaration modern slavery ${error}`);
+  }
+};
+var create_a_declaration_modern_slavery_default = createADeclarationModernSlavery;
+
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
   console.info('Creating an application declaration for %s', applicationId);
@@ -4586,9 +4778,11 @@ var createADeclaration = async (context, applicationId) => {
       },
     });
     const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    const declarationModernSlavery = await create_a_declaration_modern_slavery_default(context, declaration.id);
     return {
       ...declaration,
       declarationVersion,
+      declarationModernSlavery,
     };
   } catch (error) {
     console.error('Error creating an application declaration %o', error);
@@ -5481,7 +5675,7 @@ var getPopulatedEligibility = async (context, id, buyerCountry) => {
     return populatedEligibility;
   } catch (error) {
     console.error('Getting populated eligibility %s %o', id, error);
-    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
+    throw new Error(`Error getting populated eligibility ${id} ${error}`);
   }
 };
 var get_populated_eligibility_default = getPopulatedEligibility;
@@ -5790,7 +5984,7 @@ var getPopulatedExportContract = async (context, id) => {
     return populatedExportContract;
   } catch (error) {
     console.error('Getting populated exportContract %s %o', id, error);
-    throw new Error(`Error Getting populated exportContract ${id} ${error}`);
+    throw new Error(`Error getting populated exportContract ${id} ${error}`);
   }
 };
 var get_populated_export_contract_default = getPopulatedExportContract;
@@ -5876,7 +6070,7 @@ var getPopulatedCompany = async (context, id) => {
     return populatedCompany;
   } catch (error) {
     console.error('Getting populated company %s %o', id, error);
-    throw new Error(`Error Getting populated company ${id} ${error}`);
+    throw new Error(`Error getting populated company ${id} ${error}`);
   }
 };
 var get_populated_company_default = getPopulatedCompany;
@@ -5988,7 +6182,7 @@ var getPopulatedBuyer = async (context, id) => {
     return populatedBuyer;
   } catch (error) {
     console.error('Getting populated buyer %s %o', id, error);
-    throw new Error(`Error Getting populated buyer ${id} ${error}`);
+    throw new Error(`Error getting populated buyer ${id} ${error}`);
   }
 };
 var get_populated_buyer_default = getPopulatedBuyer;
@@ -6007,6 +6201,39 @@ var getDeclarationById = async (context, id) => {
   }
 };
 var get_declaration_by_id_default = getDeclarationById;
+
+// helpers/get-declaration-modern-slavery-by-id/index.ts
+var getDeclarationModernSlaveryById = async (context, id) => {
+  try {
+    console.info('Getting declaration modern slavery by ID %s', id);
+    const declarationModernSlavery = await context.db.DeclarationModernSlavery.findOne({
+      where: { id },
+    });
+    return declarationModernSlavery;
+  } catch (error) {
+    console.error('Getting declaration modern slavery by ID %s %o', id, error);
+    throw new Error(`Error Getting declaration modern slavery by ID ${id} ${error}`);
+  }
+};
+var get_declaration_modern_slavery_by_id_default = getDeclarationModernSlaveryById;
+
+// helpers/get-populated-declaration/index.ts
+var getPopulatedDeclaration = async (context, id) => {
+  try {
+    console.info('Getting populated declaration %s', id);
+    const declaration = await get_declaration_by_id_default(context, id);
+    const modernSlavery = await get_declaration_modern_slavery_by_id_default(context, declaration.modernSlaveryId);
+    const populatedDeclaration = {
+      ...declaration,
+      modernSlavery,
+    };
+    return populatedDeclaration;
+  } catch (error) {
+    console.error('Getting populated declaration %s %o', id, error);
+    throw new Error(`Error getting populated declaration ${id} ${error}`);
+  }
+};
+var get_populated_declaration_default = getPopulatedDeclaration;
 
 // helpers/get-section-review-by-id/index.ts
 var getSectionReviewById = async (context, id) => {
@@ -6029,17 +6256,54 @@ var map_total_contract_value_over_threshold_default = mapTotalContractValueOverT
 
 // helpers/get-populated-application/map-policy/index.ts
 var mapPolicy = (policy) => {
-  const { requestedStartDate, contractCompletionDate } = policy;
   const mappedPolicy = {
     ...policy,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
   };
+  if (policy?.requestedStartDate) {
+    const { requestedStartDate } = policy;
+    mappedPolicy.requestedStartDate = new Date(requestedStartDate);
+  }
+  if (policy?.contractCompletionDate) {
+    const { contractCompletionDate } = policy;
+    mappedPolicy.contractCompletionDate = new Date(contractCompletionDate);
+  }
   return mappedPolicy;
 };
 var map_policy_default = mapPolicy;
 
+// helpers/object/index.ts
+var objectHasKeysAndValues = (obj) => {
+  if (!obj) {
+    return false;
+  }
+  const keys = Object.keys(obj);
+  if (!keys.length) {
+    return false;
+  }
+  let hasValues = false;
+  keys.forEach((key2) => {
+    if (obj[key2]) {
+      hasValues = true;
+    }
+  });
+  return hasValues;
+};
+
 // helpers/get-populated-application/index.ts
+var EXPECTED_RELATIONSHIPS = [
+  'eligibility',
+  'broker',
+  'business',
+  'buyer',
+  'company',
+  'declaration',
+  'exportContract',
+  'owner',
+  'policy',
+  'policyContact',
+  'nominatedLossPayee',
+  'sectionReview',
+];
 var getPopulatedApplication = async ({
   context,
   application: application2,
@@ -6072,7 +6336,7 @@ var getPopulatedApplication = async ({
     const { companySicCodes, ...populatedCompany } = await get_populated_company_default(context, companyId);
     const business = await get_business_by_id_default(context, businessId);
     const broker = await get_broker_by_id_default(context, brokerId);
-    const declaration = await get_declaration_by_id_default(context, declarationId);
+    const declaration = await get_populated_declaration_default(context, declarationId);
     const sectionReview = await get_section_review_by_id_default(context, sectionReviewId);
     const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
     const populatedApplication2 = {
@@ -6092,10 +6356,18 @@ var getPopulatedApplication = async ({
       sectionReview,
       totalContractValueOverThreshold,
     };
+    Object.keys(populatedApplication2).forEach((relationshipKey) => {
+      if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
+        const populatedRelationship = populatedApplication2[relationshipKey];
+        if (!objectHasKeysAndValues(populatedRelationship)) {
+          throw new Error(`Error getting '${relationshipKey}' relationship`);
+        }
+      }
+    });
     return populatedApplication2;
   } catch (error) {
     console.error('Getting populated application (helper) %s %o', application2.id, error);
-    throw new Error(`Error Getting populated application (helper) ${application2.id} ${error}`);
+    throw new Error(`Error getting populated application (helper) ${application2.id} ${error}`);
   }
 };
 var populatedApplication = {
@@ -6155,34 +6427,33 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 var send4 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
+    const { requestedStartDate } = policy;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replace_character_codes_with_characters_default(company.companyName),
-      requestedStartDate: format_date_default(policy.requestedStartDate),
+      requestedStartDate: format_date_default(requestedStartDate),
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(owner)),
       emailAddress: email,
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(policyContact)),
       emailAddress: policyContact.email,
     };
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars, policy);
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars, policy);
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
@@ -6242,6 +6513,11 @@ var {
     AGREE_ANTI_BRIBERY,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY: {
+      WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS2,
+      HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS2,
+      IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY2,
+    },
     WILL_EXPORT_WITH_CODE_OF_CONDUCT,
   },
 } = insurance_default;
@@ -6264,6 +6540,52 @@ var DECLARATIONS_FIELDS = {
   [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
     SUMMARY: {
       TITLE: 'Will you export using your code of conduct?',
+    },
+  },
+  MODERN_SLAVERY: {
+    [WILL_ADHERE_TO_ALL_REQUIREMENTS2]: {
+      LABEL:
+        'Do you adhere to, and intend to continue to adhere to, all requirements that apply to you as set out in the Modern Slavery Act 2015, including reporting obligations, and all applicable legislation relating to the prevention of modern slavery in every country that you operate in?',
+      SUMMARY: {
+        TITLE: 'Adhere to the Modern Slavery Act',
+      },
+      CONDITIONAL_REASON: {
+        LABEL: 'Provide full details.',
+        MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        SUMMARY: {
+          TITLE: 'Why can the exporter not adhere?',
+        },
+      },
+    },
+    [HAS_NO_OFFENSES_OR_INVESTIGATIONS2]: {
+      LABEL:
+        'Do you confirm you are not currently under investigation and have not been fined, convicted or found guilty of any offences under the Modern Slavery Act 2015, or under any applicable similar laws or regulations relating to the prevention of modern slavery or any similar infringement of human rights in any jurisdiction?',
+      SUMMARY: {
+        TITLE: 'Does the user confirm they are not under investigation or has been convicted of any human right violations',
+      },
+      CONDITIONAL_REASON: {
+        LABEL:
+          'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+        MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        SUMMARY: {
+          TITLE: 'Details of investigation for violating the Modern Slavery Act',
+        },
+      },
+    },
+    [IS_NOT_AWARE_OF_EXISTING_SLAVERY2]: {
+      LABEL:
+        'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery in respect of yourself, the export contract(s), your immediate holding company or your supply chain, in each case, at present or in the past 2 years.',
+      SUMMARY: {
+        TITLE: 'Confirm Modern Slavery is not involved in the export',
+      },
+      CONDITIONAL_REASON: {
+        LABEL:
+          'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+        MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        SUMMARY: {
+          TITLE: 'Details of how modern slavery is involved in the export',
+        },
+      },
     },
   },
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
@@ -6294,6 +6616,9 @@ var LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS:
+      'https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-human-rights',
+    SMALL_EXPORT_BUILDER: 'Small Export Builder',
   },
 };
 
@@ -6319,7 +6644,7 @@ var {
   HAS_COMPANIES_HOUSE_NUMBER,
 } = insurance_default.ELIGIBILITY;
 var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
-var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 var ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -6547,9 +6872,12 @@ var {
 } = insurance_default;
 var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
+var maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+var SMALL_EXPORT_BUILDER_THRESHOLD = format_currency_default(maxBuyerWillOweThreshold, GBP_CURRENCY_CODE);
 var POLICY_FIELDS = {
   [POLICY_TYPE3]: {
     ID: POLICY_TYPE3,
@@ -6657,6 +6985,13 @@ var POLICY_FIELDS = {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.',
+          INITIAL_CREDIT_LIMIT: {
+            INTRO: `If your initial credit limit request is ${SMALL_EXPORT_BUILDER_THRESHOLD} or less you could be eligible for the`,
+            LINK: {
+              TEXT: 'Small Export Builder.',
+              HREF: LINKS.EXTERNAL.SMALL_EXPORT_BUILDER,
+            },
+          },
           NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
         },
         SUMMARY: {
@@ -7489,10 +7824,6 @@ var mapKeyInformation = (application2) => {
 };
 var map_key_information_default = mapKeyInformation;
 
-// helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
 var {
   POLICY_TYPE: { ABBREVIATED },
@@ -8295,6 +8626,85 @@ var mapAgreedField = (answer) => {
 };
 var map_agreed_field_default = mapAgreedField;
 
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-cannot-adhere-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS3,
+    CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS: FIELD_ID },
+  },
+} = declarations_default;
+var CONTENT_STRINGS10 = DECLARATIONS_FIELDS.MODERN_SLAVERY[WILL_ADHERE_TO_ALL_REQUIREMENTS3];
+var mapCannotAdhereConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID]) {
+    return xlsx_row_default(CONTENT_STRINGS10.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID]);
+  }
+};
+var map_cannot_adhere_conditional_reason_default = mapCannotAdhereConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-offenses-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS3,
+    CONDITIONAL_REASONS: { OFFENSES_OR_INVESTIGATIONS: FIELD_ID2 },
+  },
+} = declarations_default;
+var CONTENT_STRINGS11 = DECLARATIONS_FIELDS.MODERN_SLAVERY[HAS_NO_OFFENSES_OR_INVESTIGATIONS3];
+var mapOffensesConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID2]) {
+    return xlsx_row_default(CONTENT_STRINGS11.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID2]);
+  }
+};
+var map_offenses_conditional_reason_default = mapOffensesConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-aware-of-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY3,
+    CONDITIONAL_REASONS: { AWARE_OF_EXISTING_SLAVERY: FIELD_ID3 },
+  },
+} = declarations_default;
+var CONTENT_STRINGS12 = DECLARATIONS_FIELDS.MODERN_SLAVERY[IS_NOT_AWARE_OF_EXISTING_SLAVERY3];
+var mapAwareOfConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID3]) {
+    return xlsx_row_default(CONTENT_STRINGS12.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID3]);
+  }
+};
+var map_aware_of_conditional_reason_default = mapAwareOfConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/index.ts
+var {
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS4,
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS4,
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY4,
+  },
+} = declarations_default;
+var CONTENT_STRINGS13 = DECLARATIONS_FIELDS.MODERN_SLAVERY;
+var WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS = CONTENT_STRINGS13[WILL_ADHERE_TO_ALL_REQUIREMENTS4];
+var HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS = CONTENT_STRINGS13[HAS_NO_OFFENSES_OR_INVESTIGATIONS4];
+var IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS = CONTENT_STRINGS13[IS_NOT_AWARE_OF_EXISTING_SLAVERY4];
+var mapModernSlaveryFields = (modernSlavery) => {
+  const mapped = [
+    xlsx_row_default(
+      WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS.SUMMARY.TITLE,
+      map_yes_no_field_default({ answer: modernSlavery[WILL_ADHERE_TO_ALL_REQUIREMENTS4] }),
+    ),
+    map_cannot_adhere_conditional_reason_default(modernSlavery),
+    xlsx_row_default(
+      HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS.SUMMARY.TITLE,
+      map_yes_no_field_default({ answer: modernSlavery[HAS_NO_OFFENSES_OR_INVESTIGATIONS4] }),
+    ),
+    map_offenses_conditional_reason_default(modernSlavery),
+    xlsx_row_default(
+      IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS.SUMMARY.TITLE,
+      map_yes_no_field_default({ answer: modernSlavery[IS_NOT_AWARE_OF_EXISTING_SLAVERY4] }),
+    ),
+    map_aware_of_conditional_reason_default(modernSlavery),
+  ];
+  return mapped;
+};
+var map_modern_slavery_fields_default = mapModernSlaveryFields;
+
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
 var { FIELDS: FIELDS31 } = XLSX;
 var {
@@ -8313,6 +8723,7 @@ var mapDeclarations = (application2) => {
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
     xlsx_row_default(String(FIELDS31[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
     xlsx_row_default(String(FIELDS31[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
+    ...map_modern_slavery_fields_default(declaration.modernSlavery),
     xlsx_row_default(
       DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE,
       map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]),
@@ -8516,59 +8927,135 @@ var EXPORT_CONTRACT_INDEXES = (application2) => {
 };
 var EXPORT_CONTRACT_default = EXPORT_CONTRACT_INDEXES;
 
+// constants/XLSX-CONFIG/INDEXES/DECLARATIONS/index.ts
+var {
+  MODERN_SLAVERY: {
+    CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+  },
+} = declarations_default;
+var DEFAULT_INDEXES4 = () => ({
+  CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 0,
+  OFFENSES_OR_INVESTIGATIONS: 0,
+  AWARE_OF_EXISTING_SLAVERY: 0,
+});
+var DECLARATIONS_INDEXES = (modernSlavery) => {
+  const INDEXES = DEFAULT_INDEXES4();
+  const cannotAdhereAnswer = modernSlavery[CANNOT_ADHERE_TO_ALL_REQUIREMENTS];
+  const offensesInvestigationsAnswer = modernSlavery[OFFENSES_OR_INVESTIGATIONS];
+  const awareOfAnswer = modernSlavery[AWARE_OF_EXISTING_SLAVERY];
+  if (cannotAdhereAnswer) {
+    INDEXES.CANNOT_ADHERE_TO_ALL_REQUIREMENTS = 7;
+  }
+  if (offensesInvestigationsAnswer) {
+    INDEXES.OFFENSES_OR_INVESTIGATIONS = 8;
+    if (cannotAdhereAnswer) {
+      INDEXES.OFFENSES_OR_INVESTIGATIONS += 1;
+    }
+    if (awareOfAnswer) {
+      INDEXES.OFFENSES_OR_INVESTIGATIONS += 1;
+    }
+  }
+  if (awareOfAnswer) {
+    INDEXES.AWARE_OF_EXISTING_SLAVERY = 9;
+    if (cannotAdhereAnswer) {
+      INDEXES.AWARE_OF_EXISTING_SLAVERY += 1;
+    }
+    if (offensesInvestigationsAnswer) {
+      INDEXES.AWARE_OF_EXISTING_SLAVERY += 1;
+    }
+  }
+  return INDEXES;
+};
+var DECLARATIONS_default = DECLARATIONS_INDEXES;
+
 // constants/XLSX-CONFIG/INDEXES/index.ts
-var { EXPORTER_BUSINESS: EXPORTER_BUSINESS4, POLICY: POLICY5, BUYER: BUYER2, EXPORT_CONTRACT: EXPORT_CONTRACT3 } = SECTION_NAMES_default;
+var {
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS4,
+  POLICY: POLICY5,
+  BUYER: BUYER2,
+  EXPORT_CONTRACT: EXPORT_CONTRACT3,
+  DECLARATIONS: DECLARATIONS4,
+} = SECTION_NAMES_default;
 var XLSX_ROW_INDEXES = {
   [EXPORTER_BUSINESS4]: (application2) => EXPORTER_BUSINESS_default(application2),
   [POLICY5]: (application2) => POLICY_default(application2),
   [BUYER2]: () => BUYER_default(),
   [EXPORT_CONTRACT3]: (application2) => EXPORT_CONTRACT_default(application2),
+  [DECLARATIONS4]: (application2) => DECLARATIONS_default(application2.declaration.modernSlavery),
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 
-// generate-xlsx/styled-columns/index.ts
-var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
-var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
-var worksheetRowHeights = (rowIndexes, worksheet, sheetName) => {
-  const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-  if (isInformationSheet) {
-    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  }
-  rowIndexes.forEach((rowIndex) => {
-    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  });
-  return modifiedWorksheet;
+// constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION/index.ts
+var APPLICATION_INFORMATION_INDEXES = {
+  EXPORTER_CONTACT_DETAILS: 8,
+  KEY_INFORMATION: 13,
 };
-var styledColumns = (application2, worksheet, sheetName) => {
-  let modifiedWorksheet = worksheet;
-  modifiedWorksheet.eachRow((row, rowNumber) => {
+var APPLICATION_INFORMATION_default = APPLICATION_INFORMATION_INDEXES;
+
+// generate-xlsx/styled-columns/is-title-row/index.ts
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_default;
+var isTitleRow = (sheetName, rowNumber) => {
+  const isInfoSheet = sheetName === APPLICATION_INFORMATION2;
+  const isInfoTitle = isInfoSheet && (rowNumber === EXPORTER_CONTACT_DETAILS || rowNumber === KEY_INFORMATION);
+  const result = rowNumber === 1 || isInfoTitle;
+  return result;
+};
+var is_title_row_default = isTitleRow;
+
+// generate-xlsx/styled-columns/modify-row-styles/index.ts
+var { FONT_SIZE } = XLSX_CONFIG;
+var modifyRowStyles = (worksheet, sheetName) => {
+  worksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
       modifiedRow.getCell(colNumber).alignment = {
         vertical: 'top',
         wrapText: true,
       };
-      const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
-      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
-      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
-      const isTitleRow = rowNumber === 1 || isInformationTitle;
+      const isATitleRow = is_title_row_default(sheetName, rowNumber);
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isTitleRow),
-        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
+        bold: isATitleRow,
+        size: isATitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });
   });
+  return worksheet;
+};
+var modify_row_styles_default = modifyRowStyles;
+
+// generate-xlsx/styled-columns/modify-row-heights/index.ts
+var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT } = XLSX_CONFIG;
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION3 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS: EXPORTER_CONTACT_DETAILS2, KEY_INFORMATION: KEY_INFORMATION2 } = APPLICATION_INFORMATION_default;
+var modifyRowHeights = (rowIndexes, worksheet, sheetName) => {
+  const modifiedWorksheet = worksheet;
+  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  if (sheetName === APPLICATION_INFORMATION3) {
+    modifiedWorksheet.getRow(EXPORTER_CONTACT_DETAILS2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    modifiedWorksheet.getRow(KEY_INFORMATION2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  }
+  rowIndexes.forEach((rowIndex) => {
+    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  });
+  return modifiedWorksheet;
+};
+var modify_row_heights_default = modifyRowHeights;
+
+// generate-xlsx/styled-columns/index.ts
+var getAdditionalRowHeightIndexes = (application2, sheetName) => {
   let INDEXES = [];
   if (INDEXES_default[sheetName]) {
     const sheetIndexes = INDEXES_default[sheetName](application2);
     INDEXES = Object.values(sheetIndexes);
   }
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
-  return modifiedWorksheet;
+  return INDEXES;
+};
+var styledColumns = (application2, worksheet, sheetName) => {
+  const withRowStyles = modify_row_styles_default(worksheet, sheetName);
+  const indexes = getAdditionalRowHeightIndexes(application2, sheetName);
+  const withRowHeights = modify_row_heights_default(indexes, withRowStyles, sheetName);
+  return withRowHeights;
 };
 var styled_columns_default = styledColumns;
 
@@ -9051,6 +9538,36 @@ var APIM = {
       throw new Error(`Calling APIM - currencies ${error}`);
     }
   },
+  getCurrenciesExchange: async (source, target) => {
+    try {
+      console.info('Calling APIM - currencies exchange');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY_EXCHANGE}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        params: { source, target },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies exchange %o', error);
+      throw new Error(`Calling APIM - currencies exchange ${error}`);
+    }
+  },
 };
 var APIM_default = APIM;
 
@@ -9061,124 +9578,249 @@ var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
 };
 var filter_cis_entries_default = filterCisEntries;
 
-// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
-var { CIS } = EXTERNAL_API_DEFINITIONS;
-var mapRiskCategory = (str) => {
-  if (str === CIS.RISK.STANDARD) {
-    return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
+// helpers/map-CIS-countries/map-CIS-country/map-esra-classification/index.ts
+var {
+  CIS: { ESRA_CLASSIFICATION },
+} = EXTERNAL_API_DEFINITIONS;
+var mapEsraClassification = (str) => {
+  if (str === ESRA_CLASSIFICATION.STANDARD) {
+    return EXTERNAL_API_MAPPINGS.CIS.ESRA_CLASSIFICATION.STANDARD;
   }
-  if (str === CIS.RISK.HIGH) {
+  if (str === ESRA_CLASSIFICATION.HIGH) {
     return str;
   }
-  if (str === CIS.RISK.VERY_HIGH) {
+  if (str === ESRA_CLASSIFICATION.VERY_HIGH) {
     return str;
   }
   return null;
 };
-var map_risk_category_default = mapRiskCategory;
+var map_esra_classification_default = mapEsraClassification;
 
-// helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
+// helpers/map-CIS-countries/map-CIS-country/country-rating-is-a-or-b/index.ts
 var {
-  CIS: { SHORT_TERM_COVER_AVAILABLE },
+  CIS: { COUNTRY_RATINGS },
 } = EXTERNAL_API_DEFINITIONS;
-var mapShortTermCoverAvailable = (str) => {
-  switch (str) {
-    case SHORT_TERM_COVER_AVAILABLE.YES:
+var countryRatingIsAorB = (rating) => {
+  if (COUNTRY_RATINGS.A.includes(rating)) {
+    return true;
+  }
+  if (COUNTRY_RATINGS.B.includes(rating)) {
+    return true;
+  }
+  return false;
+};
+var country_rating_is_a_or_b_default = countryRatingIsAorB;
+
+// helpers/map-CIS-countries/map-CIS-country/country-rating-is-c-or-d/index.ts
+var {
+  CIS: { COUNTRY_RATINGS: COUNTRY_RATINGS2 },
+} = EXTERNAL_API_DEFINITIONS;
+var countryRatingIsCorD = (rating) => {
+  if (COUNTRY_RATINGS2.C.includes(rating)) {
+    return true;
+  }
+  if (COUNTRY_RATINGS2.D.includes(rating)) {
+    return true;
+  }
+  return false;
+};
+var country_rating_is_c_or_d_default = countryRatingIsCorD;
+
+// helpers/map-CIS-countries/map-CIS-country/esra-classification-is-standard-high-or-very-high/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var esraClassificationIsStandardHighOrVeryHigh = (esraClassification) => {
+  switch (esraClassification) {
+    case STANDARD:
       return true;
-    case SHORT_TERM_COVER_AVAILABLE.ILC:
+    case HIGH:
       return true;
-    case SHORT_TERM_COVER_AVAILABLE.CILC:
-      return true;
-    case SHORT_TERM_COVER_AVAILABLE.REFER:
+    case VERY_HIGH:
       return true;
     default:
       return false;
   }
 };
-var map_short_term_cover_available_default = mapShortTermCoverAvailable;
+var esra_classification_is_standard_high_or_very_high_default = esraClassificationIsStandardHighOrVeryHigh;
 
-// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
-var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
-var mapNbiIssueAvailable = (str) => {
-  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
+// helpers/map-CIS-countries/map-CIS-country/has-no-support/index.ts
+var {
+  CIS: {
+    COUNTRY_RATINGS: { NOT_APPLICABLE },
+    ESRA_CLASSIFICATION: { NONE },
+    SHORT_TERM_COVER: { UNLISTED, CILC },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var hasNoSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+  const shortTermCoverIsUnlisted = shortTermCover === UNLISTED;
+  const esraClassificationIsNone = esraClassification === NONE;
+  const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
+  const countryRatingConditions =
+    country_rating_is_a_or_b_default(countryRating) || country_rating_is_c_or_d_default(countryRating) || countryRatingIsNotApplicable;
+  if (shortTermCoverIsUnlisted && esraClassificationIsNone && countryRatingConditions) {
+    return true;
+  }
+  const esraClassificationConditions = esra_classification_is_standard_high_or_very_high_default(esraClassification) || esraClassificationIsNone;
+  if (shortTermCover === CILC && countryRatingIsNotApplicable && esraClassificationConditions) {
     return true;
   }
   return false;
 };
-var map_NBI_issue_available_default = mapNbiIssueAvailable;
+var has_no_support_default = hasNoSupport;
 
-// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = (country) => {
-  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/a-and-b-rating-conditions/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD: STANDARD2, HIGH: HIGH2, VERY_HIGH: VERY_HIGH2, NONE: NONE2 },
+    SHORT_TERM_COVER: { NO: NO2, ILC, CILC: CILC2 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
+  if (!country_rating_is_a_or_b_default(countryRating)) {
+    return false;
+  }
+  if (esraClassification === STANDARD2 || esraClassification === HIGH2 || esraClassification === VERY_HIGH2) {
+    if (shortTermCover === ILC) {
+      return true;
+    }
+    if (shortTermCover === CILC2) {
+      return true;
+    }
+    if (shortTermCover === NO2) {
+      return true;
+    }
+  }
+  if (esraClassification === NONE2 && shortTermCover === NO2) {
     return true;
   }
   return false;
+};
+var a_and_b_rating_conditions_default = aAndBRatingConditions;
+
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/c-and-d-rating-conditions/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD: STANDARD3, HIGH: HIGH3, VERY_HIGH: VERY_HIGH3, NONE: NONE3 },
+    SHORT_TERM_COVER: { YES: YES2, NO: NO3, ILC: ILC2, CILC: CILC3, REFER, UNLISTED: UNLISTED2 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
+  if (!country_rating_is_c_or_d_default(countryRating)) {
+    return false;
+  }
+  if (esraClassification === STANDARD3 || esraClassification === HIGH3 || esraClassification === VERY_HIGH3) {
+    if (shortTermCover === YES2) {
+      return true;
+    }
+    if (shortTermCover === ILC2) {
+      return true;
+    }
+    if (shortTermCover === CILC3) {
+      return true;
+    }
+    if (shortTermCover === REFER) {
+      return true;
+    }
+    if (shortTermCover === UNLISTED2) {
+      return true;
+    }
+    if (shortTermCover === NO3) {
+      return true;
+    }
+  }
+  if (esraClassification === NONE3 && shortTermCover === NO3) {
+    return true;
+  }
+  return false;
+};
+var c_and_d_rating_conditions_default = cAndDRatingConditions;
+
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/index.ts
+var hasNoOnlineSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+  const aAndBConditions = a_and_b_rating_conditions_default({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+  const cAndDConditions = c_and_d_rating_conditions_default({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+  const conditions = aAndBConditions || cAndDConditions;
+  return conditions;
+};
+var has_no_online_support_default = hasNoOnlineSupport;
+
+// helpers/map-CIS-countries/map-CIS-country/short-term-cover-is-yes-refer-or-unlisted/index.ts
+var {
+  CIS: {
+    SHORT_TERM_COVER: { YES: YES3, REFER: REFER2, UNLISTED: UNLISTED3 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var shortTermCoverIsYesReferOrUnlisted = (shortTermCover) => {
+  switch (shortTermCover) {
+    case YES3:
+      return true;
+    case REFER2:
+      return true;
+    case UNLISTED3:
+      return true;
+    default:
+      return false;
+  }
+};
+var short_term_cover_is_yes_refer_or_unlisted_default = shortTermCoverIsYesReferOrUnlisted;
+
+// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
+var canGetAQuoteOnline = (cisCountry) => {
+  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
+  const conditions =
+    esra_classification_is_standard_high_or_very_high_default(ESRAClassificationDesc) &&
+    short_term_cover_is_yes_refer_or_unlisted_default(shortTermCoverAvailabilityDesc) &&
+    country_rating_is_a_or_b_default(countryRatingDesc);
+  return conditions;
 };
 var can_get_a_quote_online_default = canGetAQuoteOnline;
 
-// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
-var canGetAQuoteByEmail = (country) => {
-  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
-    return true;
-  }
-  return false;
-};
-var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
-
-// helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = (country) => {
-  if (!country.riskCategory || (!country.shortTermCover && !country.nbiIssueAvailable)) {
-    return true;
-  }
-  return false;
-};
-var cannot_get_a_quote_default = cannotGetAQuote;
-
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var canApplyForInsuranceOnline = (shortTermCover, riskCategory) => {
-  if (riskCategory && shortTermCover) {
-    return true;
-  }
-  return false;
+var canApplyForInsuranceOnline = (cisCountry) => {
+  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
+  const conditions =
+    esra_classification_is_standard_high_or_very_high_default(ESRAClassificationDesc) &&
+    short_term_cover_is_yes_refer_or_unlisted_default(shortTermCoverAvailabilityDesc) &&
+    country_rating_is_a_or_b_default(countryRatingDesc);
+  return conditions;
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.ILC) {
-    return true;
-  }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.CILC) {
-    return true;
-  }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.REFER) {
-    return true;
-  }
-  return false;
-};
-var can_apply_offline_default = canApplyOffline;
-
-// helpers/map-CIS-countries/map-CIS-country/no-insurance-support/index.ts
-var { NO_COVER } = EXTERNAL_API_DEFINITIONS.CIS;
-var noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc) => marketRiskAppetitePublicDesc === NO_COVER;
-var no_insurance_support_default = noInsuranceSupportAvailable;
-
 // helpers/map-CIS-countries/map-CIS-country/index.ts
-var mapCisCountry = (country) => {
+var mapCisCountry = (cisCountry) => {
+  const { countryRatingDesc: countryRating, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc: shortTermCover } = cisCountry;
+  const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
+  const noSupport = has_no_support_default({
+    countryRating,
+    esraClassification: ESRAClassificationDesc,
+    shortTermCover,
+  });
   const mapped = {
-    name: country.marketName,
-    isoCode: country.isoCode,
-    riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
-    shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue),
+    countryRating,
+    esraClassification,
+    isoCode,
+    name: marketName,
+    noOnlineSupport: has_no_online_support_default({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover,
+    }),
+    canGetAQuoteOnline: can_get_a_quote_online_default(cisCountry),
+    cannotGetAQuote: noSupport,
+    canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
+    noInsuranceSupport: noSupport,
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
-  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
-  mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(mapped.shortTermCover, mapped.riskCategory);
-  mapped.noInsuranceSupport = no_insurance_support_default(country.marketRiskAppetitePublicDesc);
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
@@ -9191,9 +9833,9 @@ var sortArrayAlphabetically = (arr, field) => {
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
-var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
+var { CIS } = EXTERNAL_API_DEFINITIONS;
 var mapCisCountries = (countries) => {
-  const filteredCountries = filter_cis_entries_default(countries, CIS4.INVALID_COUNTRIES, 'marketName');
+  const filteredCountries = filter_cis_entries_default(countries, CIS.INVALID_COUNTRIES, 'marketName');
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, 'name');
   return sorted;
@@ -9201,7 +9843,7 @@ var mapCisCountries = (countries) => {
 var map_CIS_countries_default = mapCisCountries;
 
 // helpers/get-APIM-CIS-countries/index.ts
-var get = async () => {
+var get2 = async () => {
   try {
     console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
@@ -9219,7 +9861,7 @@ var get = async () => {
   }
 };
 var apimCisCountries = {
-  get,
+  get: get2,
 };
 var get_APIM_CIS_countries_default = apimCisCountries;
 
@@ -9240,7 +9882,7 @@ var getApimCisCountriesQuery = async () => {
 var get_APIM_CIS_countries_default2 = getApimCisCountriesQuery;
 
 // helpers/map-currencies/index.ts
-var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
@@ -9250,7 +9892,7 @@ var getAlternativeCurrencies = (currencies) => {
   return alternate;
 };
 var mapCurrencies = (currencies, alternativeCurrencies) => {
-  let currenciesArray = filter_cis_entries_default(currencies, CIS5.INVALID_CURRENCIES, 'name');
+  let currenciesArray = filter_cis_entries_default(currencies, CIS2.INVALID_CURRENCIES, 'name');
   if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {
@@ -9262,7 +9904,7 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 var map_currencies_default = mapCurrencies;
 
 // helpers/get-APIM-currencies/index.ts
-var get2 = async () => {
+var get3 = async () => {
   try {
     console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
@@ -9284,7 +9926,7 @@ var get2 = async () => {
   }
 };
 var apimCurrencies = {
-  get: get2,
+  get: get3,
 };
 var get_APIM_currencies_default = apimCurrencies;
 

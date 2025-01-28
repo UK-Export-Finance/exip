@@ -69,7 +69,23 @@ export const createFullApplication = async (context: Context, policyType?: strin
       totalValueOfContract: 456,
       maximumBuyerWillOwe: 789,
       policyCurrencyCode: GBP_CURRENCY_CODE,
+      requestedStartDate: new Date(),
+      contractCompletionDate: new Date(),
     };
+
+    /**
+     * Create minimal policy data.
+     * If a multiple policy type is passed, use multiple policy type.
+     * Otherwise, use single policy type.
+     */
+    // const policyData = {
+    //   policyType: POLICY_TYPE.SINGLE,
+    //   requestedCreditLimit: 100,
+    //   totalSalesToBuyer: 123,
+    //   totalValueOfContract: 456,
+    //   maximumBuyerWillOwe: 789,
+    //   policyCurrencyCode: GBP_CURRENCY_CODE,
+    // };
 
     if (policyType === POLICY_TYPE.MULTIPLE) {
       policyData.policyType = POLICY_TYPE.MULTIPLE;

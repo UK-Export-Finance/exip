@@ -2,7 +2,7 @@ import { ROUTES } from '../../../../../../constants';
 
 const {
   INSURANCE: {
-    ELIGIBILITY: { TOTAL_VALUE_INSURED, NEED_TO_START_AGAIN },
+    ELIGIBILITY: { TOTAL_VALUE_INSURED, NEED_TO_START_AGAIN_EXIT },
   },
 } = ROUTES;
 
@@ -14,7 +14,7 @@ context('Manually going to the `total value insured` page via URL without comple
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });

@@ -18,6 +18,14 @@ describe('server/constants/declarations/versions', () => {
         CONFIDENTIALITY: '1',
         CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
       },
+      {
+        ANTI_BRIBERY: '2',
+        ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
+        ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+        CONFIDENTIALITY: '1',
+        CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+        MODERN_SLAVERY: '1',
+      },
     ];
 
     expect(VERSIONS).toEqual(expected);

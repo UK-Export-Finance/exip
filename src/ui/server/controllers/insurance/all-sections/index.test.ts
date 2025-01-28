@@ -56,7 +56,6 @@ describe('controllers/insurance/all-sections', () => {
 
       const { isUsingBroker, isBasedInUk: brokerIsBasedInUk, fullAddress: brokerFullAddress } = broker;
       const { hasDifferentTradingName } = company;
-      const { hasAntiBriberyCodeOfConduct } = declaration;
       const { buyerTradingHistory, relationship } = buyer;
       const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
       const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
@@ -66,6 +65,7 @@ describe('controllers/insurance/all-sections', () => {
 
       const taskListStructure = generateGroupsAndTasks(
         referenceNumber,
+        declaration,
         policyType,
         finalDestinationKnown,
         jointlyInsuredParty.requested,
@@ -76,7 +76,6 @@ describe('controllers/insurance/all-sections', () => {
         lossPayeeIsLocatedInUk,
         lossPayeeIsLocatedInternationally,
         hasDifferentTradingName,
-        hasAntiBriberyCodeOfConduct,
         exporterIsConnectedWithBuyer,
         exporterHasTradedWithBuyer,
         outstandingPayments,

@@ -106,11 +106,8 @@ context(
       });
 
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-
         cy.submitAndAssertRadioErrors({
           field: noRadio(FIELD_ID),
-          expectedErrorsCount,
           expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY,
         });
       });

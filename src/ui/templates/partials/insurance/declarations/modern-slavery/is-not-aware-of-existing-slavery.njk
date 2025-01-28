@@ -1,0 +1,32 @@
+{% import '../../../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+
+{% set conditionalNoHtml %}
+  {% include "partials/insurance/declarations/modern-slavery/conditional-reasons/aware-of-existing-slavery.njk" %}
+{% endset %}
+
+{% set fieldId = FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.ID %}
+
+{#
+  When a submitted answer has a boolean value of false,
+  to ensure that the "no" radio is checked,
+  we need to manually set the submittedAnswer to the false boolean.
+  Otherwise, nunjucks will not have a submittedAnswer variable of false
+  and submittedAnswer would be empty.
+#}
+{% set submittedAnswer = submittedValues[fieldId] or application.declaration.modernSlavery[fieldId] %}
+
+{% if submittedValues[fieldId] === false %}
+  {% set submittedAnswer = submittedValues[fieldId] %}
+{% endif %}
+
+{{ yesNoRadioButtons.render({
+  fieldId: fieldId,
+  legendText: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.LABEL,
+  legendClass: 'govuk-fieldset__legend--s',
+  legendSpan: true,
+  errorMessage: validationErrors.errorList[fieldId],
+  dataCyLegend: fieldId + '-legend',
+  horizontalRadios: HORIZONTAL_RADIOS,
+  conditionalNoHtml: conditionalNoHtml,
+  submittedAnswer: submittedAnswer
+}) }}

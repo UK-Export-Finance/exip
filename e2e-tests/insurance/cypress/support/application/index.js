@@ -1,6 +1,7 @@
 import './business';
 import './buyer';
 import './check-your-answers';
+import './declarations';
 import './export-contract';
 import './policy';
 

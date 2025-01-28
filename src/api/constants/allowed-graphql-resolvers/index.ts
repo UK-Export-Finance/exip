@@ -19,6 +19,7 @@ export const DEFAULT_RESOLVERS = [
   'updateBuyerTradingHistory',
   'updateCompany',
   'updateDeclaration',
+  'updateDeclarationModernSlavery',
   'updateNominatedLossPayee',
   'updateJointlyInsuredParty',
   'updatePolicy',

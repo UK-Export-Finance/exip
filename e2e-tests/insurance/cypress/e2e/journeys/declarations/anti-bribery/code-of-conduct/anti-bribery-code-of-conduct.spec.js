@@ -27,6 +27,8 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
+        cy.completePrepareApplicationSinglePolicyType({});
+
         cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'antiBribery', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
@@ -86,11 +88,11 @@ context(
         cy.assertSubmitAndSaveButtons();
       });
 
-      it('should NOT render conditional `we will email you` hint without selecting the "yes" radio', () => {
+      it('should NOT render a conditional `we will email you` hint without selecting the "yes" radio', () => {
         codeOfConductPage.revealText().should('not.be.visible');
       });
 
-      it('should render conditional `we will email you` hint when selecting the "yes" radio', () => {
+      it('should render a conditional `we will email you` hint when selecting the "yes" radio', () => {
         cy.clickYesRadioInput();
 
         codeOfConductPage.revealText().should('be.visible');
@@ -106,11 +108,8 @@ context(
         });
 
         it('should render a validation error', () => {
-          const expectedErrorsCount = 1;
-
           cy.submitAndAssertRadioErrors({
             field: yesRadio(FIELD_ID),
-            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
           });
         });

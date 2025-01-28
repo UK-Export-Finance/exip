@@ -6,7 +6,7 @@ import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
 const {
-  QUOTE: { EXPORTER_LOCATION, BUYER_BODY, UK_GOODS_OR_SERVICES },
+  QUOTE: { EXPORTER_LOCATION, TYPE_OF_BUYER, UK_GOODS_OR_SERVICES },
 } = ROUTES;
 
 const {
@@ -30,7 +30,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: EXPORTER_LOCATION,
-      backLink: BUYER_BODY,
+      backLink: TYPE_OF_BUYER,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       assertSaveAndBackButtonDoesNotExist: true,

@@ -156,7 +156,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
     });
 
     describe('api error handling', () => {
-      describe('when the save data API call does not return anything', () => {
+      describe('when the save data API call returns false', () => {
         beforeEach(() => {
           mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
           save.declaration = mockSaveDeclaration;

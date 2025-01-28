@@ -1,7 +1,7 @@
 export const QUOTE_ROUTES = {
   START: '/',
 
-  BUYER_BODY: '/quote/type-of-buyer',
+  TYPE_OF_BUYER: '/quote/type-of-buyer',
 
   BUYER_COUNTRY: '/quote/buyer-country',
   BUYER_COUNTRY_CHANGE: '/quote/buyer-country/change',
@@ -23,6 +23,8 @@ export const QUOTE_ROUTES = {
   CANNOT_APPLY_EXIT: '/quote/cannot-apply',
 
   GET_A_QUOTE_BY_EMAIL: '/quote/get-quote-by-email',
+
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: '/quote/talk-to-an-export-finance-manager',
 
   YOUR_QUOTE: '/quote/your-quote',
 

@@ -121,7 +121,13 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
     }
 
+    /**
+     * If a country can get a quote online,
+     * redirect to the next part of the flow.
+     */
     if (country.canGetAQuoteOnline) {
+      console.info('Country support - %s - can get a quote online', country.name);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
@@ -130,26 +136,30 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
       }
 
-      return res.redirect(ROUTES.QUOTE.BUYER_BODY);
+      return res.redirect(ROUTES.QUOTE.TYPE_OF_BUYER);
     }
 
-    if (country.canGetAQuoteByEmail) {
+    /**
+     * If a country has no online support,
+     * redirect to a specific exit page.
+     */
+    if (country.noOnlineSupport) {
+      console.info('Country support - %s - no online quote support available', country.name);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
-      req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
-
-      const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
-      const { REASON } = GET_A_QUOTE_BY_EMAIL;
-
-      req.flash('exitReason', REASON.BUYER_COUNTRY);
-      req.flash('exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION);
-
-      return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+      return res.redirect(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     }
 
+    /**
+     * If a country cannot get a quote,
+     * redirect to a specific exit page.
+     */
     if (country.cannotGetAQuote) {
+      console.info('Country support - %s - cannot a quote', country.name);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
@@ -165,6 +175,10 @@ export const post = async (req: Request, res: Response) => {
 
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
     }
+
+    console.info('Country support - %s - unable to determine country support', country.name);
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error getting CIS countries %o', error);
 

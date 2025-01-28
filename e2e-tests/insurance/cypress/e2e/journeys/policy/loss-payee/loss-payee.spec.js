@@ -1,5 +1,4 @@
-import { headingCaption } from '../../../../../../partials';
-import { field as fieldSelector, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
