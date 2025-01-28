@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.40.2](https://github.com/UK-Export-Finance/exip/compare/v2.40.1...v2.40.2) (2025-01-27)
+
+
+### Bug Fixes
+
+* **deployment:** deployment time ([#3503](https://github.com/UK-Export-Finance/exip/issues/3503)) ([9ac1d99](https://github.com/UK-Export-Finance/exip/commit/9ac1d99451490640a61f7f28ff12902eb51f1b26))
+
 ## [2.40.1](https://github.com/UK-Export-Finance/exip/compare/v2.40.0...v2.40.1) (2025-01-25)
 
 
