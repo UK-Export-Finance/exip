@@ -4,6 +4,11 @@ import replaceCharacterCodesWithCharacters from '../../replace-character-codes-w
 import { mockApplication } from '../../../test-mocks';
 
 const {
+  DECLARATIONS: {
+    MODERN_SLAVERY: {
+      CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+    },
+  },
   EXPORTER_BUSINESS: {
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: ALT_TRADING_FULL_ADDRESS },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
@@ -26,7 +31,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { broker, business, buyer, company, exportContract, policy, nominatedLossPayee } = mockApplication;
+const { broker, business, buyer, company, declaration, exportContract, policy, nominatedLossPayee } = mockApplication;
 
 describe('server/helpers/mappings/map-textarea-fields', () => {
   it('should return textarea fields with replaceCharacterCodesWithCharacters function', () => {
@@ -56,6 +61,15 @@ describe('server/helpers/mappings/map-textarea-fields', () => {
         differentTradingAddress: {
           ...company.differentTradingAddress,
           [ALT_TRADING_FULL_ADDRESS]: replaceCharacterCodesWithCharacters(company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS]),
+        },
+      },
+      declaration: {
+        ...declaration,
+        modernSlavery: {
+          ...declaration.modernSlavery,
+          [CANNOT_ADHERE_TO_ALL_REQUIREMENTS]: replaceCharacterCodesWithCharacters(declaration.modernSlavery[CANNOT_ADHERE_TO_ALL_REQUIREMENTS]),
+          [OFFENSES_OR_INVESTIGATIONS]: replaceCharacterCodesWithCharacters(declaration.modernSlavery[OFFENSES_OR_INVESTIGATIONS]),
+          [AWARE_OF_EXISTING_SLAVERY]: replaceCharacterCodesWithCharacters(declaration.modernSlavery[AWARE_OF_EXISTING_SLAVERY]),
         },
       },
       exportContract: {

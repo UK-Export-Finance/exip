@@ -6,7 +6,7 @@ const { STATUS, LATEST_VERSION_NUMBER, VERSIONS } = APPLICATION;
 
 /**
  * updateApplicationVersion
- * Update IN_PROGRESS applications from the No PDF version (2), to the new "No PDF iterations" version (3)
+ * Update IN_PROGRESS applications from the "No PDF" version (2), to the new "No PDF iterations" version (3)
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

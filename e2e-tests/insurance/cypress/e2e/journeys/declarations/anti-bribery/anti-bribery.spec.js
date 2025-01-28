@@ -1,5 +1,5 @@
 import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
-import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
+import { expandable } from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -27,6 +27,10 @@ context(
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
+
+        cy.completePrepareApplicationSinglePolicyType({});
+
+        cy.completeAndSubmitCheckYourAnswers();
 
         cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'confidentiality', referenceNumber });
 
@@ -108,8 +112,6 @@ context(
           cy.navigateToUrl(url);
         });
 
-        const { expandable } = antiBriberyPage;
-
         it('should render summary text with collapsed conditional `details` content', () => {
           cy.checkText(expandable.summary(), CONTENT_STRINGS.EXPANDABLE.INTRO);
 
@@ -147,11 +149,8 @@ context(
         });
 
         it('should render a validation error', () => {
-          const expectedErrorsCount = 1;
-
           cy.submitAndAssertFieldErrors({
             field,
-            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
             clearInput: false,
           });

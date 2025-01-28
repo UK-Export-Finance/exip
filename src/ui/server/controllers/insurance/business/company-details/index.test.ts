@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
-import companyDetailsValidation from './validation/company-details';
+import generateValidationErrors from './validation';
 import { Application, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
@@ -171,7 +171,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        const validationErrors = companyDetailsValidation(payload);
+        const validationErrors = generateValidationErrors(payload);
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...insuranceCorePageVariables({

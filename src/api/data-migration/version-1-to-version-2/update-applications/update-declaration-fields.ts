@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import getAllNonSubmittedApplications from '../get-all-non-submitted-applications';
+import getAllNonSubmittedApplications from '../../helpers/get-all-non-submitted-applications';
 import executeSqlQuery from '../../execute-sql-query';
 import { Application } from '../../../types';
 

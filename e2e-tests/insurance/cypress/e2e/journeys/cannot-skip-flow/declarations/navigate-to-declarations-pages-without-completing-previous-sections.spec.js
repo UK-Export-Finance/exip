@@ -6,6 +6,7 @@ const {
   DECLARATIONS: {
     CONFIDENTIALITY,
     ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT, CODE_OF_CONDUCT, EXPORTING_WITH_CODE_OF_CONDUCT },
+    MODERN_SLAVERY,
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
 } = INSURANCE_ROUTES;
@@ -33,7 +34,7 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
     cy.deleteApplication();
   });
 
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Confidentiality page directly`, () => {
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - ${CONFIDENTIALITY} page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${CONFIDENTIALITY}`;
 
     cy.navigateToUrl(url);
@@ -41,7 +42,7 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
     cy.assertUrl(completeOtherSectionsUrl);
   });
 
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Anti-bribery page directly`, () => {
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - ${ANTI_BRIBERY_ROOT} page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
     cy.navigateToUrl(url);
@@ -49,7 +50,7 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
     cy.assertUrl(completeOtherSectionsUrl);
   });
 
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Anti-bribery - Code of conduct page directly`, () => {
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - ${CODE_OF_CONDUCT} page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
     cy.navigateToUrl(url);
@@ -57,7 +58,7 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
     cy.assertUrl(completeOtherSectionsUrl);
   });
 
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Anti-bribery - Exporting with code of conduct page directly`, () => {
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - ${EXPORTING_WITH_CODE_OF_CONDUCT} page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 
     cy.navigateToUrl(url);
@@ -65,7 +66,15 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
     cy.assertUrl(completeOtherSectionsUrl);
   });
 
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Confirmation and acknowledgements page directly`, () => {
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - ${MODERN_SLAVERY} page directly`, () => {
+    const url = `${insuranceRoute}/${referenceNumber}${MODERN_SLAVERY}`;
+
+    cy.navigateToUrl(url);
+
+    cy.assertUrl(completeOtherSectionsUrl);
+  });
+
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - ${CONFIRMATION_AND_ACKNOWLEDGEMENTS} page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
     cy.navigateToUrl(url);

@@ -1,5 +1,5 @@
-import { headingCaption, html } from '../../../../../../partials';
-import { field as fieldSelector } from '../../../../../../pages/shared';
+import { html } from '../../../../../../partials';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';

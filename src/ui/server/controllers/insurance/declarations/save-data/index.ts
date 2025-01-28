@@ -4,7 +4,7 @@ import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import { Application, RequestBody } from '../../../../../types';
 
 /**
- * declarations
+ * declaration
  * Update an application's declaration
  * This is used for any save functionality in the Declarations section of an application
  * @param {Application} application
@@ -18,16 +18,16 @@ const declaration = async (application: Application, formBody: RequestBody) => {
   const sanitisedData = sanitiseData(fieldsWithValues);
 
   // send the form data to the API for database update.
-  const declarationId = application.declaration?.id;
+  const declarationId = application.declaration.id;
 
   try {
-    const saveResponse = await api.keystone.application.update.declarations(declarationId, sanitisedData);
+    const saveResponse = await api.keystone.application.update.declaration(declarationId, sanitisedData);
 
     return saveResponse;
   } catch (error) {
-    console.error("Error updating application's declarations %o", error);
+    console.error("Error updating application's declaration %o", error);
 
-    throw new Error("Updating application's declarations");
+    throw new Error("Updating application's declaration");
   }
 };
 

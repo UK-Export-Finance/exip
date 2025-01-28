@@ -1,20 +1,21 @@
-import { EMAIL_TEMPLATE_IDS } from '../../constants';
+import getSubmittedConfirmationTemplateId from './get-submitted-confirmation-template-id';
 import fileSystem from '../../file-system';
 import APIM from '../../integrations/APIM';
-import { ApplicationSubmissionEmailVariables, ApimSendEmailHelperResponse } from '../../types';
+import { ApplicationPolicy, ApplicationSubmissionEmailVariables, ApimSendEmailHelperResponse } from '../../types';
 
 const application = {
   /**
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @param { ApplicationPolicy } policy: Application policy
    * @returns {Promise<ApimSendEmailHelperResponse>}
    */
-  submittedEmail: async (variables: ApplicationSubmissionEmailVariables): Promise<ApimSendEmailHelperResponse> => {
+  submittedEmail: async (variables: ApplicationSubmissionEmailVariables, policy: ApplicationPolicy): Promise<ApimSendEmailHelperResponse> => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
 
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const templateId = getSubmittedConfirmationTemplateId(policy);
 
       const { emailAddress } = variables;
 

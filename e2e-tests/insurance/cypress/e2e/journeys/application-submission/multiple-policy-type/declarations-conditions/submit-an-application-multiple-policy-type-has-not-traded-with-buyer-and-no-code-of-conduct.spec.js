@@ -5,13 +5,7 @@ context(
   () => {
     let referenceNumber;
 
-    before(() => {
-      cy.createAccount({});
-    });
-
     beforeEach(() => {
-      cy.saveSession();
-
       cy.completeSignInAndSubmitAnApplication({
         policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
         exporterHasTradedWithBuyer: false,
@@ -20,6 +14,10 @@ context(
       }).then((refNumber) => {
         referenceNumber = refNumber;
       });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
     });
 
     after(() => {

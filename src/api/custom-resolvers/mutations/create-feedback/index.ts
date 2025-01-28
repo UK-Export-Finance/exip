@@ -26,7 +26,7 @@ const createFeedback = async (root: any, variables: InsuranceFeedbackVariables, 
     // sends email with relevant fields
     const emailResponse = await sendEmail.insuranceFeedbackEmail(feedback);
 
-    // only if data added to db and email has successfully been sent - then return success as true
+    // only if data added to db and email has successfully been sent - then return success=true
     if (response && emailResponse?.success) {
       return {
         ...response,

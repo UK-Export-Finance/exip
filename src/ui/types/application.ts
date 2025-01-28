@@ -199,13 +199,40 @@ interface ApplicationSectionReview {
   buyer?: boolean;
 }
 
-interface ApplicationDeclaration {
+export interface ApplicationDeclarationModernSlavery {
   id: string;
-  agreeToConfidentiality?: boolean;
+  willAdhereToAllRequirements?: boolean;
+  hasNoOffensesOrInvestigations?: boolean;
+  isNotAwareOfExistingSlavery?: boolean;
+  cannotAdhereToAllRequirements?: string;
+  offensesOrInvestigations?: string;
+  awareOfExistingSlavery?: string;
+}
+
+export interface ApplicationDeclarationModernSlaveryVersions {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: string;
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: string;
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: string;
+}
+
+interface ApplicationDeclarationCore {
+  id: string;
+  agreeHowDataWillBeUsed?: boolean;
   agreeToAntiBribery?: boolean;
+  agreeToConfidentiality?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
   hasAntiBriberyCodeOfConduct?: boolean;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
-  agreeToConfirmationAndAcknowledgements?: boolean;
+}
+
+interface ApplicationDeclarationFlat extends ApplicationDeclarationCore {
+  willAdhereToAllRequirements?: boolean;
+  hasNoOffensesOrInvestigations?: boolean;
+  isNotAwareOfExistingSlavery?: boolean;
+}
+
+export interface ApplicationDeclaration extends ApplicationDeclarationCore {
+  modernSlavery: ApplicationDeclarationModernSlavery;
 }
 
 interface ApplicationDeclarationVersions {
@@ -215,6 +242,7 @@ interface ApplicationDeclarationVersions {
   CONFIDENTIALITY: string;
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
   HOW_YOUR_DATA_WILL_BE_USED?: string;
+  MODERN_SLAVERY?: string;
 }
 
 interface ApplicationPolicyContact {
@@ -231,7 +259,7 @@ interface ApplicationJointlyInsuredParty {
   requested?: boolean;
   companyName?: string;
   companyNumber?: string;
-  country?: string;
+  countryCode?: string;
 }
 
 interface ApplicationLossPayeeFinancialDetailsInternational {
@@ -270,6 +298,7 @@ interface ApplicationPolicy {
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
   jointlyInsuredParty: ApplicationJointlyInsuredParty;
+  requestedCreditLimit?: number;
 }
 
 interface Application extends ApplicationCore {
@@ -295,7 +324,11 @@ interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore,
   migratedTo?: number;
 }
 
-type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclaration;
+type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclarationFlat;
+
+interface ApplicationVersionSmallExportBuilder {
+  MAXIMUM_BUYER_WILL_OWE: number;
+}
 
 interface ApplicationVersion {
   VERSION_NUMBER: string;
@@ -308,6 +341,7 @@ interface ApplicationVersion {
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
   REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
   DECLARATIONS_MODERN_SLAVERY?: boolean;
+  SMALL_EXPORT_BUILDER?: ApplicationVersionSmallExportBuilder;
   BROKER_ADDRESS_LOOKUP?: boolean;
 }
 
@@ -322,7 +356,6 @@ export {
   ApplicationBuyerApiInput,
   ApplicationCompany,
   ApplicationCompanyDifferentTradingAddress,
-  ApplicationDeclaration,
   ApplicationDeclarationVersions,
   ApplicationExportContract,
   ApplicationExportContractAgent,

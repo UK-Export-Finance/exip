@@ -1,7 +1,8 @@
 import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-import getPopulatedApplication from '.';
+import getPopulatedApplication, { EXPECTED_RELATIONSHIPS } from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import getPopulatedExportContract from '../get-populated-export-contract';
+import getPopulatedDeclaration from '../get-populated-declaration';
 import mapPolicy from './map-policy';
 import getNominatedLossPayee from './nominated-loss-payee';
 import mockCountries from '../../test-mocks/mock-countries';
@@ -36,6 +37,29 @@ describe('api/helpers/get-populated-application', () => {
       nominatedLossPayeeId: fullApplication.nominatedLossPayeeId,
       sectionReviewId: fullApplication.sectionReviewId,
     };
+  });
+
+  describe('EXPECTED_RELATIONSHIPS', () => {
+    it('should return an array of expected relationships', () => {
+      const result = EXPECTED_RELATIONSHIPS;
+
+      const expected = [
+        'eligibility',
+        'broker',
+        'business',
+        'buyer',
+        'company',
+        'declaration',
+        'exportContract',
+        'owner',
+        'policy',
+        'policyContact',
+        'nominatedLossPayee',
+        'sectionReview',
+      ];
+
+      expect(result).toEqual(expected);
+    });
   });
 
   it('should return an application with associated data', async () => {
@@ -113,6 +137,14 @@ describe('api/helpers/get-populated-application', () => {
     const expected = await getPopulatedExportContract(context, exportContract.id);
 
     expect(result.exportContract).toEqual(expected);
+  });
+
+  it('should return an application with populated declaration', async () => {
+    const result = await getPopulatedApplication.get({ context, application });
+
+    const expected = await getPopulatedDeclaration(context, application.declarationId);
+
+    expect(result.declaration).toEqual(expected);
   });
 
   it('should return an application with populated sectionReview', async () => {
