@@ -25,9 +25,9 @@ export const createMultipleFullApplications = async (context: Context): Promise<
 
     return promises;
   } catch (error) {
-    console.error('Error creating multiple full applications (test helpers)');
+    console.error('Error creating multiple full applications (test helpers) %o', error);
 
-    throw new Error('Error creating multiple full applications (test helpers)');
+    throw new Error('Error creating multiple full applications (test helpers) %o', error);
   }
 };
 

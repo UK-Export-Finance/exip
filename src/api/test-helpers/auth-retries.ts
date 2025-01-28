@@ -14,7 +14,7 @@ const findAll = async (context: Context) => {
 
     return retries;
   } catch (error) {
-    console.error('Error getting auth retries (test helpers)');
+    console.error('Error getting auth retries (test helpers) %o', error);
 
     throw new Error(`Getting auth retries (test helpers) ${error}`);
   }
@@ -38,7 +38,7 @@ const deleteAll = async (context: Context) => {
 
     return deleted;
   } catch (error) {
-    console.error('Error deleting auth retries (test helpers)');
+    console.error('Error deleting auth retries (test helpers) %o', error);
 
     return error;
   }

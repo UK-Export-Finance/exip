@@ -11,7 +11,7 @@ const coverPeriodQuery = 'id value valueId';
  */
 const create = async (context: Context) => {
   try {
-    console.info('Creating an coverPeriod (test helpers)');
+    console.info('Creating an coverPeriod (test helpers');
 
     const coverPeriod = await context.query.CoverPeriod.createOne({
       data: {
@@ -23,7 +23,7 @@ const create = async (context: Context) => {
 
     return coverPeriod;
   } catch (error) {
-    console.error('Error creating a coverPeriod (test helpers)');
+    console.error('Error creating a coverPeriod (test helpers) %o', error);
 
     return error;
   }

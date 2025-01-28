@@ -25,9 +25,9 @@ export const generateSubmittedApplication = async () => {
 
     return submittedApplication;
   } catch (error) {
-    console.error('Error generating a submitted application (test helpers)');
+    console.error('Error generating a submitted application (test helpers) %o', error);
 
-    throw new Error('Error generating a submitted application (test helpers)');
+    throw new Error('Error generating a submitted application (test helpers) %o', error);
   }
 };
 

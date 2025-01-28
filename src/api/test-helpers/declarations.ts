@@ -17,7 +17,7 @@ const create = async (context: Context, data = {}) => {
 
     return declaration;
   } catch (error) {
-    console.error('Error creating a declaration (test helpers)');
+    console.error('Error creating a declaration (test helpers) %o', error);
 
     return error;
   }

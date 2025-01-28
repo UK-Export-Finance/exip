@@ -28,7 +28,7 @@ const create = async ({ context }: TestHelperApplicationCreate) => {
 
     return application;
   } catch (error) {
-    console.error('Error creating an application (test helpers)');
+    console.error('Error creating an application (test helpers) %o', error);
 
     return error;
   }
@@ -52,7 +52,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
 
     return application;
   } catch (error) {
-    console.error('Error getting an application (test helpers)');
+    console.error('Error getting an application (test helpers) %o', error);
 
     return error;
   }
@@ -72,7 +72,7 @@ const getAll = async (context: Context): Promise<Application> => {
 
     return applications;
   } catch (error) {
-    console.error('Error getting all applications (test helpers)');
+    console.error('Error getting all applications (test helpers) %o', error);
 
     return error;
   }
@@ -96,7 +96,7 @@ const update = async ({ context, applicationId, data }: TestHelperApplicationUpd
 
     return application;
   } catch (error) {
-    console.error('Error updating an application (test helpers)');
+    console.error('Error updating an application (test helpers) %o', error);
 
     return error;
   }
@@ -124,7 +124,7 @@ const deleteAll = async (context: Context) => {
 
     return [];
   } catch (error) {
-    console.error('Error getting and deleting applications (test helpers)');
+    console.error('Error getting and deleting applications (test helpers) %o', error);
 
     throw new Error(`Getting and deleting applications (test helpers) ${error}`);
   }

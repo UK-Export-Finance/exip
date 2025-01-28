@@ -17,7 +17,7 @@ const create = async (context: Context, data = {}) => {
 
     return buyer;
   } catch (error) {
-    console.error('Error creating a buyer (test helpers)');
+    console.error('Error creating a buyer (test helpers) %o', error);
 
     return error;
   }
@@ -37,7 +37,7 @@ const getAll = async (context: Context) => {
 
     return buyers;
   } catch (error) {
-    console.error('Error getting all buyers (test helpers)');
+    console.error('Error getting all buyers (test helpers) %o', error);
 
     throw new Error(`Getting all buyers (test helpers) ${error}`);
   }
@@ -65,7 +65,7 @@ const deleteAll = async (context: Context) => {
 
     return [];
   } catch (error) {
-    console.error('Error getting and deleting all buyers (test helpers)');
+    console.error('Error getting and deleting all buyers (test helpers) %o', error);
 
     throw new Error(`Getting and deleting all buyers (test helpers) ${error}`);
   }

@@ -22,9 +22,9 @@ export const createMultipleAccounts = async (context: Context): Promise<Array<Ac
 
     return promises;
   } catch (error) {
-    console.error('Error creating multiple accounts (test helpers)');
+    console.error('Error creating multiple accounts (test helpers) %o', error);
 
-    throw new Error('Error creating multiple accounts (test helpers)');
+    throw new Error('Error creating multiple accounts (test helpers) %o', error);
   }
 };
 

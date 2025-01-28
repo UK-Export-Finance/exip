@@ -20,7 +20,7 @@ const create = async (context: Context) => {
 
     return country;
   } catch (error) {
-    console.error('Error creating a country (test helpers)');
+    console.error('Error creating a country (test helpers) %o', error);
 
     return error;
   }

@@ -15,7 +15,7 @@ const create = async (context: Context) => {
 
     return agent;
   } catch (error) {
-    console.error('Error creating a privateMarket (test helpers)');
+    console.error('Error creating a privateMarket (test helpers) %o', error);
 
     return error;
   }
@@ -38,7 +38,7 @@ const get = async (context: Context, agentId: string) => {
 
     return agent;
   } catch (error) {
-    console.error('Error getting a privateMarket by ID (test helpers)');
+    console.error('Error getting a privateMarket by ID (test helpers) %o', error);
 
     throw new Error(`Getting an privateMarket by ID (test helpers) ${error}`);
   }

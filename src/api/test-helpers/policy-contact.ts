@@ -15,7 +15,7 @@ const create = async (context: Context) => {
 
     return policyContact;
   } catch (error) {
-    console.error('Error creating a policyContact (test helpers)');
+    console.error('Error creating a policyContact (test helpers) %o', error);
 
     return error;
   }
@@ -38,7 +38,7 @@ const get = async (context: Context, policyContactId: string): Promise<Applicati
 
     return policyContact;
   } catch (error) {
-    console.error('Error getting a policyContact by ID (test helpers)');
+    console.error('Error getting a policyContact by ID (test helpers) %o', error);
 
     throw new Error(`Getting an policyContact by ID (test helpers) ${error}`);
   }
