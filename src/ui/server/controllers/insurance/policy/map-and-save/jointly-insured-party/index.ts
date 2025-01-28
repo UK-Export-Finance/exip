@@ -25,6 +25,8 @@ const jointlyInsuredParty = async (formBody: RequestBody, application: Applicati
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.jointlyInsuredParty %s', application.id);
+
         return false;
       }
 

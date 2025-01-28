@@ -35,6 +35,8 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
       }
 
       if (!saveResponse) {
+        console.error('No save response received from saveService.exportContractAgentService %s', application.id);
+
         return false;
       }
 

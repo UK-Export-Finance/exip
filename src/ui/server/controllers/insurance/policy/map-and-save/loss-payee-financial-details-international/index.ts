@@ -26,6 +26,8 @@ const lossPayeeFinancialDetailsInternational = async (formBody: RequestBody, app
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.lossPayeeFinancialDetailsInternational %s', application.id);
+
         return false;
       }
 
