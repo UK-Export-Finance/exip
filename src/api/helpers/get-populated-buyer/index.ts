@@ -6,7 +6,7 @@ import getBuyerTradingHistoryById from '../get-buyer-trading-history-by-id';
 
 /**
  * getPopulatedBuyer
- * Get a populated eligibility
+ * Get a populated buyer
  * @param {Context} context: KeystoneJS context API
  * @param {String} id: Buyer ID
  * @returns {Promise<ApplicationBuyer>}
@@ -34,7 +34,7 @@ const getPopulatedBuyer = async (context: Context, id: string) => {
   } catch (error) {
     console.error('Getting populated buyer %s %o', id, error);
 
-    throw new Error(`Error Getting populated buyer ${id} ${error}`);
+    throw new Error(`Error getting populated buyer ${id} ${error}`);
   }
 };
 

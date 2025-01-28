@@ -2,7 +2,7 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import constructPayload from '../../../../../helpers/construct-payload';
-import companyDetailsValidation from '../validation/company-details';
+import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/company-details';
 import { Request, Response } from '../../../../../../types';
 
@@ -40,7 +40,7 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(body, FIELD_IDS);
 
-    const validationErrors = companyDetailsValidation(payload);
+    const validationErrors = generateValidationErrors(payload);
 
     const saveResponse = await mapAndSave.companyDetails(payload, application, validationErrors);
 

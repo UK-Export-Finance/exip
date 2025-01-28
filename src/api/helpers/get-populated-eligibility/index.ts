@@ -33,7 +33,7 @@ const getPopulatedEligibility = async (context: Context, id: string, buyerCountr
   } catch (error) {
     console.error('Getting populated eligibility %s %o', id, error);
 
-    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
+    throw new Error(`Error getting populated eligibility ${id} ${error}`);
   }
 };
 

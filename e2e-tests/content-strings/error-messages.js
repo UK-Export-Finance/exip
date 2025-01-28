@@ -562,6 +562,31 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
         IS_EMPTY: 'Confirm that you have read and accept the confirmation and acknowledgements',
       },
+      MODERN_SLAVERY: {
+        [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.WILL_ADHERE_TO_ALL_REQUIREMENTS]: {
+          IS_EMPTY: 'Select if you adhere to all the requirements of the Modern Slavery Act 2015',
+        },
+        [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.HAS_NO_OFFENSES_OR_INVESTIGATIONS]: {
+          IS_EMPTY: 'Select if you are under investigation or been fine, convicted or found guilty or not',
+        },
+        [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.IS_NOT_AWARE_OF_EXISTING_SLAVERY]: {
+          IS_EMPTY: 'Select if you are or are not aware of Modern Slavery in respect of yourself, the export contract, holding company or supply chain',
+        },
+        CONDITIONAL_REASONS: {
+          [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.CANNOT_ADHERE_TO_ALL_REQUIREMENTS]: {
+            IS_EMPTY: 'Enter full details of why you cannot adhere',
+            ABOVE_MAXIMUM: `The  explanation of why you cannot adhere cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+          },
+          [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.OFFENSES_OR_INVESTIGATIONS]: {
+            IS_EMPTY: 'Enter full details of why you cannot confirm',
+            ABOVE_MAXIMUM: `The  explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+          },
+          [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.AWARE_OF_EXISTING_SLAVERY]: {
+            IS_EMPTY: 'Enter full details of why you cannot confirm',
+            ABOVE_MAXIMUM: `The  explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+          },
+        },
+      },
     },
   },
 };

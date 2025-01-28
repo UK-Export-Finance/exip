@@ -511,6 +511,16 @@ var DECLARATIONS = {
   HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: 'hasAntiBriberyCodeOfConduct',
   WILL_EXPORT_WITH_CODE_OF_CONDUCT: 'willExportWithAntiBriberyCodeOfConduct',
   AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: 'agreeToConfirmationAndAcknowledgements',
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: 'willAdhereToAllRequirements',
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: 'hasNoOffensesOrInvestigations',
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: 'isNotAwareOfExistingSlavery',
+    CONDITIONAL_REASONS: {
+      CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 'cannotAdhereToAllRequirements',
+      OFFENSES_OR_INVESTIGATIONS: 'offensesOrInvestigations',
+      AWARE_OF_EXISTING_SLAVERY: 'awareOfExistingSlavery',
+    },
+  },
 };
 var declarations_default = DECLARATIONS;
 
@@ -577,6 +587,7 @@ var DEFAULT_RESOLVERS = [
   'updateBuyerTradingHistory',
   'updateCompany',
   'updateDeclaration',
+  'updateDeclarationModernSlavery',
   'updateNominatedLossPayee',
   'updateJointlyInsuredParty',
   'updatePolicy',
@@ -794,30 +805,44 @@ var DATE_FORMAT = {
 };
 
 // constants/declarations/versions/index.ts
-var DECLARATION_VERSIONS = [
-  {
-    ANTI_BRIBERY: '1',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-    HOW_YOUR_DATA_WILL_BE_USED: '1',
-  },
-  {
-    ANTI_BRIBERY: '2',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-  },
-];
+var VERSION_12 = {
+  ANTI_BRIBERY: '1',
+  ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+  CONFIDENTIALITY: '1',
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+  HOW_YOUR_DATA_WILL_BE_USED: '1',
+};
+var VERSION_22 = {
+  ANTI_BRIBERY: '2',
+  ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+  CONFIDENTIALITY: '1',
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+};
+var VERSION_32 = {
+  ...VERSION_22,
+  MODERN_SLAVERY: '1',
+};
+var DECLARATION_VERSIONS = [VERSION_12, VERSION_22, VERSION_32];
 var versions_default2 = DECLARATION_VERSIONS;
+
+// constants/declarations/modern-slavery-versions/index.ts
+var VERSION_13 = {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: '1',
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: '1',
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: '1',
+};
+var DECLARATION_MODERN_SLAVERY_VERSIONS = [VERSION_13];
+var modern_slavery_versions_default = DECLARATION_MODERN_SLAVERY_VERSIONS;
 
 // constants/declarations/index.ts
 var DECLARATIONS2 = {
   VERSIONS: versions_default2,
   V1_DECLARATIONS: versions_default2[0],
   LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1],
+  MODREN_SLAVERY_VERSIONS: modern_slavery_versions_default,
+  LATEST_MODERN_SLAVERY_DECLARATIONS: modern_slavery_versions_default[modern_slavery_versions_default.length - 1],
 };
 var declarations_default2 = DECLARATIONS2;
 
@@ -994,6 +1019,11 @@ var MAXIMUM_CHARACTERS = {
   COMPANY_DIFFERENT_TRADING_NAME: 200,
   CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
   CREDIT_PERIOD_WITH_BUYER: 1e3,
+  DECLARATIONS: {
+    MODERN_SLAVERY: {
+      CONDITIONAL_REASON: 1e3,
+    },
+  },
   DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
   DIFFERENT_NAME_ON_POLICY_POSITION: 50,
   DIFFERENT_NAME_ON_POLICY: 50,
@@ -2528,6 +2558,7 @@ var lists = {
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
       hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
       willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      modernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery.declaration' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2557,6 +2588,47 @@ var lists = {
         db: { nativeType: 'VarChar(3)' },
       }),
       agreeHowDataWillBeUsed: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+    },
+    access: import_access.allowAll,
+  }),
+  DeclarationModernSlavery: (0, import_core2.list)({
+    fields: {
+      declaration: (0, import_fields.relationship)({ ref: 'Declaration.modernSlavery' }),
+      version: (0, import_fields.relationship)({ ref: 'DeclarationModernSlaveryVersion' }),
+      willAdhereToAllRequirements: nullable_checkbox_default(),
+      hasNoOffensesOrInvestigations: nullable_checkbox_default(),
+      isNotAwareOfExistingSlavery: nullable_checkbox_default(),
+      cannotAdhereToAllRequirements: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      offensesOrInvestigations: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      awareOfExistingSlavery: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: import_access.allowAll,
+  }),
+  DeclarationModernSlaveryVersion: (0, import_core2.list)({
+    fields: {
+      declarationModernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery' }),
+      willAdhereToAllRequirements: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      hasNoOffensesOrInvestigations: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      isNotAwareOfExistingSlavery: (0, import_fields.text)({
         db: { nativeType: 'VarChar(3)' },
       }),
     },
@@ -4645,6 +4717,53 @@ var createADeclarationVersion = async (context, declarationId) => {
 };
 var create_a_declaration_version_default = createADeclarationVersion;
 
+// helpers/create-a-declaration-modern-slavery-version/index.ts
+var { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY } =
+  declarations_default2.LATEST_MODERN_SLAVERY_DECLARATIONS;
+var createADeclarationModernSlaveryVersion = async (context, declarationModernSlaveryId) => {
+  console.info('Creating an application declaration modern slavery version for %s', declarationModernSlaveryId);
+  try {
+    const version = await context.db.DeclarationModernSlaveryVersion.createOne({
+      data: {
+        declarationModernSlavery: {
+          connect: { id: declarationModernSlaveryId },
+        },
+        willAdhereToAllRequirements: WILL_ADHERE_TO_ALL_REQUIREMENTS,
+        hasNoOffensesOrInvestigations: HAS_NO_OFFENSES_OR_INVESTIGATIONS,
+        isNotAwareOfExistingSlavery: IS_NOT_AWARE_OF_EXISTING_SLAVERY,
+      },
+    });
+    return version;
+  } catch (error) {
+    console.error('Error creating an application declaration modern slavery version %o', error);
+    throw new Error(`Creating an application declaration modern slavery version ${error}`);
+  }
+};
+var create_a_declaration_modern_slavery_version_default = createADeclarationModernSlaveryVersion;
+
+// helpers/create-a-declaration-modern-slavery/index.ts
+var createADeclarationModernSlavery = async (context, declarationId) => {
+  console.info('Creating an application declaration modern slavery for %s', declarationId);
+  try {
+    const declarationModernSlavery = await context.db.DeclarationModernSlavery.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId },
+        },
+      },
+    });
+    const declarationModernSlaveryVersion = await create_a_declaration_modern_slavery_version_default(context, declarationModernSlavery.id);
+    return {
+      ...declarationModernSlavery,
+      declarationModernSlaveryVersion,
+    };
+  } catch (error) {
+    console.error('Error creating an application declaration modern slavery %o', error);
+    throw new Error(`Creating an application declaration modern slavery ${error}`);
+  }
+};
+var create_a_declaration_modern_slavery_default = createADeclarationModernSlavery;
+
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
   console.info('Creating an application declaration for %s', applicationId);
@@ -4657,9 +4776,11 @@ var createADeclaration = async (context, applicationId) => {
       },
     });
     const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    const declarationModernSlavery = await create_a_declaration_modern_slavery_default(context, declaration.id);
     return {
       ...declaration,
       declarationVersion,
+      declarationModernSlavery,
     };
   } catch (error) {
     console.error('Error creating an application declaration %o', error);
@@ -5552,7 +5673,7 @@ var getPopulatedEligibility = async (context, id, buyerCountry) => {
     return populatedEligibility;
   } catch (error) {
     console.error('Getting populated eligibility %s %o', id, error);
-    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
+    throw new Error(`Error getting populated eligibility ${id} ${error}`);
   }
 };
 var get_populated_eligibility_default = getPopulatedEligibility;
@@ -5861,7 +5982,7 @@ var getPopulatedExportContract = async (context, id) => {
     return populatedExportContract;
   } catch (error) {
     console.error('Getting populated exportContract %s %o', id, error);
-    throw new Error(`Error Getting populated exportContract ${id} ${error}`);
+    throw new Error(`Error getting populated exportContract ${id} ${error}`);
   }
 };
 var get_populated_export_contract_default = getPopulatedExportContract;
@@ -5947,7 +6068,7 @@ var getPopulatedCompany = async (context, id) => {
     return populatedCompany;
   } catch (error) {
     console.error('Getting populated company %s %o', id, error);
-    throw new Error(`Error Getting populated company ${id} ${error}`);
+    throw new Error(`Error getting populated company ${id} ${error}`);
   }
 };
 var get_populated_company_default = getPopulatedCompany;
@@ -6059,7 +6180,7 @@ var getPopulatedBuyer = async (context, id) => {
     return populatedBuyer;
   } catch (error) {
     console.error('Getting populated buyer %s %o', id, error);
-    throw new Error(`Error Getting populated buyer ${id} ${error}`);
+    throw new Error(`Error getting populated buyer ${id} ${error}`);
   }
 };
 var get_populated_buyer_default = getPopulatedBuyer;
@@ -6078,6 +6199,39 @@ var getDeclarationById = async (context, id) => {
   }
 };
 var get_declaration_by_id_default = getDeclarationById;
+
+// helpers/get-declaration-modern-slavery-by-id/index.ts
+var getDeclarationModernSlaveryById = async (context, id) => {
+  try {
+    console.info('Getting declaration modern slavery by ID %s', id);
+    const declarationModernSlavery = await context.db.DeclarationModernSlavery.findOne({
+      where: { id },
+    });
+    return declarationModernSlavery;
+  } catch (error) {
+    console.error('Getting declaration modern slavery by ID %s %o', id, error);
+    throw new Error(`Error Getting declaration modern slavery by ID ${id} ${error}`);
+  }
+};
+var get_declaration_modern_slavery_by_id_default = getDeclarationModernSlaveryById;
+
+// helpers/get-populated-declaration/index.ts
+var getPopulatedDeclaration = async (context, id) => {
+  try {
+    console.info('Getting populated declaration %s', id);
+    const declaration = await get_declaration_by_id_default(context, id);
+    const modernSlavery = await get_declaration_modern_slavery_by_id_default(context, declaration.modernSlaveryId);
+    const populatedDeclaration = {
+      ...declaration,
+      modernSlavery,
+    };
+    return populatedDeclaration;
+  } catch (error) {
+    console.error('Getting populated declaration %s %o', id, error);
+    throw new Error(`Error getting populated declaration ${id} ${error}`);
+  }
+};
+var get_populated_declaration_default = getPopulatedDeclaration;
 
 // helpers/get-section-review-by-id/index.ts
 var getSectionReviewById = async (context, id) => {
@@ -6100,17 +6254,54 @@ var map_total_contract_value_over_threshold_default = mapTotalContractValueOverT
 
 // helpers/get-populated-application/map-policy/index.ts
 var mapPolicy = (policy) => {
-  const { requestedStartDate, contractCompletionDate } = policy;
   const mappedPolicy = {
     ...policy,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
   };
+  if (policy?.requestedStartDate) {
+    const { requestedStartDate } = policy;
+    mappedPolicy.requestedStartDate = new Date(requestedStartDate);
+  }
+  if (policy?.contractCompletionDate) {
+    const { contractCompletionDate } = policy;
+    mappedPolicy.contractCompletionDate = new Date(contractCompletionDate);
+  }
   return mappedPolicy;
 };
 var map_policy_default = mapPolicy;
 
+// helpers/object/index.ts
+var objectHasKeysAndValues = (obj) => {
+  if (!obj) {
+    return false;
+  }
+  const keys = Object.keys(obj);
+  if (!keys.length) {
+    return false;
+  }
+  let hasValues = false;
+  keys.forEach((key2) => {
+    if (obj[key2]) {
+      hasValues = true;
+    }
+  });
+  return hasValues;
+};
+
 // helpers/get-populated-application/index.ts
+var EXPECTED_RELATIONSHIPS = [
+  'eligibility',
+  'broker',
+  'business',
+  'buyer',
+  'company',
+  'declaration',
+  'exportContract',
+  'owner',
+  'policy',
+  'policyContact',
+  'nominatedLossPayee',
+  'sectionReview',
+];
 var getPopulatedApplication = async ({
   context,
   application: application2,
@@ -6143,7 +6334,7 @@ var getPopulatedApplication = async ({
     const { companySicCodes, ...populatedCompany } = await get_populated_company_default(context, companyId);
     const business = await get_business_by_id_default(context, businessId);
     const broker = await get_broker_by_id_default(context, brokerId);
-    const declaration = await get_declaration_by_id_default(context, declarationId);
+    const declaration = await get_populated_declaration_default(context, declarationId);
     const sectionReview = await get_section_review_by_id_default(context, sectionReviewId);
     const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
     const populatedApplication2 = {
@@ -6163,10 +6354,18 @@ var getPopulatedApplication = async ({
       sectionReview,
       totalContractValueOverThreshold,
     };
+    Object.keys(populatedApplication2).forEach((relationshipKey) => {
+      if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
+        const populatedRelationship = populatedApplication2[relationshipKey];
+        if (!objectHasKeysAndValues(populatedRelationship)) {
+          throw new Error(`Error getting '${relationshipKey}' relationship`);
+        }
+      }
+    });
     return populatedApplication2;
   } catch (error) {
     console.error('Getting populated application (helper) %s %o', application2.id, error);
-    throw new Error(`Error Getting populated application (helper) ${application2.id} ${error}`);
+    throw new Error(`Error getting populated application (helper) ${application2.id} ${error}`);
   }
 };
 var populatedApplication = {
@@ -6312,6 +6511,11 @@ var {
     AGREE_ANTI_BRIBERY,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY: {
+      WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS2,
+      HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS2,
+      IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY2,
+    },
     WILL_EXPORT_WITH_CODE_OF_CONDUCT,
   },
 } = insurance_default;
@@ -6334,6 +6538,52 @@ var DECLARATIONS_FIELDS = {
   [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
     SUMMARY: {
       TITLE: 'Will you export using your code of conduct?',
+    },
+  },
+  MODERN_SLAVERY: {
+    [WILL_ADHERE_TO_ALL_REQUIREMENTS2]: {
+      LABEL:
+        'Do you adhere to, and intend to continue to adhere to, all requirements that apply to you as set out in the Modern Slavery Act 2015, including reporting obligations, and all applicable legislation relating to the prevention of modern slavery in every country that you operate in?',
+      SUMMARY: {
+        TITLE: 'Adhere to the Modern Slavery Act',
+      },
+      CONDITIONAL_REASON: {
+        LABEL: 'Provide full details.',
+        MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        SUMMARY: {
+          TITLE: 'Why can the exporter not adhere?',
+        },
+      },
+    },
+    [HAS_NO_OFFENSES_OR_INVESTIGATIONS2]: {
+      LABEL:
+        'Do you confirm you are not currently under investigation and have not been fined, convicted or found guilty of any offences under the Modern Slavery Act 2015, or under any applicable similar laws or regulations relating to the prevention of modern slavery or any similar infringement of human rights in any jurisdiction?',
+      SUMMARY: {
+        TITLE: 'Does the user confirm they are not under investigation or has been convicted of any human right violations',
+      },
+      CONDITIONAL_REASON: {
+        LABEL:
+          'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+        MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        SUMMARY: {
+          TITLE: 'Details of investigation for violating the Modern Slavery Act',
+        },
+      },
+    },
+    [IS_NOT_AWARE_OF_EXISTING_SLAVERY2]: {
+      LABEL:
+        'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery in respect of yourself, the export contract(s), your immediate holding company or your supply chain, in each case, at present or in the past 2 years.',
+      SUMMARY: {
+        TITLE: 'Confirm Modern Slavery is not involved in the export',
+      },
+      CONDITIONAL_REASON: {
+        LABEL:
+          'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+        MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        SUMMARY: {
+          TITLE: 'Details of how modern slavery is involved in the export',
+        },
+      },
     },
   },
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
@@ -6364,6 +6614,8 @@ var LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS:
+      'https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-human-rights',
     SMALL_EXPORT_BUILDER: 'Small Export Builder',
   },
 };
@@ -8372,6 +8624,85 @@ var mapAgreedField = (answer) => {
 };
 var map_agreed_field_default = mapAgreedField;
 
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-cannot-adhere-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS3,
+    CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS: FIELD_ID },
+  },
+} = declarations_default;
+var CONTENT_STRINGS10 = DECLARATIONS_FIELDS.MODERN_SLAVERY[WILL_ADHERE_TO_ALL_REQUIREMENTS3];
+var mapCannotAdhereConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID]) {
+    return xlsx_row_default(CONTENT_STRINGS10.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID]);
+  }
+};
+var map_cannot_adhere_conditional_reason_default = mapCannotAdhereConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-offenses-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS3,
+    CONDITIONAL_REASONS: { OFFENSES_OR_INVESTIGATIONS: FIELD_ID2 },
+  },
+} = declarations_default;
+var CONTENT_STRINGS11 = DECLARATIONS_FIELDS.MODERN_SLAVERY[HAS_NO_OFFENSES_OR_INVESTIGATIONS3];
+var mapOffensesConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID2]) {
+    return xlsx_row_default(CONTENT_STRINGS11.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID2]);
+  }
+};
+var map_offenses_conditional_reason_default = mapOffensesConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-aware-of-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY3,
+    CONDITIONAL_REASONS: { AWARE_OF_EXISTING_SLAVERY: FIELD_ID3 },
+  },
+} = declarations_default;
+var CONTENT_STRINGS12 = DECLARATIONS_FIELDS.MODERN_SLAVERY[IS_NOT_AWARE_OF_EXISTING_SLAVERY3];
+var mapAwareOfConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID3]) {
+    return xlsx_row_default(CONTENT_STRINGS12.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID3]);
+  }
+};
+var map_aware_of_conditional_reason_default = mapAwareOfConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/index.ts
+var {
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS4,
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS4,
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY4,
+  },
+} = declarations_default;
+var CONTENT_STRINGS13 = DECLARATIONS_FIELDS.MODERN_SLAVERY;
+var WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS = CONTENT_STRINGS13[WILL_ADHERE_TO_ALL_REQUIREMENTS4];
+var HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS = CONTENT_STRINGS13[HAS_NO_OFFENSES_OR_INVESTIGATIONS4];
+var IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS = CONTENT_STRINGS13[IS_NOT_AWARE_OF_EXISTING_SLAVERY4];
+var mapModernSlaveryFields = (modernSlavery) => {
+  const mapped = [
+    xlsx_row_default(
+      WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS.SUMMARY.TITLE,
+      map_yes_no_field_default({ answer: modernSlavery[WILL_ADHERE_TO_ALL_REQUIREMENTS4] }),
+    ),
+    map_cannot_adhere_conditional_reason_default(modernSlavery),
+    xlsx_row_default(
+      HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS.SUMMARY.TITLE,
+      map_yes_no_field_default({ answer: modernSlavery[HAS_NO_OFFENSES_OR_INVESTIGATIONS4] }),
+    ),
+    map_offenses_conditional_reason_default(modernSlavery),
+    xlsx_row_default(
+      IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS.SUMMARY.TITLE,
+      map_yes_no_field_default({ answer: modernSlavery[IS_NOT_AWARE_OF_EXISTING_SLAVERY4] }),
+    ),
+    map_aware_of_conditional_reason_default(modernSlavery),
+  ];
+  return mapped;
+};
+var map_modern_slavery_fields_default = mapModernSlaveryFields;
+
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
 var { FIELDS: FIELDS31 } = XLSX;
 var {
@@ -8390,6 +8721,7 @@ var mapDeclarations = (application2) => {
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
     xlsx_row_default(String(FIELDS31[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
     xlsx_row_default(String(FIELDS31[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
+    ...map_modern_slavery_fields_default(declaration.modernSlavery),
     xlsx_row_default(
       DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE,
       map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]),
@@ -8593,13 +8925,61 @@ var EXPORT_CONTRACT_INDEXES = (application2) => {
 };
 var EXPORT_CONTRACT_default = EXPORT_CONTRACT_INDEXES;
 
+// constants/XLSX-CONFIG/INDEXES/DECLARATIONS/index.ts
+var {
+  MODERN_SLAVERY: {
+    CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+  },
+} = declarations_default;
+var DEFAULT_INDEXES4 = () => ({
+  CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 0,
+  OFFENSES_OR_INVESTIGATIONS: 0,
+  AWARE_OF_EXISTING_SLAVERY: 0,
+});
+var DECLARATIONS_INDEXES = (modernSlavery) => {
+  const INDEXES = DEFAULT_INDEXES4();
+  const cannotAdhereAnswer = modernSlavery[CANNOT_ADHERE_TO_ALL_REQUIREMENTS];
+  const offensesInvestigationsAnswer = modernSlavery[OFFENSES_OR_INVESTIGATIONS];
+  const awareOfAnswer = modernSlavery[AWARE_OF_EXISTING_SLAVERY];
+  if (cannotAdhereAnswer) {
+    INDEXES.CANNOT_ADHERE_TO_ALL_REQUIREMENTS = 7;
+  }
+  if (offensesInvestigationsAnswer) {
+    INDEXES.OFFENSES_OR_INVESTIGATIONS = 8;
+    if (cannotAdhereAnswer) {
+      INDEXES.OFFENSES_OR_INVESTIGATIONS += 1;
+    }
+    if (awareOfAnswer) {
+      INDEXES.OFFENSES_OR_INVESTIGATIONS += 1;
+    }
+  }
+  if (awareOfAnswer) {
+    INDEXES.AWARE_OF_EXISTING_SLAVERY = 9;
+    if (cannotAdhereAnswer) {
+      INDEXES.AWARE_OF_EXISTING_SLAVERY += 1;
+    }
+    if (offensesInvestigationsAnswer) {
+      INDEXES.AWARE_OF_EXISTING_SLAVERY += 1;
+    }
+  }
+  return INDEXES;
+};
+var DECLARATIONS_default = DECLARATIONS_INDEXES;
+
 // constants/XLSX-CONFIG/INDEXES/index.ts
-var { EXPORTER_BUSINESS: EXPORTER_BUSINESS4, POLICY: POLICY5, BUYER: BUYER2, EXPORT_CONTRACT: EXPORT_CONTRACT3 } = SECTION_NAMES_default;
+var {
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS4,
+  POLICY: POLICY5,
+  BUYER: BUYER2,
+  EXPORT_CONTRACT: EXPORT_CONTRACT3,
+  DECLARATIONS: DECLARATIONS4,
+} = SECTION_NAMES_default;
 var XLSX_ROW_INDEXES = {
   [EXPORTER_BUSINESS4]: (application2) => EXPORTER_BUSINESS_default(application2),
   [POLICY5]: (application2) => POLICY_default(application2),
   [BUYER2]: () => BUYER_default(),
   [EXPORT_CONTRACT3]: (application2) => EXPORT_CONTRACT_default(application2),
+  [DECLARATIONS4]: (application2) => DECLARATIONS_default(application2.declaration.modernSlavery),
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 

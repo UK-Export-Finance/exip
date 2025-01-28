@@ -1,10 +1,23 @@
 # Changelog
 
+## [2.40.1](https://github.com/UK-Export-Finance/exip/compare/v2.40.0...v2.40.1) (2025-01-25)
+
+### Bug Fixes
+
+- **EMS-4137-4138:** declarations - modern slavery - form validation ([#3492](https://github.com/UK-Export-Finance/exip/issues/3492)) ([8ea7a20](https://github.com/UK-Export-Finance/exip/commit/8ea7a20b2b2ffc204784942881aa875f34b29cf6))
+- **EMS-4138:** declarations - modern slavery - error messages ([#3496](https://github.com/UK-Export-Finance/exip/issues/3496)) ([70ff5f6](https://github.com/UK-Export-Finance/exip/commit/70ff5f6dd4cdab1c8e17c7497cf8c1ae6e4e3861))
+
 ## [2.40.0](https://github.com/UK-Export-Finance/exip/compare/v2.39.4...v2.40.0) (2025-01-22)
 
 ### Features
 
 - **EMS-4134:** add additional security routes ([#3489](https://github.com/UK-Export-Finance/exip/issues/3489)) ([65ef0a5](https://github.com/UK-Export-Finance/exip/commit/65ef0a5f0644c19dc666b89aab0e039d1c1603f3))
+
+## [2.39.4](https://github.com/UK-Export-Finance/exip/compare/v2.39.3...v2.39.4) (2025-01-16)
+
+## [2.39.4](https://github.com/UK-Export-Finance/exip/compare/v2.39.3...v2.39.4) (2025-01-16)
+
+## [2.39.4](https://github.com/UK-Export-Finance/exip/compare/v2.39.3...v2.39.4) (2025-01-16)
 
 ## [2.39.4](https://github.com/UK-Export-Finance/exip/compare/v2.39.3...v2.39.4) (2025-01-16)
 
