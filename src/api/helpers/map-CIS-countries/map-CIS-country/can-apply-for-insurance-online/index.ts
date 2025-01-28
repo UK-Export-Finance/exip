@@ -1,24 +1,23 @@
+import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
+import shortTermCoverIsYesReferOrUnlisted from '../short-term-cover-is-yes-refer-or-unlisted';
+import countryRatingIsAorB from '../country-rating-is-a-or-b';
+import { CisCountry } from '../../../../types';
+
 /**
  * canApplyForInsuranceOnline
  * Check if a country can apply for insurance online.
- * A country can apply if
- * 1) The country has a risk category,
- * 2) The country has a short term cover definition with one of the following values:
- * - Yes
- * - ILC
- * - CILC
- * - Refer
- * - Unlisted
- * @param {Boolean} shortTermCover: Boolean value of shortTermCover.
- * @param {String} riskCategory: Country risk category.
+ * @param {CisCountry} cisCountry: CIS country
  * @returns {Boolean}
  */
-export const canApplyForInsuranceOnline = (shortTermCover: boolean, riskCategory?: string) => {
-  if (riskCategory && shortTermCover) {
-    return true;
-  }
+const canApplyForInsuranceOnline = (cisCountry: CisCountry): boolean => {
+  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
 
-  return false;
+  const conditions =
+    esraClassificationIsStandardHighOrVeryHigh(ESRAClassificationDesc) &&
+    shortTermCoverIsYesReferOrUnlisted(shortTermCoverAvailabilityDesc) &&
+    countryRatingIsAorB(countryRatingDesc);
+
+  return conditions;
 };
 
 export default canApplyForInsuranceOnline;

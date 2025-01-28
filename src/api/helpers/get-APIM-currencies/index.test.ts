@@ -11,12 +11,12 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     jest.resetAllMocks();
   });
 
-  describe('when APIM currencies API returns success with data/countries', () => {
+  describe('when APIM currencies API returns success with data/currencies', () => {
     beforeEach(() => {
       APIM.getCurrencies = jest.fn(() => Promise.resolve(mockApimCurrenciesResponse));
     });
 
-    it('should return an object with mapped countries ', async () => {
+    it('should return an object with mapped currencies ', async () => {
       const response = await apimCurrencies.get();
 
       const mappedSupported = mapCurrencies(mockCurrencies, false);
@@ -33,12 +33,12 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     });
   });
 
-  describe('when APIM currencies API returns success as false', () => {
+  describe('when APIM currencies API returns success=false', () => {
     beforeEach(() => {
       APIM.getCurrencies = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await apimCurrencies.get();
 
       const expected = { success: false };
@@ -47,12 +47,12 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     });
   });
 
-  describe('when APIM currencies API returns empty data object', () => {
+  describe('when APIM currencies API returns an empty data object', () => {
     beforeEach(() => {
       APIM.getCurrencies = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await apimCurrencies.get();
 
       const expected = { success: false };

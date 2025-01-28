@@ -104,11 +104,8 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
 
     it('should render validation errors', () => {
-      const expectedErrorsCount = 1;
-
       cy.submitAndAssertRadioErrors({
         field: yesRadio(FIELD_ID),
-        expectedErrorsCount,
         expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY,
       });
     });

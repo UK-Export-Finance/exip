@@ -11,8 +11,6 @@ const checkEmailFieldRendering = ({ fieldId, contentStrings }) => {
 
   cy.checkText(field.label(), contentStrings.LABEL);
 
-  field.input().should('exist');
-
   cy.checkTypeAttribute(field.input(), 'email');
 };
 

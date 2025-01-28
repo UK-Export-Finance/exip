@@ -1,64 +1,20 @@
 import canGetAQuoteOnline from '.';
-import { EXTERNAL_API_MAPPINGS } from '../../../../constants';
-import mockCountries from '../../../../test-mocks/mock-countries';
-import { MappedCisCountry } from '../../../../types';
-
-const {
-  CIS: { RISK },
-} = EXTERNAL_API_MAPPINGS;
-
-const validMockCountry = {
-  ...mockCountries[0],
-  riskCategory: RISK.STANDARD,
-  shortTermCover: true,
-  nbiIssueAvailable: true,
-} as MappedCisCountry;
+import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
+import shortTermCoverIsYesReferOrUnlisted from '../short-term-cover-is-yes-refer-or-unlisted';
+import countryRatingIsAorB from '../country-rating-is-a-or-b';
+import { mockCisCountry } from '../../../../test-mocks';
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online', () => {
-  describe('when a country has true riskCategory, shortTermCover and nbiIssueAvailable', () => {
-    it('should return true', () => {
-      const result = canGetAQuoteOnline(validMockCountry);
+  it('should return the result of 3x conditions', () => {
+    const result = canGetAQuoteOnline(mockCisCountry);
 
-      expect(result).toEqual(true);
-    });
-  });
+    const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, marketRiskAppetitePublicDesc } = mockCisCountry;
 
-  describe('when a country does not have riskCategory', () => {
-    it('should return false', () => {
-      const mockCountry = {
-        ...validMockCountry,
-        riskCategory: undefined,
-      } as MappedCisCountry;
+    const expected =
+      esraClassificationIsStandardHighOrVeryHigh(ESRAClassificationDesc) &&
+      shortTermCoverIsYesReferOrUnlisted(shortTermCoverAvailabilityDesc) &&
+      countryRatingIsAorB(marketRiskAppetitePublicDesc);
 
-      const result = canGetAQuoteOnline(mockCountry);
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when a country does not have shortTermCover', () => {
-    it('should return false', () => {
-      const mockCountry = {
-        ...validMockCountry,
-        shortTermCover: false,
-      } as MappedCisCountry;
-
-      const result = canGetAQuoteOnline(mockCountry);
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when a country does not have nbiIssueAvailable', () => {
-    it('should return false', () => {
-      const mockCountry = {
-        ...validMockCountry,
-        nbiIssueAvailable: false,
-      } as MappedCisCountry;
-
-      const result = canGetAQuoteOnline(mockCountry);
-
-      expect(result).toEqual(false);
-    });
+    expect(result).toEqual(expected);
   });
 });

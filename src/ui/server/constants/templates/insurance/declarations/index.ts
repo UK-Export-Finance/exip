@@ -4,4 +4,5 @@ export const DECLARATIONS_TEMPLATES = {
   ANTI_BRIBERY: {
     ROOT: 'insurance/declarations/anti-bribery.njk',
   },
+  MODERN_SLAVERY: 'insurance/declarations/modern-slavery.njk',
 };

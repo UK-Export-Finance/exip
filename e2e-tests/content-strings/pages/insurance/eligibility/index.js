@@ -3,7 +3,7 @@ import formatCurrency from '../../../../helpers/format-currency';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 
-export const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+export const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 
 export const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for credit insurance for your export',
@@ -168,7 +168,7 @@ export const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
 
-export const CONTRACT_TOO_SHORT_EXIT = {
+export const TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT = {
   PAGE_TITLE: 'Talk to an export finance manager',
   INTRO: "We do not normally offer short term cover for the country you've selected.",
   CONTACT_EFM: {

@@ -3,7 +3,7 @@
 # Version 2
 #
 # Database: exip
-# Generation Time: 2024-08-05 16:34:00 +0000
+# Generation Time: 2024-12-17 18:39:13 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -593,14 +593,20 @@ CREATE TABLE `Declaration` (
   `agreeToAntiBribery` tinyint(1) DEFAULT NULL,
   `agreeToConfidentiality` tinyint(1) DEFAULT NULL,
   `agreeToConfirmationAndAcknowledgements` tinyint(1) DEFAULT NULL,
-  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hasAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
   `willExportWithAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
-  `version` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `version` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modernSlavery` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `Declaration_modernSlavery_key` (`modernSlavery`),
   KEY `Declaration_application_idx` (`application`),
   KEY `Declaration_version_idx` (`version`),
+  KEY `Declaration_modernSlavery_idx` (`modernSlavery`),
   CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `Declaration_modernSlavery_fkey` FOREIGN KEY (`modernSlavery`) REFERENCES `DeclarationModernSlavery` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE,
     CONSTRAINT `Declaration_version_fkey` FOREIGN KEY (`version`) REFERENCES `DeclarationVersion` (`id`) ON DELETE
@@ -610,6 +616,44 @@ CREATE TABLE `Declaration` (
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table DeclarationModernSlavery
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `DeclarationModernSlavery`;
+
+CREATE TABLE `DeclarationModernSlavery` (
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `willAdhereToAllRequirements` tinyint(1) DEFAULT NULL,
+  `hasNoOffensesOrInvestigations` tinyint(1) DEFAULT NULL,
+  `isNotAwareOfExistingSlavery` tinyint(1) DEFAULT NULL,
+  `awareOfExistingSlavery` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `cannotAdhereToAllRequirements` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `offensesOrInvestigations` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `version` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `DeclarationModernSlavery_version_idx` (`version`),
+  CONSTRAINT `DeclarationModernSlavery_version_fkey` FOREIGN KEY (`version`) REFERENCES `DeclarationModernSlaveryVersion` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+# Dump of table DeclarationModernSlaveryVersion
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `DeclarationModernSlaveryVersion`;
+
+CREATE TABLE `DeclarationModernSlaveryVersion` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `declarationModernSlavery` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `willAdhereToAllRequirements` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `hasNoOffensesOrInvestigations` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `isNotAwareOfExistingSlavery` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `DeclarationModernSlaveryVersion_declarationModernSlavery_idx` (`declarationModernSlavery`),
+  CONSTRAINT `DeclarationModernSlaveryVersion_declarationModernSlavery_fkey` FOREIGN KEY (`declarationModernSlavery`) REFERENCES `DeclarationModernSlavery` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 # Dump of table DeclarationVersion

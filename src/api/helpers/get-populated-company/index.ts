@@ -34,7 +34,7 @@ const getPopulatedCompany = async (context: Context, id: string) => {
   } catch (error) {
     console.error('Getting populated company %s %o', id, error);
 
-    throw new Error(`Error Getting populated company ${id} ${error}`);
+    throw new Error(`Error getting populated company ${id} ${error}`);
   }
 };
 

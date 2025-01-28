@@ -8,7 +8,7 @@ export const FIELD_IDS = {
   ...SHARED,
   ELIGIBILITY: {
     ...SHARED_ELIGIBILITY_FIELD_IDS,
-    VALID_BUYER_BODY: 'validBuyerBody',
+    VALID_TYPE_OF_BUYER: 'validBuyerBody',
     COUNTRY: 'country',
     AMOUNT_CURRENCY: 'amountAndCurrency',
     CURRENCY: 'currency',

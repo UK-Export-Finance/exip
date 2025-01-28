@@ -18,7 +18,7 @@ describe('controllers/insurance/declarations/save-data', () => {
   };
 
   beforeEach(() => {
-    api.keystone.application.update.declarations = updateApplicationSpy;
+    api.keystone.application.update.declaration = updateApplicationSpy;
   });
 
   it('should return the API response', async () => {
@@ -27,7 +27,7 @@ describe('controllers/insurance/declarations/save-data', () => {
     expect(result).toEqual(mockUpdateApplicationResponse);
   });
 
-  it('should call api.keystone.application.update.declarations with declaration ID and sanitised data without empty fields', async () => {
+  it('should call api.keystone.application.update.declaration with declaration ID and sanitised data without empty fields', async () => {
     await save.declaration(mockApplication, mockFormBody);
 
     expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
@@ -48,14 +48,14 @@ describe('controllers/insurance/declarations/save-data', () => {
   describe('when there is an error calling the API', () => {
     beforeEach(() => {
       updateApplicationSpy = mockSpyPromiseRejection;
-      api.keystone.application.update.declarations = updateApplicationSpy;
+      api.keystone.application.update.declaration = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.declaration(mockApplication, mockFormBody);
       } catch (error) {
-        const expected = new Error("Updating application's declarations");
+        const expected = new Error("Updating application's declaration");
         expect(error).toEqual(expected);
       }
     });

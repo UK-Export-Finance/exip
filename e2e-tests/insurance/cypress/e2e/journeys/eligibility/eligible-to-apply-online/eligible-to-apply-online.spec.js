@@ -51,8 +51,6 @@ context(
       });
 
       it('renders inset text', () => {
-        eligibleToApplyOnlinePage.insetText().should('exist');
-
         cy.checkText(eligibleToApplyOnlinePage.insetText(), CONTENT_STRINGS.INSET);
       });
 

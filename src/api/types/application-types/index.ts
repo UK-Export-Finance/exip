@@ -126,12 +126,28 @@ export interface ApplicationCompanySicCode {
   industrySectorName: string;
 }
 
+export interface ApplicationDeclarationModernSlavery extends Relationship {
+  willAdhereToAllRequirements?: boolean;
+  hasNoOffensesOrInvestigations?: boolean;
+  isNotAwareOfExistingSlavery?: boolean;
+  cannotAdhereToAllRequirements?: string;
+  offensesOrInvestigations?: string;
+  awareOfExistingSlavery?: string;
+}
+
+export interface ApplicationDeclarationModernSlaveryVersions {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: string;
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: string;
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: string;
+}
+
 export interface ApplicationDeclaration extends Relationship {
   agreeToAntiBribery?: boolean;
   agreeToConfidentiality?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean | null;
+  hasAntiBriberyCodeOfConduct?: boolean;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
+  modernSlavery: ApplicationDeclarationModernSlavery;
 }
 
 export interface ApplicationDeclarationVersions {
@@ -261,9 +277,9 @@ export interface ApplicationJointlyInsuredParty extends Relationship {
 }
 
 export interface ApplicationPolicy extends Relationship {
-  policyType?: string;
+  policyType: string;
   requestedStartDate: Date;
-  contractCompletionDate: Date;
+  contractCompletionDate?: Date;
   totalValueOfContract?: number;
   needPreCreditPeriodCover?: boolean;
   creditPeriodWithBuyer?: string;
@@ -272,6 +288,7 @@ export interface ApplicationPolicy extends Relationship {
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
   jointlyInsuredParty: ApplicationJointlyInsuredParty;
+  requestedCreditLimit?: number;
 }
 
 export interface ApplicationPolicyContact extends Relationship {
@@ -321,6 +338,10 @@ export interface ApplicationSubmissionEmailVariables {
   buyerLocation: string;
 }
 
+interface ApplicationVersionSmallExportBuilder {
+  MAXIMUM_BUYER_WILL_OWE: number;
+}
+
 export interface ApplicationVersion {
   VERSION_NUMBER: string;
   OVER_500K_SUPPORT: boolean;
@@ -331,6 +352,7 @@ export interface ApplicationVersion {
   DEFAULT_CURRENCY?: string;
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
   REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
+  SMALL_EXPORT_BUILDER?: ApplicationVersionSmallExportBuilder;
   DECLARATIONS_MODERN_SLAVERY?: boolean;
   BROKER_ADDRESS_LOOKUP?: boolean;
 }

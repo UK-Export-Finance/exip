@@ -1,5 +1,4 @@
-import { headingCaption } from '../../../../../../partials';
-import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
+import { headingCaption, noRadio, yesNoRadioHint, yesRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -87,11 +86,8 @@ context(
         });
 
         it('should render validation errors', () => {
-          const expectedErrorsCount = 1;
-
           cy.submitAndAssertRadioErrors({
             field: yesRadio(FIELD_ID),
-            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY,
           });
         });

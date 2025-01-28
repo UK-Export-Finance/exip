@@ -73,7 +73,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
         // generate a XLSX for UKEF underwriting team email
         const xlsxPath = await generate.XLSX(populatedApplication, countries);
 
-        // send all "application submitted" emails
+        // send all "application submitted" related emails
         await applicationSubmittedEmails.send(populatedApplication, xlsxPath);
 
         return {
