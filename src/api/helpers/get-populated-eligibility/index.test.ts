@@ -60,13 +60,9 @@ describe('helpers/get-populated-company', () => {
 
   describe('when an eligibility is not found', () => {
     it('should throw an error', async () => {
-      try {
-        await getPopulatedEligibility(context, mockInvalidId, createdCountry);
-      } catch (error) {
-        const expected = `Getting populated eligibility ${mockInvalidId}`;
+      const expectedErrorMessage = `Error getting populated eligibility ${mockInvalidId}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedEligibility(context, mockInvalidId, createdCountry)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -83,13 +79,9 @@ describe('helpers/get-populated-company', () => {
 
       const eligibilityNoCoverPeriod = (await eligibility.create(context, eligibilityObject)) as ApplicationEligibility;
 
-      try {
-        await getPopulatedEligibility(context, eligibilityNoCoverPeriod.id, createdCountry);
-      } catch (error) {
-        const expected = `Getting populated eligibility ${eligibilityNoCoverPeriod.id}`;
+      const expectedErrorMessage = `Error getting populated eligibility ${eligibilityNoCoverPeriod.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedEligibility(context, eligibilityNoCoverPeriod.id, createdCountry)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -106,13 +98,9 @@ describe('helpers/get-populated-company', () => {
 
       const eligibilityNoTotalContractValue = (await eligibility.create(context, eligibilityObject)) as ApplicationEligibility;
 
-      try {
-        await getPopulatedEligibility(context, eligibilityNoTotalContractValue.id, createdCountry);
-      } catch (error) {
-        const expected = `Getting populated eligibility ${eligibilityNoTotalContractValue.id}`;
+      const expectedErrorMessage = `Error getting populated eligibility ${eligibilityNoTotalContractValue.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedEligibility(context, eligibilityNoTotalContractValue.id, createdCountry)).rejects.toThrow(expectedErrorMessage);
     });
   });
 });

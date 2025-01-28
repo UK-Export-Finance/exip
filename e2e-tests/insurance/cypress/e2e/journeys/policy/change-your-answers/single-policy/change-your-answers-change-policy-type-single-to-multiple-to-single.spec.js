@@ -47,7 +47,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
     cy.navigateToUrl(checkYourAnswersUrl);
 
     cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
-    cy.completeAndSubmitExportValueForm();
+    cy.completeAndSubmitExportValueForm({});
 
     summaryList.field(POLICY_TYPE).changeLink().click();
 

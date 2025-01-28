@@ -1,13 +1,8 @@
-import { autoCompleteField } from '../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../pages/quote';
 import { PAGES } from '../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
-
-const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
-
-const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -15,11 +10,9 @@ context('Get a quote via email exit page', () => {
   beforeEach(() => {
     cy.navigateToRootUrl();
 
-    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
+    cy.completeAndSubmitBuyerCountryForm({});
 
-    const results = autoCompleteField(FIELD_ID).results();
-    results.first().click();
-
+    cy.clickYesRadioInput();
     cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
@@ -31,7 +24,7 @@ context('Get a quote via email exit page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL,
-      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
+      backLink: ROUTES.QUOTE.TYPE_OF_BUYER,
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
@@ -43,9 +36,9 @@ context('Get a quote via email exit page', () => {
   });
 
   it('renders a reason and description ', () => {
-    cy.checkText(getAQuoteByEmailPage.reason(), CONTENT_STRINGS.REASON.BUYER_COUNTRY);
+    cy.checkText(getAQuoteByEmailPage.reason(), CONTENT_STRINGS.REASON.TYPE_OF_BUYER);
 
-    cy.checkText(getAQuoteByEmailPage.description(), CONTENT_STRINGS.REASON.BUYER_COUNTRY_DESCRIPTION);
+    cy.checkText(getAQuoteByEmailPage.description(), CONTENT_STRINGS.REASON.TYPE_OF_BUYER_DESCRIPTION);
   });
 
   it('renders `action` content', () => {

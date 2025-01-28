@@ -32,9 +32,11 @@ export const mockApplicationEligibility = {
 };
 
 const mockGenericPolicy = {
+  id: 'clfv9uv6v00csoqz2pm7nftfy',
   requestedStartDate: new Date(date.setMonth(month + 1)),
   policyCurrencyCode: GBP,
   jointlyInsuredParty: {
+    policyId: 'clfv9uv6v00csoqz2pm7nftfy',
     id: 'clfv9uv6v00csoqz2pm7nftfx',
     requested: false,
   },
@@ -46,10 +48,12 @@ export const mockSinglePolicy = {
   contractCompletionDate: new Date(date.setMonth(month + 3)),
   totalValueOfContract: 1500,
   needPreCreditPeriodCover: false,
+  requestedCreditLimit: 865,
 };
 
 export const mockMultiplePolicy = {
   ...mockGenericPolicy,
+  policyId: mockGenericPolicy.id,
   policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
   totalMonthsOfCover: 5,
   totalSalesToBuyer: 1500,
@@ -167,6 +171,16 @@ export const mockSectionReview = {
   buyer: true,
 };
 
+export const mockApplicationDeclarationModernSlavery = {
+  id: 'clf3te7vx1432cfoqp9rbop74',
+  willAdhereToAllRequirements: true,
+  hasNoOffensesOrInvestigations: true,
+  isNotAwareOfExistingSlavery: true,
+  cannotAdhereToAllRequirements: '',
+  offensesOrInvestigations: '',
+  awareOfExistingSlavery: '',
+};
+
 export const mockApplicationDeclaration = {
   id: 'clf3te7vx1432cfoqp9rbop73',
   agreeToConfidentiality: true,
@@ -175,6 +189,7 @@ export const mockApplicationDeclaration = {
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: null,
+  modernSlavery: mockApplicationDeclarationModernSlavery,
 };
 
 export const mockLossPayeeFinancialDetailsUkVector = {

@@ -99,13 +99,9 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when an exportContract is not found', () => {
     it('should throw an error', async () => {
-      try {
-        await getPopulatedExportContract(context, mockInvalidId);
-      } catch (error) {
-        const expected = `Getting populated exportContract ${mockInvalidId}`;
+      const expectedErrorMessage = `Error getting populated exportContract ${mockInvalidId}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedExportContract(context, mockInvalidId)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -124,19 +120,16 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
       const exportContractNoAgent = (await agent.create(context, exportContractObject)) as ApplicationExportContract;
 
-      try {
-        await getPopulatedExportContract(context, exportContractNoAgent.id);
-      } catch (error) {
-        const expected = `Getting populated exportContract ${exportContractNoAgent.id}`;
+      const expectedErrorMessage = `Error getting populated exportContract ${exportContractNoAgent.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedExportContract(context, exportContractNoAgent.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
   describe('when a privateMarket is not found', () => {
     it('should throw an error', async () => {
       const exportContractObject = {
+        ...createdExportContract,
         privateMarket: privateMarketConnectObject,
         finalDestinationCountryCountryCode: createdCountry.isoCode,
         agent: {
@@ -149,13 +142,9 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
       const exportContractNoAgent = (await agent.create(context, exportContractObject)) as ApplicationExportContract;
 
-      try {
-        await getPopulatedExportContract(context, exportContractNoAgent.id);
-      } catch (error) {
-        const expected = `Getting populated exportContract ${exportContractNoAgent.id}`;
+      const expectedErrorMessage = `Error getting populated exportContract ${exportContractNoAgent.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedExportContract(context, exportContractNoAgent.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -169,13 +158,9 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
       const exportContractNoAgent = (await agent.create(context, exportContractObject)) as ApplicationExportContract;
 
-      try {
-        await getPopulatedExportContract(context, exportContractNoAgent.id);
-      } catch (error) {
-        const expected = `Getting populated exportContract ${exportContractNoAgent.id}`;
+      const expectedErrorMessage = `Error getting populated exportContract ${exportContractNoAgent.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedExportContract(context, exportContractNoAgent.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 });

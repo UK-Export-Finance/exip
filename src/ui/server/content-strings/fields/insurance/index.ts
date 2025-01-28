@@ -1,5 +1,6 @@
 export * from './eligibility';
 export * from './account';
+export * from './declarations';
 export * from './export-contract';
 export * from './policy';
 export * from './your-business';

@@ -9,7 +9,7 @@ const {
   ROOT: INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { CODE_OF_CONDUCT, EXPORTING_WITH_CODE_OF_CONDUCT },
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
   },
 } = INSURANCE_ROUTES;
 
@@ -26,6 +26,8 @@ context(
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
+
+        cy.completePrepareApplicationSinglePolicyType({});
 
         cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'codeOfConduct', referenceNumber });
 
@@ -88,11 +90,8 @@ context(
         });
 
         it('should render a validation error', () => {
-          const expectedErrorsCount = 1;
-
           cy.submitAndAssertRadioErrors({
             field: yesRadio(FIELD_ID),
-            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
           });
         });
@@ -113,12 +112,12 @@ context(
       });
 
       describe('when submitting a fully completed form', () => {
-        it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
+        it(`should redirect to ${MODERN_SLAVERY}`, () => {
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
 
-          const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+          const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
           cy.assertUrl(expectedUrl);
         });

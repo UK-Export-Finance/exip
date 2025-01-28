@@ -30,6 +30,19 @@ const CANNOT_APPLY_EXIT = {
   ACTIONS,
 };
 
+const TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT = {
+  PAGE_TITLE: 'Talk to an export finance manager',
+  INTRO: "We do not normally offer short term cover for the country you've selected.",
+  CONTACT_EFM: {
+    INTRO: 'You might still be able to apply for credit insurance through UKEF - contact',
+    LINK: {
+      TEXT: 'your nearest export finance manager',
+      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+    },
+    TEXT: `to learn more about your options.`,
+  },
+};
+
 const ACCESSIBILITY_STATEMENT_PAGE = {
   PAGE_TITLE: 'Apply for credit insurance - accessibility statement',
   HEADING: 'Apply for credit insurance - accessibility statement',
@@ -165,7 +178,7 @@ const COOKIES_SAVED_PAGE = {
   BODY: 'You can change your preferences at any time.',
 };
 
-const NEED_TO_START_AGAIN_EXIT = {
+const NEED_TO_START_AGAIN_EXIT_EXIT = {
   PAGE_TITLE: 'You need to start again',
   REASON: 'This is because you have not yet answered all the eligibility questions.',
 };
@@ -218,10 +231,11 @@ const PAGES = {
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
   CANNOT_APPLY_EXIT,
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
   ACCESSIBILITY_STATEMENT_PAGE,
   COOKIES_PAGE,
   COOKIES_SAVED_PAGE,
-  NEED_TO_START_AGAIN_EXIT,
+  NEED_TO_START_AGAIN_EXIT_EXIT,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   CONTACT_US_PAGE,

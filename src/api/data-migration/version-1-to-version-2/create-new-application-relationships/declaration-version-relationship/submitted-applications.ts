@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import { DECLARATIONS } from '../../../../constants';
-import getAllSubmittedApplications from '../../get-all-submitted-applications';
-import createCuid from '../../create-cuid';
+import getAllSubmittedApplications from '../../../helpers/get-all-submitted-applications';
+import createCuid from '../../../helpers/create-cuid';
 import executeSqlQuery from '../../../execute-sql-query';
 import { Application } from '../../../../types';
 

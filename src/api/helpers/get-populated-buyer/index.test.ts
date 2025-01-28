@@ -64,13 +64,9 @@ describe('helpers/get-populated-buyer', () => {
 
   describe('when a buyer is not found', () => {
     it('should throw an error', async () => {
-      try {
-        await getPopulatedBuyer(context, mockInvalidId);
-      } catch (error) {
-        const expected = `Getting populated buyer ${mockInvalidId}`;
+      const expectedErrorMessage = `Error getting populated buyer ${mockInvalidId}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedBuyer(context, mockInvalidId)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -78,19 +74,16 @@ describe('helpers/get-populated-buyer', () => {
     it('should throw an error', async () => {
       const buyerNoCountry = (await buyer.create(context)) as ApplicationBuyer;
 
-      try {
-        await getPopulatedBuyer(context, buyerNoCountry.id);
-      } catch (error) {
-        const expected = `Getting populated buyer ${buyerNoCountry.id}`;
+      const expectedErrorMessage = `Error getting populated buyer ${buyerNoCountry.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedBuyer(context, buyerNoCountry.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
   describe('when a relationship is not found', () => {
     it('should throw an error', async () => {
       const buyerObject = {
+        ...createdBuyer,
         country: buyerCountryConnectObject,
         relationship: {
           connect: {
@@ -101,19 +94,16 @@ describe('helpers/get-populated-buyer', () => {
 
       const buyerNoRelationship = (await buyer.create(context, buyerObject)) as ApplicationBuyer;
 
-      try {
-        await getPopulatedBuyer(context, buyerNoRelationship.id);
-      } catch (error) {
-        const expected = `Getting populated buyer ${buyerNoRelationship.id}`;
+      const expectedErrorMessage = `Error getting populated buyer ${buyerNoRelationship.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedBuyer(context, buyerNoRelationship.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
   describe('when a tradingHistory is not found', () => {
     it('should throw an error', async () => {
       const buyerObject = {
+        ...createdBuyer,
         country: buyerCountryConnectObject,
         relationship: buyerRelationshipConnectObject,
         buyerTradingHistory: {
@@ -125,13 +115,9 @@ describe('helpers/get-populated-buyer', () => {
 
       const buyerNoRelationship = (await buyer.create(context, buyerObject)) as ApplicationBuyer;
 
-      try {
-        await getPopulatedBuyer(context, buyerNoRelationship.id);
-      } catch (error) {
-        const expected = `Getting populated buyer ${buyerNoRelationship.id}`;
+      const expectedErrorMessage = `Error getting populated buyer ${buyerNoRelationship.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedBuyer(context, buyerNoRelationship.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 });

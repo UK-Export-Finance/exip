@@ -86,11 +86,11 @@ context(
           cy.checkText(field.label(), OPTIONS.PERCENTAGE.TEXT);
         });
 
-        it(`should NOT display conditional "${PERCENTAGE_CHARGE}" field`, () => {
+        it(`should NOT display a conditional "${PERCENTAGE_CHARGE}" field`, () => {
           fieldSelector(PERCENTAGE_CHARGE).input().should('not.be.visible');
         });
 
-        it(`should render conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
+        it(`should render a conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
           agentChargesPage[METHOD][PERCENTAGE].label().click();
 
           const fieldId = PERCENTAGE_CHARGE;
@@ -104,7 +104,10 @@ context(
       });
 
       describe(`searchable autocomplete input (${PAYABLE_COUNTRY_CODE})`, () => {
-        assertCountryAutocompleteInput({ fieldId: PAYABLE_COUNTRY_CODE });
+        assertCountryAutocompleteInput({
+          fieldId: PAYABLE_COUNTRY_CODE,
+          assertFilteredCisCountries: false,
+        });
       });
     });
 
@@ -163,7 +166,7 @@ context(
             cy.assertAgentChargesFieldValues({ percentageMethod: true });
           });
 
-          it(`should render conditional "${PERCENTAGE_CHARGE}" field`, () => {
+          it(`should render a conditional "${PERCENTAGE_CHARGE}" field`, () => {
             fieldSelector(PERCENTAGE_CHARGE).input().should('be.visible');
           });
         });

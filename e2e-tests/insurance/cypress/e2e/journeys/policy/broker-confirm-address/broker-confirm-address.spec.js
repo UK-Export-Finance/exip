@@ -1,5 +1,4 @@
-import { headingCaption } from '../../../../../../partials';
-import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
+import { insetTextHtml, insetTextHtmlLineBreak, headingCaption } from '../../../../../../pages/shared';
 import { brokerConfirmAddressPage } from '../../../../../../pages/insurance/policy';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import {

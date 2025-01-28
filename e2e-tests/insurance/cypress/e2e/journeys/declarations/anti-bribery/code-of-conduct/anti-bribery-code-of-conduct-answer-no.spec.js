@@ -4,7 +4,7 @@ const {
   ROOT: INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { CODE_OF_CONDUCT },
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
   },
 } = INSURANCE_ROUTES;
 
@@ -19,6 +19,8 @@ context(
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
+
+        cy.completePrepareApplicationSinglePolicyType({});
 
         cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'antiBribery', referenceNumber });
 
@@ -41,8 +43,8 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+    it(`should redirect to ${MODERN_SLAVERY}`, () => {
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
       cy.assertUrl(expectedUrl);
     });

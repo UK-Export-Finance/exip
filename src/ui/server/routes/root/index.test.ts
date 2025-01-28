@@ -1,6 +1,7 @@
 import { get, post } from '../../test-mocks/mock-router';
 import { ROUTES } from '../../constants';
 import rootGet from '../../controllers/root';
+import { get as thankYouGet } from '../../controllers/root/thank-you';
 import { get as accessibilityStatementGet } from '../../controllers/root/accessibility-statement';
 import { get as cookiesGet, post as cookiesPost } from '../../controllers/root/cookies';
 import { get as cookiesSavedGet } from '../../controllers/root/cookies/saved';
@@ -18,10 +19,11 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(11);
+    expect(get).toHaveBeenCalledTimes(12);
     expect(post).toHaveBeenCalledTimes(4);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ROOT, rootGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.THANK_YOU, thankYouGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);

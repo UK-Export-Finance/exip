@@ -135,7 +135,7 @@ context('Insurance - Dashboard - populated application - GBP currency', () => {
 
       // complete and submit the next 2 forms
       cy.completeAndSubmitMultipleContractPolicyForm({});
-      cy.completeAndSubmitExportValueForm({ policyType });
+      cy.completeAndSubmitExportValueForm({});
     });
 
     it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.VALUE} cell`, () => {

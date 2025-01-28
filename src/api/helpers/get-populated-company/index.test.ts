@@ -59,13 +59,9 @@ describe('helpers/get-populated-company', () => {
 
   describe('when a company is not found', () => {
     it('should throw an error', async () => {
-      try {
-        await getPopulatedCompany(context, mockInvalidId);
-      } catch (error) {
-        const expected = `Getting populated company ${mockInvalidId}`;
+      const expectedErrorMessage = `Error getting populated company ${mockInvalidId}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedCompany(context, mockInvalidId)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -82,13 +78,9 @@ describe('helpers/get-populated-company', () => {
 
       const companyNoAddress = (await company.createCompany(context, companyObject)) as ApplicationCompany;
 
-      try {
-        await getPopulatedCompany(context, companyNoAddress.id);
-      } catch (error) {
-        const expected = `Getting populated company ${companyNoAddress.id}`;
+      const expectedErrorMessage = `Error getting populated company ${companyNoAddress.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedCompany(context, companyNoAddress.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -105,13 +97,9 @@ describe('helpers/get-populated-company', () => {
 
       const companyNoDifferentTradingAddress = (await company.createCompany(context, companyObject)) as ApplicationCompany;
 
-      try {
-        await getPopulatedCompany(context, companyNoDifferentTradingAddress.id);
-      } catch (error) {
-        const expected = `Getting populated company ${companyNoDifferentTradingAddress.id}`;
+      const expectedErrorMessage = `Error getting populated company ${companyNoDifferentTradingAddress.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedCompany(context, companyNoDifferentTradingAddress.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 });

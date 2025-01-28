@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import getAllDeclarations from '../get-all-declarations';
+import getAllDeclarationsNonSubmittedApplications from '../../helpers/get-all-declarations-non-submitted-applications';
 import getAllDeclarationVersions from '../get-all-declaration-versions';
 import executeSqlQuery from '../../execute-sql-query';
 
@@ -18,7 +18,14 @@ const updateDeclarationVersionField = async (connection: Connection) => {
   console.info('✅ %s', loggingMessage);
 
   try {
-    const declarations = await getAllDeclarations(connection);
+    const declarations = await getAllDeclarationsNonSubmittedApplications(connection);
+
+    if (!declarations || !declarations.length) {
+      console.info('ℹ️ No non-submitted application declarations available - no need to create related declaration modern slavery version entries');
+
+      return false;
+    }
+
     const declarationVersions = await getAllDeclarationVersions(connection);
 
     const declarationPromises = declarations.map(async (declaration: object, index: number) => {

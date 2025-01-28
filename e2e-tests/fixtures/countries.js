@@ -1,21 +1,16 @@
-export const XAD = {
-  NAME: 'Abu Dhabi',
-  ISO_CODE: 'XAD',
-};
-
-export const DZA = {
-  NAME: 'Algeria',
-  ISO_CODE: 'DZA',
-};
-
 export const AGO = {
   NAME: 'Angola',
   ISO_CODE: 'AGO',
 };
 
-export const FRA = {
-  NAME: 'France',
-  ISO_CODE: 'FRA',
+export const ARG = {
+  NAME: 'Argentina',
+  ISO_CODE: 'ARG',
+};
+
+export const BLZ = {
+  NAME: 'Belize',
+  ISO_CODE: 'BLZ',
 };
 
 export const BRA = {
@@ -23,29 +18,19 @@ export const BRA = {
   ISO_CODE: 'BRA',
 };
 
-export const AFG = {
-  NAME: 'Afghanistan',
-  ISO_CODE: 'AFG',
+export const DZA = {
+  NAME: 'Algeria',
+  ISO_CODE: 'DZA',
 };
 
-export const AUS = {
-  NAME: 'Australia',
-  ISO_CODE: 'AUS',
+export const ERI = {
+  NAME: 'Eritrea',
+  ISO_CODE: 'ERI',
 };
 
-export const BLR = {
-  NAME: 'Belarus',
-  ISO_CODE: 'BLR',
-};
-
-export const RUS = {
-  NAME: 'Russia',
-  ISO_CODE: 'RUS',
-};
-
-export const MMR = {
-  NAME: 'Burma',
-  ISO_CODE: 'MMR',
+export const FRA = {
+  NAME: 'France',
+  ISO_CODE: 'FRA',
 };
 
 export const GBR = {
@@ -53,44 +38,78 @@ export const GBR = {
   ISO_CODE: 'GBR',
 };
 
-const mockCountries = [XAD, AFG, DZA, AGO, AUS, BLR, BRA, MMR, FRA, RUS, GBR];
+export const IOT = {
+  NAME: 'British Indian Ocean Territory',
+  ISO_CODE: 'IOT',
+};
+
+export const IRL = {
+  NAME: 'Ireland',
+  ISO_CODE: 'IRL',
+};
+
+export const NCL = {
+  NAME: 'New Caledonia',
+  ISO_CODE: 'NCL',
+};
+
+export const TN = {
+  NAME: 'Tunisia',
+  ISO_CODE: 'TN',
+};
+
+export const XAD = {
+  NAME: 'Abu Dhabi',
+  ISO_CODE: 'XAD',
+};
+
+const mockCountries = [DZA, FRA, AGO, GBR, XAD, BRA];
+
+const ONLINE_SUPPORT_1 = DZA;
+
+const NO_ONLINE_SUPPORT_1 = AGO;
+const NO_ONLINE_SUPPORT_2 = ARG;
+const NO_ONLINE_SUPPORT_3 = BLZ;
+const NO_ONLINE_SUPPORT_4 = TN;
+const NO_ONLINE_SUPPORT_5 = IRL;
+const NO_ONLINE_SUPPORT_6 = FRA;
+
+const NOT_SUPPORTED_1 = GBR;
+const NOT_SUPPORTED_2 = ERI;
+const NOT_SUPPORTED_3 = IOT;
+const NOT_SUPPORTED_4 = NCL;
 
 /**
  * COUNTRY_QUOTE_SUPPORT
  * Different types of country support for a quote.
  */
-const { 2: QUOTE_ONLINE, 3: QUOTE_BY_EMAIL, 8: QUOTE_UNSUPPORTED } = mockCountries;
-
 export const COUNTRY_QUOTE_SUPPORT = {
-  ONLINE: QUOTE_ONLINE,
-  BY_EMAIL: QUOTE_BY_EMAIL,
-  UNSUPPORTED: QUOTE_UNSUPPORTED,
+  ONLINE_SUPPORT_1,
+  NO_ONLINE_SUPPORT_1,
+  NO_ONLINE_SUPPORT_2,
+  NO_ONLINE_SUPPORT_3,
+  NO_ONLINE_SUPPORT_4,
+  NO_ONLINE_SUPPORT_5,
+  NO_ONLINE_SUPPORT_6,
+  NOT_SUPPORTED_1,
 };
 
 /**
  * COUNTRY_APPLICATION_SUPPORT
  * Different types of country support for an application
  */
-const {
-  2: APPLICATION_ONLINE,
-  3: APPLICATION_BY_EMAIL,
-  8: APPLICATION_NO_SHORT_TERM_COVER_1,
-  4: APPLICATION_NO_SHORT_TERM_COVER_2,
-  1: APPLICATION_UNSUPPORTED_1,
-  5: APPLICATION_UNSUPPORTED_2,
-  7: APPLICATION_UNSUPPORTED_3,
-  9: APPLICATION_UNSUPPORTED_4,
-} = mockCountries;
-
 export const COUNTRY_APPLICATION_SUPPORT = {
-  ONLINE: APPLICATION_ONLINE,
-  BY_EMAIL: APPLICATION_BY_EMAIL,
-  UNSUPPORTED_1: APPLICATION_UNSUPPORTED_1,
-  UNSUPPORTED_2: APPLICATION_UNSUPPORTED_2,
-  UNSUPPORTED_3: APPLICATION_UNSUPPORTED_3,
-  UNSUPPORTED_4: APPLICATION_UNSUPPORTED_4,
-  NO_SHORT_TERM_COVER_1: APPLICATION_NO_SHORT_TERM_COVER_1,
-  NO_SHORT_TERM_COVER_2: APPLICATION_NO_SHORT_TERM_COVER_2,
+  ONLINE_SUPPORT_1,
+  NO_ONLINE_SUPPORT_1,
+  NO_ONLINE_SUPPORT_2,
+  NO_ONLINE_SUPPORT_3,
+  NO_ONLINE_SUPPORT_4,
+  NO_ONLINE_SUPPORT_5,
+  NO_ONLINE_SUPPORT_6,
+  NOT_SUPPORTED_1,
+  NOT_SUPPORTED_2,
+  NOT_SUPPORTED_3,
+  NOT_SUPPORTED_4,
 };
 
 export default mockCountries;

@@ -123,6 +123,8 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
       ...getTrueAndFalseAnswers(exportContract.agent.service),
       ...exportContract.agent.service.charge,
       ...getTrueAndFalseAnswers(declaration),
+      ...declaration.modernSlavery,
+      ...getTrueAndFalseAnswers(declaration.modernSlavery),
       ...mapNominatedLossPayee(nominatedLossPayee),
       ...relationship,
       ...policy,

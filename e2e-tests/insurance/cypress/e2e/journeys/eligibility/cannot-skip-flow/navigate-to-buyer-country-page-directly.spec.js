@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, NEED_TO_START_AGAIN },
+  ELIGIBILITY: { BUYER_COUNTRY, NEED_TO_START_AGAIN_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -12,7 +12,7 @@ context('Manually going to the `Buyer country` page via URL without completing t
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });

@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  ELIGIBILITY: { ELIGIBLE_TO_APPLY_ONLINE, NEED_TO_START_AGAIN },
+  ELIGIBILITY: { ELIGIBLE_TO_APPLY_ONLINE, NEED_TO_START_AGAIN_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -26,8 +26,8 @@ context('Insurance - Eligibility - You are eligible to apply online page - user 
     cy.deleteAccount();
   });
 
-  it(`should redirect to ${NEED_TO_START_AGAIN}`, () => {
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+  it(`should redirect to ${NEED_TO_START_AGAIN_EXIT}`, () => {
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });

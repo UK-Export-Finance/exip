@@ -4,9 +4,62 @@ import generateGroupsAndTasks from './generate-groups-and-tasks';
 import flattenApplicationData from '../flatten-application-data';
 import { mockApplication, referenceNumber } from '../../test-mocks';
 
+const { broker, buyer, company, declaration, exportContract, nominatedLossPayee, policy, totalContractValueOverThreshold } = mockApplication;
+
+const { policyType, jointlyInsuredParty } = policy;
+
+const {
+  isAppointed: isAppointingLossPayee,
+  isLocatedInUk: lossPayeeIsLocatedInUk,
+  isLocatedInternationally: lossPayeeIsLocatedInternationally,
+} = nominatedLossPayee;
+
+const {
+  finalDestinationKnown,
+  privateMarket: { attempted: attemptedPrivateMarketCover },
+  agent: {
+    isUsingAgent,
+    service: {
+      agentIsCharging,
+      charge: { method: agentChargeMethod },
+    },
+  },
+} = exportContract;
+
+const { isUsingBroker, isBasedInUk: brokerIsBasedInUk, fullAddress: brokerFullAddress } = broker;
+const { hasDifferentTradingName } = company;
+const { buyerTradingHistory, relationship } = buyer;
+const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
+const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
+const { awardMethod } = exportContract;
+
 describe('server/helpers/task-list', () => {
   const mockApplicationFlat = flattenApplicationData(mockApplication);
-  const mockTaskListData = generateGroupsAndTasks(referenceNumber);
+
+  const mockTaskListData = generateGroupsAndTasks(
+    referenceNumber,
+    declaration,
+    policyType,
+    finalDestinationKnown,
+    jointlyInsuredParty.requested,
+    isUsingBroker,
+    brokerIsBasedInUk,
+    brokerFullAddress,
+    isAppointingLossPayee,
+    lossPayeeIsLocatedInUk,
+    lossPayeeIsLocatedInternationally,
+    hasDifferentTradingName,
+    exporterIsConnectedWithBuyer,
+    exporterHasTradedWithBuyer,
+    outstandingPayments,
+    exporterHasPreviousCreditInsuranceWithBuyer,
+    totalContractValueOverThreshold,
+    attemptedPrivateMarketCover,
+    isUsingAgent,
+    agentIsCharging,
+    agentChargeMethod,
+    awardMethod?.id,
+  );
 
   const { 0: mockTaskGroup } = mockTaskListData;
   const { tasks: group1Tasks } = mockTaskGroup;

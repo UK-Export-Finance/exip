@@ -20,7 +20,7 @@ describe('getOrdnanceSurveyAddresses', () => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return object containing success=false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = { success: false };
@@ -34,7 +34,7 @@ describe('getOrdnanceSurveyAddresses', () => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
-    it('should return object containing success=false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = { success: false };
@@ -44,7 +44,7 @@ describe('getOrdnanceSurveyAddresses', () => {
   });
 
   describe('when the postcode is invalid', () => {
-    it('should return object containing success=false and invalidPostcode=true', async () => {
+    it('should return an object containing success=false and invalidPostcode=true', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode: 'S', houseNameOrNumber });
 
       const expected = { success: false, invalidPostcode: true };
