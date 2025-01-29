@@ -1,3 +1,4 @@
+import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
@@ -13,7 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Broker - Not based in UK - Summary List', () => {
+context('Insurance - Policy - Check your answers - Summary list - Multiple contract policy - Broker - Based in UK - Summary List', () => {
   let url;
   let referenceNumber;
 
@@ -21,7 +22,12 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ usingBroker: true, brokerIsBasedInUk: false });
+      cy.completePolicySection({
+        policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+        usingBroker: true,
+        brokerIsBasedInUk: true,
+        provideBrokerAddressManually: true,
+      });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });

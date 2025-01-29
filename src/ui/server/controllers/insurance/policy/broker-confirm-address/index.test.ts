@@ -3,10 +3,12 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import generateUseDifferentBrokerAddressUrl from '../../../../helpers/generate-use-different-broker-address-url';
 import generateEnterBrokerAddressManuallyUrl from '../../../../helpers/generate-enter-broker-address-manually-url';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import generateBrokerAddressInsetTextHtml from '../../../../helpers/generate-broker-address-inset-text-html';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
@@ -19,7 +21,8 @@ const {
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_DETAILS_CHANGE, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_CONFIRM_ADDRESS_CHANGE, LOSS_PAYEE_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE, LOSS_PAYEE_ROOT, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -49,40 +52,19 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('pageVariables', () => {
-    const expectedGenericVariables = {
-      USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-    };
+    it('should return the correct properties', () => {
+      const isAChangeRoute = true;
+      const isACheckAndChangeRoute = false;
 
-    describe("when the url's last substring is `change`", () => {
-      it('should return the correct properties', () => {
-        const isAChangeRoute = isChangeRoute(BROKER_CONFIRM_ADDRESS_CHANGE);
+      const result = pageVariables(referenceNumber, isAChangeRoute, isACheckAndChangeRoute);
 
-        const result = pageVariables(referenceNumber, isAChangeRoute);
+      const expected = {
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+        USE_DIFFERENT_ADDRESS_URL: generateUseDifferentBrokerAddressUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute),
+        ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute),
+      };
 
-        const expected = {
-          ...expectedGenericVariables,
-          USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHANGE}`,
-          ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute),
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe("when the url's last substring is NOT `change`", () => {
-      it('should return the correct properties', () => {
-        const isAChangeRoute = isChangeRoute(BROKER_CONFIRM_ADDRESS_ROOT);
-
-        const result = pageVariables(referenceNumber, isAChangeRoute);
-
-        const expected = {
-          ...expectedGenericVariables,
-          ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute),
-        };
-
-        expect(result).toEqual(expected);
-      });
+      expect(result).toEqual(expected);
     });
   });
 
@@ -195,7 +177,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, isChangeRoute(req.originalUrl)),
+        ...pageVariables(referenceNumber, isChangeRoute(req.originalUrl), isCheckAndChangeRoute(req.originalUrl)),
         userName: getUserNameFromSession(req.session.user),
         submittedAnswer: generateBrokerAddressInsetTextHtml(mockApplication.broker),
       });
@@ -222,6 +204,17 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
         await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe("when the url's last substring is `check-and-change`", () => {
+      it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+        req.originalUrl = BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE;
+
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
     });
