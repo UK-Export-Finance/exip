@@ -4,26 +4,26 @@ import { SubmittedData } from '../submitted-data';
 import { Quote } from '../quote';
 import { Application } from '../application';
 
-interface Next {
+export interface Next {
   (error?: any): void;
 }
 
-interface RequestBody {
+export interface RequestBody {
   _csrf?: string;
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-interface RequestCookies {
+export interface RequestCookies {
   optionalCookies?: string;
 }
 
-interface RequestHeaders {
+export interface RequestHeaders {
   referer: string;
   origin: string;
   host: string;
 }
 
-interface SRI {
+export interface SRI {
   JS: string;
   GOVUK: string;
   FORM: string;
@@ -33,14 +33,13 @@ interface SRI {
   GA_TAG_MANAGER: string;
 }
 
-interface MetaData {
+export interface MetaData {
   URL: string;
   TITLE: string;
   ORGANISATION: string;
 }
 
-interface ResponseLocals {
-  application?: Application;
+export interface ResponseLocals {
   csrfToken: string;
   cookieConsent?: boolean;
   cookieConsentDecision?: boolean;
@@ -51,17 +50,21 @@ interface ResponseLocals {
   SRI: SRI;
 }
 
-interface RequestParams {
+export interface ResponseLocalsInsurance extends ResponseLocals {
+  application: Application;
+}
+
+export interface RequestParams {
   referenceNumber?: string;
   pageNumber?: string;
 }
 
-interface RequestQuery {
+export interface RequestQuery {
   token?: string;
   id?: string;
 }
 
-interface RequestSessionUser {
+export interface RequestSessionUser {
   firstName: string;
   lastName: string;
   email: string;
@@ -70,7 +73,7 @@ interface RequestSessionUser {
   expires: string;
 }
 
-interface RequestSession {
+export interface RequestSession {
   submittedData: SubmittedData;
   quote?: Quote;
   cookieConsentNewDecision?: boolean;
@@ -83,7 +86,7 @@ interface RequestSession {
   returnToServiceUrl?: string;
 }
 
-interface Request {
+export interface Request {
   body: RequestBody;
   cookies: RequestCookies;
   csrfToken: () => string;
@@ -99,7 +102,7 @@ interface Request {
   session: RequestSession;
 }
 
-interface Response {
+export interface Response {
   redirect: (str: string) => any;
   render: (str: string, object: any) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
   locals: ResponseLocals;
@@ -111,10 +114,12 @@ interface Response {
   send: () => any;
 }
 
+export interface ResponseInsurance extends Response {
+  locals: ResponseLocalsInsurance;
+}
+
 declare module 'express-session' {
   interface SessionData {
     submittedData: SubmittedData;
   }
 }
-
-export { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response };

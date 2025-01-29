@@ -12,8 +12,8 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
 import getBrokerDetailsPostRedirectUrl from '../../../../helpers/get-broker-details-post-redirect-url';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber, mockSpyPromiseRejection } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
@@ -29,11 +29,11 @@ const { broker } = mockApplication;
 
 describe('controllers/insurance/policy/broker-details', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -120,18 +120,6 @@ describe('controllers/insurance/policy/broker-details', () => {
         application: mapApplicationToFormFields(mockApplication),
       });
     });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
   });
 
   describe('post', () => {
@@ -208,18 +196,6 @@ describe('controllers/insurance/policy/broker-details', () => {
         });
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

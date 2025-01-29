@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import getApplicationByReferenceNumber from '../../../helpers/get-application-by-reference-number';
 import getApplicationByReferenceNumberVariables from '../../../helpers/get-application-by-reference-number-variables';
-import { Next, Request, Response } from '../../../../types';
+import { Next, Request, ResponseInsurance } from '../../../../types';
 
 const {
   ALL_SECTIONS,
@@ -43,10 +43,10 @@ export const RELEVANT_ROUTES = [
  * getApplicationByReferenceNumberMiddleware
  * If the route is a relevant insurance route, get the application via getApplicationByReferenceNumber query and add to res.locals
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Request.Next} request next or response redirect
  */
-const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Response, next: Next) => {
+const getApplicationByReferenceNumberMiddleware = async (req: Request, res: ResponseInsurance, next: Next) => {
   const { originalUrl: url } = req;
 
   /**
@@ -71,13 +71,15 @@ const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Resp
 
       const application = await getApplicationByReferenceNumber(variables);
 
-      if (application) {
-        res.locals.application = application;
+      if (!application) {
+        console.error('No application obtained (getApplicationByReferenceNumber middleware) - redirecting to %s', PAGE_NOT_FOUND);
 
-        return next();
+        return res.redirect(PAGE_NOT_FOUND);
       }
 
-      return res.redirect(PAGE_NOT_FOUND);
+      res.locals.application = application;
+
+      return next();
     } catch (error) {
       console.error('Error getting application by reference number %o', error);
 

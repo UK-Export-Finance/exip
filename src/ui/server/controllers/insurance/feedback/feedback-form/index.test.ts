@@ -7,8 +7,8 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockInsuranceFeedback } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockInsuranceFeedback } from '../../../../test-mocks';
 
 const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FEEDBACK_FIELD_IDS;
 
@@ -21,7 +21,7 @@ const { FEEDBACK_SENT, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/feedback/feedback-confirmation', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   const mockFlash = jest.fn();
 
@@ -29,7 +29,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
     req = mockReq();
     req.flash = mockFlash;
 
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('FIELD_IDS', () => {

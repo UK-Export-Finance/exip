@@ -10,8 +10,8 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import generateBrokerAddressInsetTextHtml from '../../../../helpers/generate-broker-address-inset-text-html';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { POSTCODE, BUILDING_NUMBER_OR_NAME },
@@ -23,16 +23,15 @@ const {
   ALL_SECTIONS,
   POLICY: { BROKER_DETAILS_ROOT, BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE, LOSS_PAYEE_ROOT, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-  PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/policy/broker-confirm-address', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -182,18 +181,6 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
         submittedAnswer: generateBrokerAddressInsetTextHtml(mockApplication.broker),
       });
     });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
   });
 
   describe('post', () => {
@@ -225,18 +212,6 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
       const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 });

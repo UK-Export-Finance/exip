@@ -12,7 +12,7 @@ import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Application, Request, Response } from '../../../../../types';
+import { Application, Request, ResponseInsurance } from '../../../../../types';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
@@ -65,10 +65,10 @@ export const HTML_FLAGS = {
 /**
  * gets the template for company details page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} renders company details page with/without previously submitted details
  */
-const get = (req: Request, res: Response) => {
+const get = (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -110,10 +110,10 @@ const get = (req: Request, res: Response) => {
  * posts company details
  * runs validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Nature of business page with or without errors
  */
-const post = async (req: Request, res: Response) => {
+const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

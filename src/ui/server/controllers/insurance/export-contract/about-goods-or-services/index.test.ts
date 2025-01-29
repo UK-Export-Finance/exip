@@ -14,8 +14,8 @@ import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockCountries, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -39,7 +39,7 @@ const {
 
 describe('controllers/insurance/export-contract/about-goods-or-services', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../map-and-save/export-contract');
 
@@ -50,7 +50,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.countries.getAll = getCountriesSpy;
   });
@@ -141,18 +141,6 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {
@@ -275,18 +263,6 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

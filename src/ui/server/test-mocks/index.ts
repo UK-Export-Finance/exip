@@ -50,7 +50,7 @@ import mockLossPayeeFinancialDetailsUk from './mock-loss-payee-financial-details
 import mockContact from './mock-contact';
 import mockOrdnanceSurveyAddressResponse from './mock-ordnance-survey-address-response';
 import mockValidEmail from './mock-valid-email';
-import { Request, Response } from '../../types';
+import { Request, Response, ResponseInsurance } from '../../types';
 
 const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, ACCESSIBILITY } = INTEGRITY;
 
@@ -88,20 +88,21 @@ const mockReq = () => {
   return req;
 };
 
-const mockRes = () => {
-  const res = {} as Response;
-
-  res.redirect = jest.fn();
-  res.render = jest.fn();
-  res.removeHeader = jest.fn();
-  res.setHeader = jest.fn();
-  res.status = jest.fn();
-  res.type = jest.fn();
-  res.write = jest.fn();
-  res.send = jest.fn();
-
-  res.locals = {
-    application: mockApplication,
+/**
+ * mockRes
+ * Mock response object
+ * @returns {Response}
+ */
+const mockRes = (): Response => ({
+  redirect: jest.fn(),
+  render: jest.fn(),
+  removeHeader: jest.fn(),
+  setHeader: jest.fn(),
+  status: jest.fn(),
+  type: jest.fn(),
+  write: jest.fn(),
+  send: jest.fn(),
+  locals: {
     csrfToken: 'mock',
     meta: {
       URL: 'mock.com/route',
@@ -117,10 +118,21 @@ const mockRes = () => {
       GA,
       GA_TAG_MANAGER,
     },
-  };
+  },
+});
 
-  return res;
-};
+/**
+ * mockResInsurance
+ * Mock response object for "insurance" routes
+ * @returns {ResponseInsurance}
+ */
+const mockResInsurance = (): ResponseInsurance => ({
+  ...mockRes(),
+  locals: {
+    ...mockRes().locals,
+    application: mockApplication,
+  },
+});
 
 const mockErrorMessage = 'Mock error';
 
@@ -189,6 +201,7 @@ export {
   mockPhoneNumbers,
   mockReq,
   mockRes,
+  mockResInsurance,
   mockSpyPromise,
   mockSpyPromiseRejection,
   mockValidEmail,

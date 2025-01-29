@@ -11,7 +11,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
@@ -47,10 +47,10 @@ export const pageVariables = (referenceNumber: number) => ({
 /**
  * Render the Broker manual address page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Broker manual address page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -75,10 +75,10 @@ export const get = (req: Request, res: Response) => {
  * post
  * Check Policy - Broker manual address validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
