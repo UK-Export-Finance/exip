@@ -148,7 +148,7 @@ export const post = async (req: Request, res: Response) => {
       referenceNumber,
       originalUrl: req.originalUrl,
       formBody: payload,
-      brokerData: application.broker,
+      brokerData: saveResponse,
     });
 
     return res.redirect(redirectUrl);

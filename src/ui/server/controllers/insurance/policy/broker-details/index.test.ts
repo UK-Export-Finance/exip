@@ -153,7 +153,12 @@ describe('controllers/insurance/policy/broker-details', () => {
       },
     };
 
-    mapAndSave.broker = jest.fn(() => Promise.resolve(true));
+    const mockSaveBrokerRespone = {
+      ...mockApplication.broker,
+      id: 'mock-saved-broker-id',
+    };
+
+    mapAndSave.broker = jest.fn().mockResolvedValue(mockSaveBrokerRespone);
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
@@ -204,7 +209,7 @@ describe('controllers/insurance/policy/broker-details', () => {
           referenceNumber,
           originalUrl: req.originalUrl,
           formBody: payload,
-          brokerData: mockApplication.broker,
+          brokerData: mockSaveBrokerRespone,
         });
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
@@ -229,7 +234,7 @@ describe('controllers/insurance/policy/broker-details', () => {
           req.body = validBody.notBasedInUk;
         });
 
-        describe('when mapAndSave.broker does not return a true boolean', () => {
+        describe('when mapAndSave.broker does not return data', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
