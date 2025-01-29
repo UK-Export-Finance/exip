@@ -209,7 +209,6 @@ describe('controllers/insurance/policy/broker-details', () => {
           referenceNumber,
           originalUrl: req.originalUrl,
           formBody: payload,
-          brokerData: mockSaveBrokerRespone,
         });
 
         expect(res.redirect).toHaveBeenCalledWith(expected);

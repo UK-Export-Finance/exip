@@ -37,8 +37,8 @@ import { ApolloResponse } from './apollo';
 import {
   BrokerDetailsDataChangeFlagsParams,
   BrokerDetailsNotBasedInUkRedirectUrlParams,
+  BrokerDetailsRedirectUrlChildParams,
   BrokerDetailsRedirectUrlParams,
-  BrokerDetailsBasedInUkRedirectUrlParams,
 } from './broker-details';
 import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
@@ -138,8 +138,8 @@ export {
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
-  BrokerDetailsBasedInUkRedirectUrlParams,
   BrokerDetailsDataChangeFlagsParams,
+  BrokerDetailsRedirectUrlChildParams,
   BrokerDetailsRedirectUrlParams,
   BrokerDetailsNotBasedInUkRedirectUrlParams,
   CanCreateApplicationEligibilityFlags,
