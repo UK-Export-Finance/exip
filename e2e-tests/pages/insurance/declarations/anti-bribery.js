@@ -11,23 +11,6 @@ const antiBriberyPage = {
       item: (itemNumber) => cy.get('.lower-alpha-counter-list').last().children(`[data-cy='list-level-2-item-${itemNumber}']`),
     },
   },
-  expandable: {
-    summary: () => cy.get('[data-cy="definition-of-terms"] summary'),
-    details: () => cy.get('[data-cy="definition-of-terms"]'),
-    table: {
-      headers: {
-        term: () => cy.get('[data-cy="header-term"]'),
-        definition: () => cy.get('[data-cy="header-definition"]'),
-      },
-      body: {
-        row: (row) => ({
-          term: () => cy.get(`[data-cy="row-${row}-cell-term"]`),
-          definition: () => cy.get(`[data-cy="row-${row}-cell-definition"]`),
-          definitionListItem: (listItem) => cy.get(`[data-cy="row-${row}-cell-definition-list-item-${listItem}"]`),
-        }),
-      },
-    },
-  },
 };
 
 export default antiBriberyPage;

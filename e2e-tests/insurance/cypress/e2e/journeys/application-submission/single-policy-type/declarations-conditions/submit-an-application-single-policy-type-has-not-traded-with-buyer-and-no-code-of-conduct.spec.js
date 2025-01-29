@@ -5,10 +5,6 @@ context(
 
     before(() => {
       cy.createAccount({});
-    });
-
-    beforeEach(() => {
-      cy.saveSession();
 
       cy.completeSignInAndSubmitAnApplication({
         exporterHasTradedWithBuyer: false,
@@ -17,6 +13,10 @@ context(
       }).then((refNumber) => {
         referenceNumber = refNumber;
       });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
     });
 
     after(() => {

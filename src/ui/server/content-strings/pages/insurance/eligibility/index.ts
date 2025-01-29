@@ -3,7 +3,7 @@ import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
 
-const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 
 const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for credit insurance for your export',
@@ -168,19 +168,6 @@ const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
 
-const CONTRACT_TOO_SHORT_EXIT = {
-  PAGE_TITLE: 'Talk to an export finance manager',
-  INTRO: "We do not normally offer short term cover for the country you've selected.",
-  CONTACT_EFM: {
-    INTRO: 'You might still be able to apply for credit insurance through UKEF - contact',
-    LINK: {
-      TEXT: 'your nearest export finance manager',
-      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-    },
-    TEXT: `to learn more about your options.`,
-  },
-};
-
 const PARTY_TO_CONSORTIUM = {
   PAGE_TITLE: 'Are you, or will you be a party to any consortium in connection with the performance or financing of any part of the export contract(s)?',
 };
@@ -206,7 +193,6 @@ export default {
   CHECK_YOUR_ANSWERS,
   ELIGIBLE_TO_APPLY_ONLINE,
   HAVE_AN_ACCOUNT,
-  CONTRACT_TOO_SHORT_EXIT,
   PARTY_TO_CONSORTIUM,
   MEMBER_OF_A_GROUP,
   MEMBER_OF_A_GROUP_EXIT,

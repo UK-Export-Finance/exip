@@ -9,8 +9,9 @@ const { NAME: ALGERIA } = DZA;
  * assertCountryAutocompleteInput
  * Assert a country autocomplete field
  * @param {String} fieldId: Country field ID
+ * @param {Boolean} assertFilteredCisCountries: Whether to check for filtered CIS countries.
  */
-export const assertCountryAutocompleteInput = ({ fieldId }) => {
+export const assertCountryAutocompleteInput = ({ fieldId, assertFilteredCisCountries }) => {
   const field = autoCompleteField(fieldId);
 
   it('has working client side JS', () => {
@@ -25,9 +26,11 @@ export const assertCountryAutocompleteInput = ({ fieldId }) => {
     assertions.rendersNoResultsMessage(field, 'test');
   });
 
-  it('renders `no results` message for invalid/filtered out CIS countries', () => {
-    assertions.doesNotRenderFilteredCisCountries(field);
-  });
+  if (assertFilteredCisCountries) {
+    it('renders `no results` message for invalid/filtered out CIS countries', () => {
+      assertions.doesNotRenderFilteredCisCountries(field);
+    });
+  }
 
   it('renders a single country result after searching', () => {
     assertions.rendersSingleResult(field, 'Alg');

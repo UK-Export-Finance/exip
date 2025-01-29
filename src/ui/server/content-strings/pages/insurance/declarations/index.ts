@@ -2,6 +2,7 @@ import { CONFIDENTIALITY } from './confidentiality';
 import { ANTI_BRIBERY } from './anti-bribery';
 import { ANTI_BRIBERY_CODE_OF_CONDUCT } from './anti-bribery-code-of-conduct';
 import { ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT } from './anti-bribery-exporting-with-code-of-conduct';
+import { MODERN_SLAVERY } from './modern-slavery';
 import { CONFIRMATION_AND_ACKNOWLEDGEMENTS } from './confirmation-and-acknowledgements';
 
 export default {
@@ -9,5 +10,6 @@ export default {
   ANTI_BRIBERY,
   ANTI_BRIBERY_CODE_OF_CONDUCT,
   ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
+  MODERN_SLAVERY,
   CONFIRMATION_AND_ACKNOWLEDGEMENTS,
 };

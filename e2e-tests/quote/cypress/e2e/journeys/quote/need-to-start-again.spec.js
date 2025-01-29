@@ -2,10 +2,10 @@ import { needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_EXIT;
+const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_EXIT_EXIT;
 
 const {
-  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, NEED_TO_START_AGAIN, BUYER_COUNTRY },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, NEED_TO_START_AGAIN_EXIT, BUYER_COUNTRY },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -20,7 +20,7 @@ context('Get a Quote - Need to start again exit page', () => {
 
     cy.saveSession();
 
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });
@@ -28,7 +28,7 @@ context('Get a Quote - Need to start again exit page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: NEED_TO_START_AGAIN,
+      currentHref: NEED_TO_START_AGAIN_EXIT,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertBackLink: false,
       assertAuthenticatedHeader: false,

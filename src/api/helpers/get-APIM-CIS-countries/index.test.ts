@@ -28,12 +28,12 @@ describe('helpers/get-APIM-CIS-countries', () => {
     });
   });
 
-  describe('when APIM CIS API returns success as false', () => {
+  describe('when APIM CIS API returns success=false', () => {
     beforeEach(() => {
       APIM.getCisCountries = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await apimCisCountries.get();
 
       const expected = { success: false };
@@ -42,12 +42,12 @@ describe('helpers/get-APIM-CIS-countries', () => {
     });
   });
 
-  describe('when APIM CIS API returns empty data object', () => {
+  describe('when APIM CIS API returns an empty data object', () => {
     beforeEach(() => {
       APIM.getCisCountries = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await apimCisCountries.get();
 
       const expected = { success: false };

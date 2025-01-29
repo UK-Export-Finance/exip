@@ -10,57 +10,56 @@ version: 2
 updates:
   # Root package-*.json files
   - package-ecosystem: 'npm'
-    directory: '/'
+    directories:
+      - '/'
+      - 'src/api'
+      - '/src/ui'
+      - '/generate-exip-pricing-grid'
     schedule:
       interval: 'monthly'
       time: '03:00'
     labels:
       - 'chore'
+    ignore:
+      - dependency-name: "@keystone-6/core"
+        versions: [">=6.0.0"]
+      - dependency-name: "@keystone-6/auth"
+        versions: [">=8.0.0"]
+      - dependency-name: "@keystone-6/fields-document"
+        versions: [">=9.0.0"]
+      - dependency-name: "@typescript-eslint/parser"
+        versions: [">=8.0.0"]
+      - dependency-name: "@typescript-eslint/eslint-plugin"
+        versions: [">=8.0.0"]
+      - dependency-name: "graphql"
+        versions: [">=16.0.0"]
+      - dependency-name: "eslint"
+        versions: [">=9.0.0"]
+      - dependency-name: "eslint-plugin-cypress"
+        versions: [">=4.0.0"]
+      - dependency-name: "eslint-plugin-prettier"
+        versions: [">=5.0.0"]
+      - dependency-name: "prettier"
+        versions: [">=3.0.0"]
+    groups:
+      npm-packages:
+        patterns:
+          - '*'
 
-  # `API` package-*.json files
-  - package-ecosystem: 'npm'
-    directory: '/src/api'
-    schedule:
-      interval: 'monthly'
-      time: '03:00'
-    labels:
-      - 'chore'
-
-  # `UI` package-*.json files
-  - package-ecosystem: 'npm'
-    directory: '/src/ui'
-    schedule:
-      interval: 'monthly'
-      time: '03:00'
-    labels:
-      - 'chore'
-
-  # `generate-exip-pricing-grid` package-*.json files
-  - package-ecosystem: 'npm'
-    directory: '/generate-exip-pricing-grid'
-    schedule:
-      interval: 'monthly'
-      time: '03:00'
-    labels:
-      - 'chore'
-
-  # `API` Dockerfile
+  # `UI and API` Dockerfile
   - package-ecosystem: 'docker'
-    directory: '/src/api'
+    directories:
+      - 'src/api'
+      - '/src/ui'
     schedule:
       interval: 'monthly'
       time: '03:00'
     labels:
       - 'chore'
-
-  # `UI` Dockerfile
-  - package-ecosystem: 'docker'
-    directory: '/src/ui'
-    schedule:
-      interval: 'monthly'
-      time: '03:00'
-    labels:
-      - 'chore'
+    groups:
+      docker-packages:
+        patterns:
+          - '*'
 
   # Git Hub Actions
   #  Set the directory to `/` for
@@ -72,3 +71,7 @@ updates:
       time: '03:00'
     labels:
       - 'chore'
+    groups:
+      github-actions:
+        patterns:
+          - '*'

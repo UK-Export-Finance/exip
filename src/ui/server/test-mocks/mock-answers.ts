@@ -3,7 +3,7 @@ import { SubmittedDataQuoteEligibility } from '../../types';
 
 const {
   ELIGIBILITY: {
-    VALID_BUYER_BODY,
+    VALID_TYPE_OF_BUYER,
     VALID_EXPORTER_LOCATION,
     BUYER_COUNTRY,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -17,7 +17,7 @@ const {
 } = FIELD_IDS;
 
 const mockAnswers = {
-  [VALID_BUYER_BODY]: true,
+  [VALID_TYPE_OF_BUYER]: true,
   [VALID_EXPORTER_LOCATION]: true,
   [BUYER_COUNTRY]: 'Algeria',
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,

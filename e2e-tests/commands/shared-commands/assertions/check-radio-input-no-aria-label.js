@@ -6,11 +6,20 @@ import checkAriaLabel from './check-aria-label';
  * checkRadioInputNoAriaLabel
  * Check a "no" radio input's aria label
  * @param {String} Expected message without "No" copy
+ * @param {Integer} index: Optional radio index
  */
-const checkRadioInputNoAriaLabel = (message) => {
+const checkRadioInputNoAriaLabel = (message, index) => {
   const expectedMessage = `${message} ${FIELD_VALUES.NO}`;
 
-  checkAriaLabel(noRadioInput(), expectedMessage);
+  let selector;
+
+  if (index) {
+    selector = noRadioInput().eq(index);
+  } else {
+    selector = noRadioInput();
+  }
+
+  checkAriaLabel(selector, expectedMessage);
 };
 
 export default checkRadioInputNoAriaLabel;

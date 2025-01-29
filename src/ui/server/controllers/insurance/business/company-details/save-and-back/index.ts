@@ -2,19 +2,21 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import constructPayload from '../../../../../helpers/construct-payload';
-import companyDetailsValidation from '../validation/company-details';
+import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/company-details';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, COMPANY_DETAILS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_DETAILS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @returns {Object} Page variables
+ */
 const pageVariables = (referenceNumber: number) => ({
-  POST_ROUTES: {
-    COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-  },
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
   FIELDS: BUSINESS_FIELD_IDS,
 });
 
@@ -38,7 +40,7 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(body, FIELD_IDS);
 
-    const validationErrors = companyDetailsValidation(payload);
+    const validationErrors = generateValidationErrors(payload);
 
     const saveResponse = await mapAndSave.companyDetails(payload, application, validationErrors);
 

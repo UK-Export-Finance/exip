@@ -33,7 +33,31 @@
                     class="govuk-!-margin-bottom-5 declarations-anti-bribery-definition--list-item"
                     data-cy="row-{{ rowIndex }}-cell-definition-list-item-{{ loop.index }}"
                   >
-                    {{ item }}
+
+                  {% set itemIndex = loop.index %}
+
+                    {% if item.CHILDREN %}
+                      {% for child in item.CHILDREN %}
+
+                        {% set childIndex = loop.index %}
+
+                        {% set dataCy = "row-" + rowIndex + "-cell-definition-list-item-" + itemIndex + "-child-" + childIndex %}
+
+                        {% if child.HREF %}
+                          <a class="govuk-link" href="{{ child.HREF }}" data-cy="{{ dataCy }}">{{ child.TEXT }}</a>
+
+                          {% else %}
+
+                          <span data-cy="{{ dataCy }}">{{ child.TEXT }}</span>
+                        {% endif %}
+
+                      {% endfor %}
+
+                      {% else %}
+
+                      {{ item.TEXT }}
+
+                    {% endif %}
                   </li>
                 {% endfor %}
               </ul>

@@ -45,7 +45,6 @@ context('Cookies consent - reject', () => {
 
       cy.checkLink(cookieBanner.cookiesLink(), ROUTES.COOKIES, COOKIES_CONSENT.COOKIES_LINK);
 
-      cookieBanner.hideButton().should('exist');
       cy.checkText(cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
     });
 

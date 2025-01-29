@@ -1,6 +1,7 @@
 import createADeclaration from '.';
 import { mockInvalidId } from '../../test-mocks';
 import createADeclarationVersion from '../create-a-declaration-version';
+import createADeclarationModernSlaveryVersion from '../create-a-declaration-modern-slavery-version';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
@@ -18,7 +19,7 @@ describe('helpers/create-a-declaration', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   it('should return a declaration with ID', async () => {
@@ -77,6 +78,34 @@ describe('helpers/create-a-declaration', () => {
     expect(agreeToConfirmationAndAcknowledgements).toEqual(expectedVersions.agreeToConfirmationAndAcknowledgements);
     expect(hasAntiBriberyCodeOfConduct).toEqual(expectedVersions.hasAntiBriberyCodeOfConduct);
     expect(willExportWithAntiBriberyCodeOfConduct).toEqual(expectedVersions.willExportWithAntiBriberyCodeOfConduct);
+  });
+
+  test('it should return empty modernSlavery fields via createADeclarationModernSlavery helper', async () => {
+    const result = await createADeclaration(context, application.id);
+
+    const {
+      declarationModernSlavery: {
+        id: declarationModernSlaveryId,
+        willAdhereToAllRequirements,
+        hasNoOffensesOrInvestigations,
+        isNotAwareOfExistingSlavery,
+        declarationModernSlaveryVersion,
+      },
+    } = result;
+
+    expect(declarationModernSlaveryId).toBeDefined();
+    expect(typeof declarationModernSlaveryId).toEqual('string');
+    expect(declarationModernSlaveryId.length).toBeGreaterThan(0);
+
+    const expectedVersions = await createADeclarationModernSlaveryVersion(context, declarationModernSlaveryId);
+
+    expect(willAdhereToAllRequirements).toBeNull();
+    expect(hasNoOffensesOrInvestigations).toBeNull();
+    expect(isNotAwareOfExistingSlavery).toBeNull();
+
+    expect(declarationModernSlaveryVersion.willAdhereToAllRequirements).toEqual(expectedVersions.willAdhereToAllRequirements);
+    expect(declarationModernSlaveryVersion.hasNoOffensesOrInvestigations).toEqual(expectedVersions.hasNoOffensesOrInvestigations);
+    expect(declarationModernSlaveryVersion.isNotAwareOfExistingSlavery).toEqual(expectedVersions.isNotAwareOfExistingSlavery);
   });
 
   describe('when an invalid application ID is passed', () => {

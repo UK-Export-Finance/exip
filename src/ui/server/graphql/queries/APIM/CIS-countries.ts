@@ -5,15 +5,12 @@ const getApimCisCountries = gql`
     getApimCisCountries {
       isoCode
       name
-      riskCategory
+      esraClassification
       canGetAQuoteOnline
-      canGetAQuoteOffline
-      canGetAQuoteByEmail
       cannotGetAQuote
-      cannotApply
       canApplyForInsuranceOnline
+      noOnlineSupport
       noInsuranceSupport
-      shortTermCover
     }
   }
 `;

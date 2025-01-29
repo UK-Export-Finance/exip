@@ -59,7 +59,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       const expected = CHECK_YOUR_ANSWERS_FIELD_IDS.POLICY;
 
       expect(FIELD_ID).toEqual(expected);
@@ -232,7 +232,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
     });
 
     describe('api error handling', () => {
-      describe('when the save data API call does not return anything', () => {
+      describe('when the save data API call returns false', () => {
         beforeEach(() => {
           mockSaveSectionReview = jest.fn(() => Promise.resolve(false));
           save.sectionReview = mockSaveSectionReview;

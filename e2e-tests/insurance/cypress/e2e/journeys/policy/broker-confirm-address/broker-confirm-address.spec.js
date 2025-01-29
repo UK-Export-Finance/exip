@@ -1,5 +1,5 @@
-import { headingCaption, useDifferentAddressLink } from '../../../../../../partials';
-import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
+import { useDifferentAddressLink } from '../../../../../../partials';
+import { insetTextHtml, insetTextHtmlLineBreak, headingCaption } from '../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import {
   ADDRESS_LOOKUP_INPUT_EXAMPLES,

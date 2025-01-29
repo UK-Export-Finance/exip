@@ -24,7 +24,6 @@ const {
 } = ERROR_MESSAGES;
 
 const field = howWillYouGetPaidPage[FIELD_ID];
-const expectedErrorsCount = 1;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -98,7 +97,6 @@ context(
       it(`should render validation errors if ${FIELD_ID} is left empty`, () => {
         cy.submitAndAssertFieldErrors({
           field,
-          expectedErrorsCount,
           expectedErrorMessage: ERRORS[FIELD_ID].IS_EMPTY,
         });
       });
@@ -110,7 +108,6 @@ context(
           cy.submitAndAssertFieldErrors({
             field,
             value: submittedValue,
-            expectedErrorsCount,
             expectedErrorMessage: ERRORS[FIELD_ID].ABOVE_MAXIMUM,
           });
 

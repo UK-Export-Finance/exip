@@ -2,10 +2,10 @@ import { needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_EXIT;
+const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_EXIT_EXIT;
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, EXPORTER_LOCATION, NEED_TO_START_AGAIN },
+  ELIGIBILITY: { BUYER_COUNTRY, EXPORTER_LOCATION, NEED_TO_START_AGAIN_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -24,7 +24,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
 
     cy.navigateToUrl(buyerCountryUrl);
 
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });
@@ -32,7 +32,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: NEED_TO_START_AGAIN,
+      currentHref: NEED_TO_START_AGAIN_EXIT,
       backLink: BUYER_COUNTRY,
       assertBackLink: false,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,

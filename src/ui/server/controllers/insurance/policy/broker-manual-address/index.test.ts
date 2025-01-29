@@ -20,7 +20,8 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_ROOT, BROKER_MANUAL_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_ROOT, BROKER_MANUAL_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE, BROKER_MANUAL_ADDRESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { broker } = mockApplication;
@@ -150,6 +151,17 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

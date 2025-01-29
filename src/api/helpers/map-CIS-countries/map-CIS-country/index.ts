@@ -1,12 +1,8 @@
-import mapRiskCategory from './map-risk-category';
-import mapShortTermCoverAvailable from './map-short-term-cover-available';
-import mapNbiIssueAvailable from './map-NBI-issue-available';
+import mapEsraClassification from './map-esra-classification';
+import hasNoSupport from './has-no-support';
+import hasNoOnlineSupport from './has-no-online-support';
 import canGetAQuoteOnline from './can-get-a-quote-online';
-import canGetAQuoteByEmail from './can-get-a-quote-by-email';
-import cannotGetAQuote from './cannot-get-a-quote';
-import applyForInsuranceOnline from './can-apply-for-insurance-online';
-import canApplyOffline from './can-apply-offline';
-import noInsuranceSupportAvailable from './no-insurance-support';
+import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
 /**
@@ -15,23 +11,42 @@ import { CisCountry, MappedCisCountry } from '../../../types';
  * @param {CisCountry} CIS Country
  * @returns {MappedCisCountry} Mapped country
  */
-export const mapCisCountry = (country: CisCountry): MappedCisCountry => {
-  const mapped = {
-    name: country.marketName,
-    isoCode: country.isoCode,
-    riskCategory: mapRiskCategory(country.ESRAClassificationDesc),
-    shortTermCover: mapShortTermCoverAvailable(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: mapNbiIssueAvailable(country.NBIIssue),
-  } as MappedCisCountry;
+export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
+  const { countryRatingDesc: countryRating, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc: shortTermCover } = cisCountry;
 
-  mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
-  mapped.canGetAQuoteOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
-  mapped.cannotGetAQuote = cannotGetAQuote(mapped);
+  const esraClassification = mapEsraClassification(cisCountry.ESRAClassificationDesc);
 
-  mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(mapped.shortTermCover, mapped.riskCategory);
+  /**
+   * Current business logic for "no support" (online or offline)
+   * Is exactly the same for "get a quote" and "insurance application".
+   * Therefore we can use hasNoSupport for both.
+   */
+  const noSupport = hasNoSupport({
+    countryRating,
+    esraClassification: ESRAClassificationDesc,
+    shortTermCover,
+  });
 
-  mapped.noInsuranceSupport = noInsuranceSupportAvailable(country.marketRiskAppetitePublicDesc);
+  const mapped: MappedCisCountry = {
+    countryRating,
+    esraClassification,
+    isoCode,
+    name: marketName,
+
+    noOnlineSupport: hasNoOnlineSupport({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover,
+    }),
+
+    canGetAQuoteOnline: canGetAQuoteOnline(cisCountry),
+
+    cannotGetAQuote: noSupport,
+
+    canApplyForInsuranceOnline: canApplyForInsuranceOnline(cisCountry),
+
+    noInsuranceSupport: noSupport,
+  };
 
   return mapped;
 };
