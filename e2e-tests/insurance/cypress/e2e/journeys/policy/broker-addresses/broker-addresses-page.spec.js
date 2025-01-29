@@ -8,7 +8,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 
 const { WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
-const { UNDERGROUND_STATION } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
+const { UNDERGROUND_STATION, W_H_SMITH } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
 
 const {
   PAGE_TITLE,
@@ -30,9 +30,15 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = fieldSelector(FIELD_ID);
 
-const optionValue = `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`;
+const optionValue = {
+  UNDERGROUND_STATION: `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`,
+  W_H_SMITH: `${W_H_SMITH.ADDRESS_LINE_1} ${W_H_SMITH.ADDRESS_LINE_2}`,
+};
 
-const optionDataCy = `${FIELD_ID}-${optionValue}`;
+const optionDataCy = {
+  UNDERGROUND_STATION: `${FIELD_ID}-${optionValue.UNDERGROUND_STATION}`,
+  W_H_SMITH: `${FIELD_ID}-${optionValue.W_H_SMITH}`,
+};
 
 context(
   'Insurance - Policy - Broker addresses page - As an exporter, I want to provide UKEF with my broker’s details, So that UKEF can communicate with the broker as needed whilst processing my application',
@@ -69,7 +75,7 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    it('renders core page elements', () => {
+    it('should render core page elements', () => {
       cy.corePageChecks({
         pageTitle: PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`,
@@ -82,7 +88,7 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it('renders a intro copy', () => {
+      it('should render a intro copy', () => {
         intro()
           .invoke('text')
           .then((text) => {
@@ -94,23 +100,33 @@ context(
           });
       });
 
-      it('renders a `search again` link', () => {
+      it('should render a `search again` link', () => {
         const expectedHref = `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
         cy.checkLink(brokerAddressesPage.searchAgainLink(), expectedHref, SEARCH_AGAIN);
       });
 
       describe(FIELD_ID, () => {
-        it('renders a legend', () => {
+        it('should render a legend', () => {
           cy.checkText(field.label(), FIELD_STRINGS[FIELD_ID].LABEL);
         });
 
-        it('renders an `address` radio label and input', () => {
-          const { option } = radios(FIELD_ID, optionValue);
+        describe('radio options', () => {
+          it('should render an `address` radio label and input - option 1', () => {
+            const { option } = radios(FIELD_ID, optionValue.UNDERGROUND_STATION);
 
-          cy.checkText(option.label(), optionValue);
+            cy.checkText(option.label(), optionValue.UNDERGROUND_STATION);
 
-          option.input().should('exist');
+            option.input().should('exist');
+          });
+
+          it('should render an `address` radio label and input - option 2', () => {
+            const { option } = radios(FIELD_ID, optionValue.W_H_SMITH);
+
+            cy.checkText(option.label(), optionValue.W_H_SMITH);
+
+            option.input().should('exist');
+          });
         });
       });
 
@@ -138,10 +154,10 @@ context(
           cy.checkText(field.errorMessage(), `Error: ${expectedErrorMessage}`);
         });
 
-        it('should focus on input when clicking summary error message', () => {
+        it('should focus on the first input when clicking summary error message', () => {
           errorSummaryListItemLinks().eq(errorIndex).click();
 
-          fieldSelector(optionDataCy).input().should('have.focus');
+          fieldSelector(optionDataCy.UNDERGROUND_STATION).input().should('have.focus');
         });
       });
 
@@ -149,7 +165,9 @@ context(
         it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
           cy.navigateToUrl(url);
 
-          cy.completeAndSubmitBrokerAddressesForm({ optionValue });
+          cy.completeAndSubmitBrokerAddressesForm({
+            optionValue: optionValue.W_H_SMITH,
+          });
 
           cy.assertUrl(brokerConfirmAddressUrl);
         });
@@ -158,7 +176,7 @@ context(
           it('should have the submitted value', () => {
             cy.navigateToUrl(url);
 
-            const { option } = radios(FIELD_ID, optionValue);
+            const { option } = radios(FIELD_ID, optionValue.W_H_SMITH);
 
             cy.assertRadioOptionIsChecked(option.input());
           });

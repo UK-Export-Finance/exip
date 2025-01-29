@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../constants/field-ids/insurance/policy';
 import isChangeRoute from '../is-change-route';
 import isCheckAndChangeRoute from '../is-check-and-change-route';
-import brokerDetailsDataChangeFlags from '../broker-details-data-change-flags';
 import basedInUkRedirectUrl from './based-in-uk';
 import notBasedInUkRedirectUrl from './not-based-in-uk';
 import { referenceNumber, mockApplication } from '../../test-mocks';
@@ -37,13 +36,10 @@ describe('server/helpers/src/ui/server/helpers/get-broker-details-post-redirect-
         formBody: mockFormBody,
       });
 
-      const { postcodeOrBuildingNumberNameHasChanged } = brokerDetailsDataChangeFlags(mockFormBody, mockBroker);
-
       const expected = basedInUkRedirectUrl({
         baseUrl: `${INSURANCE_ROOT}/${referenceNumber}`,
         isAChangeRoute,
         isACheckAndChangeRoute,
-        postcodeOrBuildingNumberNameHasChanged,
       });
 
       expect(result).toEqual(expected);
@@ -55,13 +51,13 @@ describe('server/helpers/src/ui/server/helpers/get-broker-details-post-redirect-
       [IS_BASED_IN_UK]: 'false',
     };
 
+    const manualAddressRequired = true;
+
     it('should return the result of notBasedInUkRedirectUrl', () => {
       const result = getBrokerDetailsPostRedirectUrl({
         ...baseParams,
         formBody: mockFormBody,
       });
-
-      const { manualAddressRequired } = brokerDetailsDataChangeFlags(mockFormBody, mockBroker);
 
       const expected = notBasedInUkRedirectUrl({
         baseUrl: `${INSURANCE_ROOT}/${referenceNumber}`,
@@ -79,13 +75,13 @@ describe('server/helpers/src/ui/server/helpers/get-broker-details-post-redirect-
       [IS_BASED_IN_UK]: 'some other value',
     };
 
+    const manualAddressRequired = false;
+
     it('should return the result of notBasedInUkRedirectUrl', () => {
       const result = getBrokerDetailsPostRedirectUrl({
         ...baseParams,
         formBody: mockFormBody,
       });
-
-      const { manualAddressRequired } = brokerDetailsDataChangeFlags(mockFormBody, mockBroker);
 
       const expected = notBasedInUkRedirectUrl({
         baseUrl: `${INSURANCE_ROOT}/${referenceNumber}`,

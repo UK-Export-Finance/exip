@@ -3,7 +3,7 @@ import mapSubmittedData from '../../map-submitted-data/broker';
 import save from '../../save-data/broker';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
-import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication } from '../../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { NAME },
@@ -17,7 +17,12 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
     ...mockApplication.broker,
   };
 
-  const mockSaveBroker = mockSpyPromise();
+  const mockSaveBrokerRespone = {
+    ...mockApplication.broker,
+    id: 'mock-saved-broker-id',
+  };
+
+  const mockSaveBroker = jest.fn().mockResolvedValue(mockSaveBrokerRespone);
   save.broker = mockSaveBroker;
 
   const populatedData = mapSubmittedData(mockFormBody, mockApplication.broker);
@@ -33,10 +38,10 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
         expect(save.broker).toHaveBeenCalledWith(mockApplication, populatedData, mockValidationErrors?.errorList);
       });
 
-      it('should return true', async () => {
+      it('should return the saved response', async () => {
         const result = await mapAndSave.broker(populatedData, mockApplication, mockValidationErrors);
 
-        expect(result).toEqual(true);
+        expect(result).toEqual(mockSaveBrokerRespone);
       });
     });
 
@@ -48,10 +53,10 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
         expect(save.broker).toHaveBeenCalledWith(mockApplication, populatedData);
       });
 
-      it('should return true', async () => {
+      it('should return the saved response', async () => {
         const result = await mapAndSave.broker(populatedData, mockApplication, mockValidationErrors);
 
-        expect(result).toEqual(true);
+        expect(result).toEqual(mockSaveBrokerRespone);
       });
     });
   });

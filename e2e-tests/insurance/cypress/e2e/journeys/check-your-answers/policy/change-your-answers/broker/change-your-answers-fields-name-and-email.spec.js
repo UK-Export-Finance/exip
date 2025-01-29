@@ -65,6 +65,8 @@ context('Insurance - Change your answers - Policy - Broker - As an exporter, I w
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
+
+        cy.completeAndSubmitBrokerManualAddressForm({});
       });
 
       it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -101,6 +103,8 @@ context('Insurance - Change your answers - Policy - Broker - As an exporter, I w
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
+
+        cy.completeAndSubmitBrokerManualAddressForm({});
       });
 
       it(`should redirect to ${TYPE_OF_POLICY}`, () => {
