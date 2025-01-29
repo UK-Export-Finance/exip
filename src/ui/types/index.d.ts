@@ -34,7 +34,12 @@ import {
 } from './application';
 import { ApplicationByReferenceNumberVariables } from './application-by-reference-number-variables';
 import { ApolloResponse } from './apollo';
-import { BrokerDetailsRedirectUrlParams, BrokerDetailsNotBasedInUkRedirectUrlParams, BrokerDetailsBasedInUkRedirectUrlParams } from './broker-details';
+import {
+  BrokerDetailsDataChangeFlagsParams,
+  BrokerDetailsNotBasedInUkRedirectUrlParams,
+  BrokerDetailsRedirectUrlChildParams,
+  BrokerDetailsRedirectUrlParams,
+} from './broker-details';
 import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
@@ -133,9 +138,10 @@ export {
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
+  BrokerDetailsDataChangeFlagsParams,
+  BrokerDetailsRedirectUrlChildParams,
   BrokerDetailsRedirectUrlParams,
   BrokerDetailsNotBasedInUkRedirectUrlParams,
-  BrokerDetailsBasedInUkRedirectUrlParams,
   CanCreateApplicationEligibilityFlags,
   Company,
   CompaniesHouseResponse,

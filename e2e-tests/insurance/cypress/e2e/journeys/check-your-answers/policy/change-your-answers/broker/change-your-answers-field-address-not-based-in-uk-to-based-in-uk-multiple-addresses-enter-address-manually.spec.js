@@ -1,5 +1,4 @@
 import { summaryList } from '../../../../../../../../pages/shared';
-import { brokerConfirmAddressPage } from '../../../../../../../../pages/insurance/policy';
 import { ADDRESS_LOOKUP_INPUT_EXAMPLES } from '../../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
@@ -72,7 +71,7 @@ context(
       it(`should redirect to ${TYPE_OF_POLICY}`, () => {
         summaryList.field(FULL_ADDRESS).changeLink().click();
 
-        brokerConfirmAddressPage.useDifferentAddressLink().click();
+        cy.clickUseDifferentAddressLink();
 
         cy.completeAndSubmitBrokerDetailsForm({
           isBasedInUk: true,

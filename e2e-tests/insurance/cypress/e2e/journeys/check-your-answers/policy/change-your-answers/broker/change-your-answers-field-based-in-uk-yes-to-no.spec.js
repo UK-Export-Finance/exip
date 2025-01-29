@@ -28,7 +28,7 @@ context(
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({
-          usingBroker: false,
+          usingBroker: true,
           brokerIsBasedInUk: true,
         });
 

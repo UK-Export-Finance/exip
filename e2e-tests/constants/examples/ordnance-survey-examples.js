@@ -12,5 +12,11 @@ export const ORDNANCE_SURVEY_EXAMPLES = {
       TOWN: 'LONDON',
       POSTCODE: 'SW1A 2JR',
     },
+    W_H_SMITH: {
+      ADDRESS_LINE_1: 'W H SMITH LTD WESTMINSTER STATION',
+      ADDRESS_LINE_2: 'BRIDGE STREET',
+      TOWN: 'LONDON',
+      POSTCODE: 'SW1A 2JR',
+    },
   },
 };
