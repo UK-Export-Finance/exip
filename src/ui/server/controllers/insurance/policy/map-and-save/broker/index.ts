@@ -30,7 +30,7 @@ const broker = async (formBody: RequestBody, application: Application, validatio
         return false;
       }
 
-      return true;
+      return saveResponse;
     }
 
     return true;

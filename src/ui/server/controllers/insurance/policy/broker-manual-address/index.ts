@@ -10,6 +10,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -20,6 +21,7 @@ const {
   PROBLEM_WITH_SERVICE,
   INSURANCE_ROOT,
   POLICY: { LOSS_PAYEE_ROOT, BROKER_MANUAL_ADDRESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 export const FIELD_ID = FULL_ADDRESS;
@@ -109,6 +111,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);

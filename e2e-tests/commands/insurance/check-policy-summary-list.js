@@ -252,13 +252,17 @@ const checkPolicySummaryList = {
         cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
       }
     },
-    [BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: ({ shouldRender = true }) => {
+    [BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: ({ shouldRender = true, value }) => {
       const fieldId = BROKER_MANUAL_ADDRESS.FULL_ADDRESS;
 
       if (shouldRender) {
         const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_MANUAL_ADDRESS);
 
-        const expectedValue = application.BROKER[fieldId];
+        let expectedValue = application.BROKER[fieldId];
+
+        if (value) {
+          expectedValue = value;
+        }
 
         cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
       } else {

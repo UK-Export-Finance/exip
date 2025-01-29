@@ -1,6 +1,6 @@
-import { field, summaryList } from '../../../../../../../pages/shared';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { field, summaryList } from '../../../../../../../../pages/shared';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
   BROKER_DETAILS: { NAME, EMAIL },
@@ -8,22 +8,28 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+  POLICY: { BROKER_DETAILS_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
+context('Insurance - Change your answers - Policy - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
-  let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ usingBroker: true });
+      cy.completePrepareApplicationSinglePolicyType({ usingBroker: true });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.clickTaskCheckAnswers();
+
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
     });
   });
 
@@ -39,12 +45,12 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     const fieldId = NAME;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${BROKER_DETAILS_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+      it(`should redirect to ${BROKER_DETAILS_CHECK_AND_CHANGE}`, () => {
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -52,7 +58,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
       const newAnswer = 'Test name 2';
 
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
@@ -63,8 +69,8 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
         cy.completeAndSubmitBrokerManualAddressForm({});
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -77,12 +83,12 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     const fieldId = EMAIL;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${BROKER_DETAILS_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+      it(`should redirect to ${BROKER_DETAILS_CHECK_AND_CHANGE}`, () => {
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHANGE, fieldId: EMAIL });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHECK_AND_CHANGE, fieldId: EMAIL });
       });
     });
 
@@ -90,7 +96,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
       const newAnswer = 'testing321@test.com';
 
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
@@ -101,8 +107,8 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
         cy.completeAndSubmitBrokerManualAddressForm({});
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer', () => {
