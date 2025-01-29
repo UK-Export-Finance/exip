@@ -1414,7 +1414,7 @@ var APIM = {
           return acceptableStatus.includes(status);
         },
       });
-      if (response.data && response.status === 200) {
+      if (response?.data && response?.status === 200) {
         return {
           success: true,
           data: response.data,
@@ -1443,7 +1443,7 @@ var APIM = {
           return acceptableStatus.includes(status);
         },
       });
-      if (response.data && response.status === 200) {
+      if (response?.data && response?.status === 200) {
         return {
           success: true,
           data: response.data,
@@ -1473,7 +1473,7 @@ var APIM = {
           return acceptableStatus.includes(status);
         },
       });
-      if (response.data && response.status === 200) {
+      if (response?.data && response?.status === 200) {
         return {
           success: true,
           data: response.data,
@@ -1516,7 +1516,7 @@ var APIM = {
           return acceptableStatus.includes(status);
         },
       });
-      if (response.data && response.status === 201) {
+      if (response?.data && response?.status === 201) {
         return {
           success: true,
           emailRecipient: sendToEmailAddress,
