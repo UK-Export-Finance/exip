@@ -38,7 +38,7 @@ const APIM = {
         },
       });
 
-      if (response.data && response.status === 200) {
+      if (response?.data && response?.status === 200) {
         return {
           success: true,
           data: response.data,
@@ -71,7 +71,7 @@ const APIM = {
         },
       });
 
-      if (response.data && response.status === 200) {
+      if (response?.data && response?.status === 200) {
         return {
           success: true,
           data: response.data,
@@ -105,7 +105,7 @@ const APIM = {
         },
       });
 
-      if (response.data && response.status === 200) {
+      if (response?.data && response?.status === 200) {
         return {
           success: true,
           data: response.data,
@@ -152,7 +152,7 @@ const APIM = {
         },
       });
 
-      if (response.data && response.status === 201) {
+      if (response?.data && response?.status === 201) {
         return {
           success: true,
           emailRecipient: sendToEmailAddress,
