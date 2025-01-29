@@ -1,7 +1,7 @@
 import { summaryList } from '../../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { FIELD_VALUES } from '../../../../../../../../constants';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   USING_BROKER: FIELD_ID,
@@ -19,7 +19,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Change your answers - Policy - Broker - Using a broker - Yes to no - As an exporter, I want to change my answers to the broker section',
+  'Insurance - Change your answers - Policy - Broker - Using a broker - No to yes - Not based in UK - As an exporter, I want to change my answers to the broker section',
   () => {
     let referenceNumber;
     let checkYourAnswersUrl;
@@ -28,7 +28,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({ usingBroker: true });
+        cy.completePrepareApplicationSinglePolicyType({ usingBroker: false });
 
         cy.clickTaskCheckAnswers();
 
@@ -57,7 +57,7 @@ context(
       });
     });
 
-    describe('after changing the answer from yes to no', () => {
+    describe('after changing the answer from no to yes and completing (now required) broker fields', () => {
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
       });
@@ -65,24 +65,25 @@ context(
       it(`should redirect to ${TYPE_OF_POLICY}`, () => {
         summaryList.field(FIELD_ID).changeLink().click();
 
-        cy.completeAndSubmitBrokerForm({ usingBroker: false });
+        cy.completeAndSubmitBrokerForm({ usingBroker: true });
+        cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
+
+        cy.completeAndSubmitBrokerManualAddressForm({});
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: FIELD_ID });
       });
 
-      it(`should render new ${FIELD_ID} answer and change link, with no other broker details fields`, () => {
-        cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.NO);
+      it(`should render new ${FIELD_ID} answer and broker details fields`, () => {
+        checkSummaryList[FIELD_ID]({ usingBroker: true });
+        checkSummaryList.BROKER[NAME]();
 
-        cy.assertSummaryListRowDoesNotExist(summaryList, NAME);
+        checkSummaryList.BROKER[FULL_ADDRESS]({});
 
-        /**
-         * Here, we can only assert the EMAIL field's "change" link.
-         * Otherwise, the other (non-broker) EMAIL field's key and value is picked up.
-         */
-        summaryList.field(EMAIL).changeLink().should('not.exist');
+        checkSummaryList.BROKER[EMAIL]();
+      });
 
-        cy.assertSummaryListRowDoesNotExist(summaryList, SELECT_THE_ADDRESS);
-        cy.assertSummaryListRowDoesNotExist(summaryList, FULL_ADDRESS);
+      it(`should NOT render the ${SELECT_THE_ADDRESS} field `, () => {
+        checkSummaryList.BROKER[SELECT_THE_ADDRESS]({ shouldRender: false });
       });
     });
   },

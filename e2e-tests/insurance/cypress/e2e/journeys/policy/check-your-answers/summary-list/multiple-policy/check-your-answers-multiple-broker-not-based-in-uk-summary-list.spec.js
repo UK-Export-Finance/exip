@@ -7,6 +7,8 @@ const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
 const {
   USING_BROKER,
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
@@ -44,7 +46,19 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
     checkSummaryList[USING_BROKER]({ usingBroker: true });
   });
 
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList.BROKER[NAME]();
+  });
+
+  it(`should render a ${EMAIL} summary list row`, () => {
+    checkSummaryList.BROKER[EMAIL]();
+  });
+
   it(`should render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList.BROKER[FULL_ADDRESS]({});
+  });
+
+  it(`should NOT render a ${SELECT_THE_ADDRESS} summary list row`, () => {
+    checkSummaryList.BROKER[SELECT_THE_ADDRESS]({ shouldRender: false });
   });
 });

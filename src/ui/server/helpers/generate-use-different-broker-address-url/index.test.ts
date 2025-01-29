@@ -1,12 +1,12 @@
-import generateEnterBrokerAddressManuallyUrl from '.';
+import useDifferentBrokerAddressUrl from '.';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_MANUAL_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
-describe('server/helpers/generate-enter-broker-address-manually-url', () => {
+describe('server/helpers/generate-use-different-broker-address-url', () => {
   const referenceNumber = 123;
 
   describe('when isAChangeRoute is true', () => {
@@ -14,9 +14,9 @@ describe('server/helpers/generate-enter-broker-address-manually-url', () => {
       const isAChangeRoute = true;
       const isACheckAndChangeRoute = false;
 
-      const response = generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute);
+      const response = useDifferentBrokerAddressUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute);
 
-      const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_CHANGE}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHANGE}`;
 
       expect(response).toEqual(expected);
     });
@@ -27,9 +27,9 @@ describe('server/helpers/generate-enter-broker-address-manually-url', () => {
       const isAChangeRoute = false;
       const isACheckAndChangeRoute = true;
 
-      const response = generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute);
+      const response = useDifferentBrokerAddressUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute);
 
-      const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHECK_AND_CHANGE}`;
 
       expect(response).toEqual(expected);
     });
@@ -40,9 +40,9 @@ describe('server/helpers/generate-enter-broker-address-manually-url', () => {
       const isAChangeRoute = false;
       const isACheckAndChangeRoute = false;
 
-      const response = generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute);
+      const response = useDifferentBrokerAddressUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute);
 
-      const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
       expect(response).toEqual(expected);
     });

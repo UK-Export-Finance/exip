@@ -15,6 +15,7 @@ import getOrdnanceSurveyAddressByIndex from '../../../../helpers/get-chosen-ordn
 import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
@@ -27,13 +28,18 @@ const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   POLICY: {
+    BROKER_ADDRESSES_ROOT,
     BROKER_ADDRESSES_SAVE_AND_BACK,
+    BROKER_ADDRESSES_CHANGE,
+    BROKER_ADDRESSES_CHECK_AND_CHANGE,
     BROKER_DETAILS_ROOT,
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
-    BROKER_ADDRESSES_CHANGE,
+    BROKER_CONFIRM_ADDRESS_CHANGE,
+    BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -44,6 +50,7 @@ const { postcode, buildingNumberOrName } = broker;
 const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, broker);
 
 let isAChangeRoute = false;
+let isACheckAndChangeRoute = false;
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
@@ -59,6 +66,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
     isAChangeRoute = isChangeRoute(req.originalUrl);
+    isACheckAndChangeRoute = isCheckAndChangeRoute(req.originalUrl);
   });
 
   afterAll(() => {
@@ -100,7 +108,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
       },
       SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-      ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute),
+      ENTER_ADDRESS_MANUALLY_URL: generateEnterBrokerAddressManuallyUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute),
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_SAVE_AND_BACK}`,
     };
 
@@ -108,7 +116,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       it('should have correct properties', () => {
         const mockTotalAddresses = 1;
 
-        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute);
+        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute, isACheckAndChangeRoute);
 
         const expected = {
           ...expectedGenericProperties,
@@ -126,7 +134,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       it('should have correct properties', () => {
         const mockTotalAddresses = 2;
 
-        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute);
+        const result = pageVariables(referenceNumber, mockTotalAddresses, isAChangeRoute, isACheckAndChangeRoute);
 
         const expected = {
           ...expectedGenericProperties,
@@ -201,11 +209,11 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
         api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockResponse));
         mapAndSave.broker = jest.fn(() => Promise.resolve(true));
-
-        await get(req, res);
       });
 
-      it('should call mapAndSave.broker once with address data and application data', () => {
+      it('should call mapAndSave.broker once with address data and application data', async () => {
+        await get(req, res);
+
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
         const addressToSave = getOrdnanceSurveyAddressByIndex({
@@ -216,8 +224,36 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         expect(mapAndSave.broker).toHaveBeenCalledWith(addressToSave, mockApplication);
       });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_CHANGE}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_CHANGE;
+
+          await get(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHANGE}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_CHECK_AND_CHANGE;
+
+          await get(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is not `change` or `check-and-change`", () => {
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_ROOT;
+
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+        });
       });
 
       describe('api error handling', () => {
@@ -261,7 +297,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute),
+        ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute, isACheckAndChangeRoute),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
         postcode,
@@ -372,7 +408,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute),
+          ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length, isAChangeRoute, isACheckAndChangeRoute),
           userName: getUserNameFromSession(req.session.user),
           mappedAddresses,
           postcode,
@@ -417,6 +453,17 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

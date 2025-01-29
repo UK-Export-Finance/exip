@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { referenceNumber } from '../../../test-mocks';
 
 const {
-  POLICY: { BROKER_MANUAL_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_CHANGE, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_MANUAL_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -50,16 +50,32 @@ describe('server/helpers/src/ui/server/helpers/get-broker-details-post-redirect-
   });
 
   describe('when isACheckAndChangeRoute is true', () => {
-    it('should return the correct URL', () => {
-      const result = notBasedInUkRedirectUrl({
-        ...baseParams,
-        isACheckAndChangeRoute: true,
-        manualAddressRequired: false,
+    describe('when manualAddressRequired is true', () => {
+      it('should return the correct URL', () => {
+        const result = notBasedInUkRedirectUrl({
+          ...baseParams,
+          isACheckAndChangeRoute: true,
+          manualAddressRequired: true,
+        });
+
+        const expected = `${mockBaseUrl}${BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE}`;
+
+        expect(result).toEqual(expected);
       });
+    });
 
-      const expected = `${mockBaseUrl}${CHECK_AND_CHANGE_ROUTE}`;
+    describe('when manualAddressRequired is false', () => {
+      it('should return the correct URL', () => {
+        const result = notBasedInUkRedirectUrl({
+          ...baseParams,
+          isACheckAndChangeRoute: true,
+          manualAddressRequired: false,
+        });
 
-      expect(result).toEqual(expected);
+        const expected = `${mockBaseUrl}${CHECK_AND_CHANGE_ROUTE}`;
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
