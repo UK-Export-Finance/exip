@@ -4,6 +4,7 @@ import { ApplicationBroker, BrokerDetailsDataChangeFlagsParams, RequestBody } fr
 
 const {
   BROKER_DETAILS: { IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 /**
@@ -26,10 +27,12 @@ const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: Applica
     const buildingNumberOrNameHasChanged = formBody[BUILDING_NUMBER_OR_NAME] !== brokerData[BUILDING_NUMBER_OR_NAME];
 
     postcodeOrBuildingNumberNameHasChanged = postcodeHasChanged || buildingNumberOrNameHasChanged;
+
+    manualAddressRequired = isEmptyString(brokerData[POSTCODE]);
   }
 
   if (!isBasedInUk) {
-    manualAddressRequired = isEmptyString(brokerData[POSTCODE]);
+    manualAddressRequired = !brokerData[FULL_ADDRESS];
   }
 
   return {

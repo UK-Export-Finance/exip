@@ -4,6 +4,7 @@ import { mockApplication } from '../../test-mocks';
 
 const {
   BROKER_DETAILS: { IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const { broker } = mockApplication;
@@ -91,10 +92,27 @@ describe('server/helpers/broker-details-data-change-flags', () => {
         expect(result.postcodeOrBuildingNumberNameHasChanged).toEqual(false);
       });
     });
+
+    describe(`when the broker data's ${POSTCODE} is an empty string`, () => {
+      it('should return manualAddressRequired as true', () => {
+        const mockFormBody = {
+          [IS_BASED_IN_UK]: 'true',
+        };
+
+        const mockBrokerData = {
+          ...mockBroker,
+          [POSTCODE]: '',
+        };
+
+        const result = brokerDetailsDataChangeFlags(mockFormBody, mockBrokerData);
+
+        expect(result.manualAddressRequired).toEqual(true);
+      });
+    });
   });
 
   describe(`when form body has a ${IS_BASED_IN_UK} value of 'false'`, () => {
-    describe(`when the broker data's ${POSTCODE} is an empty string`, () => {
+    describe(`when the broker data's ${FULL_ADDRESS} is an empty string`, () => {
       it('should return manualAddressRequired as true', () => {
         const mockFormBody = {
           [IS_BASED_IN_UK]: 'false',
@@ -102,7 +120,7 @@ describe('server/helpers/broker-details-data-change-flags', () => {
 
         const mockBrokerData = {
           ...mockBroker,
-          [POSTCODE]: '',
+          [FULL_ADDRESS]: '',
         };
 
         const result = brokerDetailsDataChangeFlags(mockFormBody, mockBrokerData);
