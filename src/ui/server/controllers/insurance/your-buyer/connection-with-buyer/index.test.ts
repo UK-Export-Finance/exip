@@ -87,7 +87,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           CONNECTION_WITH_BUYER_DESCRIPTION: {
             ID: CONNECTION_WITH_BUYER_DESCRIPTION,
             ...FIELDS[CONNECTION_WITH_BUYER_DESCRIPTION],
-            MAXIMUM: 1000,
           },
         },
         PAGE_CONTENT_STRINGS,
