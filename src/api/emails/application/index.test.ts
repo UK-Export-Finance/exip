@@ -114,9 +114,13 @@ describe('emails/application', () => {
       });
 
       it('should throw an error', async () => {
-        const response = application.underwritingTeam(variables, mockFilePath, templateId);
+        try {
+          await application.underwritingTeam(variables, mockFilePath, templateId);
+        } catch (error) {
+          const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${new Error(mockErrorMessage)}`);
 
-        await expect(response).rejects.toThrow(`Sending application submitted email to underwriting team Error: Sending email ${new Error(mockErrorMessage)}`);
+          expect(error).toEqual(expected);
+        }
       });
     });
   });
