@@ -139,7 +139,7 @@ const APIM = {
         headers: {
           'Content-Type': 'application/json',
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
-          'govUkNotifyKey': GOV_NOTIFY_API_KEY,
+          govUkNotifyKey: GOV_NOTIFY_API_KEY,
         },
         data: {
           templateId,
