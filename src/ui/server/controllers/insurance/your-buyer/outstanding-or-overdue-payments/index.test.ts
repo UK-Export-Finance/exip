@@ -13,10 +13,10 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import api from '../../../../api';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockCurrencies,
   mockCurrenciesResponse,
@@ -49,13 +49,13 @@ const currencyValue = mockApplication.buyer.buyerTradingHistory[CURRENCY_CODE];
 
 describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
@@ -133,18 +133,6 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {
@@ -266,23 +254,10 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when mapAndSave.buyerTradingHistory returns false', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(false));
         });
 
@@ -296,7 +271,6 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
       describe('when mapAndSave.buyerTradingHistory fails', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerTradingHistory = mockSpyPromiseRejection;
         });
 

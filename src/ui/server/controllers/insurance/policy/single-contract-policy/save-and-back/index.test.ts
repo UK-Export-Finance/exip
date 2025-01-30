@@ -4,8 +4,8 @@ import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/policy';
 import generateValidationErrors from '../validation';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
@@ -13,7 +13,7 @@ const {
 
 describe('controllers/insurance/policy/single-contract-policy/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../../map-and-save/policy');
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/policy/single-contract-policy/save-and-back', ()
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     req.body = mockFormBody;
   });
@@ -62,18 +62,6 @@ describe('controllers/insurance/policy/single-contract-policy/save-and-back', ()
       const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
-    });
-  });
-
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 

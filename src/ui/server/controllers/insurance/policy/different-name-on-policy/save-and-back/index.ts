@@ -2,8 +2,8 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import { Request, Response } from '../../../../../../types';
 import mapAndSave from '../../map-and-save/policy-contact';
+import { Request, ResponseInsurance } from '../../../../../../types';
 
 const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE, ALL_SECTIONS } = INSURANCE_ROUTES;
 
@@ -11,10 +11,10 @@ const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE, ALL_SECTIONS } = INSURANCE_ROUTES;
  * post
  * Save valid different name on policy fields and redirect to all-sections
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

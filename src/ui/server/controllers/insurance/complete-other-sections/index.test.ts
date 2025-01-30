@@ -3,8 +3,8 @@ import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../types';
-import { mockReq, mockRes, referenceNumber } from '../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../types';
+import { mockReq, mockResInsurance, referenceNumber } from '../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
@@ -12,11 +12,11 @@ const {
 
 describe('controllers/insurance/all-sections', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('TEMPLATE', () => {

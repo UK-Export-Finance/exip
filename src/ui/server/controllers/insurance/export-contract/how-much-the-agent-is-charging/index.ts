@@ -14,7 +14,7 @@ import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Currency, Request, Response } from '../../../../../types';
+import { Currency, Request, ResponseInsurance } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -59,10 +59,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_THE_AGENT_I
  * get
  * Get the application and render the "Export contract - How much the agent is charging"
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} "Export contract - How much the agent is charging" page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -115,10 +115,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Check "Export contract - How much is the agent charging" validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

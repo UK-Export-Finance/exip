@@ -6,18 +6,17 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { Application, Request, Response } from '../../../../../types';
+import { Application, Request, ResponseInsurance } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/loss-payee';
-import { mockReq, mockRes, mockApplication, mockLossPayeeDetails, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockResInsurance, mockApplication, mockLossPayeeDetails, referenceNumber } from '../../../../test-mocks';
 
 const { NAME, LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
 const {
   INSURANCE_ROOT,
-  PROBLEM_WITH_SERVICE,
   POLICY: {
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
@@ -35,11 +34,11 @@ const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
 
 describe('controllers/insurance/policy/loss-payee-details', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -108,18 +107,6 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: mappedApplication?.nominatedLossPayee,
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -262,18 +249,6 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

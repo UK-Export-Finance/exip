@@ -1,15 +1,15 @@
 import callMapAndSave from '.';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import generateValidationErrors from '../type-of-policy/validation';
 import mapAndSave from '../map-and-save/policy';
-import { mockApplication, mockReq, mockRes, mockSpyPromiseRejection } from '../../../../test-mocks';
+import { mockApplication, mockReq, mockResInsurance, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { POLICY_TYPE } = FIELD_IDS;
 
 describe('controllers/insurance/policy/call-map-and-save', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../map-and-save/policy');
 
@@ -30,7 +30,7 @@ describe('controllers/insurance/policy/call-map-and-save', () => {
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     req.body = mockFormBody;
   });

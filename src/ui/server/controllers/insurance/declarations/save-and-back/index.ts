@@ -3,7 +3,7 @@ import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/de
 import hasFormData from '../../../../helpers/has-form-data';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -22,10 +22,10 @@ export const FIELD_IDS = [
  * post
  * Save a Declarations field if provided and if successful, redirect to the all sections page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} All sections page or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

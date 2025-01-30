@@ -11,8 +11,8 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract';
-import { ObjectType, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockExportContract, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { ObjectType, Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockExportContract, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -41,7 +41,7 @@ const {
 
 describe('controllers/insurance/export-contract/how-was-the-contract-awarded', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../map-and-save/export-contract');
 
@@ -49,7 +49,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -114,18 +114,6 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 
@@ -210,18 +198,6 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

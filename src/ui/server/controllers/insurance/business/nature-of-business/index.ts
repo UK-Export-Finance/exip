@@ -10,7 +10,7 @@ import mapAndSave from '../map-and-save/business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
@@ -58,10 +58,10 @@ const pageVariables = (referenceNumber: number) => ({
 /**
  * gets the template for nature of business page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} renders nature of business page with/without previously submitted details
  */
-const get = (req: Request, res: Response) => {
+const get = (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -89,10 +89,10 @@ const get = (req: Request, res: Response) => {
  * posts nature of business page
  * runs validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Turnover page with or without errors
  */
-const post = async (req: Request, res: Response) => {
+const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

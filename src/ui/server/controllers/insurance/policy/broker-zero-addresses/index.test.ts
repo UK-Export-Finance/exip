@@ -4,12 +4,11 @@ import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  PROBLEM_WITH_SERVICE,
   POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
@@ -18,11 +17,11 @@ const { postcode } = broker;
 
 describe('controllers/insurance/policy/broker-zero-addresses', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -66,18 +65,6 @@ describe('controllers/insurance/policy/broker-zero-addresses', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         postcode,
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

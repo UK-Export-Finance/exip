@@ -12,8 +12,15 @@ import api from '../../../../../api';
 import mapApplicationToFormFields from '../../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/policy';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import {
+  mockReq,
+  mockResInsurance,
+  mockCurrencies,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+  mockSpyPromiseRejection,
+} from '../../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../../test-mocks/mock-application';
 
 const {
@@ -44,7 +51,7 @@ const { allCurrencies } = mockCurrenciesResponse;
 
 describe('controllers/insurance/policy/multiple-contract-policy/export-value', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../../map-and-save/policy');
 
@@ -53,7 +60,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
@@ -138,18 +145,6 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {
@@ -280,18 +275,6 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

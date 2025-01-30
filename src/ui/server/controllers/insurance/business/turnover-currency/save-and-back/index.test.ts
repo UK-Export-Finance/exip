@@ -5,8 +5,8 @@ import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/turnover';
-import { Request, Response } from '../../../../../../types';
-import { EUR, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { EUR, mockReq, mockResInsurance, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -16,7 +16,7 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/business/turnover-currency/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../../map-and-save/turnover');
 
@@ -28,7 +28,7 @@ describe('controllers/insurance/business/turnover-currency/save-and-back', () =>
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     req.body = mockFormBody;
 
@@ -81,22 +81,9 @@ describe('controllers/insurance/business/turnover-currency/save-and-back', () =>
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     describe('when mapAndSave.turnover returns false', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
         mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
         mapAndSave.turnover = mapAndSaveSpy;
       });
@@ -110,7 +97,6 @@ describe('controllers/insurance/business/turnover-currency/save-and-back', () =>
 
     describe('when mapAndSave.turnover fails', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
         mapAndSaveSpy = mockSpyPromiseRejection;
         mapAndSave.turnover = mapAndSaveSpy;
       });

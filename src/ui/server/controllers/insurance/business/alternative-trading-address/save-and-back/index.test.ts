@@ -4,8 +4,8 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import mapAndSave from '../../map-and-save/company-different-trading-address';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
-import { Request, Response } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
 
 const {
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
@@ -15,13 +15,13 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/business/alternative-trading-address/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.companyDifferentTradingAddress = updateMapAndSave;
   });
@@ -78,24 +78,10 @@ describe('controllers/insurance/business/alternative-trading-address/save-and-ba
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      req.body = validBody;
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     describe('when mapAndSave.companyDifferentTradingAddress returns false', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
         mapAndSave.companyDifferentTradingAddress = jest.fn(() => Promise.resolve(false));
       });
 
@@ -108,7 +94,6 @@ describe('controllers/insurance/business/alternative-trading-address/save-and-ba
 
     describe('when mapAndSave.companyDifferentTradingAddress fails', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
         req.body = validBody;
         updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.companyDifferentTradingAddress = updateMapAndSave;
