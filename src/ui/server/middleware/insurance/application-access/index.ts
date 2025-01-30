@@ -1,5 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import { Next, Request, Response } from '../../../../types';
+import { Next, Request, ResponseInsurance } from '../../../../types';
 
 const { PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, COOKIES, COOKIES_SAVED } = INSURANCE_ROUTES;
 const { DASHBOARD, DASHBOARD_PAGE } = INSURANCE_ROUTES;
@@ -20,7 +20,14 @@ export const IRRELEVANT_ROUTES = [
   COOKIES_SAVED,
 ];
 
-export const applicationAccessMiddleware = async (req: Request, res: Response, next: Next) => {
+/**
+ * middleware to check if a user is the owner of an application
+ * @param {Express.Request} Express request
+ * @param {ResponseInsurance} Express response for "insurance" routes
+ * @param {Next} Express next
+ * @returns {Express.Response.redirect} NO_ACCESS_APPLICATION_SUBMITTED or next
+ */
+export const applicationAccessMiddleware = async (req: Request, res: ResponseInsurance, next: Next) => {
   const { baseUrl: url } = req;
 
   /**

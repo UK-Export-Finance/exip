@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import api from '../../../../api';
-import { Request, Response, InsuranceFeedbackVariables } from '../../../../../types';
+import { Request, ResponseInsurance, InsuranceFeedbackVariables } from '../../../../../types';
 
 const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FEEDBACK_FIELD_IDS;
 
@@ -47,10 +47,10 @@ const pageVariables = () => ({
 /**
  * gets the template for the feedback page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} renders insurance feedback page
  */
-const get = (req: Request, res: Response) => {
+const get = (req: Request, res: ResponseInsurance) => {
   try {
     /**
      * flash containing origin of user when clicking the feedback form
@@ -76,10 +76,10 @@ const get = (req: Request, res: Response) => {
 /**
  * posts the feedback form
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} renders insurance feedback confirmation page
  */
-const post = async (req: Request, res: Response) => {
+const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { body } = req;
 

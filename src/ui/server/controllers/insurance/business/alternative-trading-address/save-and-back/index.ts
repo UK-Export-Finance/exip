@@ -3,25 +3,21 @@ import { FIELD_IDS } from '..';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/company-different-trading-address';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { Request, Response } from '../../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 /**
  * saves and goes back to all sections from alternative trading address page unless there are API errors
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} redirects to all sections page on success
  */
-const post = async (req: Request, res: Response) => {
+const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
     const { referenceNumber } = req.params;
-
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
 
     const { body } = req;
 

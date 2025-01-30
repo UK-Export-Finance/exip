@@ -11,10 +11,10 @@ import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencie
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockCurrencies,
   mockCurrenciesResponse,
@@ -57,7 +57,7 @@ const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
 describe('controllers/insurance/export-contract/currency-of-agents-charge', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../map-and-save/export-contract-agent-service-charge');
 
@@ -66,7 +66,7 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
@@ -137,18 +137,6 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('when the get currencies API call fails', () => {
@@ -336,18 +324,6 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

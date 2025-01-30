@@ -16,8 +16,15 @@ import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnanc
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import {
+  mockReq,
+  mockResInsurance,
+  mockApplication,
+  mockOrdnanceSurveyAddressResponse,
+  mockSpyPromiseRejection,
+  referenceNumber,
+} from '../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { POSTCODE, BUILDING_NUMBER_OR_NAME },
@@ -54,13 +61,13 @@ let isACheckAndChangeRoute = false;
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   const getOrdnanceSurveyAddressesSpy = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.getOrdnanceSurveyAddresses = getOrdnanceSurveyAddressesSpy;
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
@@ -305,18 +312,6 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when api.keystone.getOrdnanceSurveyAddresses returns apiError=true', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -514,18 +509,6 @@ describe('controllers/insurance/policy/broker-addresses', () => {
             });
           });
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

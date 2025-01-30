@@ -4,8 +4,8 @@ import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
 import generateValidationErrors from '../validation';
-import { Request, Response } from '../../../../../../types';
-import { mockApplication, mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockApplication, mockReq, mockResInsurance, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -13,7 +13,7 @@ const [NAME] = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/agent-charges/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../../map-and-save/export-contract-agent-service-charge');
 
@@ -28,7 +28,7 @@ describe('controllers/insurance/export-contract/agent-charges/save-and-back', ()
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     req.params.referenceNumber = String(mockApplication.referenceNumber);
 
@@ -71,18 +71,6 @@ describe('controllers/insurance/export-contract/agent-charges/save-and-back', ()
       const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
-    });
-  });
-
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 

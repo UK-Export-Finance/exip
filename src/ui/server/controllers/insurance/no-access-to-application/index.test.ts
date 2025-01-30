@@ -3,16 +3,16 @@ import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../types';
-import { mockReq, mockRes } from '../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../types';
+import { mockReq, mockResInsurance } from '../../../test-mocks';
 
 describe('controllers/insurance/no-access-to-application', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('TEMPLATE', () => {

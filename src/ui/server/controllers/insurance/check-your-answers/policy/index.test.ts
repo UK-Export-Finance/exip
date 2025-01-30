@@ -11,10 +11,10 @@ import requiredFields from '../../../../helpers/required-fields/policy';
 import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockContact,
   mockCountriesAndCurrencies,
@@ -47,13 +47,13 @@ describe('controllers/insurance/check-your-answers/policy', () => {
   save.sectionReview = mockSaveSectionReview;
 
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let getCountriesAndCurrenciesSpy = jest.fn(() => Promise.resolve(mockCountriesAndCurrencies));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.getCountriesAndCurrencies = getCountriesAndCurrenciesSpy;
   });
@@ -139,18 +139,6 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       expect(getCountriesAndCurrenciesSpy).toHaveBeenCalledTimes(1);
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when the currencies and countries API call fails', () => {
         beforeEach(() => {
@@ -217,18 +205,6 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       const expected = `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {

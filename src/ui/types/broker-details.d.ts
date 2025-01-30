@@ -1,14 +1,12 @@
-import { ApplicationBroker } from './application';
 import { RequestBody } from './express';
 
 export interface BrokerDetailsRedirectUrlParams {
   referenceNumber: number;
   originalUrl: string;
   formBody: RequestBody;
-  brokerData: ApplicationBroker;
 }
 
-interface BrokerDetailsRedirectUrlChildParams {
+export interface BrokerDetailsRedirectUrlChildParams {
   baseUrl: string;
   isAChangeRoute: boolean;
   isACheckAndChangeRoute: boolean;
@@ -18,6 +16,6 @@ export interface BrokerDetailsNotBasedInUkRedirectUrlParams extends BrokerDetail
   manualAddressRequired: boolean;
 }
 
-export interface BrokerDetailsBasedInUkRedirectUrlParams extends BrokerDetailsRedirectUrlChildParams {
-  postcodeOrBuildingNumberNameHasChanged: boolean;
+export interface BrokerDetailsDataChangeFlagsParams {
+  manualAddressRequired: boolean;
 }

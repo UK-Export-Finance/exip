@@ -3,7 +3,7 @@ import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../helpers/mappings/map-application-to-form-fields';
-import { Request, Response } from '../../../../types';
+import { Request, ResponseInsurance } from '../../../../types';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
@@ -15,15 +15,11 @@ export const TEMPLATE = TEMPLATES.INSURANCE.APPLICATION_SUBMITTED;
  * get
  * Get the application and render the Application submitted page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Application submitted page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
-
-  if (!application) {
-    return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
-  }
 
   const { referenceNumber } = req.params;
 

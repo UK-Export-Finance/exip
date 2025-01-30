@@ -9,8 +9,8 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
@@ -21,7 +21,6 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const { TURNOVER_CURRENCY_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE } =
@@ -33,11 +32,11 @@ jest.mock('../map-and-save/business');
 
 describe('controllers/insurance/business/nature-of-business', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -94,18 +93,6 @@ describe('controllers/insurance/business/nature-of-business', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         ...pageVariables(referenceNumber),
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -193,18 +180,6 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

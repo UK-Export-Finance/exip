@@ -5,8 +5,8 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_ID } from '..';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { USING_BROKER } = POLICY_FIELD_IDS;
 
@@ -14,13 +14,13 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/policy/broker-manual-address/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.broker = updateMapAndSave;
   });
@@ -81,25 +81,10 @@ describe('controllers/insurance/policy/broker-manual-address/save-and-back', () 
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      req.body = validBody;
-
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     describe('when mapAndSave.broker returns false', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
         mapAndSave.broker = jest.fn(() => Promise.resolve(false));
       });
 
@@ -113,7 +98,6 @@ describe('controllers/insurance/policy/broker-manual-address/save-and-back', () 
     describe('when mapAndSave.broker fails', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
         updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.broker = updateMapAndSave;
       });

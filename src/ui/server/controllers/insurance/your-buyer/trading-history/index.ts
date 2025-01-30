@@ -6,11 +6,11 @@ import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -61,10 +61,10 @@ export const pageVariables = (referenceNumber: number) => ({
  * get
  * Render the trading history page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Trading history page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -95,10 +95,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Check trading history validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

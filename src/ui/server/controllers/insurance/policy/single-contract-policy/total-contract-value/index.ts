@@ -14,7 +14,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/policy';
 import isChangeRoute from '../../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../../helpers/is-check-and-change-route';
-import { Currency, Request, Response } from '../../../../../../types';
+import { Currency, Request, ResponseInsurance } from '../../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -67,10 +67,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_
  * get
  * Get the application and render the Single contract policy - Total contract value page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Single contract policy - Total contract value page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -116,10 +116,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Check Single contract policy - Total contract value validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

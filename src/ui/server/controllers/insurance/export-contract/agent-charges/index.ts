@@ -17,7 +17,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Currency, Request, Response } from '../../../../../types';
+import { Currency, Request, ResponseInsurance } from '../../../../../types';
 
 const {
   EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
@@ -97,10 +97,10 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
  * get
  * Get the application and render the "Agent charges" page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} "Agent charges" page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -141,10 +141,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Check for validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

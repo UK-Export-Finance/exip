@@ -5,23 +5,23 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
-import { Request, Response, ApplicationBuyer } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance, ApplicationBuyer } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockBuyer, referenceNumber } from '../../../../test-mocks';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.YOUR_BUYER;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.YOUR_BUYER;
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/your-buyer/check-your-answers', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('TEMPLATE', () => {
@@ -55,18 +55,6 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 

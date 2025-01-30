@@ -4,21 +4,20 @@ import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import sectionStartPageVariables from '../../../helpers/page-variables/core/insurance/section-start';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../types';
-import { referenceNumber, mockReq, mockRes } from '../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../types';
+import { referenceNumber, mockReq, mockResInsurance } from '../../../test-mocks';
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
-  PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/your-buyer/index', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -43,18 +42,6 @@ describe('controllers/insurance/your-buyer/index', () => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

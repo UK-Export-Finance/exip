@@ -5,8 +5,8 @@ import { ROUTES } from '../../../../../constants';
 import BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { HAS_BUYER_FINANCIAL_ACCOUNTS } = BUYER_FIELD_IDS;
 
@@ -14,13 +14,13 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/your-buyer/buyer-financial-information/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.buyerRelationship = updateMapAndSave;
   });
@@ -81,23 +81,10 @@ describe('controllers/insurance/your-buyer/buyer-financial-information/save-and-
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     describe('when mapAndSave.buyerRelationship returns false', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.resolve(false));
         mapAndSave.buyerRelationship = updateMapAndSave;
       });
@@ -113,7 +100,6 @@ describe('controllers/insurance/your-buyer/buyer-financial-information/save-and-
       beforeEach(() => {
         req.body = validBody;
 
-        res.locals = mockRes().locals;
         updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.buyerRelationship = updateMapAndSave;
       });

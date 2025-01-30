@@ -11,10 +11,10 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/turnover';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
@@ -43,13 +43,13 @@ jest.mock('../map-and-save/turnover');
 
 describe('controllers/insurance/business/turnover-currency', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
@@ -115,18 +115,6 @@ describe('controllers/insurance/business/turnover-currency', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, mockApplication.business[TURNOVER_CURRENCY_CODE]),
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -252,18 +240,6 @@ describe('controllers/insurance/business/turnover-currency', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

@@ -34,7 +34,12 @@ import {
 } from './application';
 import { ApplicationByReferenceNumberVariables } from './application-by-reference-number-variables';
 import { ApolloResponse } from './apollo';
-import { BrokerDetailsRedirectUrlParams, BrokerDetailsNotBasedInUkRedirectUrlParams, BrokerDetailsBasedInUkRedirectUrlParams } from './broker-details';
+import {
+  BrokerDetailsDataChangeFlagsParams,
+  BrokerDetailsNotBasedInUkRedirectUrlParams,
+  BrokerDetailsRedirectUrlChildParams,
+  BrokerDetailsRedirectUrlParams,
+} from './broker-details';
 import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
@@ -42,7 +47,7 @@ import { Country } from './country';
 import { Currency, CurrencyRadios } from './currency';
 import { Business } from './business';
 import { DateErrorMessage, ErrorMessageObject } from './errors';
-import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
+import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response, ResponseInsurance } from './express';
 import { GetChosenOrdnanceSurveyAddressByIndexParams, MappedOrdnanceSurveyAddress } from './ordnance-survey';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
@@ -133,9 +138,10 @@ export {
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
+  BrokerDetailsDataChangeFlagsParams,
+  BrokerDetailsRedirectUrlChildParams,
   BrokerDetailsRedirectUrlParams,
   BrokerDetailsNotBasedInUkRedirectUrlParams,
-  BrokerDetailsBasedInUkRedirectUrlParams,
   CanCreateApplicationEligibilityFlags,
   Company,
   CompaniesHouseResponse,
@@ -175,6 +181,7 @@ export {
   RequiredDataStateInsuranceEligibility,
   RequiredDataStateQuoteEligibility,
   Response,
+  ResponseInsurance,
   RadioOption,
   SectionStartPageVariables,
   SectionStartPageVariablesInput,

@@ -1,7 +1,7 @@
 import applicationAccessMiddleware, { IRRELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import { Next, Request, Response } from '../../../../types';
-import { mockReq, mockRes, mockApplication, mockAccount, referenceNumber } from '../../../test-mocks';
+import { Next, Request, ResponseInsurance } from '../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockAccount, referenceNumber } from '../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -19,14 +19,14 @@ const {
 
 describe('middleware/insurance/application-access', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
   let next: Next;
 
   const nextSpy = jest.fn();
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
     next = nextSpy;
   });
 
@@ -102,7 +102,11 @@ describe('middleware/insurance/application-access', () => {
 
     describe("when req.session.accountId does NOT match the application's owner ID", () => {
       beforeEach(() => {
-        req.session.accountId = '1234';
+        req.session.user = {
+          ...mockAccount,
+          id: '1234',
+        };
+
         next = nextSpy;
       });
 
@@ -117,24 +121,11 @@ describe('middleware/insurance/application-access', () => {
       beforeEach(() => {
         res.locals.application = {
           ...mockApplication,
-          // @ts-ignore
-          owner: {},
+          owner: {
+            ...mockApplication.owner,
+            id: '',
+          },
         };
-
-        next = nextSpy;
-      });
-
-      it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, async () => {
-        await applicationAccessMiddleware(req, res, next);
-
-        expect(res.redirect).toHaveBeenCalledWith(NO_ACCESS_TO_APPLICATION);
-      });
-    });
-
-    describe('when there is no req.session.accountID or res.locals.application', () => {
-      beforeEach(() => {
-        delete req.session.accountId;
-        delete res.locals.application;
 
         next = nextSpy;
       });
