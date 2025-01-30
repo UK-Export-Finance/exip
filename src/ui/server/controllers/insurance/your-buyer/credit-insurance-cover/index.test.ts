@@ -11,14 +11,13 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/buyer-relationship';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  PROBLEM_WITH_SERVICE,
   YOUR_BUYER: {
     CREDIT_INSURANCE_COVER_SAVE_AND_BACK,
     CREDIT_INSURANCE_COVER_CHANGE,
@@ -38,11 +37,11 @@ const {
 
 describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -130,18 +129,6 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
   });
 
   describe('post', () => {
@@ -222,18 +209,6 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
           validationErrors,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

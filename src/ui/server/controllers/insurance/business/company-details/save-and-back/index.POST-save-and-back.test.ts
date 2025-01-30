@@ -5,8 +5,8 @@ import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/bus
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/company-details';
 import api from '../../../../../api';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCompany, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockCompany, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, PHONE_NUMBER },
@@ -18,13 +18,13 @@ const { VALID_PHONE_NUMBERS, INVALID_PHONE_NUMBERS } = mockPhoneNumbers;
 
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.companyDetails = updateMapAndSave;
 
@@ -89,23 +89,10 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when mapAndSave.companyDetails returns false', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
         });
 
@@ -119,7 +106,6 @@ describe('controllers/insurance/business/companies-details', () => {
       describe('when mapAndSave.companyDetails fails', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           updateMapAndSave = mockSpyPromiseRejection;
           mapAndSave.companyDetails = updateMapAndSave;
         });

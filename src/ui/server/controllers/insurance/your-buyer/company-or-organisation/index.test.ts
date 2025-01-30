@@ -9,8 +9,8 @@ import yourBuyerDetailsValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockBuyer, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { COMPANY_OR_ORGANISATION } = BUYER_FIELD_IDS;
 
@@ -35,11 +35,11 @@ const { relationship, ...companyOrOrganisationMock } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -107,18 +107,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 
@@ -205,23 +193,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when mapAndSave.yourBuyer returns false', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
         });
 
@@ -235,7 +210,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
       describe('when mapAndSave.yourBuyer fails', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.yourBuyer = mockSpyPromiseRejection;
         });
 

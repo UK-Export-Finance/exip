@@ -4,20 +4,20 @@ import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/buyer-trading-history';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/your-buyer/failed-to-pay-on-time/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.buyerTradingHistory = updateMapAndSave;
   });
@@ -79,21 +79,8 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time/save-and-back',
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('when mapAndSave.buyerTradingHistory returns false', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.resolve(false));
       mapAndSave.buyerTradingHistory = updateMapAndSave;
     });
@@ -107,7 +94,6 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time/save-and-back',
 
   describe('when mapAndSave.buyerTradingHistory fails', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
       updateMapAndSave = mockSpyPromiseRejection;
       mapAndSave.buyerTradingHistory = updateMapAndSave;
     });

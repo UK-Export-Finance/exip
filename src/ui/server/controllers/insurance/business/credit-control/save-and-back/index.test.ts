@@ -3,20 +3,20 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import { FIELD_ID } from '..';
 import { ROUTES } from '../../../../../constants';
 import mapAndSave from '../../map-and-save/business';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/business/credit-control/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.business = updateMapAndSave;
   });
@@ -71,24 +71,10 @@ describe('controllers/insurance/business/credit-control/save-and-back', () => {
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      req.body = validBody;
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     describe('when mapAndSave.business returns false', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
 
         mapAndSave.business = jest.fn(() => Promise.resolve(false));
       });
@@ -103,7 +89,6 @@ describe('controllers/insurance/business/credit-control/save-and-back', () => {
     describe('when mapAndSave.business fails', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
 
         updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.business = updateMapAndSave;

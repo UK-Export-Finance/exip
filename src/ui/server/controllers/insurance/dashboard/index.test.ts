@@ -8,8 +8,8 @@ import getTotalPages from '../../../helpers/pagination/get-total-pages';
 import { getSkipCount, generatePaginationItems } from '../../../helpers/pagination';
 import api from '../../../api';
 import mapApplications from '../../../helpers/mappings/map-applications';
-import { Request, Response } from '../../../../types';
-import { mockReq, mockRes, mockApplications, mockAccount, mockSession } from '../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../types';
+import { mockReq, mockResInsurance, mockApplications, mockAccount, mockSession } from '../../../test-mocks';
 
 const {
   ACCOUNT: { SIGN_IN },
@@ -23,7 +23,7 @@ const firstDashboardPageRoute = `${DASHBOARD_PAGE}/${DEFAULT_PAGE_NUMBER}`;
 
 describe('controllers/insurance/dashboard', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   const getApplicationsResponse = {
     applications: mockApplications,
@@ -36,7 +36,7 @@ describe('controllers/insurance/dashboard', () => {
     req = mockReq();
     req.session.user = mockAccount;
 
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.applications.getAll = getApplicationsSpy;
   });

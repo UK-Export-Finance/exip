@@ -47,7 +47,7 @@ import { Country } from './country';
 import { Currency, CurrencyRadios } from './currency';
 import { Business } from './business';
 import { DateErrorMessage, ErrorMessageObject } from './errors';
-import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
+import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response, ResponseInsurance } from './express';
 import { GetChosenOrdnanceSurveyAddressByIndexParams, MappedOrdnanceSurveyAddress } from './ordnance-survey';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
@@ -181,6 +181,7 @@ export {
   RequiredDataStateInsuranceEligibility,
   RequiredDataStateQuoteEligibility,
   Response,
+  ResponseInsurance,
   RadioOption,
   SectionStartPageVariables,
   SectionStartPageVariablesInput,

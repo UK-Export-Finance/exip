@@ -7,7 +7,7 @@ import mapApplicationToFormFields from '../../../../../helpers/mappings/map-appl
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import save from '../../save-data';
-import { Request, Response } from '../../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../../types';
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
 
@@ -59,10 +59,10 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
  * get
  * Render the Declarations - Anti-bribery - Code of conduct page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Declarations - Anti-bribery - Code of conduct page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -82,10 +82,10 @@ export const get = (req: Request, res: Response) => {
  * post
  * Check Declarations - Anti-bribery - Code of conduct validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

@@ -1,5 +1,5 @@
 import { LINKS } from '../../../content-strings';
-import { Request, Response } from '../../../../types';
+import { Request, ResponseInsurance } from '../../../../types';
 
 /**
  * Redirect to LINKS.EXTERNAL.FULL_APPLICATION
@@ -8,9 +8,9 @@ import { Request, Response } from '../../../../types';
  * This redirect ensures that any users who visit the URL,
  * are redirect to the start page.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect}
  */
-export const get = (req: Request, res: Response) => res.redirect(LINKS.EXTERNAL.FULL_APPLICATION);
+export const get = (req: Request, res: ResponseInsurance) => res.redirect(LINKS.EXTERNAL.FULL_APPLICATION);
 
 export default get;

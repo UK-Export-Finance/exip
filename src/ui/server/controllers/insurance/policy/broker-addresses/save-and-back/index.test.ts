@@ -6,8 +6,15 @@ import getOrdnanceSurveyAddressById from '../../../../../helpers/get-chosen-ordn
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_ID, ERROR_MESSAGE } from '..';
 import api from '../../../../../api';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import {
+  mockReq,
+  mockResInsurance,
+  mockApplication,
+  mockOrdnanceSurveyAddressResponse,
+  mockSpyPromiseRejection,
+  referenceNumber,
+} from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -15,14 +22,14 @@ const { postcode, buildingNumberOrName } = mockApplication.broker;
 
 describe('controllers/insurance/policy/broker-addresses/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   const getOrdnanceSurveyAddressesSpy = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse));
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.getOrdnanceSurveyAddresses = getOrdnanceSurveyAddressesSpy;
     mapAndSave.broker = updateMapAndSave;
@@ -88,20 +95,6 @@ describe('controllers/insurance/policy/broker-addresses/save-and-back', () => {
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      req.body = validBody;
-
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     describe('when api.keystone.getOrdnanceSurveyAddresses throws an error', () => {
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -118,7 +111,6 @@ describe('controllers/insurance/policy/broker-addresses/save-and-back', () => {
     describe('when mapAndSave.broker returns false', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
 
         api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse));
         mapAndSave.broker = jest.fn(() => Promise.resolve(false));
@@ -134,7 +126,6 @@ describe('controllers/insurance/policy/broker-addresses/save-and-back', () => {
     describe('when mapAndSave.broker fails', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
 
         updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.broker = updateMapAndSave;

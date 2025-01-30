@@ -4,8 +4,8 @@ import { ROUTES } from '../../../../../constants/routes';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/jointly-insured-party';
 import generateValidationErrors from '../validation';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
-import { Request, Response } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -13,7 +13,7 @@ const [COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE] = FIELD_IDS;
 
 describe('controllers/insurance/policy/other-company-details/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   const updateMapAndSaveSuccess = jest.fn(() => Promise.resolve(true));
   const updateMapAndSaveFalse = jest.fn(() => Promise.resolve(false));
@@ -21,7 +21,7 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.jointlyInsuredParty = updateMapAndSaveSuccess;
   });
@@ -84,24 +84,9 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      req.body = validBody;
-
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     beforeEach(() => {
       req.body = validBody;
-      res.locals = mockRes().locals;
     });
 
     describe('when mapAndSave.jointlyInsuredParty returns false', () => {

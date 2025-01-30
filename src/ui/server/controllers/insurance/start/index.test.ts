@@ -1,15 +1,15 @@
 import { get } from '.';
 import { LINKS } from '../../../content-strings';
-import { Request, Response } from '../../../../types';
-import { mockReq, mockRes } from '../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../types';
+import { mockReq, mockResInsurance } from '../../../test-mocks';
 
 describe('controllers/insurance/start', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('get', () => {

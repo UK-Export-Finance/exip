@@ -4,20 +4,20 @@ import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../helpers/mappings/map-application-to-form-fields';
-import { Request, Response } from '../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../test-mocks';
 
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
 } = ROUTES;
 
 describe('controllers/insurance/application-submitted', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     res.locals.application = {
       ...mockApplication,
@@ -45,18 +45,6 @@ describe('controllers/insurance/application-submitted', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe(`when the application does not have a status of ${APPLICATION.STATUS.SUBMITTED}`, () => {

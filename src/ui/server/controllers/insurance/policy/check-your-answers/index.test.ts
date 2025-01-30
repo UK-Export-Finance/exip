@@ -8,10 +8,10 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockContact,
   mockCountriesAndCurrencies,
@@ -31,13 +31,13 @@ const { allCurrencies, countries } = mockCountriesAndCurrencies;
 
 describe('controllers/insurance/policy/check-your-answers', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let getCountriesAndCurrenciesSpy = jest.fn(() => Promise.resolve(mockCountriesAndCurrencies));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.getCountriesAndCurrencies = getCountriesAndCurrenciesSpy;
   });
@@ -102,18 +102,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {

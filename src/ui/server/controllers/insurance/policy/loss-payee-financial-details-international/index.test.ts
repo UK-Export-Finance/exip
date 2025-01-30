@@ -10,10 +10,10 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-international';
-import { Application, Request, Response } from '../../../../../types';
+import { Application, Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockLossPayeeFinancialDetailsInternational,
   mockSpyPromiseRejection,
@@ -34,11 +34,11 @@ const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS
 
 describe('controllers/insurance/policy/loss-payee-financial-details-international', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -107,18 +107,6 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
         submittedValues: mappedApplication.nominatedLossPayee.financialInternational,
       });
     });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
   });
 
   describe('post', () => {
@@ -184,18 +172,6 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

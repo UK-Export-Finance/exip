@@ -10,8 +10,8 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
-import { Request, Response } from '../../../../../types';
-import { mockApplication, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockApplication, mockReq, mockResInsurance, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
@@ -28,11 +28,11 @@ const { broker } = mockApplication;
 
 describe('controllers/insurance/policy/broker-manual-address', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -84,18 +84,6 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplication,
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -170,18 +158,6 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

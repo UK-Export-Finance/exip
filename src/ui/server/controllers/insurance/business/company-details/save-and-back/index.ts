@@ -4,7 +4,7 @@ import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/bus
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/company-details';
-import { Request, Response } from '../../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../../types';
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -23,10 +23,10 @@ const pageVariables = (referenceNumber: number) => ({
 /**
  * saves and goes back to all sections from company details page unless there are API errors
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} redirects to all sections page on success
  */
-const post = async (req: Request, res: Response) => {
+const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

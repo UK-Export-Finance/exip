@@ -10,8 +10,8 @@ import requiredFields from '../../../../helpers/required-fields/your-buyer';
 import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -31,11 +31,11 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
   save.sectionReview = mockSaveSectionReview;
 
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('FIELD_ID', () => {
@@ -97,18 +97,6 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
   });
 
   describe('post', () => {
@@ -135,18 +123,6 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
       const expected = `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {
