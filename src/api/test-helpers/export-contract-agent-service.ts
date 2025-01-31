@@ -10,13 +10,13 @@ import { ApplicationExportContractAgentService } from '../types';
  */
 const create = async (context: Context, data = {}) => {
   try {
-    console.info('Creating a exportContractAgentService (test helpers)');
+    console.info('Creating an exportContractAgentService (test helpers)');
 
     const agentService = (await context.query.ExportContractAgentService.createOne({ data })) as ApplicationExportContractAgentService;
 
     return agentService;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating an exportContractAgentService (test helpers) %o', error);
 
     return error;
   }
@@ -39,7 +39,7 @@ const get = async (context: Context, serviceId: string) => {
 
     return agentService;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting an exportContractAgentService by ID (test helpers) %o', error);
 
     throw new Error(`Getting an exportContractAgentService by ID (test helpers) ${error}`);
   }

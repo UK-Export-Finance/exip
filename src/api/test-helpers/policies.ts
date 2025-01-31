@@ -19,7 +19,7 @@ const update = async ({ context, data, policyId }: TestHelperPolicyUpdate) => {
 
     return policy;
   } catch (error) {
-    console.error(error);
+    console.error('Error updating a policy (test helpers) %o', error);
 
     return error;
   }
@@ -40,7 +40,7 @@ const create = async ({ context, data = {} }: TestHelperPolicyCreate) => {
 
     return policy;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a policy (test helpers) %o', error);
 
     return error;
   }

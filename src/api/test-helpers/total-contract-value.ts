@@ -12,7 +12,7 @@ const totalContractValueQuery = 'id value valueId';
  */
 const create = async (context: Context) => {
   try {
-    console.info('Creating an totalContractValue (test helpers)');
+    console.info('Creating a totalContractValue (test helpers)');
 
     const totalContractValue = (await context.query.TotalContractValue.createOne({
       data: {
@@ -24,7 +24,7 @@ const create = async (context: Context) => {
 
     return totalContractValue;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a totalContractValue (test helpers) %o', error);
 
     return error;
   }

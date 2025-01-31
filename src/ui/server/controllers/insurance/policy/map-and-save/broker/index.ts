@@ -25,6 +25,8 @@ const broker = async (formBody: RequestBody, application: Application, validatio
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.broker %s', application.id);
+
         return false;
       }
 

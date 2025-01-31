@@ -10,17 +10,25 @@ import createFullApplication from './create-full-application';
  * @returns {Object} Submitted application
  */
 export const generateSubmittedApplication = async () => {
-  const context = getKeystoneContext();
-  const fullApplication = await createFullApplication(context);
+  try {
+    console.info('Generating a submitted application (test helpers)');
 
-  const populatedApplication = await getPopulatedApplication.get({ context, application: fullApplication });
+    const context = getKeystoneContext();
+    const fullApplication = await createFullApplication(context);
 
-  const submittedApplication = {
-    ...populatedApplication,
-    submissionDate: new Date(),
-  };
+    const populatedApplication = await getPopulatedApplication.get({ context, application: fullApplication });
 
-  return submittedApplication;
+    const submittedApplication = {
+      ...populatedApplication,
+      submissionDate: new Date(),
+    };
+
+    return submittedApplication;
+  } catch (error) {
+    console.error('Error generating a submitted application (test helpers) %o', error);
+
+    throw new Error('Error generating a submitted application (test helpers) %o', error);
+  }
 };
 
 export default generateSubmittedApplication;

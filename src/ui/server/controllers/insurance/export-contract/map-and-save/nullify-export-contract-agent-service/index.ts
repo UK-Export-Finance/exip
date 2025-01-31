@@ -24,6 +24,8 @@ const exportContractAgentServiceAndCharge = async (application: Application) => 
     let saveResponse = await saveAgentServiceCharge.exportContractAgentServiceCharge(application, nullified.serviceCharge);
 
     if (!saveResponse) {
+      console.error('No save response received from saveAgentServiceCharge.exportContractAgentServiceCharge %s', application.id);
+
       return false;
     }
 
@@ -32,6 +34,8 @@ const exportContractAgentServiceAndCharge = async (application: Application) => 
     saveResponse = await saveAgentService.exportContractAgentService(application, nullified.service);
 
     if (!saveResponse) {
+      console.error('No save response received from saveAgentService.exportContractAgentService %s', application.id);
+
       return false;
     }
 

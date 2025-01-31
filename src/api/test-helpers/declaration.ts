@@ -16,7 +16,7 @@ const create = async (context: Context, data = {}) => {
 
     return declaration;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a declaration (test helpers) %o', error);
 
     return error;
   }
@@ -39,9 +39,9 @@ const get = async (context: Context, declarationId: string) => {
 
     return declaration;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting a declaration by ID (test helpers) %o', error);
 
-    throw new Error(`Getting an declaration by ID (test helpers) ${error}`);
+    throw new Error(`Getting a declaration by ID (test helpers) ${error}`);
   }
 };
 

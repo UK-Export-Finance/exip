@@ -24,6 +24,8 @@ const turnover = async (formBody: RequestBody, application: Application, validat
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.business %s', application.id);
+
         return false;
       }
 

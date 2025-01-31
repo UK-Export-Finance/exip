@@ -25,6 +25,8 @@ const privateMarket = async (formBody: RequestBody, application: Application, va
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.privateMarket %s', application.id);
+
         return false;
       }
 

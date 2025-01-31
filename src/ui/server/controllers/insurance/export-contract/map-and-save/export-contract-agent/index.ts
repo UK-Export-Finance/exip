@@ -31,6 +31,8 @@ const exportContractAgent = async (formBody: RequestBody, application: Applicati
       }
 
       if (!saveResponse) {
+        console.error('No save response received from saveAgent.exportContractAgent %s', application.id);
+
         return false;
       }
 
