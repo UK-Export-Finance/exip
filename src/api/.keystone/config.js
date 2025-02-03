@@ -35,7 +35,7 @@ __export(keystone_exports, {
   default: () => keystone_default,
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config7 = require('dotenv/config');
+var import_config6 = require('dotenv/config');
 var import_core3 = require('@keystone-6/core');
 var import_overload_protection = __toESM(require('overload-protection'));
 
@@ -575,7 +575,8 @@ var FIELD_IDS = {
 };
 
 // constants/allowed-graphql-resolvers/index.ts
-var import_config2 = require('dotenv/config');
+var dotenv = __toESM(require('dotenv'));
+dotenv.config();
 var { NODE_ENV } = process.env;
 var isDevEnvironment = NODE_ENV === 'development';
 var DEFAULT_RESOLVERS = [
@@ -640,19 +641,20 @@ var CUSTOM_RESOLVERS = [
   'getApimCurrencies',
   'getCountriesAndCurrencies',
 ];
+var DEV_ENVIRONMENT_CUSTOM_RESOLVERS = [
+  'accounts',
+  'addAndGetOTP',
+  'createApplications',
+  'createAnAbandonedApplication',
+  'createManyApplications',
+  'createBuyer',
+  'deleteAnAccount',
+  'deleteApplications',
+  'getAccountPasswordResetToken',
+  'updateAccountStatus',
+];
 if (isDevEnvironment) {
-  CUSTOM_RESOLVERS.push(
-    'accounts',
-    'addAndGetOTP',
-    'createApplications',
-    'createAnAbandonedApplication',
-    'createManyApplications',
-    'createBuyer',
-    'deleteAnAccount',
-    'deleteApplications',
-    'getAccountPasswordResetToken',
-    'updateAccountStatus',
-  );
+  CUSTOM_RESOLVERS.push(...DEV_ENVIRONMENT_CUSTOM_RESOLVERS);
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
@@ -2791,7 +2793,7 @@ var lists = {
 };
 
 // auth.ts
-var import_config3 = require('dotenv/config');
+var import_config2 = require('dotenv/config');
 var import_auth = require('@keystone-6/auth');
 var import_session = require('@keystone-6/core/session');
 var sessionSecret = String(process.env.SESSION_SECRET);
@@ -2842,7 +2844,7 @@ var apolloPlugins = [{ requestDidStart }];
 var plugins_default = apolloPlugins;
 
 // apollo/format-graphql-error/index.ts
-var import_config4 = require('dotenv/config');
+var import_config3 = require('dotenv/config');
 var import_apollo_server_express = require('apollo-server-express');
 var formatGraphQlError = (error) => {
   const isDevEnvironment3 = process.env.NODE_ENV === 'development';
@@ -3350,7 +3352,7 @@ var typeDefs = `
 var type_defs_default = typeDefs;
 
 // custom-resolvers/mutations/create-an-account/index.ts
-var import_config5 = require('dotenv/config');
+var import_config4 = require('dotenv/config');
 
 // helpers/get-account-status-by-id/index.ts
 var getAccountStatusById = async (context, id) => {
@@ -3952,7 +3954,7 @@ var blockAccount = async (context, statusId) => {
 var block_account_default = blockAccount;
 
 // custom-resolvers/mutations/account-sign-in/account-sign-in-checks/index.ts
-var import_config6 = require('dotenv/config');
+var import_config5 = require('dotenv/config');
 
 // helpers/generate-otp/index.ts
 var import_crypto5 = __toESM(require('crypto'));

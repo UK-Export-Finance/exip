@@ -24,6 +24,8 @@ const companyDifferentTradingAddress = async (formBody: RequestBody, application
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.companyDifferentTradingAddress %s', application.id);
+
         return false;
       }
 

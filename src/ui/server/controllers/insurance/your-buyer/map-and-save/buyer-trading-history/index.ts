@@ -25,6 +25,8 @@ const buyerTradingHistory = async (formBody: RequestBody, application: Applicati
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.buyerTradingHistory %s', application.id);
+
         return false;
       }
 

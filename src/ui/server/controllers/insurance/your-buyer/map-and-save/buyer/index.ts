@@ -25,6 +25,8 @@ const yourBuyer = async (formBody: RequestBody, application: Application, valida
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.buyer %s', application.id);
+
         return false;
       }
 

@@ -18,7 +18,7 @@ const createCompany = async (context: Context, data = {}) => {
 
     return company;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a company (test helpers) %o', error);
 
     return error;
   }
@@ -42,7 +42,7 @@ const deleteCompany = async (context: Context, companyId: string) => {
 
     return response;
   } catch (error) {
-    console.error(error);
+    console.error('Error deleting a company (test helpers) %o', error);
 
     throw new Error(`Deleting company (test helpers) ${error}`);
   }
@@ -56,7 +56,7 @@ const deleteCompany = async (context: Context, companyId: string) => {
  */
 const deleteCompanyAddress = async (context: Context, companyAddressId: string) => {
   try {
-    console.info('Deleting company address (test helpers)');
+    console.info('Deleting companyAddress (test helpers)');
 
     const response = await context.query.CompanyAddress.deleteMany({
       where: {
@@ -66,7 +66,7 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
 
     return response;
   } catch (error) {
-    console.error(error);
+    console.error('Error deleting company address (test helpers) %o', error);
 
     throw new Error(`Deleting company address (test helpers) ${error}`);
   }
@@ -80,7 +80,7 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
  */
 const deleteCompanySicCode = async (context: Context, companySicId: string) => {
   try {
-    console.info('Deleting company SIC code (test helpers)', companySicId);
+    console.info('Deleting company SIC code (test helpers) %s', companySicId);
 
     const response = await context.query.CompanySicCode.deleteMany({
       where: [{ id: companySicId }],
@@ -88,7 +88,7 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
 
     return response;
   } catch (error) {
-    console.error(error);
+    console.error('Error deleting company SIC code (test helpers) %o', error);
 
     throw new Error(`Deleting company SIC code (test helpers) ${error}`);
   }
@@ -112,7 +112,7 @@ const createCompanyAddress = async (context: Context, data = {}) => {
 
     return company;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a company address (test helpers) %o', error);
 
     return error;
   }
@@ -141,7 +141,7 @@ const createCompanySicCode = async (context: Context, companyId: string) => {
 
     return companySicCode;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a company SIC code (test helpers) %o', error);
 
     return error;
   }
@@ -171,7 +171,7 @@ const createCompanyDifferentTradingAddress = async (context: Context, companyId:
 
     return differentTradingAddress;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating a company different trading address (test helpers) %o', error);
 
     throw new Error(`Creating a company different trading address (test helpers) ${error}`);
   }
@@ -195,7 +195,7 @@ const getCompany = async (context: Context, companyId: string) => {
 
     return company;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting a company by ID (test helpers) %o', error);
 
     throw new Error(`Getting a company by ID (test helpers) ${error}`);
   }
@@ -219,7 +219,7 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
 
     return companyAddress;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting a company address by ID (test helpers) %o', error);
 
     throw new Error(`Getting a company address by ID (test helpers) ${error}`);
   }
@@ -247,7 +247,7 @@ const getCompanySicCodes = async (context: Context, companyId: string) => {
 
     return companySic;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting a company SIC code by company ID (test helpers) %o', error);
 
     throw new Error(`Getting company SIC code by company ID (test helpers) ${error}`);
   }
