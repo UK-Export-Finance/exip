@@ -30,7 +30,7 @@ on:
       - dev
       - staging
       - production
-      - main-broker-address-lookup
+      - chore/deployment-broker-address-lookup
 
     paths:
       - 'src/**'
@@ -39,7 +39,7 @@ on:
 
 env:
   PRODUCT: exip
-  ENVIRONMENT: main-broker-address-lookup
+  ENVIRONMENT: dev
   TIMEZONE: ${{ vars.TIMEZONE }}
 
 jobs:
