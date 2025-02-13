@@ -18,7 +18,7 @@
 # 2. Any modifications to atleast one of the `paths` targets.
 
 name: Deployment
-run-name: 🚀 Deploying from ${{ github.ref_name }}
+run-name: 🚀 Deploying from main-broker-address-lookup
 
 on:
   schedule:
@@ -30,6 +30,7 @@ on:
       - dev
       - staging
       - production
+      - main-broker-address-lookup
 
     paths:
       - 'src/**'
@@ -38,7 +39,7 @@ on:
 
 env:
   PRODUCT: exip
-  ENVIRONMENT: ${{ github.ref_name }}
+  ENVIRONMENT: main-broker-address-lookup
   TIMEZONE: ${{ vars.TIMEZONE }}
 
 jobs:
@@ -85,7 +86,7 @@ jobs:
           username: ${{ secrets.MYSQL_USER }}
           password: ${{ secrets.MYSQL_PASSWORD }}
           database: ${{ env.PRODUCT }}
-          branch: ${{ github.ref_name }}
+          branch: main-broker-address-lookup
           node: ${{ vars.NODE_VERSION }}
           execute: ${{ vars.DATABASE }}
 
@@ -130,7 +131,7 @@ jobs:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           acr: ${{ secrets.ACR_PASSWORD }}
           webapp: ${{ matrix.webapp }}
-          branch: ${{ github.ref_name }}
+          branch: main-broker-address-lookup
           node: ${{ vars.NODE_ENV }}
           port: ${{ env.PORT }}
           session: ${{ secrets.SESSION_SECRET }}
