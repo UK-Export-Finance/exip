@@ -7,7 +7,7 @@ import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/field
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
 
-const { TREASURY } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
+const { TREASURY, QUEENS_DIAMOND_JUBILEE_GALLERIES } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
 
 const {
   BROKER_DETAILS: { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
@@ -164,6 +164,33 @@ context(
       describe(`when submitting ${IS_BASED_IN_UK} as "yes" and there is only one address available`, () => {
         const postcode = TREASURY.POSTCODE;
         const buildingNumberOrName = TREASURY.BUILDING_NUMBER;
+
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
+          cy.completeAndSubmitBrokerDetailsForm({
+            isBasedInUk: true,
+            postcode,
+            buildingNumberOrName,
+          });
+
+          cy.assertUrl(brokerConfirmAddressUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertBrokerDetailsFieldValues({
+              isBasedInUk: true,
+              expectedPostcode: postcode,
+              expectedBuildingNumberOrName: buildingNumberOrName,
+            });
+          });
+        });
+      });
+
+      describe(`when submitting ${IS_BASED_IN_UK} as "yes" and there is only one address available that has "address line 1" as a pure number`, () => {
+        const postcode = QUEENS_DIAMOND_JUBILEE_GALLERIES.POSTCODE;
+        const buildingNumberOrName = QUEENS_DIAMOND_JUBILEE_GALLERIES.BUILDING_NUMBER;
 
         it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
           cy.completeAndSubmitBrokerDetailsForm({
