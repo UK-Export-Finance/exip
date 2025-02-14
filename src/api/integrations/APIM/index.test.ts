@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import APIM from '.';
+import APIM, { statusIsValid, responseIsValid } from '.';
 import { EXTERNAL_API_ENDPOINTS, GBP, USD } from '../../constants';
 import { ApimSendEmailResponse } from '../../types';
 import { mockCisCountries, mockCurrencies } from '../../test-mocks';
@@ -12,11 +12,69 @@ const { APIM_MDM_URL } = process.env;
 const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 
 describe('integrations/APIM', () => {
+  describe('statusIsValid', () => {
+    describe('when the status matches', () => {
+      it('should return true', () => {
+        const result = statusIsValid(200, 200);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when the status does NOT match', () => {
+      it('should return false', () => {
+        const result = statusIsValid(200, 201);
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
+  describe('responseIsValid', () => {
+    describe('when the response status matches and has a data object', () => {
+      it('should return true', () => {
+        const mockResponse = {
+          status: 200,
+          data: {},
+        };
+
+        const result = responseIsValid(mockResponse, 200);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when the response status matches, but does not have a data object', () => {
+      it('should return false', () => {
+        const mockResponse = {
+          status: 200,
+        };
+
+        const result = responseIsValid(mockResponse, 200);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when the response status does NOT match, but has a data object', () => {
+      it('should return false', () => {
+        const mockResponse = {
+          status: 200,
+          data: {},
+        };
+
+        const result = responseIsValid(mockResponse, 201);
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
   describe('getCisCountries', () => {
     const url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
 
     describe('when a 200 status and data is returned', () => {
-      test('it should return success=true and data', async () => {
+      it('should return success=true and data', async () => {
         const mock = new MockAdapter(axios);
 
         const mockResponseData = mockCisCountries;
@@ -35,7 +93,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when no data is returned', () => {
-      test('it should return success=false', async () => {
+      it('should return success=false', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onGet(url).reply(200);
@@ -51,7 +109,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when a 200 status is not returned', () => {
-      test('it should throw an error', async () => {
+      it('should throw an error', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onGet(url).reply(500);
@@ -65,7 +123,7 @@ describe('integrations/APIM', () => {
     const url = `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`;
 
     describe('when a 200 status and data is returned', () => {
-      test('it should return success=true and data', async () => {
+      it('should return success=true and data', async () => {
         const mock = new MockAdapter(axios);
 
         const mockResponseData = mockCurrencies;
@@ -84,7 +142,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when no data is returned', () => {
-      test('it should return success=false', async () => {
+      it('should return success=false', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onGet(url).reply(200);
@@ -100,7 +158,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when a 200 status is not returned', () => {
-      test('it should throw an error', async () => {
+      it('should throw an error', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onGet(url).reply(500);
@@ -117,7 +175,7 @@ describe('integrations/APIM', () => {
     const mockTarget = USD;
 
     describe('when a 200 status and data is returned', () => {
-      test('it should return success=true and data', async () => {
+      it('should return success=true and data', async () => {
         const mock = new MockAdapter(axios);
 
         const mockResponseData = mockCurrencies;
@@ -136,7 +194,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when no data is returned', () => {
-      test('it should return success=false', async () => {
+      it('should return success=false', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onGet(url).reply(200);
@@ -152,7 +210,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when a 200 status is not returned', () => {
-      test('it should throw an error', async () => {
+      it('should throw an error', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onGet(url).reply(500);
@@ -170,7 +228,7 @@ describe('integrations/APIM', () => {
     const mockPersonalisation = { mock: true };
 
     describe('when a 201 status and data is returned', () => {
-      test('it should return success=true and a emailRecipient field', async () => {
+      it('should return success=true and a emailRecipient field', async () => {
         const mock = new MockAdapter(axios);
 
         const mockResponseData: ApimSendEmailResponse = {
@@ -198,7 +256,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when no data is returned', () => {
-      test('it should return success=false and a emailRecipient field', async () => {
+      it('should return success=false and a emailRecipient field', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onPost(url).reply(201);
@@ -215,7 +273,7 @@ describe('integrations/APIM', () => {
     });
 
     describe('when a 201 status is not returned', () => {
-      test('it should throw an error', async () => {
+      it('should throw an error', async () => {
         const mock = new MockAdapter(axios);
 
         mock.onPost(url).reply(500);

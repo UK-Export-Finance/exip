@@ -1400,6 +1400,13 @@ var import_dotenv5 = __toESM(require('dotenv'));
 import_dotenv5.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE, GOV_NOTIFY_API_KEY } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
+var statusIsValid = (status, expectedStatus = 200) => status === expectedStatus;
+var responseIsValid = (response, expectedStatus) => {
+  if (response.data && statusIsValid(response.status, expectedStatus)) {
+    return true;
+  }
+  return false;
+};
 var APIM = {
   getCisCountries: async () => {
     try {
@@ -1411,12 +1418,9 @@ var APIM = {
           'Content-Type': 'application/json',
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status),
       });
-      if (response?.data && response?.status === 200) {
+      if (responseIsValid(response)) {
         return {
           success: true,
           data: response.data,
@@ -1440,12 +1444,9 @@ var APIM = {
           'Content-Type': 'application/json',
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status),
       });
-      if (response?.data && response?.status === 200) {
+      if (responseIsValid(response)) {
         return {
           success: true,
           data: response.data,
@@ -1470,12 +1471,9 @@ var APIM = {
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
         params: { source, target },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status),
       });
-      if (response?.data && response?.status === 200) {
+      if (responseIsValid(response)) {
         return {
           success: true,
           data: response.data,
@@ -1513,12 +1511,9 @@ var APIM = {
           sendToEmailAddress,
           personalisation,
         },
-        validateStatus(status) {
-          const acceptableStatus = [201];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status, 201),
       });
-      if (response?.data && response?.status === 201) {
+      if (responseIsValid(response, 201)) {
         return {
           success: true,
           emailRecipient: sendToEmailAddress,
@@ -6873,7 +6868,7 @@ var EXPORT_CONTRACT_FIELDS = {
         ],
         OUTRO: "We may contact you to get more information if you're exporting goods or services that might have an impact on the environment.",
       },
-      MAXIMUM: 1e3,
+      MAXIMUM: MAXIMUM_CHARACTERS.ABOUT_GOODS_OR_SERVICES_DESCRIPTION,
       SUMMARY: {
         TITLE: "Goods or services you're exporting",
       },

@@ -14,6 +14,35 @@ dotenv.config();
 const { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE, GOV_NOTIFY_API_KEY } = process.env;
 const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 
+interface ResponseObject {
+  data?: object;
+  status: number;
+}
+
+/**
+ * statusIsValid
+ * Check if a status is valid
+ * @param {Number} status
+ * @param {Number} expectedStatus. Defaults to 200
+ * @returns {Boolean}
+ */
+export const statusIsValid = (status: number, expectedStatus: number = 200) => status === expectedStatus;
+
+/**
+ * responseIsValid
+ * Check if a response is valid
+ * @param {ResponseObject} response
+ * @param {Number} expectedStatus
+ * @returns {Boolean}
+ */
+export const responseIsValid = (response: ResponseObject, expectedStatus?: number) => {
+  if (response.data && statusIsValid(response.status, expectedStatus)) {
+    return true;
+  }
+
+  return false;
+};
+
 /**
  * APIM
  * Calls to APIM:
@@ -32,13 +61,10 @@ const APIM = {
           'Content-Type': 'application/json',
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status),
       });
 
-      if (response?.data && response?.status === 200) {
+      if (responseIsValid(response)) {
         return {
           success: true,
           data: response.data,
@@ -65,13 +91,10 @@ const APIM = {
           'Content-Type': 'application/json',
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status),
       });
 
-      if (response?.data && response?.status === 200) {
+      if (responseIsValid(response)) {
         return {
           success: true,
           data: response.data,
@@ -99,13 +122,10 @@ const APIM = {
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
         params: { source, target },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status),
       });
 
-      if (response?.data && response?.status === 200) {
+      if (responseIsValid(response)) {
         return {
           success: true,
           data: response.data,
@@ -146,13 +166,10 @@ const APIM = {
           sendToEmailAddress,
           personalisation,
         },
-        validateStatus(status) {
-          const acceptableStatus = [201];
-          return acceptableStatus.includes(status);
-        },
+        validateStatus: (status) => statusIsValid(status, 201),
       });
 
-      if (response?.data && response?.status === 201) {
+      if (responseIsValid(response, 201)) {
         return {
           success: true,
           emailRecipient: sendToEmailAddress,
