@@ -1,6 +1,6 @@
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
-import { callNotify } from '../call-notify';
-import { EmailResponse } from '../../types';
+import APIM from '../../integrations/APIM';
+import { ApimSendEmailHelperResponse } from '../../types';
 
 /**
  * reactivateAccountLink
@@ -8,9 +8,14 @@ import { EmailResponse } from '../../types';
  * @param {String} Email address
  * @param {String} Name
  * @param {String} Password reset token
- * @returns {Promise<Object>} callNotify response
+ * @returns {Promise<ApimSendEmailHelperResponse>}
  */
-export const reactivateAccountLink = async (urlOrigin: string, emailAddress: string, name: string, reactivationHash: string): Promise<EmailResponse> => {
+export const reactivateAccountLink = async (
+  urlOrigin: string,
+  emailAddress: string,
+  name: string,
+  reactivationHash: string,
+): Promise<ApimSendEmailHelperResponse> => {
   try {
     console.info('Sending email for account reactivation');
 
@@ -18,7 +23,7 @@ export const reactivateAccountLink = async (urlOrigin: string, emailAddress: str
 
     const variables = { urlOrigin, name, reactivationToken: reactivationHash };
 
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM.sendEmail(templateId, emailAddress, variables);
 
     return response;
   } catch (error) {

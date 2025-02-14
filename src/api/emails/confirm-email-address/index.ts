@@ -1,6 +1,6 @@
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
-import { callNotify } from '../call-notify';
-import { EmailResponse } from '../../types';
+import APIM from '../../integrations/APIM';
+import { ApimSendEmailHelperResponse } from '../../types';
 
 /**
  * confirmEmailAddress
@@ -10,7 +10,7 @@ import { EmailResponse } from '../../types';
  * @param {String} name: Name
  * @param {String} verificationHash: Verification hash
  * @param {String} id: Account ID
- * @returns {Promise<Object>} callNotify response
+ * @returns {Promise<ApimSendEmailHelperResponse>}
  */
 export const confirmEmailAddress = async (
   emailAddress: string,
@@ -18,7 +18,7 @@ export const confirmEmailAddress = async (
   name: string,
   verificationHash: string,
   id: string,
-): Promise<EmailResponse> => {
+): Promise<ApimSendEmailHelperResponse> => {
   try {
     console.info('Sending confirm email address email');
 
@@ -26,7 +26,7 @@ export const confirmEmailAddress = async (
 
     const variables = { urlOrigin, name, confirmToken: verificationHash, id };
 
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM.sendEmail(templateId, emailAddress, variables);
 
     return response;
   } catch (error) {

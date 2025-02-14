@@ -1,5 +1,5 @@
 import { submissionDeadlineEmail } from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import { mockApplication, mockSendEmailResponse, mockSpyPromiseRejection } from '../../test-mocks';
 import { SubmissionDeadlineEmailVariables } from '../../types';
@@ -19,10 +19,10 @@ describe('emails/submission-deadline', () => {
   } as SubmissionDeadlineEmailVariables;
 
   beforeAll(async () => {
-    notify.sendEmail = sendEmailSpy;
+    APIM.sendEmail = sendEmailSpy;
   });
 
-  it('should call notify.sendEmail and return the response', async () => {
+  it('should call APIM.sendEmail and return the response', async () => {
     const result = await submissionDeadlineEmail(variables.email, variables);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
@@ -36,11 +36,13 @@ describe('emails/submission-deadline', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = mockSpyPromiseRejection;
+      APIM.sendEmail = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {
-      await expect(submissionDeadlineEmail(variables.email, variables)).rejects.toThrow(`Sending submission deadline email for ${variables.referenceNumber}`);
+      const response = submissionDeadlineEmail(variables.email, variables);
+
+      await expect(response).rejects.toThrow(`Sending submission deadline email for ${variables.referenceNumber}`);
     });
   });
 });

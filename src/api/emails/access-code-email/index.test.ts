@@ -1,5 +1,5 @@
 import { accessCodeEmail } from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import { mockAccount, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
@@ -21,10 +21,10 @@ describe('emails/access-code-email', () => {
   };
 
   beforeAll(async () => {
-    notify.sendEmail = sendEmailSpy;
+    APIM.sendEmail = sendEmailSpy;
   });
 
-  it('should call notify.sendEmail and return the response', async () => {
+  it('should call APIM.sendEmail and return the response', async () => {
     const result = await accessCodeEmail(email, fullName, mockSecurityCode);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
@@ -38,17 +38,13 @@ describe('emails/access-code-email', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = mockSpyPromiseRejection;
+      APIM.sendEmail = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {
-      try {
-        await accessCodeEmail(email, fullName, mockSecurityCode);
-      } catch (error) {
-        const expected = new Error(`Sending access code email for account sign in Error: Sending email ${new Error(mockErrorMessage)}`);
+      const response = accessCodeEmail(email, fullName, mockSecurityCode);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending access code email for account sign in ${new Error(mockErrorMessage)}`);
     });
   });
 });

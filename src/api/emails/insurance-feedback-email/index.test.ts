@@ -1,5 +1,5 @@
 import { insuranceFeedbackEmail } from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import formatDate from '../../helpers/format-date';
 import mapFeedbackSatisfaction from '../../helpers/map-feedback-satisfaction';
@@ -13,15 +13,15 @@ describe('emails/insurance-feedback-email', () => {
   const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
 
   beforeAll(async () => {
-    notify.sendEmail = sendEmailSpy;
+    APIM.sendEmail = sendEmailSpy;
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should call notify.sendEmail and return the response with all variables provided', async () => {
-    notify.sendEmail = sendEmailSpy;
+  it('should call APIM.sendEmail and return the response with all variables provided', async () => {
+    APIM.sendEmail = sendEmailSpy;
 
     const emailVariables = {
       ...mockInsuranceFeedback,
@@ -45,8 +45,8 @@ describe('emails/insurance-feedback-email', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should call notify.sendEmail and return the response with no satisfaction provided', async () => {
-    notify.sendEmail = sendEmailSpy;
+  it('should call APIM.sendEmail and return the response with no satisfaction provided', async () => {
+    APIM.sendEmail = sendEmailSpy;
 
     const { satisfaction, ...mockInsuranceFeedbackNoSatisfaction } = mockInsuranceFeedback;
 
@@ -73,17 +73,13 @@ describe('emails/insurance-feedback-email', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = mockSpyPromiseRejection;
+      APIM.sendEmail = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {
-      try {
-        await insuranceFeedbackEmail(mockInsuranceFeedback);
-      } catch (error) {
-        const expected = new Error(`Sending insurance feedback email Error: Sending email ${new Error(mockErrorMessage)}`);
+      const response = insuranceFeedbackEmail(mockInsuranceFeedback);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending insurance feedback email ${new Error(mockErrorMessage)}`);
     });
   });
 });

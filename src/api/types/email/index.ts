@@ -1,13 +1,5 @@
 import { SuccessResponse } from '../generic';
 
-export interface EmailResponse extends SuccessResponse {
-  emailRecipient: string;
-}
-
-export interface NotifyPersonalisation {
-  linkToFile?: string;
-}
-
 export interface SendConfirmEmailAddressVariables {
   urlOrigin: string;
   accountId: string;
@@ -21,4 +13,21 @@ export interface SubmissionDeadlineEmailVariables {
   applicationUrl: string;
   buyerName: string;
   email: string;
+}
+
+interface ApimSendEmailResponseData {
+  content: object;
+  id: string;
+  reference: string;
+  template: object;
+  uri: string;
+}
+
+export interface ApimSendEmailResponse {
+  data: ApimSendEmailResponseData;
+  status: number;
+}
+
+export interface ApimSendEmailHelperResponse extends SuccessResponse {
+  emailRecipient: string;
 }
