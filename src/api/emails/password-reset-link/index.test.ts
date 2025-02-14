@@ -1,5 +1,5 @@
 import { passwordResetLink } from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
@@ -22,11 +22,11 @@ describe('emails/password-reset-link', () => {
   };
 
   beforeAll(async () => {
-    notify.sendEmail = sendEmailSpy;
+    APIM.sendEmail = sendEmailSpy;
   });
 
-  it('should call notify.sendEmail and return the response', async () => {
-    notify.sendEmail = sendEmailSpy;
+  it('should call APIM.sendEmail and return the response', async () => {
+    APIM.sendEmail = sendEmailSpy;
 
     const result = await passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
 
@@ -40,17 +40,13 @@ describe('emails/password-reset-link', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = mockSpyPromiseRejection;
+      APIM.sendEmail = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {
-      try {
-        await passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
-      } catch (error) {
-        const expected = new Error(`Sending email for account password reset Error: Sending email ${new Error(mockErrorMessage)}`);
+      const response = passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending email for account password reset ${new Error(mockErrorMessage)}`);
     });
   });
 });

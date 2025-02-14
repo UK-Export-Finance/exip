@@ -60,6 +60,7 @@ export const EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
     CURRENCY: '/currencies',
     CURRENCY_EXCHANGE: '/currencies/exchange',
+    EMAIL: '/emails',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
   },

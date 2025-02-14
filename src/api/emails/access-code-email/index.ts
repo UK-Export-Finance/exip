@@ -1,6 +1,6 @@
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
-import { callNotify } from '../call-notify';
-import { EmailResponse } from '../../types';
+import APIM from '../../integrations/APIM';
+import { ApimSendEmailHelperResponse } from '../../types';
 
 /**
  * accessCodeEmail
@@ -8,9 +8,9 @@ import { EmailResponse } from '../../types';
  * @param {String} Email address
  * @param {String} Name
  * @param {String} Security code
- * @returns {Promise<Object>} callNotify response
+ * @returns {Promise<ApimSendEmailHelperResponse>}
  */
-export const accessCodeEmail = async (emailAddress: string, name: string, securityCode: string): Promise<EmailResponse> => {
+export const accessCodeEmail = async (emailAddress: string, name: string, securityCode: string): Promise<ApimSendEmailHelperResponse> => {
   try {
     console.info('Sending access code email for account sign in');
 
@@ -18,7 +18,7 @@ export const accessCodeEmail = async (emailAddress: string, name: string, securi
 
     const variables = { name, securityCode };
 
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM.sendEmail(templateId, emailAddress, variables);
 
     return response;
   } catch (error) {
