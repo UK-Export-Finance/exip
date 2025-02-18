@@ -1,4 +1,4 @@
-import { PAGES } from '../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -63,6 +63,7 @@ export const get = (req: Request, res: ResponseInsurance) => {
       ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application,
+      SUBMIT_BUTTON_COPY: BUTTONS.USE_THIS_ADDRESS,
     });
   } catch (error) {
     console.error('Error getting broker manual address %o', error);
@@ -99,6 +100,7 @@ export const post = async (req: Request, res: ResponseInsurance) => {
       userName: getUserNameFromSession(req.session.user),
       submittedValues: sanitisedData,
       validationErrors,
+      SUBMIT_BUTTON_COPY: BUTTONS.USE_THIS_ADDRESS,
     });
   }
 
