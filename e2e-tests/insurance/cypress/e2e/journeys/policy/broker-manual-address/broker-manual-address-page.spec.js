@@ -1,6 +1,6 @@
 import { headingCaption } from '../../../../../../pages/shared';
 import { brokerManualAddressPage } from '../../../../../../pages/insurance/policy';
-import { PAGES } from '../../../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
@@ -61,6 +61,7 @@ context(
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
         backLink: `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+        submitButtonCopy: BUTTONS.USE_THIS_ADDRESS,
       });
     });
 

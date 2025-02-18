@@ -1,5 +1,5 @@
 import { pageVariables, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
-import { PAGES } from '../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -84,6 +84,7 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplication,
+        SUBMIT_BUTTON_COPY: BUTTONS.USE_THIS_ADDRESS,
       });
     });
   });
@@ -113,6 +114,7 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
           userName: getUserNameFromSession(req.session.user),
           submittedValues: payload,
           validationErrors,
+          SUBMIT_BUTTON_COPY: BUTTONS.USE_THIS_ADDRESS,
         });
       });
     });
