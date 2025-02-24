@@ -48,7 +48,7 @@ describe('getOrdnanceSurveyAddresses', () => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false, status: 400 }));
     });
 
-    it('should return an object containing success=false', async () => {
+    it('should return an object containing success=false and noAddressesFound=true', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = { success: false, noAddressesFound: true };

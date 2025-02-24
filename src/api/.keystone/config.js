@@ -10171,15 +10171,15 @@ var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
     try {
+      const acceptableStatuses = [200, 400, 404];
       const response = await (0, import_axios4.default)({
         method: 'get',
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
         validateStatus(status) {
-          const acceptableStatus = [200, 400, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatuses.includes(status);
         },
       });
-      if (!response?.data?.results || (response.status !== 200 && response.status !== 400)) {
+      if (!response?.data?.results || !acceptableStatuses.includes(response.status)) {
         return {
           success: false,
           status: response.status,

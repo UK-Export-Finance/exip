@@ -16,16 +16,17 @@ const { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 const ordnanceSurvey = {
   get: async (postcode: string): Promise<OrdnanceSurveyAPIResponse> => {
     try {
+      const acceptableStatuses = [200, 400, 404];
+
       const response = await axios({
         method: 'get',
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
         validateStatus(status) {
-          const acceptableStatus = [200, 400, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatuses.includes(status);
         },
       });
 
-      if (!response?.data?.results || (response.status !== 200 && response.status !== 400)) {
+      if (!response?.data?.results || !acceptableStatuses.includes(response.status)) {
         return {
           success: false,
           status: response.status,
