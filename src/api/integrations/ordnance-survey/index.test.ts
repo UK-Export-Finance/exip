@@ -24,6 +24,7 @@ describe('integrations/ordnance-survey', () => {
       const expected = {
         success: true,
         data: mockResponse.results,
+        status: 200,
       };
 
       expect(result).toEqual(expected);
@@ -40,6 +41,7 @@ describe('integrations/ordnance-survey', () => {
 
       const expected = {
         success: false,
+        status: 200,
       };
 
       expect(result).toEqual(expected);
@@ -56,6 +58,24 @@ describe('integrations/ordnance-survey', () => {
 
       const expected = {
         success: false,
+        status: 200,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a status code of 400 is returned', () => {
+    it('should return success=false', async () => {
+      const mock = new MockAdapter(axios);
+
+      mock.onGet(url).reply(400, {});
+
+      const result = await ordnanceSurvey.get(postcode);
+
+      const expected = {
+        success: false,
+        status: 400,
       };
 
       expect(result).toEqual(expected);

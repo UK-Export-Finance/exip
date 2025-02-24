@@ -20,20 +20,22 @@ const ordnanceSurvey = {
         method: 'get',
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
         validateStatus(status) {
-          const acceptableStatus = [200, 404];
+          const acceptableStatus = [200, 400, 404];
           return acceptableStatus.includes(status);
         },
       });
 
-      if (!response?.data?.results || response.status !== 200) {
+      if (!response?.data?.results || (response.status !== 200 && response.status !== 400)) {
         return {
           success: false,
+          status: response.status,
         };
       }
 
       return {
         success: true,
         data: response.data.results,
+        status: response.status,
       };
     } catch (error) {
       console.error('Error calling Ordnance Survey API %o', error);

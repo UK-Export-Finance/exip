@@ -41,7 +41,7 @@ export const get = (req: Request, res: ResponseInsurance) => {
     }
 
     const {
-      broker: { postcode },
+      broker: { postcode, buildingNumberOrName },
     } = application;
 
     return res.render(TEMPLATE, {
@@ -52,6 +52,7 @@ export const get = (req: Request, res: ResponseInsurance) => {
       ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       postcode,
+      buildingNumberOrName,
     });
   } catch (error) {
     console.error('Error getting broker zero addresses %o', error);

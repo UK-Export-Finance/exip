@@ -26,7 +26,9 @@
 
       <p class="govuk-body" data-cy="outro">
         <span data-cy="outro-could-not-find">{{ CONTENT_STRINGS.OUTRO.COULD_NOT_FIND }}</span>
-        <span data-cy="outro-postcode">{{ postcode }}.</span>
+        <span data-cy="outro-postcode" class="govuk-!-font-weight-bold">{{ postcode }}</span>
+        <span data-cy="outro-and">{{ CONTENT_STRINGS.OUTRO.AND }}</span>
+        <span data-cy="outro-building" class="govuk-!-font-weight-bold">{{ buildingNumberOrName }}.</span>
         <span data-cy="outro-you-can">{{ CONTENT_STRINGS.OUTRO.YOU_CAN }}</span>
 
         <a class="govuk-link" data-cy="outro-search-again-link" href="{{ SEARCH_AGAIN_URL }}">{{ CONTENT_STRINGS.OUTRO.SEARCH_AGAIN }}</a>

@@ -114,6 +114,7 @@ const BROKER_ZERO_ADDRESSES = {
     YOU_CAN: 'You can',
     SEARCH_AGAIN: 'search again',
     OR: 'or',
+    AND: 'and',
     ENTER_MANUALLY: 'enter the address manually.',
   },
 };

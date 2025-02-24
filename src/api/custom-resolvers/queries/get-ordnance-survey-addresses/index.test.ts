@@ -31,13 +31,27 @@ describe('getOrdnanceSurveyAddresses', () => {
 
   describe('when ordnance survey API returns an empty data object', () => {
     beforeEach(() => {
-      ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
+      ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: undefined, status: 200 }));
     });
 
     it('should return an object containing success=false', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = { success: false };
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe('when ordnance survey API returns a 400 status code', () => {
+    beforeEach(() => {
+      ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false, status: 400 }));
+    });
+
+    it('should return an object containing success=false', async () => {
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
+
+      const expected = { success: false, noAddressesFound: true };
 
       expect(response).toEqual(expected);
     });
@@ -57,7 +71,7 @@ describe('getOrdnanceSurveyAddresses', () => {
     beforeEach(() => {
       const ordnanceSurveyResponse: Array<OrdnanceSurveyAddress> = mockOrdnanceSurveyResponse.results;
 
-      ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: ordnanceSurveyResponse }));
+      ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: ordnanceSurveyResponse, status: 200 }));
     });
 
     it('should return an object containing success=true and mapped addresses', async () => {

@@ -28,6 +28,8 @@ context(
     let referenceNumber;
     let url;
 
+    const buildingNumberOrName = '123456789';
+
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
@@ -37,7 +39,7 @@ context(
           stopSubmittingAfter: 'brokerDetails',
           usingBroker: true,
           isBasedInUk: true,
-          buildingNumberOrName: '123456789',
+          buildingNumberOrName,
         });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`;
@@ -79,7 +81,9 @@ context(
 
       it('renders outro text', () => {
         cy.checkText(outro.couldNotFind(), CONTENT_STRINGS.OUTRO.COULD_NOT_FIND);
-        cy.checkText(outro.postcode(), `${BROKER[POSTCODE]}.`);
+        cy.checkText(outro.postcode(), `${BROKER[POSTCODE]}`);
+        cy.checkText(outro.and(), CONTENT_STRINGS.OUTRO.AND);
+        cy.checkText(outro.buildingNumberOrName(), `${buildingNumberOrName}.`);
         cy.checkText(outro.youCan(), CONTENT_STRINGS.OUTRO.YOU_CAN);
         cy.checkText(outro.or(), CONTENT_STRINGS.OUTRO.OR);
       });
