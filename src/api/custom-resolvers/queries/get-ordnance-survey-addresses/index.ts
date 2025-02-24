@@ -36,6 +36,10 @@ const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVa
 
     const response = await ordnanceSurvey.get(postcode);
 
+    /**
+     * if received status is 400
+     * then return noAddressesFound flag
+     */
     if (!response.success && response.status === 400) {
       return {
         success: false,
