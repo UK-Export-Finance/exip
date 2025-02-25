@@ -110,12 +110,13 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       });
 
       const { policyType } = policy;
-      const { isUsingBroker, isBasedInUk } = mockBroker;
+      const { isUsingBroker, isBasedInUk, fullAddress } = mockBroker;
 
       const fields = requiredFields({
         policyType,
         isUsingBroker,
         brokerIsBasedInUk: isBasedInUk,
+        brokerFullAddress: fullAddress,
       });
 
       const status = sectionStatus(fields, mockApplication);
