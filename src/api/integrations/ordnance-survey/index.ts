@@ -16,24 +16,27 @@ const { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 const ordnanceSurvey = {
   get: async (postcode: string): Promise<OrdnanceSurveyAPIResponse> => {
     try {
+      const acceptableStatuses = [200, 400, 404];
+
       const response = await axios({
         method: 'get',
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
         validateStatus(status) {
-          const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatuses.includes(status);
         },
       });
 
-      if (!response?.data?.results || response.status !== 200) {
+      if (!response.data?.results || !acceptableStatuses.includes(response.status)) {
         return {
           success: false,
+          status: response.status,
         };
       }
 
       return {
         success: true,
         data: response.data.results,
+        status: response.status,
       };
     } catch (error) {
       console.error('Error calling Ordnance Survey API %o', error);

@@ -18,6 +18,7 @@ export interface OrdnanceSurveyAddress {
 
 export interface OrdnanceSurveyAPIResponse extends SuccessResponse {
   data?: Array<OrdnanceSurveyAddress>;
+  status: number;
 }
 
 export interface OrdnanceSurveyVariables {

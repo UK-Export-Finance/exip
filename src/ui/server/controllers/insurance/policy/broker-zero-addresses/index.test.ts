@@ -13,7 +13,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const { broker } = mockApplication;
-const { postcode } = broker;
+const { postcode, buildingNumberOrName } = broker;
 
 describe('controllers/insurance/policy/broker-zero-addresses', () => {
   let req: Request;
@@ -65,6 +65,7 @@ describe('controllers/insurance/policy/broker-zero-addresses', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         postcode,
+        buildingNumberOrName,
       });
     });
   });

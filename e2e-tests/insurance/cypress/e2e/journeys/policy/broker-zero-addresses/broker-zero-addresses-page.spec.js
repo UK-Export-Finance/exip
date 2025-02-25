@@ -28,6 +28,8 @@ context(
     let referenceNumber;
     let url;
 
+    const buildingNumberOrName = '123456789';
+
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
@@ -37,12 +39,10 @@ context(
           stopSubmittingAfter: 'brokerDetails',
           usingBroker: true,
           isBasedInUk: true,
-          buildingNumberOrName: '123456789',
+          buildingNumberOrName,
         });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`;
-
-        cy.navigateToUrl(url);
       });
     });
 
@@ -54,11 +54,11 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    it('renders core page elements', () => {
+    it('should render core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`,
-        backLink: `${ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}#`,
+        backLink: `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
         hasAForm: false,
         assertSaveAndBackButtonDoesNotExist: true,
       });
@@ -69,28 +69,30 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it('renders a heading caption', () => {
+      it('should render a heading caption', () => {
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it('renders body text', () => {
+      it('should render body text', () => {
         cy.checkText(body(), CONTENT_STRINGS.BODY);
       });
 
-      it('renders outro text', () => {
+      it('should render outro text', () => {
         cy.checkText(outro.couldNotFind(), CONTENT_STRINGS.OUTRO.COULD_NOT_FIND);
-        cy.checkText(outro.postcode(), `${BROKER[POSTCODE]}.`);
+        cy.checkText(outro.postcode(), `${BROKER[POSTCODE]}`);
+        cy.checkText(outro.and(), CONTENT_STRINGS.OUTRO.AND);
+        cy.checkText(outro.buildingNumberOrName(), `${buildingNumberOrName}.`);
         cy.checkText(outro.youCan(), CONTENT_STRINGS.OUTRO.YOU_CAN);
         cy.checkText(outro.or(), CONTENT_STRINGS.OUTRO.OR);
       });
 
-      it('renders outro `search again` link', () => {
+      it('should render outro `search again` link', () => {
         const expectedHref = `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
         cy.checkLink(outro.searchAgainLink(), expectedHref, CONTENT_STRINGS.OUTRO.SEARCH_AGAIN);
       });
 
-      it('renders outro `enter manually` link', () => {
+      it('should render outro `enter manually` link', () => {
         cy.assertEnterAddressManuallyLink({
           referenceNumber,
           expectedText: CONTENT_STRINGS.OUTRO.ENTER_MANUALLY,
