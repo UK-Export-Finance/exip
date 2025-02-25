@@ -1,7 +1,7 @@
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../../../pages/insurance/policy';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../../helpers/date';
 import formatCurrency from '../../../../../../../../helpers/format-currency';
@@ -91,6 +91,10 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
         const expectedUrl = `${checkYourAnswersUrl}#heading`;
 
         cy.assertUrl(expectedUrl);
+      });
+
+      it('renders a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
     });
 

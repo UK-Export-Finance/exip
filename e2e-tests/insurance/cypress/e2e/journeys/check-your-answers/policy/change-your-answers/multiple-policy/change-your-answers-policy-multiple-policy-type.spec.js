@@ -1,6 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { field, summaryList } from '../../../../../../../../pages/shared';
+import { field, summaryList, status } from '../../../../../../../../pages/shared';
 import { multipleContractPolicyExportValuePage } from '../../../../../../../../pages/insurance/policy';
 import formatCurrency from '../../../../../../../../helpers/format-currency';
 import application from '../../../../../../../../fixtures/application';
@@ -104,6 +104,10 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
+        });
+
         it('should render the new answer', () => {
           fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
           cy.checkChangeAnswerRendered({ fieldVariables });
@@ -140,6 +144,10 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
+        });
+
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
         });
 
         it('should render the new answer', () => {
@@ -180,6 +188,10 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
+        });
+
         it('should render the new answer', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
           cy.checkChangeAnswerRendered({ fieldVariables });
@@ -216,6 +228,10 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
+        });
+
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
         });
 
         it('should render the new answer', () => {
@@ -257,6 +273,10 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
+        });
+
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
         });
 
         it('should render the new answer', () => {

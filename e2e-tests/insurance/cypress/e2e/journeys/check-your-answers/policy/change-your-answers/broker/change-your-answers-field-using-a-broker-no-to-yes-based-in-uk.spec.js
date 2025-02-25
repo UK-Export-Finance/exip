@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
@@ -71,6 +71,10 @@ context(
         cy.clickSubmitButton();
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: FIELD_ID });
+      });
+
+      it('renders a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
 
       it(`should render new ${FIELD_ID} answer and broker details fields`, () => {

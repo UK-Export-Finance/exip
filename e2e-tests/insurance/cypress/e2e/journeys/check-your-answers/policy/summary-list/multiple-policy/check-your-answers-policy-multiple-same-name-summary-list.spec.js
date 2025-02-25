@@ -2,6 +2,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insur
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
+import { status } from '../../../../../../../../pages/shared';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -48,6 +49,10 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
 
   after(() => {
     cy.deleteApplication(referenceNumber);
+  });
+
+  it('renders a `completed` status tag', () => {
+    cy.checkTaskStatusCompleted(status);
   });
 
   it('should render generic policy summary list rows', () => {

@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
@@ -72,6 +72,10 @@ context(
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: FIELD_ID });
       });
 
+      it('renders a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
+      });
+
       it(`should render new answers and change links for ${FIELD_ID} and all other company details fields`, () => {
         checkSummaryList.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID]({ requested: false });
         checkSummaryList.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME]({ shouldRender: false });
@@ -86,6 +90,10 @@ context(
           summaryList.field(FIELD_ID).changeLink().click();
 
           cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
+        });
+
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
         });
 
         describe(`when going back to ${OTHER_COMPANY_DETAILS}`, () => {

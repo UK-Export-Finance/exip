@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import { POLICY as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
@@ -70,6 +70,10 @@ context(
           email: false,
           position: newAnswer,
         });
+      });
+
+      it('renders a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
 
       it('should render the new answers when completing the different name on policy form', () => {
