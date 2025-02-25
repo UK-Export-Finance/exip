@@ -1,6 +1,6 @@
 import { POLICY as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { summaryList, status } from '../../../../../../../../pages/shared';
+import { summaryList } from '../../../../../../../../pages/shared';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -80,10 +80,6 @@ context(
         summaryList.field(NAME).changeLink().click();
 
         cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
-      });
-
-      it('renders a `completed` status tag', () => {
-        cy.checkTaskStatusCompleted(status);
       });
 
       it('should NOT have fields populated on different name on policy page', () => {

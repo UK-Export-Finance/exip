@@ -65,6 +65,8 @@ context(
       });
 
       it('renders a `completed` status tag', () => {
+        cy.navigateToUrl(checkYourAnswersUrl);
+
         cy.checkTaskStatusCompleted(status);
       });
 

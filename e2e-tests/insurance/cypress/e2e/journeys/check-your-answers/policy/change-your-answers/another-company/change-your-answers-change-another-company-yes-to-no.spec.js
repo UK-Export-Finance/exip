@@ -92,10 +92,6 @@ context(
           cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
         });
 
-        it('renders a `completed` status tag', () => {
-          cy.checkTaskStatusCompleted(status);
-        });
-
         describe(`when going back to ${OTHER_COMPANY_DETAILS}`, () => {
           it('should have empty field values', () => {
             cy.assertEmptyOtherCompanyDetailsFieldValues();

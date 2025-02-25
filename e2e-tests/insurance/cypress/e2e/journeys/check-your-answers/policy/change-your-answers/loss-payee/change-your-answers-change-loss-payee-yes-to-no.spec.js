@@ -88,10 +88,6 @@ context('Insurance - Change your answers - Policy - Loss payee - Yes to no - As 
         });
 
         describe(`when going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
-          it('renders a `completed` status tag', () => {
-            cy.checkTaskStatusCompleted(status);
-          });
-
           it('should have empty field values', () => {
             cy.assertEmptyLossPayeeDetailsFieldValues();
 

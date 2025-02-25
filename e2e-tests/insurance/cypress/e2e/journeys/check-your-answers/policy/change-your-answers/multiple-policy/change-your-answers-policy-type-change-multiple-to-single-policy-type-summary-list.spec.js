@@ -92,15 +92,15 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
         cy.assertUrl(expectedUrl);
       });
-
-      it('renders a `completed` status tag', () => {
-        cy.checkTaskStatusCompleted(status);
-      });
     });
 
     describe('should render new answers and change links for new single policy fields', () => {
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
+      });
+
+      it('renders a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
 
       it(POLICY_TYPE, () => {
