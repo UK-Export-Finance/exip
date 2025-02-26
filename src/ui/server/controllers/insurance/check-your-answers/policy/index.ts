@@ -57,7 +57,7 @@ export const get = async (req: Request, res: ResponseInsurance) => {
     const { referenceNumber, policy, exportContract, policyContact, broker, nominatedLossPayee } = application;
 
     const { policyType } = policy;
-    const { isUsingBroker } = broker;
+    const { isUsingBroker, isBasedInUk, fullAddress } = broker;
 
     const { allCurrencies, countries } = await api.keystone.getCountriesAndCurrencies();
 
@@ -83,7 +83,7 @@ export const get = async (req: Request, res: ResponseInsurance) => {
       checkAndChange,
     });
 
-    const fields = requiredFields({ policyType, isUsingBroker });
+    const fields = requiredFields({ policyType, isUsingBroker, brokerIsBasedInUk: isBasedInUk, brokerFullAddress: fullAddress });
 
     const status = sectionStatus(fields, application);
 

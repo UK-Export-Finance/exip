@@ -10179,7 +10179,7 @@ var ordnanceSurvey = {
           return acceptableStatuses.includes(status);
         },
       });
-      if (!response?.data?.results || !acceptableStatuses.includes(response.status)) {
+      if (!response.data?.results || !acceptableStatuses.includes(response.status)) {
         return {
           success: false,
           status: response.status,

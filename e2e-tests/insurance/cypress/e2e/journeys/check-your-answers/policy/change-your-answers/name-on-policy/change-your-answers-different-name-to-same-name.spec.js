@@ -1,6 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import application from '../../../../../../../../fixtures/application';
 import account from '../../../../../../../../fixtures/account';
 
@@ -81,6 +81,10 @@ context('Insurance - Change your answers - Policy - Change from different name t
       summaryList.field(fieldId).changeLink().click();
 
       cy.completeAndSubmitNameOnPolicyForm({});
+    });
+
+    it('renders a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status);
     });
 
     it(`should redirect to ${TYPE_OF_POLICY} and display new answers`, () => {
