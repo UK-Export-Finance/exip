@@ -10283,7 +10283,8 @@ var getOrdnanceSurveyAddresses = async (root, variables) => {
       };
     }
     const response = await ordnance_survey_default.get(postcode);
-    if (!response.success && response.status === 400) {
+    const acceptableStatuses = [200, 400];
+    if (!response.success && acceptableStatuses.includes(response.status)) {
       return {
         success: false,
         noAddressesFound: true,
@@ -10292,6 +10293,7 @@ var getOrdnanceSurveyAddresses = async (root, variables) => {
     if (!response.success || !response.data) {
       return {
         success: false,
+        apiError: true,
       };
     }
     const uppercaseHouseNameOrNumber = houseNameOrNumber.toUpperCase();

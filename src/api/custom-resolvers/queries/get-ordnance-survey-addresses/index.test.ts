@@ -20,16 +20,16 @@ describe('getOrdnanceSurveyAddresses', () => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return an object containing success=false', async () => {
+    it('should return an object containing success=false and apiError=true', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
-      const expected = { success: false };
+      const expected = { success: false, apiError: true };
 
       expect(response).toEqual(expected);
     });
   });
 
-  describe('when ordnance survey API returns an empty data object', () => {
+  describe('when ordnance survey API returns an empty data object and apiError=true', () => {
     beforeEach(() => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: undefined, status: 200 }));
     });
@@ -37,7 +37,7 @@ describe('getOrdnanceSurveyAddresses', () => {
     it('should return an object containing success=false', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
-      const expected = { success: false };
+      const expected = { success: false, apiError: true };
 
       expect(response).toEqual(expected);
     });
@@ -46,6 +46,20 @@ describe('getOrdnanceSurveyAddresses', () => {
   describe('when ordnance survey API returns a 400 status code', () => {
     beforeEach(() => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false, status: 400 }));
+    });
+
+    it('should return an object containing success=false and noAddressesFound=true', async () => {
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
+
+      const expected = { success: false, noAddressesFound: true };
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe('when ordnance survey API returns a 200 status code, success=false and no data object', () => {
+    beforeEach(() => {
+      ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false, status: 200 }));
     });
 
     it('should return an object containing success=false and noAddressesFound=true', async () => {
