@@ -36,11 +36,15 @@ const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVa
 
     const response = await ordnanceSurvey.get(postcode);
 
+    const acceptableStatuses = [200, 400];
+
     /**
-     * if received status is 400
-     * then return noAddressesFound flag
+     * if received status is 200 or 400
+     * and success is false
+     * then no address has been found for provided postcode
+     * return noAddressesFound = true and success = false
      */
-    if (!response.success && response.status === 400) {
+    if (!response.success && acceptableStatuses.includes(response.status)) {
       return {
         success: false,
         noAddressesFound: true,
@@ -49,11 +53,12 @@ const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVa
 
     /**
      * If there is no success response, or no data,
-     * return success=false
+     * return success=false and apiError=true
      */
     if (!response.success || !response.data) {
       return {
         success: false,
+        apiError: true,
       };
     }
 

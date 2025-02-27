@@ -16,6 +16,12 @@ const { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 const ordnanceSurvey = {
   get: async (postcode: string): Promise<OrdnanceSurveyAPIResponse> => {
     try {
+      /**
+       * 400 is on list of accepted status due to OS validation
+       * OS has very thorough validation for postcodes
+       * if a postcode fails their validation, it returns 400
+       * so 400 is handled as an accepted status
+       */
       const acceptableStatuses = [200, 400, 404];
 
       const response = await axios({
