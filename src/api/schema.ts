@@ -481,7 +481,9 @@ export const lists = {
         many: true,
       }),
       companyName: text({
-        db: { nativeType: 'VarChar(200)' },
+        db: {
+          nativeType: 'VarChar(200)',
+        },
       }),
       companyNumber: text(),
       dateOfCreation: timestamp(),
@@ -801,7 +803,7 @@ export const lists = {
         db: { isNullable: true },
       }),
       improvement: text({
-        db: { nativeType: 'VarChar(1200)' },
+        db: { nativeType: 'VarChar(1201)' },
       }),
       otherComments: text({
         db: { nativeType: 'VarChar(1200)' },
