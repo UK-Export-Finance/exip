@@ -64,9 +64,9 @@ const update = async (context: Context, declarationId: string, data = {}) => {
 
     return declaration;
   } catch (error) {
-    console.error(error);
+    console.error('Error updating a declaration by ID (test helpers) %o', error);
 
-    throw new Error(`Updating an declaration by ID (test helpers) ${error}`);
+    throw new Error(`Updating a declaration by ID (test helpers) ${error}`);
   }
 };
 

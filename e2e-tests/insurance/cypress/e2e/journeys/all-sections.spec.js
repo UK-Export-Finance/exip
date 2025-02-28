@@ -169,8 +169,6 @@ context('Insurance - All sections - new application', () => {
     });
 
     it('should render the correct submission deadline', () => {
-      insurance.allSectionsPage.submissionDeadline().should('exist');
-
       const now = new Date();
 
       const timestamp = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);

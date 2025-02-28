@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import addBrokerFields from './add-broker-fields';
 import updateApplicationVersion from './update-application-version';
-import updateInProgressApplicationsMigratedTo from './update-application-migrated-fields';
+import updateInProgressApplicationsMigratedTo from './update-application-migrated-to-field';
 
 /**
  * updateApplications
