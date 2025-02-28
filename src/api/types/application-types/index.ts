@@ -327,7 +327,7 @@ export interface Application {
   sectionReview: Relationship;
   totalContractValueOverThreshold: boolean;
   version: number;
-  migratedV3toV4?: boolean;
+  migratedTo?: number;
 }
 
 export interface ApplicationSubmissionEmailVariables {
