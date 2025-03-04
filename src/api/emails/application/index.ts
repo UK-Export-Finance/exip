@@ -8,7 +8,8 @@ import { ApplicationPolicy, ApplicationSubmissionEmailVariables, ApimSendEmailHe
 
 dotenv.config();
 
-const { GOV_NOTIFY_API_KEY } = process.env;
+const notifyKey = process.env.GOV_NOTIFY_API_KEY;
+const notifyClient = new NotifyClient(notifyKey);
 
 const application = {
   /**
@@ -59,8 +60,6 @@ const application = {
         const fileBuffer = Buffer.from(file);
 
         // TODO: EMS-4213 revert changes
-        const notifyClient = new NotifyClient(GOV_NOTIFY_API_KEY);
-
         const linkToFile = await notifyClient.prepareUpload(fileBuffer, { confirmEmailBeforeDownload: true });
 
         const variablesWithFileBuffer = {
