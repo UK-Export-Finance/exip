@@ -1730,10 +1730,10 @@ var application = {
       const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
       const file = await file_system_default.readFile(filePath);
       if (file) {
-        const fileBuffer = Buffer.from(file);
+        const bufferedHexString = file.toString('hex');
         const variablesWithFileBuffer = {
           ...variables,
-          file: fileBuffer,
+          file: bufferedHexString,
         };
         const response = await APIM_default.sendEmail(templateId, emailAddress, variablesWithFileBuffer);
         await file_system_default.unlink(filePath);
