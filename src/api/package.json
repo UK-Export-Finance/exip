@@ -44,6 +44,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.12.0",
     "node-cron": "^3.0.3",
+    "notifications-node-client": "^8.2.1",
     "otplib": "^12.0.1",
     "overload-protection": "^1.2.3",
     "postcode-validator": "^3.10.2",

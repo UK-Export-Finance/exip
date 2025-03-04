@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-// eslint-disable-next-line import/no-extraneous-dependencies
+// @ts-ignore
 import { NotifyClient } from 'notifications-node-client';
 import getSubmittedConfirmationTemplateId from './get-submitted-confirmation-template-id';
 import fileSystem from '../../file-system';

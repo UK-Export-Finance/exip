@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-// eslint-disable-next-line import/no-extraneous-dependencies
+// @ts-ignore
 import { NotifyClient } from 'notifications-node-client';
 import application from '.';
 import APIM from '../../integrations/APIM';

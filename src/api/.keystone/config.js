@@ -1701,7 +1701,8 @@ var file_system_default = fileSystem;
 
 // emails/application/index.ts
 import_dotenv6.default.config();
-var { GOV_NOTIFY_API_KEY: GOV_NOTIFY_API_KEY2 } = process.env;
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var application = {
   /**
    * application.submittedEmail
@@ -1737,7 +1738,6 @@ var application = {
       const file = await file_system_default.readFile(filePath);
       if (file) {
         const fileBuffer = Buffer.from(file);
-        const notifyClient = new import_notifications_node_client.NotifyClient(GOV_NOTIFY_API_KEY2);
         const linkToFile = await notifyClient.prepareUpload(fileBuffer, { confirmEmailBeforeDownload: true });
         const variablesWithFileBuffer = {
           ...variables,
