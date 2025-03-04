@@ -96,9 +96,11 @@ describe('emails/application', () => {
 
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
 
+      const bufferedHexString = mockFileSystemResponse.toString('hex');
+
       const expectedVariables = {
         ...variables,
-        file: Buffer.from(mockFileSystemResponse),
+        file: bufferedHexString,
       };
 
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, expectedVariables);

@@ -49,11 +49,11 @@ const application = {
       const file = await fileSystem.readFile(filePath);
 
       if (file) {
-        const fileBuffer = Buffer.from(file);
+        const bufferedHexString = file.toString('hex');
 
         const variablesWithFileBuffer = {
           ...variables,
-          file: fileBuffer,
+          file: bufferedHexString,
         };
 
         const response = await APIM.sendEmail(templateId, emailAddress, variablesWithFileBuffer);
