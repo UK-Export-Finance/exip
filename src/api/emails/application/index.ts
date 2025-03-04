@@ -1,7 +1,14 @@
+import dotenv from 'dotenv';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { NotifyClient } from 'notifications-node-client';
 import getSubmittedConfirmationTemplateId from './get-submitted-confirmation-template-id';
 import fileSystem from '../../file-system';
 import APIM from '../../integrations/APIM';
 import { ApplicationPolicy, ApplicationSubmissionEmailVariables, ApimSendEmailHelperResponse } from '../../types';
+
+dotenv.config();
+
+const { GOV_NOTIFY_API_KEY } = process.env;
 
 const application = {
   /**
@@ -51,9 +58,16 @@ const application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
 
+        // TODO: EMS-4213 revert changes
+        const notifyClient = new NotifyClient(GOV_NOTIFY_API_KEY);
+
+        const linkToFile = await notifyClient.prepareUpload(fileBuffer, { confirmEmailBeforeDownload: true });
+
         const variablesWithFileBuffer = {
           ...variables,
-          file: fileBuffer,
+          linkToFile,
+          // TODO: EMS-4213 renable file
+          // file: fileBuffer,
         };
 
         const response = await APIM.sendEmail(templateId, emailAddress, variablesWithFileBuffer);

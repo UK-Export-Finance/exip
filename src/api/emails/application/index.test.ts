@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { NotifyClient } from 'notifications-node-client';
 import application from '.';
 import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
@@ -5,6 +8,10 @@ import getSubmittedConfirmationTemplateId from './get-submitted-confirmation-tem
 import getFullNameString from '../../helpers/get-full-name-string';
 import fileSystem from '../../file-system';
 import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
+
+dotenv.config();
+
+const { GOV_NOTIFY_API_KEY } = process.env;
 
 describe('emails/application', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -96,9 +103,15 @@ describe('emails/application', () => {
 
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
 
+      const file = Buffer.from(mockFileSystemResponse);
+
+      const notifyClient = new NotifyClient(GOV_NOTIFY_API_KEY);
+
+      const linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
+
       const expectedVariables = {
         ...variables,
-        file: Buffer.from(mockFileSystemResponse),
+        linkToFile,
       };
 
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, expectedVariables);

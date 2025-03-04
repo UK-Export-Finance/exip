@@ -1309,7 +1309,7 @@ var updateInactiveApplicationsJob = {
 var inactive_application_cron_job_default = updateInactiveApplicationsJob;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-var import_dotenv8 = __toESM(require('dotenv'));
+var import_dotenv9 = __toESM(require('dotenv'));
 
 // helpers/get-start-and-end-time-of-date/index.ts
 var {
@@ -1392,7 +1392,7 @@ var mapApplicationSubmissionDeadlineVariables = (application2) => {
 var map_application_submission_deadline_variables_default = mapApplicationSubmissionDeadlineVariables;
 
 // emails/index.ts
-var import_dotenv7 = __toESM(require('dotenv'));
+var import_dotenv8 = __toESM(require('dotenv'));
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require('axios'));
@@ -1587,6 +1587,10 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
   }
 };
 
+// emails/application/index.ts
+var import_dotenv6 = __toESM(require('dotenv'));
+var import_notifications_node_client = require('notifications-node-client');
+
 // helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
@@ -1696,6 +1700,8 @@ var fileSystem = {
 var file_system_default = fileSystem;
 
 // emails/application/index.ts
+import_dotenv6.default.config();
+var { GOV_NOTIFY_API_KEY: GOV_NOTIFY_API_KEY2 } = process.env;
 var application = {
   /**
    * application.submittedEmail
@@ -1731,9 +1737,13 @@ var application = {
       const file = await file_system_default.readFile(filePath);
       if (file) {
         const fileBuffer = Buffer.from(file);
+        const notifyClient = new import_notifications_node_client.NotifyClient(GOV_NOTIFY_API_KEY2);
+        const linkToFile = await notifyClient.prepareUpload(fileBuffer, { confirmEmailBeforeDownload: true });
         const variablesWithFileBuffer = {
           ...variables,
-          file: fileBuffer,
+          linkToFile,
+          // TODO: EMS-4213 renable file
+          // file: fileBuffer,
         };
         const response = await APIM_default.sendEmail(templateId, emailAddress, variablesWithFileBuffer);
         await file_system_default.unlink(filePath);
@@ -1762,14 +1772,14 @@ var documentsEmail = async (variables, templateId) => {
 };
 
 // emails/insurance-feedback-email/index.ts
-var import_dotenv6 = __toESM(require('dotenv'));
+var import_dotenv7 = __toESM(require('dotenv'));
 
 // helpers/map-feedback-satisfaction/index.ts
 var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
 var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
 
 // emails/insurance-feedback-email/index.ts
-import_dotenv6.default.config();
+import_dotenv7.default.config();
 var insuranceFeedbackEmail = async (variables) => {
   try {
     console.info('Sending insurance feedback email');
@@ -1807,7 +1817,7 @@ var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariab
 };
 
 // emails/index.ts
-import_dotenv7.default.config();
+import_dotenv8.default.config();
 var sendEmail = {
   confirmEmailAddress,
   accessCodeEmail,
@@ -1868,7 +1878,7 @@ var applicationSubmissionDeadlineEmail = async (context) => {
 var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-import_dotenv8.default.config();
+import_dotenv9.default.config();
 var { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
 var sendEmailApplicationSubmissionDeadlineJob = {
   cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
@@ -6575,7 +6585,7 @@ var applicationSubmittedEmails = {
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
-var import_dotenv9 = __toESM(require('dotenv'));
+var import_dotenv10 = __toESM(require('dotenv'));
 var import_exceljs = __toESM(require('exceljs'));
 
 // constants/XLSX-CONFIG/SECTION_NAMES/index.ts
@@ -9144,7 +9154,7 @@ var styledColumns = (application2, worksheet, sheetName) => {
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
-import_dotenv9.default.config();
+import_dotenv10.default.config();
 var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2, countries) => {
   try {
@@ -9964,8 +9974,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require('axios'));
-var import_dotenv10 = __toESM(require('dotenv'));
-import_dotenv10.default.config();
+var import_dotenv11 = __toESM(require('dotenv'));
+import_dotenv11.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -10005,8 +10015,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require('axios'));
-var import_dotenv11 = __toESM(require('dotenv'));
-import_dotenv11.default.config();
+var import_dotenv12 = __toESM(require('dotenv'));
+import_dotenv12.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -10165,8 +10175,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require('axios'));
-var import_dotenv12 = __toESM(require('dotenv'));
-import_dotenv12.default.config();
+var import_dotenv13 = __toESM(require('dotenv'));
+import_dotenv13.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
