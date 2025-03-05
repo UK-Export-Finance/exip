@@ -25,7 +25,7 @@ const { REQUESTED_JOINTLY_INSURED_PARTY } = POLICY_FIELDS;
 
 /**
  * optionalOtherCompanyFields
- * if yes is selected for other company requested, populates and returns optional fields in an array
+ * if yes is selected for other company requested, populate and return optional fields in an array
  * @param {ApplicationJointlyInsuredParty} answers: Jointly insured party answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries

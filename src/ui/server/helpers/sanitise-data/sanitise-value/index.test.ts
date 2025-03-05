@@ -22,7 +22,8 @@ const {
     AGENT_SERVICE: { SERVICE_DESCRIPTION },
   },
   POLICY: {
-    BROKER_DETAILS: { NAME: BROKER_NAME, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME: BROKER_NAME, BUILDING_NUMBER_OR_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2 },
+    BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { IBAN, BIC_SWIFT_CODE },
     CREDIT_PERIOD_WITH_BUYER,
@@ -42,6 +43,9 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
     it('should return an explicit array of field IDs that are string fields that could have a pure number value', () => {
       const expected = [
         ACCESS_CODE,
+        BUILDING_NUMBER_OR_NAME,
+        ADDRESS_LINE_1,
+        ADDRESS_LINE_2,
         DESCRIPTION,
         COMPANY_NUMBER,
         COMPANY_SIC,

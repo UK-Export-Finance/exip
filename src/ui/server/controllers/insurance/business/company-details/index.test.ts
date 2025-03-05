@@ -10,8 +10,8 @@ import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import generateValidationErrors from './validation';
-import { Application, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Application, Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
@@ -51,11 +51,11 @@ const applicationWithoutDifferentTradingAddress = {
 
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -102,7 +102,7 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('get', () => {
-    it('should render the company-details template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       const mappedApplication = mapApplicationToFormFields(mockApplication) as Application;
@@ -127,18 +127,6 @@ describe('controllers/insurance/business/companies-details', () => {
         ...pageVariables(referenceNumber),
         submittedValues,
         SUMMARY_LIST: companiesHouseSummaryList(company, IS_APPLICATION_SUMMARY_LIST),
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -302,18 +290,6 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when mapAndSave.companyDetails returns an error', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -330,7 +306,7 @@ describe('controllers/insurance/business/companies-details', () => {
       describe('when mapAndSave.companyDetails resolves false', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           req.body = validBody;
-          res.locals = mockRes().locals;
+
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
 
           await post(req, res);

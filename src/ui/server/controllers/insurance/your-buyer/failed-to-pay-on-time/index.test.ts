@@ -9,8 +9,8 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import failedToPayValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save/buyer-trading-history';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -30,11 +30,11 @@ const { FAILED_PAYMENTS } = BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -99,18 +99,6 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 
@@ -240,23 +228,10 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when mapAndSave.buyerTradingHistory returns false', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(false));
         });
 
@@ -270,7 +245,6 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
       describe('when mapAndSave.buyerTradingHistory fails', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerTradingHistory = mockSpyPromiseRejection;
         });
 

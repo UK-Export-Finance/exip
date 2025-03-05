@@ -26,7 +26,7 @@ describe('helpers/create-a-buyer-contact', () => {
     buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
-  test('it should return a buyer contact with respective IDs', async () => {
+  it('should return a buyer contact with respective IDs', async () => {
     const result = await createABuyerContact(context, buyer.id, applicationId);
 
     expect(result).toBeDefined();
@@ -34,7 +34,7 @@ describe('helpers/create-a-buyer-contact', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty buyerContact fields', async () => {
+  it('should return empty buyerContact fields', async () => {
     const result = await createABuyerContact(context, buyer.id, applicationId);
 
     expect(result.contactFirstName).toEqual('');
@@ -45,7 +45,7 @@ describe('helpers/create-a-buyer-contact', () => {
   });
 
   describe('when an invalid buyer ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createABuyerContact(context, mockInvalidId, applicationId);
       } catch (error) {
@@ -55,7 +55,7 @@ describe('helpers/create-a-buyer-contact', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createABuyerContact(context, buyer.id, mockInvalidId);
       } catch (error) {
@@ -65,7 +65,7 @@ describe('helpers/create-a-buyer-contact', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createABuyerContact({}, buyer.id, applicationId);

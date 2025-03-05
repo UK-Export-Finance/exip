@@ -26,7 +26,7 @@ describe('helpers/create-a-buyer-relationship', () => {
     buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
-  test('it should return a buyer relationship with respective IDs', async () => {
+  it('should return a buyer relationship with respective IDs', async () => {
     const result = await createABuyerRelationship(context, buyer.id, applicationId);
 
     expect(result).toBeDefined();
@@ -34,7 +34,7 @@ describe('helpers/create-a-buyer-relationship', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty buyerRelationship fields', async () => {
+  it('should return empty buyerRelationship fields', async () => {
     const result = await createABuyerRelationship(context, buyer.id, applicationId);
 
     expect(result.exporterIsConnectedWithBuyer).toBeNull();
@@ -45,7 +45,7 @@ describe('helpers/create-a-buyer-relationship', () => {
   });
 
   describe('when an invalid buyer ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createABuyerRelationship(context, mockInvalidId, applicationId);
       } catch (error) {
@@ -55,7 +55,7 @@ describe('helpers/create-a-buyer-relationship', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createABuyerRelationship(context, buyer.id, mockInvalidId);
       } catch (error) {
@@ -65,7 +65,7 @@ describe('helpers/create-a-buyer-relationship', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createABuyerRelationship({}, buyer.id, applicationId);

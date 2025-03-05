@@ -14,7 +14,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 const broker = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      const populatedData = mapSubmittedData(formBody);
+      const populatedData = mapSubmittedData(formBody, application.broker);
 
       let saveResponse;
 
@@ -25,10 +25,12 @@ const broker = async (formBody: RequestBody, application: Application, validatio
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.broker %s', application.id);
+
         return false;
       }
 
-      return true;
+      return saveResponse;
     }
 
     return true;

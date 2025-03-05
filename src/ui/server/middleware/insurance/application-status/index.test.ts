@@ -2,8 +2,8 @@ import applicationStatusMiddleware from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { APPLICATION } from '../../../constants';
 import POLICY_FIELD_IDS from '../../../constants/field-ids/insurance/policy';
-import { mockReq, mockRes, mockApplication, mockAccount, referenceNumber } from '../../../test-mocks';
-import { Next, Request, Response } from '../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockAccount, referenceNumber } from '../../../test-mocks';
+import { Next, Request, ResponseInsurance } from '../../../../types';
 
 const { APPLICATION_SUBMITTED, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, INSURANCE_ROOT, COMPLETE_OTHER_SECTIONS, CHECK_YOUR_ANSWERS } =
   INSURANCE_ROUTES;
@@ -14,14 +14,14 @@ const {
 
 describe('middleware/insurance/application-status', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
   let next: Next;
 
   const nextSpy = jest.fn();
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
     next = nextSpy;
   });
 

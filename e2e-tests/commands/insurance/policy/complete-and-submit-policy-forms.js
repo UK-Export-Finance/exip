@@ -3,7 +3,7 @@ import { APPLICATION } from '../../../constants';
 const { SINGLE } = APPLICATION.POLICY_TYPE;
 
 /**
- * completeAndPolicyForms
+ * completeAndSubmitPolicyForms
  * completes policy forms up to the specified form to stop at
  * eg, when 'exportValue' is passed, it will complete all forms up to and including 'exportValue'
  * @param {String} stopSubmittingAfter: The final form to submit
@@ -15,8 +15,12 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {String} isoCode: Policy currency ISO code
  * @param {Boolean} alternativeCurrency: Select the "turnover - alternative currency" option
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
+ * @param {Boolean} isBasedInUk: Broker is based in the UK
+ * @param {String} postcode: Broker postcode
+ * @param {String} buildingNumberOrName: Broker building name or number
+ * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey
  */
-const completeAndPolicyForms = ({
+const completeAndSubmitPolicyForms = ({
   stopSubmittingAfter,
   policyType = SINGLE,
   sameName = true,
@@ -26,6 +30,10 @@ const completeAndPolicyForms = ({
   isoCode,
   alternativeCurrency,
   otherCompanyInvolved,
+  isBasedInUk = true,
+  postcode,
+  buildingNumberOrName,
+  multipleBrokerAddressesAvailable,
 }) => {
   cy.startInsurancePolicySection({});
 
@@ -51,7 +59,17 @@ const completeAndPolicyForms = ({
   steps.push({ name: 'broker', action: () => cy.completeAndSubmitBrokerForm({ usingBroker }) });
 
   if (usingBroker) {
-    steps.push({ name: 'brokerDetails', action: () => cy.completeAndSubmitBrokerDetailsForm({}) });
+    steps.push({ name: 'brokerDetails', action: () => cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk, postcode, buildingNumberOrName }) });
+
+    if (isBasedInUk) {
+      if (multipleBrokerAddressesAvailable) {
+        steps.push({ name: 'brokerAddresses', action: () => cy.completeAndSubmitBrokerAddressesForm({ isBasedInUk }) });
+      }
+
+      steps.push({ name: 'brokerConfirmAddress', action: () => cy.clickSubmitButton() });
+    } else {
+      steps.push({ name: 'brokerManualAddress', action: () => cy.completeAndSubmitBrokerManualAddressForm({}) });
+    }
   }
 
   steps.push({ name: 'lossPayee', action: () => cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee }) });
@@ -73,4 +91,4 @@ const completeAndPolicyForms = ({
   }
 };
 
-export default completeAndPolicyForms;
+export default completeAndSubmitPolicyForms;

@@ -10,7 +10,7 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { USING_BROKER } = POLICY_FIELD_IDS;
 
@@ -61,10 +61,10 @@ export const HTML_FLAGS = {
 /**
  * Render the Broker page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders broker page with previously submitted details
+ * @param {ResponseInsurance} Express response for "insurance" routes
+ * @returns {Express.Response.render} Broker page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -84,10 +84,10 @@ export const get = (req: Request, res: Response) => {
  * posts broker page
  * Run validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

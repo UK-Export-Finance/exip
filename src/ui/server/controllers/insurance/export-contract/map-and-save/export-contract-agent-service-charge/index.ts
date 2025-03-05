@@ -25,6 +25,8 @@ const exportContractAgentServiceCharge = async (formBody: RequestBody, applicati
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.exportContractAgentServiceCharge %s', application.id);
+
         return false;
       }
 

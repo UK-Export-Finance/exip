@@ -4,12 +4,12 @@ import { MULTI_LINE_STRING, EXPECTED_MULTI_LINE_STRING } from '../../../../../co
 
 const {
   ROOT,
-  POLICY: { PRE_CREDIT_PERIOD, BROKER_DETAILS_ROOT },
+  POLICY: { PRE_CREDIT_PERIOD, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
   CREDIT_PERIOD_WITH_BUYER,
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -17,7 +17,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Textarea fields - `Policy` textarea fields should render new lines without character codes after submission', () => {
   let referenceNumber;
   let preCreditPeriodUrl;
-  let brokerDetailsUrl;
+  let brokerManualAddressUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -39,7 +39,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       preCreditPeriodUrl = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
-      brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+      brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
     });
   });
 
@@ -76,9 +76,9 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
       beforeEach(() => {
         cy.saveSession();
 
-        cy.navigateToUrl(brokerDetailsUrl);
+        cy.navigateToUrl(brokerManualAddressUrl);
 
-        cy.completeAndSubmitBrokerDetailsForm({
+        cy.completeAndSubmitBrokerManualAddressForm({
           fullAddress: MULTI_LINE_STRING,
         });
 

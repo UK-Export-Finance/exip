@@ -232,7 +232,7 @@ describe('custom-resolvers/create-an-account', () => {
         await accountStatus.update(context, status.id, statusUpdate);
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await createAnAccount({}, variables, context);
         } catch (error) {
@@ -251,7 +251,7 @@ describe('custom-resolvers/create-an-account', () => {
         sendEmail.confirmEmailAddress = jest.fn(() => Promise.resolve(emailFailureResponse));
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await createAnAccount({}, variables, context);
         } catch (error) {

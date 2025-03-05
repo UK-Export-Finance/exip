@@ -1,0 +1,44 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <span class="govuk-caption-xl" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      <p class="govuk-body govuk-!-font-weight-bold" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+
+      <p class="govuk-body" data-cy="outro">
+        <span data-cy="outro-could-not-find">{{ CONTENT_STRINGS.OUTRO.COULD_NOT_FIND }}</span>
+        <span data-cy="outro-postcode" class="govuk-!-font-weight-bold">{{ postcode }}</span>
+        <span data-cy="outro-and">{{ CONTENT_STRINGS.OUTRO.AND }}</span>
+        <span data-cy="outro-building" class="govuk-!-font-weight-bold">{{ buildingNumberOrName }}.</span>
+        <span data-cy="outro-you-can">{{ CONTENT_STRINGS.OUTRO.YOU_CAN }}</span>
+
+        <a class="govuk-link" data-cy="outro-search-again-link" href="{{ SEARCH_AGAIN_URL }}">{{ CONTENT_STRINGS.OUTRO.SEARCH_AGAIN }}</a>
+
+        <span data-cy="outro-or"> {{ CONTENT_STRINGS.OUTRO.OR }} </span>
+
+        <a class="govuk-link" data-cy="enter-address-manually-link" href="{{ ENTER_MANUALLY_URL }}">{{ CONTENT_STRINGS.OUTRO.ENTER_MANUALLY }}</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -26,7 +26,7 @@ describe('helpers/create-a-private-market', () => {
     applicationExportContract = createdExportContract;
   });
 
-  test('it should return a privateMarket with ID', async () => {
+  it('should return a privateMarket with ID', async () => {
     const result = await createAPrivateMarket(context, applicationExportContract.id);
 
     expect(result.id).toBeDefined();
@@ -34,7 +34,7 @@ describe('helpers/create-a-private-market', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty privateMarket fields and default finalDestinationKnown', async () => {
+  it('should return empty privateMarket fields and default finalDestinationKnown', async () => {
     const result = await createAPrivateMarket(context, applicationExportContract.id);
 
     expect(result.attempted).toBeNull();
@@ -42,7 +42,7 @@ describe('helpers/create-a-private-market', () => {
   });
 
   describe('when an invalid exportContract ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAPrivateMarket(context, mockInvalidId);
       } catch (error) {
@@ -52,7 +52,7 @@ describe('helpers/create-a-private-market', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAPrivateMarket({}, applicationExportContract.id);

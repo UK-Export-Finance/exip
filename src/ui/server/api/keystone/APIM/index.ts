@@ -9,7 +9,7 @@ const APIM = {
       const response = (await apollo('GET', getApimCisCountries, {})) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL network error querying APIM - CIS countries API %o', response.errors);
+        console.error('GraphQL error querying APIM - CIS countries API %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
@@ -34,7 +34,7 @@ const APIM = {
       const response = (await apollo('GET', getApimCurrencies, {})) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL network error querying APIM - currencies API %o', response.errors);
+        console.error('GraphQL error querying APIM - currencies API %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {

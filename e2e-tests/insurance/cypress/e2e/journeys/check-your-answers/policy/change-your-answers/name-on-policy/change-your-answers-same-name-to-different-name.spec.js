@@ -1,6 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import application from '../../../../../../../../fixtures/application';
 
 const {
@@ -93,6 +93,10 @@ context('Insurance - Change your answers - Policy - Change from same name to dif
     describe('should render new answers and change links for different name on policy', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+      });
+
+      it('renders a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
 
       it(NAME, () => {

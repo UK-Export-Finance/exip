@@ -1,13 +1,13 @@
-import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
+import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
-import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import brokerAddressField from './address-field';
 import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
 
 const {
@@ -16,7 +16,7 @@ const {
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME },
 } = POLICY_FIELD_IDS;
 
 const { EMAIL } = ACCOUNT_FIELD_IDS;
@@ -27,11 +27,11 @@ const {
 
 /**
  * optionalBrokerFields
- * If USING_BROKER is true, populates and return optional fields.
+ * If USING_BROKER is true, populate and return optional fields.
  * @param {ApplicationBroker} answers: Broker answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
+ * @returns {Array<SummaryListItemData>} Optional broker fields if USING_BROKER is true
  */
 export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange?: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
@@ -48,15 +48,7 @@ export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber
         href: generateChangeLink(BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       }),
-      fieldGroupItem(
-        {
-          field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, FULL_ADDRESS),
-          data: answers,
-          href: generateChangeLink(BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
-          renderChangeLink: true,
-        },
-        replaceNewLineWithLineBreak(answers[FULL_ADDRESS]),
-      ),
+      brokerAddressField(answers, referenceNumber, checkAndChange),
       fieldGroupItem({
         field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, EMAIL),
         data: answers,

@@ -1811,7 +1811,9 @@ input BusinessCreateInput {
 type Broker {
   id: ID!
   application: Application
+  buildingNumberOrName: String
   isUsingBroker: Boolean
+  isBasedInUk: Boolean
   name: String
   addressLine1: String
   addressLine2: String
@@ -1832,6 +1834,7 @@ input BrokerWhereInput {
   NOT: [BrokerWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
+  buildingNumberOrName: StringFilter
   name: StringFilter
   addressLine1: StringFilter
   addressLine2: StringFilter
@@ -1844,6 +1847,7 @@ input BrokerWhereInput {
 
 input BrokerOrderByInput {
   id: OrderDirection
+  buildingNumberOrName: OrderDirection
   name: OrderDirection
   addressLine1: OrderDirection
   addressLine2: OrderDirection
@@ -1856,7 +1860,9 @@ input BrokerOrderByInput {
 
 input BrokerUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
+  buildingNumberOrName: String
   isUsingBroker: Boolean
+  isBasedInUk: Boolean
   name: String
   addressLine1: String
   addressLine2: String
@@ -1874,7 +1880,9 @@ input BrokerUpdateArgs {
 
 input BrokerCreateInput {
   application: ApplicationRelateToOneForCreateInput
+  buildingNumberOrName: String
   isUsingBroker: Boolean
+  isBasedInUk: Boolean
   name: String
   addressLine1: String
   addressLine2: String
@@ -3574,8 +3582,8 @@ type Query {
   """ gets application by reference number """
   getApplicationByReferenceNumber(referenceNumber: Int, decryptFinancialUk: Boolean, decryptFinancialInternational: Boolean): ApplicationSuccessResponse
 
-  """ get Ordnance Survey address """
-  getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
+  """ get Ordnance Survey addresses """
+  getOrdnanceSurveyAddresses(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
 
   """ get CIS countries from APIM """
   getApimCisCountries: [MappedCisCountry]
@@ -3738,16 +3746,7 @@ type CompaniesHouseResponse {
 type OrdnanceSurveyAddress {
   addressLine1: String
   addressLine2: String
-  postalCode: String
-  country: String
-  county: String
-  town: String
-}
-
-input OrdnanceAddressInput {
-  addressLine1: String
-  addressLine2: String
-  postalCode: String
+  postcode: String
   country: String
   county: String
   town: String

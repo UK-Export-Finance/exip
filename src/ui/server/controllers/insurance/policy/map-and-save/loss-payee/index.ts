@@ -38,6 +38,8 @@ const lossPayee = async (formBody: RequestBody, application: Application, valida
       }
 
       if (!saveResponse) {
+        console.error('No save response received from saveLossPayee.nominatedLossPayee %s', application.id);
+
         return false;
       }
 

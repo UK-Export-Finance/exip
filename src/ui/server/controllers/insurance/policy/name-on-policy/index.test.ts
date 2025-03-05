@@ -9,8 +9,8 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy-contact';
 import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -26,7 +26,6 @@ const {
       PRE_CREDIT_PERIOD,
     },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -36,7 +35,7 @@ const {
 
 describe('controllers/insurance/policy/name-on-policy', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../map-and-save/policy-contact');
 
@@ -44,7 +43,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -105,18 +104,6 @@ describe('controllers/insurance/policy/name-on-policy', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 
@@ -281,18 +268,6 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

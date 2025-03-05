@@ -375,10 +375,26 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: `The broker or company email cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
           INCORRECT_FORMAT: 'Enter the broker or company email address in the correct format, like name@example.com',
         },
-        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.FULL_ADDRESS]: {
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.IS_BASED_IN_UK]: {
+          IS_EMPTY: 'Select if the broker you are using in the UK',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.POSTCODE]: {
+          IS_EMPTY: "Enter the broker's postcode",
+          INCORRECT_FORMAT: 'Enter a full UK postcode',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.BUILDING_NUMBER_OR_NAME]: {
+          IS_EMPTY: "Enter the broker's building number or name",
+          ABOVE_MAXIMUM: `The broker's building number or name cannot be more than ${MAXIMUM_CHARACTERS.BROKER_BUILDING_NUMBER_OR_NAME} characters`,
+        },
+      },
+      BROKER_MANUAL_ADDRESS: {
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: {
           IS_EMPTY: "Enter the broker's address",
           ABOVE_MAXIMUM: `The broker's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },
+      },
+      [FIELD_IDS.INSURANCE.POLICY.BROKER_ADDRESSES.SELECT_THE_ADDRESS]: {
+        IS_EMPTY: "Select your broker's address",
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE.IS_APPOINTED]: {
         IS_EMPTY: 'Select if you are appointing a loss payee',
@@ -551,23 +567,24 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select if you adhere to all the requirements of the Modern Slavery Act 2015',
         },
         [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.HAS_NO_OFFENSES_OR_INVESTIGATIONS]: {
-          IS_EMPTY: 'Select if you are under investigation or been fine, convicted or found guilty or not',
+          IS_EMPTY: 'Select if you are under investigation, or, have been fined, convicted, or, found guilty',
         },
         [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.IS_NOT_AWARE_OF_EXISTING_SLAVERY]: {
-          IS_EMPTY: 'Select if you are or are not aware of Modern Slavery in respect of yourself, the export contract, holding company or supply chain',
+          IS_EMPTY:
+            'Select if you are not aware of the existence of Modern Slavery in respect of yourself, the export contract(s), your immediate holding company or your supply chain',
         },
         CONDITIONAL_REASONS: {
           [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.CANNOT_ADHERE_TO_ALL_REQUIREMENTS]: {
-            IS_EMPTY: 'Enter full details of why you cannot adhere',
-            ABOVE_MAXIMUM: `The  explanation of why you cannot adhere cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+            IS_EMPTY: 'Enter full details as to why you cannot adhere',
+            ABOVE_MAXIMUM: `The explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
           },
           [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.OFFENSES_OR_INVESTIGATIONS]: {
-            IS_EMPTY: 'Enter full details of why you cannot confirm',
-            ABOVE_MAXIMUM: `The  explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+            IS_EMPTY: 'Enter full details as to why you cannot confirm',
+            ABOVE_MAXIMUM: `The explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
           },
           [FIELD_IDS.INSURANCE.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASONS.AWARE_OF_EXISTING_SLAVERY]: {
-            IS_EMPTY: 'Enter full details of why you cannot confirm',
-            ABOVE_MAXIMUM: `The  explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
+            IS_EMPTY: 'Enter full details as to why you cannot confirm',
+            ABOVE_MAXIMUM: `The explanation of why you cannot confirm cannot be more than ${MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON} characters`,
           },
         },
       },

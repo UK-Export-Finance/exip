@@ -1,5 +1,5 @@
 import { confirmEmailAddress } from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import { mockAccount, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
@@ -20,10 +20,10 @@ describe('emails/confirm-email-address', () => {
   };
 
   beforeAll(async () => {
-    notify.sendEmail = sendEmailSpy;
+    APIM.sendEmail = sendEmailSpy;
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
+  it('should call APIM.sendEmail and return the response', async () => {
     const result = await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
@@ -37,17 +37,13 @@ describe('emails/confirm-email-address', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = mockSpyPromiseRejection;
+      APIM.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
-      try {
-        await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
-      } catch (error) {
-        const expected = new Error(`Sending confirm email address email Error: Sending email ${new Error(mockErrorMessage)}`);
+    it('should throw an error', async () => {
+      const response = confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending confirm email address email ${new Error(mockErrorMessage)}`);
     });
   });
 });

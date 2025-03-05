@@ -6,7 +6,14 @@ const mockBroker = {
   isUsingBroker: true,
   name: 'Mock broker name',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  fullAddress: 'Mock broker address',
+  fullAddress: 'Mock full broker address',
+  isBasedInUk: false,
+  postcode: 'SW1A 2HQ',
+  buildingNumberOrName: 'HM Treasury',
+  addressLine1: 'Mock broker address line 1',
+  addressLine2: 'Mock broker address line 2',
+  town: 'Mock broker town',
+  county: 'Mock broker county',
 };
 
 export default mockBroker;

@@ -1,5 +1,5 @@
 import application from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getSubmittedConfirmationTemplateId from './get-submitted-confirmation-template-id';
 import getFullNameString from '../../helpers/get-full-name-string';
@@ -37,13 +37,13 @@ describe('emails/application', () => {
     beforeEach(() => {
       jest.clearAllMocks();
 
-      notify.sendEmail = sendEmailSpy;
+      APIM.sendEmail = sendEmailSpy;
       fileSystem.readFile = readFileSpy;
       fileSystem.unlink = unlinkSpy;
     });
 
-    test('it should call notify.sendEmail and return the response', async () => {
-      notify.sendEmail = sendEmailSpy;
+    it('should call APIM.sendEmail and return the response', async () => {
+      APIM.sendEmail = sendEmailSpy;
 
       const result = await application.submittedEmail(variables, policy);
 
@@ -59,10 +59,10 @@ describe('emails/application', () => {
 
     describe('error handling', () => {
       beforeAll(async () => {
-        notify.sendEmail = mockSpyPromiseRejection;
+        APIM.sendEmail = mockSpyPromiseRejection;
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await application.submittedEmail(variables, policy);
         } catch (error) {
@@ -82,13 +82,13 @@ describe('emails/application', () => {
     beforeEach(() => {
       jest.clearAllMocks();
 
-      notify.sendEmail = sendEmailSpy;
+      APIM.sendEmail = sendEmailSpy;
       fileSystem.readFile = readFileSpy;
       fileSystem.unlink = unlinkSpy;
     });
 
-    test('it should call notify.sendEmail and return the response', async () => {
-      notify.sendEmail = sendEmailSpy;
+    it('should call APIM.sendEmail and return the response', async () => {
+      APIM.sendEmail = sendEmailSpy;
 
       const result = await application.underwritingTeam(variables, mockFilePath, templateId);
 
@@ -96,9 +96,14 @@ describe('emails/application', () => {
 
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
 
-      const expectedFileBuffer = Buffer.from(mockFileSystemResponse);
+      const bufferedHexString = mockFileSystemResponse.toString('hex');
 
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, variables, expectedFileBuffer);
+      const expectedVariables = {
+        ...variables,
+        file: bufferedHexString,
+      };
+
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, expectedVariables);
 
       const expected = mockSendEmailResponse;
 
@@ -107,10 +112,10 @@ describe('emails/application', () => {
 
     describe('error handling', () => {
       beforeAll(async () => {
-        notify.sendEmail = mockSpyPromiseRejection;
+        APIM.sendEmail = mockSpyPromiseRejection;
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await application.underwritingTeam(variables, mockFilePath, templateId);
         } catch (error) {

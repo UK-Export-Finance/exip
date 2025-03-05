@@ -34,7 +34,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   describe('when verificationHash and verificationExpiry do not exist', () => {
-    test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
+    it('should call sendEmail.confirmEmailAddress and return success=true', async () => {
       const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
 
       const { email, verificationHash } = account;
@@ -54,7 +54,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   describe('when verificationHash exists and verificationExpiry has elapsed', () => {
-    test("it should call sendEmail.confirmEmailAddress and return success=true but should NOT use the stored account's verificationHash", async () => {
+    it("should call sendEmail.confirmEmailAddress and return success=true but should NOT use the stored account's verificationHash", async () => {
       await accounts.update(context, account.id, { verificationExpiry: DATE_24_HOURS_IN_THE_PAST(), verificationHash: 'mock-hash' });
 
       const updatedAccount = await accounts.get(context, account.id);
@@ -79,7 +79,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   describe('when verificationHash exists and verificationExpiry has not elapsed', () => {
-    test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
+    it('should call sendEmail.confirmEmailAddress and return success=true', async () => {
       await accounts.update(context, account.id, { verificationExpiry: DATE_24_HOURS_FROM_NOW(), verificationHash: 'mock-hash' });
 
       const updatedAccount = await accounts.get(context, account.id);
@@ -103,7 +103,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       await accounts.deleteAll(context);
 
       const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
@@ -119,7 +119,7 @@ describe('helpers/send-email-confirm-email-address', () => {
       sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(mockSpyPromiseRejection));
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id)).rejects.toThrow(
         'Sending email verification (sendEmailConfirmEmailAddress helper)',
       );

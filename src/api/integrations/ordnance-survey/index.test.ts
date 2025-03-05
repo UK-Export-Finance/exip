@@ -12,7 +12,7 @@ describe('integrations/ordnance-survey', () => {
   const url = `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`;
 
   describe('when a successful request is made', () => {
-    test('it should return success=true and data', async () => {
+    it('should return success=true and data', async () => {
       const mock = new MockAdapter(axios);
 
       const mockResponse = mockOrdnanceSurveyResponse;
@@ -24,6 +24,7 @@ describe('integrations/ordnance-survey', () => {
       const expected = {
         success: true,
         data: mockResponse.results,
+        status: 200,
       };
 
       expect(result).toEqual(expected);
@@ -31,7 +32,7 @@ describe('integrations/ordnance-survey', () => {
   });
 
   describe('when no data is returned', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       const mock = new MockAdapter(axios);
 
       mock.onGet(url).reply(200);
@@ -40,6 +41,7 @@ describe('integrations/ordnance-survey', () => {
 
       const expected = {
         success: false,
+        status: 200,
       };
 
       expect(result).toEqual(expected);
@@ -47,7 +49,7 @@ describe('integrations/ordnance-survey', () => {
   });
 
   describe('when response.data.results does not exist', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       const mock = new MockAdapter(axios);
 
       mock.onGet(url).reply(200, {});
@@ -56,6 +58,24 @@ describe('integrations/ordnance-survey', () => {
 
       const expected = {
         success: false,
+        status: 200,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a status code of 400 is returned', () => {
+    it('should return success=false', async () => {
+      const mock = new MockAdapter(axios);
+
+      mock.onGet(url).reply(400, {});
+
+      const result = await ordnanceSurvey.get(postcode);
+
+      const expected = {
+        success: false,
+        status: 400,
       };
 
       expect(result).toEqual(expected);
@@ -63,7 +83,7 @@ describe('integrations/ordnance-survey', () => {
   });
 
   describe('when a 200 status is not returned', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       const mock = new MockAdapter(axios);
 
       mock.onGet(url).reply(500);

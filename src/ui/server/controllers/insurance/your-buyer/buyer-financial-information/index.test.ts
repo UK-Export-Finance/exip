@@ -8,8 +8,8 @@ import buyerFinancialInformationValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-relationship';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -20,7 +20,6 @@ const {
     BUYER_FINANCIAL_INFORMATION_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const {
@@ -36,11 +35,11 @@ const { HAS_BUYER_FINANCIAL_ACCOUNTS } = BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -115,18 +114,6 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 
@@ -207,18 +194,6 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
           validationErrors,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

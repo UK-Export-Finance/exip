@@ -3,8 +3,8 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/declarations';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -13,7 +13,7 @@ const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, HAS_ANTI_BRIBERY_CODE_OF_COND
 
 describe('controllers/insurance/declarations/confidentiality/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../save-data');
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     req.body = mockFormBody;
   });
@@ -74,18 +74,6 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
       const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
-    });
-  });
-
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 

@@ -1,24 +1,24 @@
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
-import { callNotify } from '../call-notify';
-import { EmailResponse, SubmissionDeadlineEmailVariables } from '../../types';
+import APIM from '../../integrations/APIM';
+import { ApimSendEmailHelperResponse, SubmissionDeadlineEmailVariables } from '../../types';
 
 /**
  * submissionDeadlineEmail
  * Send the submission deadline email
  * @param {String} Email address
  * @param {SubmissionDeadlineEmailVariables} submissionDeadlineEmailVariables
- * @returns {Promise<Object>} callNotify response
+ * @returns {Promise<ApimSendEmailHelperResponse>}
  */
 export const submissionDeadlineEmail = async (
   emailAddress: string,
   submissionDeadlineEmailVariables: SubmissionDeadlineEmailVariables,
-): Promise<EmailResponse> => {
+): Promise<ApimSendEmailHelperResponse> => {
   try {
     console.info('Sending submission deadline reminder email for %s', submissionDeadlineEmailVariables.referenceNumber);
 
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
 
-    const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
+    const response = await APIM.sendEmail(templateId, emailAddress, submissionDeadlineEmailVariables);
 
     return response;
   } catch (error) {

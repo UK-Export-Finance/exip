@@ -1,6 +1,8 @@
 import brokerPage from './broker';
-import brokerConfirmAddressPage from './brokerConfirmAddress';
+import brokerAddressesPage from './brokerAddresses';
+import brokerZeroAddressesPage from './brokerZeroAddresses';
+import brokerManualAddressPage from './brokerManualAddress';
 import multipleContractPolicyExportValuePage from './multipleContractPolicyExportValue';
 import typeOfPolicyPage from './typeOfPolicy';
 
-export { brokerPage, brokerConfirmAddressPage, multipleContractPolicyExportValuePage, typeOfPolicyPage };
+export { brokerPage, brokerAddressesPage, brokerManualAddressPage, brokerZeroAddressesPage, multipleContractPolicyExportValuePage, typeOfPolicyPage };

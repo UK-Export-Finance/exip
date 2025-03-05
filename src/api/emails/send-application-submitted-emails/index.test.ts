@@ -77,14 +77,14 @@ describe('emails/send-email-application-submitted', () => {
     });
 
     describe('when application owner and policy contact emails are the same', () => {
-      test('it should call sendEmail.application.applicationSubmittedEmail once', async () => {
+      it('should call sendEmail.application.applicationSubmittedEmail once', async () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars, application.policy);
       });
 
-      test('it should call sendEmail.application.applicationSubmittedEmail with the correct template ID', async () => {
+      it('should call sendEmail.application.applicationSubmittedEmail with the correct template ID', async () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
@@ -94,7 +94,7 @@ describe('emails/send-email-application-submitted', () => {
         expect(underwritingTeamEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars, mockXlsxPath, templateId);
       });
 
-      test('it should call sendEmail.documentsEmail with the correct template ID', async () => {
+      it('should call sendEmail.documentsEmail with the correct template ID', async () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
@@ -110,7 +110,7 @@ describe('emails/send-email-application-submitted', () => {
         application.policyContact.isSameAsOwner = false;
       });
 
-      test('it should call sendEmail.application.submittedEmail twice', async () => {
+      it('should call sendEmail.application.submittedEmail twice', async () => {
         expectedContactSendEmailVars.emailAddress = application.policyContact.email;
 
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
@@ -120,7 +120,7 @@ describe('emails/send-email-application-submitted', () => {
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars, application.policy);
       });
 
-      test('it should call sendEmail.application.submittedEmail with the correct template ID', async () => {
+      it('should call sendEmail.application.submittedEmail with the correct template ID', async () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
@@ -130,7 +130,7 @@ describe('emails/send-email-application-submitted', () => {
         expect(underwritingTeamEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars, mockXlsxPath, templateId);
       });
 
-      test('it should call sendEmail.documentsEmail with the correct template ID twice', async () => {
+      it('should call sendEmail.documentsEmail with the correct template ID twice', async () => {
         expectedContactSendEmailVars.emailAddress = application.policyContact.email;
 
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
@@ -157,7 +157,7 @@ describe('emails/send-email-application-submitted', () => {
         };
       });
 
-      test('it should call sendEmail.documentsEmail with the correct template ID', async () => {
+      it('should call sendEmail.documentsEmail with the correct template ID', async () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
@@ -181,7 +181,7 @@ describe('emails/send-email-application-submitted', () => {
         };
       });
 
-      test('it should NOT call sendEmail.documentsEmail', async () => {
+      it('should NOT call sendEmail.documentsEmail', async () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(0);
@@ -201,7 +201,7 @@ describe('emails/send-email-application-submitted', () => {
         };
       });
 
-      test('it should NOT call sendEmail.documentsEmail', async () => {
+      it('should NOT call sendEmail.documentsEmail', async () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
@@ -232,7 +232,7 @@ describe('emails/send-email-application-submitted', () => {
         );
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
         } catch (error) {
@@ -253,7 +253,7 @@ describe('emails/send-email-application-submitted', () => {
         );
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
         } catch (error) {
@@ -274,14 +274,10 @@ describe('emails/send-email-application-submitted', () => {
         );
       });
 
-      test('should throw an error', async () => {
-        try {
-          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (error) {
-          const expected = new Error(`Sending application submitted emails Error: Sending application documents emails ${mockSendEmailResponse}`);
+      it('should throw an error', async () => {
+        const response = sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
-          expect(error).toEqual(expected);
-        }
+        await expect(response).rejects.toThrow(`Sending application submitted emails Error: Sending application documents emails ${mockSendEmailResponse}`);
       });
     });
 
@@ -290,14 +286,10 @@ describe('emails/send-email-application-submitted', () => {
         sendEmail.application.submittedEmail = mockSpyPromiseRejection;
       });
 
-      test('should throw an error', async () => {
-        try {
-          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (error) {
-          const expected = new Error(`Sending application submitted emails ${new Error('Sending application submitted email to owner/account')}`);
+      it('should throw an error', async () => {
+        const response = sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
-          expect(error).toEqual(expected);
-        }
+        await expect(response).rejects.toThrow(`Sending application submitted emails ${new Error('Sending application submitted email to owner/account')}`);
       });
     });
   });

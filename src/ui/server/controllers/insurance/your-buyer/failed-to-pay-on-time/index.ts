@@ -10,7 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -53,10 +53,10 @@ export const HTML_FLAGS = {
  * get
  * Render the failed to pay on time page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Failed to pay on time page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -90,10 +90,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Check failed to pay on time validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

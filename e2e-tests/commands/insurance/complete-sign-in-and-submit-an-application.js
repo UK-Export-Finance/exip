@@ -36,11 +36,14 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} isUsingAgent: Should submit "yes" to "using an agent" form.
  * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details".
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period.
- * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
+ * @param {Boolean} otherCompanyInvolved: Should submit "yes" to "another company to be insured".
  * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
+ * @param {Boolean} brokerIsBasedInUk: Should submit "yes or "no" to "broker is based in the UK".
+ * @param {String} brokerBuildingNumberOrName: Broker building name or number.
+ * @param {String} brokerPostcode: Broker postcode.
  * @param {Boolean} hasAntiBriberyCodeOfConduct: has "anti-bribery - code of conduct"
  * @param {Boolean} exportingWithCodeOfConduct: will export with "anti-bribery - exporting with code of conduct"
  * @param {Boolean} willAdhereToAllRequirements: "Declaration - Modern slavery - will adhere to all requirements" answer
@@ -84,6 +87,11 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   totalContractValueOverThreshold = false,
   usingBroker = false,
+  brokerIsBasedInUk = false,
+  brokerBuildingNumberOrName,
+  brokerPostcode,
+  multipleBrokerAddressesAvailable,
+  provideBrokerAddressManually,
   hasAntiBriberyCodeOfConduct = false,
   exportingWithCodeOfConduct = false,
   willAdhereToAllRequirements,
@@ -130,6 +138,11 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
+        brokerIsBasedInUk,
+        brokerBuildingNumberOrName,
+        brokerPostcode,
+        multipleBrokerAddressesAvailable,
+        provideBrokerAddressManually,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -162,6 +175,11 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
+        brokerIsBasedInUk,
+        brokerBuildingNumberOrName,
+        brokerPostcode,
+        multipleBrokerAddressesAvailable,
+        provideBrokerAddressManually,
       });
     }
 

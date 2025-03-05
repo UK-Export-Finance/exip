@@ -7,10 +7,10 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { exportContractSummaryLists } from '../../../../helpers/summary-lists/export-contract';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockCountries,
   mockCurrencies,
@@ -25,14 +25,14 @@ const { exportContract, referenceNumber, totalContractValueOverThreshold } = moc
 
 describe('controllers/insurance/export-contract/check-your-answers', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.countries.getAll = getCountriesSpy;
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
@@ -83,18 +83,6 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {

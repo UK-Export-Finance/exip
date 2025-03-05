@@ -10,8 +10,8 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/broker';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { USING_BROKER } = POLICY_FIELD_IDS;
 
@@ -39,11 +39,11 @@ const {
 
 describe('controllers/insurance/policy/broker', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -105,7 +105,7 @@ describe('controllers/insurance/policy/broker', () => {
   });
 
   describe('get', () => {
-    it('should render the broker template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
@@ -114,18 +114,6 @@ describe('controllers/insurance/policy/broker', () => {
         application: mapApplicationToFormFields(mockApplication),
         applicationAnswer: mockApplication.broker[USING_BROKER],
         ...pageVariables(referenceNumber),
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -255,18 +243,6 @@ describe('controllers/insurance/policy/broker', () => {
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

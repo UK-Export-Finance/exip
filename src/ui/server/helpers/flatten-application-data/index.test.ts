@@ -1,20 +1,19 @@
-import flattenApplicationData, { mapBroker, mapExportContractAgentDetails, mapPolicyContact, mapNominatedLossPayee } from '.';
+import flattenApplicationData, { mapExportContractAgentDetails, mapPolicyContact, mapNominatedLossPayee } from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
+import mapBroker from './map-broker';
 import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import { mockApplication, referenceNumber } from '../../test-mocks';
 
 const {
   POLICY: {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL },
-    USING_BROKER,
-    BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
     FINANCIAL_ADDRESS,
     LOSS_PAYEE: { IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
     LOSS_PAYEE_FINANCIAL_ADDRESS,
   },
   EXPORT_CONTRACT: {
-    AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE, COUNTRY_CODE },
+    AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE, COUNTRY_CODE, FULL_ADDRESS, NAME },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
@@ -25,22 +24,6 @@ const { nominatedLossPayee, policy, policyContact, sectionReview } = mockApplica
 const { buyerTradingHistory, contact, relationship } = mockApplication.buyer;
 
 describe('server/helpers/flatten-application-data', () => {
-  describe('mapBroker', () => {
-    it('should return mapped broker IDs', () => {
-      const result = mapBroker(broker);
-
-      const expected = {
-        id: broker.id,
-        [USING_BROKER]: broker[USING_BROKER],
-        [NAME]: broker[NAME],
-        [BROKER_EMAIL]: broker[EMAIL],
-        [FULL_ADDRESS]: broker[FULL_ADDRESS],
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('mapExportContractAgentDetails', () => {
     it('should return mapped export contract agent IDs', () => {
       const result = mapExportContractAgentDetails(exportContract.agent);

@@ -25,7 +25,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
     applicationPolicy = createdPolicy;
   });
 
-  test('it should return a jointlyInsuredParty with ID', async () => {
+  it('should return a jointlyInsuredParty with ID', async () => {
     const result = await createAJointlyInsuredParty(context, applicationPolicy.id);
 
     expect(result.id).toBeDefined();
@@ -33,7 +33,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return a policy relationship and empty jointlyInsuredParty fields', async () => {
+  it('should return a policy relationship and empty jointlyInsuredParty fields', async () => {
     const result = await createAJointlyInsuredParty(context, applicationPolicy.id);
 
     expect(result.policyId).toEqual(applicationPolicy.id);
@@ -44,7 +44,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
   });
 
   describe('when an invalid policy ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAJointlyInsuredParty(context, mockInvalidId);
       } catch (error) {
@@ -54,7 +54,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAJointlyInsuredParty({}, applicationPolicy.id);

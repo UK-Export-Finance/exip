@@ -1,8 +1,8 @@
 import getApplicationByReferenceNumberMiddleware, { RELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import api from '../../../api';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../test-mocks';
-import { Next, Request, Response } from '../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../test-mocks';
+import { Next, Request, ResponseInsurance } from '../../../../types';
 
 const {
   ACCESSIBILITY_STATEMENT,
@@ -25,14 +25,14 @@ const {
 
 describe('middleware/insurance/get-application-by-reference-number', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
   let next: Next;
 
   const nextSpy = jest.fn();
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
     next = nextSpy;
   });
 

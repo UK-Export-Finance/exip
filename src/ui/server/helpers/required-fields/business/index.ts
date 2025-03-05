@@ -12,7 +12,7 @@ const { FINANCIAL_YEAR_END_DATE, TURNOVER_CURRENCY_CODE, ...TURNOVER_FIELDS } = 
  * getYourCompanyTasks
  * Get your company tasks depending on the hasDifferentTradingName field
  * @param {Boolean} hasDifferentTradingName "has different trading name" flag
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<string> => {
   if (hasDifferentTradingName) {

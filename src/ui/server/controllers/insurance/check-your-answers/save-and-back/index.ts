@@ -3,7 +3,7 @@ import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insura
 import constructPayload from '../../../../helpers/construct-payload';
 import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import save from '../save-data';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -13,10 +13,10 @@ export const FIELD_IDS = Object.values(CHECK_YOUR_ANSWERS_FIELD_IDS);
  * post
  * Save check your answers section review and if successful, redirect to the all sections page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} All sections page or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

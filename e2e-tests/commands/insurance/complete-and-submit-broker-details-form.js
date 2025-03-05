@@ -3,10 +3,12 @@
  * Complete and submit "broker details" form
  * @param {String} name: Broker name
  * @param {String} email: Broker email
- * @param {String} fullAddress: Broker's full address
+ * @param {Boolean} isBasedInUk: Broker is based in the UK
+ * @param {String} postcode: Broker postcode
+ * @param {String} buildingNumberOrName: Broker building name or number
  */
-const completeAndSubmitBrokerDetailsForm = ({ name, email, fullAddress }) => {
-  cy.completeBrokerDetailsForm({ name, email, fullAddress });
+const completeAndSubmitBrokerDetailsForm = ({ name, email, isBasedInUk, postcode, buildingNumberOrName }) => {
+  cy.completeBrokerDetailsForm({ name, email, isBasedInUk, postcode, buildingNumberOrName });
 
   cy.clickSubmitButton();
 };

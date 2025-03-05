@@ -44,14 +44,14 @@ describe('custom-resolvers/create-feedback', () => {
       expect(success).toEqual(true);
     });
 
-    test('it should generate createdAt timestamp', () => {
+    it('should generate createdAt timestamp', () => {
       const feedbackCreatedAtTimestamp = format(new Date(feedbackResponse.createdAt), 'dd/mm/yyyy');
       const nowTimestamp = format(new Date(), 'dd/mm/yyyy');
 
       expect(feedbackCreatedAtTimestamp).toEqual(nowTimestamp);
     });
 
-    test('it should call sendEmail.insuranceFeedbackEmail', async () => {
+    it('should call sendEmail.insuranceFeedbackEmail', async () => {
       expect(sendInsuranceFeedbackEmailSpy).toHaveBeenCalledTimes(1);
     });
   });
@@ -66,7 +66,7 @@ describe('custom-resolvers/create-feedback', () => {
       feedbackResponse = (await createInsuranceFeedbackAndEmail({}, variables, context)) as Feedback;
     });
 
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       expect(feedbackResponse.success).toEqual(false);
     });
   });
@@ -79,7 +79,7 @@ describe('custom-resolvers/create-feedback', () => {
       sendEmail.insuranceFeedbackEmail = sendInsuranceFeedbackEmailSpy;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         feedbackResponse = (await createInsuranceFeedbackAndEmail({}, variables, context)) as Feedback;
       } catch (error) {

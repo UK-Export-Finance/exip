@@ -9,7 +9,7 @@ import requiredFields from '../../../../helpers/required-fields/your-buyer';
 import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -41,10 +41,10 @@ export const pageVariables = (referenceNumber: number) => ({
  * get
  * Render the Check your answers - Your buyer page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Check your answers - Your buyer page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -83,10 +83,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Save data and redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

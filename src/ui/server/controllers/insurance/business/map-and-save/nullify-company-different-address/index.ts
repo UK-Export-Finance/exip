@@ -17,6 +17,8 @@ const companyDifferentTradingAddress = async (application: Application) => {
     const saveResponse = await saveAddress.companyDifferentTradingAddress(application, nullifiedData);
 
     if (!saveResponse) {
+      console.error('No save response received from saveAddress.companyDifferentTradingAddress %s', application.id);
+
       return false;
     }
 

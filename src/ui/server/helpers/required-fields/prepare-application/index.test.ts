@@ -21,6 +21,11 @@ const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     USING_BROKER,
+    BROKER_DETAILS: { IS_BASED_IN_UK },
+    BROKER_MANUAL_ADDRESS: { BROKER_FULL_ADDRESS },
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
+    LOSS_PAYEE: { IS_APPOINTED },
+    LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
   },
   YOUR_BUYER: { CONNECTION_WITH_BUYER, OUTSTANDING_PAYMENTS, TRADED_WITH_BUYER, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER },
 } = INSURANCE_FIELD_IDS;
@@ -36,7 +41,13 @@ describe('server/helpers/required-fields/section-review', () => {
       ...requiredEligibilityFields(),
       ...requiredPolicyFields({
         policyType: flatApplicationData[POLICY_TYPE],
+        jointlyInsuredParty: flatApplicationData[REQUESTED],
         isUsingBroker: flatApplicationData[USING_BROKER],
+        brokerIsBasedInUk: flatApplicationData[IS_BASED_IN_UK],
+        brokerFullAddress: flatApplicationData[BROKER_FULL_ADDRESS],
+        isAppointingLossPayee: flatApplicationData[IS_APPOINTED],
+        lossPayeeIsLocatedInUk: flatApplicationData[IS_LOCATED_IN_UK],
+        lossPayeeIsLocatedInternationally: flatApplicationData[IS_LOCATED_INTERNATIONALLY],
       }),
       ...requiredExportContractFields({
         finalDestinationKnown: flatApplicationData[FINAL_DESTINATION_KNOWN],

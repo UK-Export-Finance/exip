@@ -28,7 +28,7 @@ const deleteAll = async (context: Context) => {
 
     return [];
   } catch (error) {
-    console.error(error);
+    console.error('Error getting and deleting accounts (test helpers) %o', error);
 
     throw new Error(`Getting and deleting accounts (test helpers) ${error}`);
   }
@@ -53,7 +53,7 @@ const get = async (context: Context, accountId: string): Promise<Account> => {
 
     return account;
   } catch (error) {
-    console.error(error);
+    console.error('Error getting an account by ID (test helpers) %o', error);
 
     throw new Error(`Getting an account by ID (test helpers) ${error}`);
   }
@@ -94,7 +94,7 @@ const create = async ({ context, data, deleteAccounts = true }: TestHelperAccoun
 
     return updatedAccount;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating an account (test helpers) %o', error);
 
     return error;
   }
@@ -119,7 +119,7 @@ const update = async (context: Context, accountId: string, data: AccountCreation
 
     return account;
   } catch (error) {
-    console.error(error);
+    console.error('Error updating an account by ID (test helpers) %o', error);
 
     throw new Error(`Updating an account by ID (test helpers) ${error}`);
   }

@@ -10,7 +10,7 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import mapAndSave from '../map-and-save/loss-payee';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
@@ -56,10 +56,10 @@ export const pageVariables = (referenceNumber: number) => ({
 /**
  * Render the Loss payee page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Loss payee page with previously submitted details
+ * @param {ResponseInsurance} Express response for "insurance" routes
+ * @returns {Express.Response.render} Loss payee page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -83,10 +83,10 @@ export const get = (req: Request, res: Response) => {
  * post
  * Run validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

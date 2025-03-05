@@ -35,20 +35,20 @@ describe('custom-resolvers/create-an-abandoned-application', () => {
     variables.accountId = account.id;
   });
 
-  test('it should return success=true', async () => {
+  it('should return success=true', async () => {
     result = await createAnAbandonedApplication({}, variables, context);
 
     expect(result.success).toEqual(true);
   });
 
-  test(`it should return status as ${STATUS.ABANDONED}`, async () => {
+  it(`should return status as ${STATUS.ABANDONED}`, async () => {
     result = await createAnAbandonedApplication({}, variables, context);
 
     expect(result.status).toEqual(STATUS.ABANDONED);
   });
 
   describe('when there is no account for the provided accountId', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       variables.accountId = mockInvalidId;
 
       result = await createAnAbandonedApplication({}, variables, context);
@@ -58,7 +58,7 @@ describe('custom-resolvers/create-an-abandoned-application', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(createAnAbandonedApplication({}, variables, {})).rejects.toThrow('Creating an abandoned application');
     });
   });

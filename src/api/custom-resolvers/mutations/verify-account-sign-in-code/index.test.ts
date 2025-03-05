@@ -60,22 +60,22 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
   });
 
-  test('it should return success=true', async () => {
+  it('should return success=true', async () => {
     expect(result.success).toEqual(true);
   });
 
-  test('it should return account details', async () => {
+  it('should return account details', async () => {
     expect(result.accountId).toEqual(account.id);
     expect(result.firstName).toEqual(account.firstName);
     expect(result.lastName).toEqual(account.lastName);
   });
 
-  test('it should return JWT', async () => {
+  it('should return JWT', async () => {
     expect(result.token).toEqual(mockJWT.token);
     expect(result.sessionIdentifier).toEqual(mockJWT.sessionIdentifier);
   });
 
-  test(`it should wipe the account's retry entires`, async () => {
+  it(`should wipe the account's retry entires`, async () => {
     const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
@@ -147,7 +147,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // no need to delete here - account is (correctly) already deleted due to afterEach()
 
       result = await verifyAccountSignInCode({}, variables, context);
@@ -164,7 +164,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
 
     const otp = generate.otp();
-    test('it should return success=false and expired=true', async () => {
+    it('should return success=false and expired=true', async () => {
       // add OTP to the account
       const { salt, hash } = otp;
 
@@ -208,7 +208,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   });
 
   describe('when the account does not have OTP salt, hash or expiry', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       account = await accounts.create({ context });
 
       result = await verifyAccountSignInCode({}, variables, context);

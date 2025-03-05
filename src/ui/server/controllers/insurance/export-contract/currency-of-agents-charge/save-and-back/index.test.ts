@@ -5,8 +5,8 @@ import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
 import generateValidationErrors from '../validation';
-import { Request, Response } from '../../../../../../types';
-import { EUR, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { EUR, mockReq, mockResInsurance, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -16,7 +16,7 @@ const {
 
 describe('controllers/insurance/export-contract/currency-of-agents-charge/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../../map-and-save/export-contract-agent-service-charge');
 
@@ -29,7 +29,7 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge/save-a
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     req.body = mockFormBody;
 
@@ -75,18 +75,6 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge/save-a
       const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
-    });
-  });
-
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 

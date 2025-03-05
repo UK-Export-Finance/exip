@@ -10,15 +10,14 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-uk';
-import { Application, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockLossPayeeFinancialDetailsUk, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { Application, Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockLossPayeeFinancialDetailsUk, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  PROBLEM_WITH_SERVICE,
   POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK, LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
@@ -27,11 +26,11 @@ const { LOSS_PAYEE_FINANCIAL_UK, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = 
 
 describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -100,18 +99,6 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
         submittedValues: mappedApplication.nominatedLossPayee.financialUk,
       });
     });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
   });
 
   describe('post', () => {
@@ -177,18 +164,6 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

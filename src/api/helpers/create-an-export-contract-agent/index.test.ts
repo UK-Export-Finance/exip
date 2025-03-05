@@ -23,7 +23,7 @@ describe('helpers/create-an-export-contract-agent', () => {
     applicationExportContract = await createAnExportContract(context, application.id);
   });
 
-  test('it should return an agent ID', async () => {
+  it('should return an agent ID', async () => {
     const { agent } = await createAnExportContractAgent(context, applicationExportContract.id);
 
     expect(agent.id).toBeDefined();
@@ -31,7 +31,7 @@ describe('helpers/create-an-export-contract-agent', () => {
     expect(agent.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty agent fields', async () => {
+  it('should return empty agent fields', async () => {
     const { agent } = await createAnExportContractAgent(context, applicationExportContract.id);
 
     expect(agent.countryCode).toEqual('');
@@ -40,7 +40,7 @@ describe('helpers/create-an-export-contract-agent', () => {
     expect(agent.name).toEqual('');
   });
 
-  test('it should return an agentService ID', async () => {
+  it('should return an agentService ID', async () => {
     const { agentService } = await createAnExportContractAgent(context, applicationExportContract.id);
 
     expect(agentService.id).toBeDefined();
@@ -48,14 +48,14 @@ describe('helpers/create-an-export-contract-agent', () => {
     expect(agentService.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty agentService fields', async () => {
+  it('should return empty agentService fields', async () => {
     const { agentService } = await createAnExportContractAgent(context, applicationExportContract.id);
 
     expect(agentService.agentIsCharging).toBeNull();
     expect(agentService.serviceDescription).toEqual('');
   });
 
-  test('it should return an agentServiceCharge ID', async () => {
+  it('should return an agentServiceCharge ID', async () => {
     const { agentServiceCharge } = await createAnExportContractAgent(context, applicationExportContract.id);
 
     expect(agentServiceCharge.id).toBeDefined();
@@ -63,7 +63,7 @@ describe('helpers/create-an-export-contract-agent', () => {
     expect(agentServiceCharge.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty agentService fields', async () => {
+  it('should return empty agentService fields', async () => {
     const { agentServiceCharge } = await createAnExportContractAgent(context, applicationExportContract.id);
 
     expect(agentServiceCharge.percentageCharge).toBeNull();
@@ -73,7 +73,7 @@ describe('helpers/create-an-export-contract-agent', () => {
   });
 
   describe('when an invalid exportContract ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAnExportContractAgent(context, mockInvalidId);
       } catch (error) {
@@ -83,7 +83,7 @@ describe('helpers/create-an-export-contract-agent', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAnExportContractAgent({}, mockInvalidId);

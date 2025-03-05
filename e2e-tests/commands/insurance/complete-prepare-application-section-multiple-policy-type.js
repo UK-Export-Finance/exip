@@ -42,6 +42,11 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
+ * @param {Boolean} brokerIsBasedInUk: Should submit "yes or "no" to "broker is based in the UK".
+ * @param {String} brokerBuildingNumberOrName: Broker building name or number.
+ * @param {String} brokerPostcode: Broker postcode.
+ * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey.
+ * @param {Boolean} provideBrokerAddressManually: Provide a broker address manually, instead of selecting a result from Ordnance Survey
  */
 const completePrepareApplicationMultiplePolicyType = ({
   agentChargeMethodFixedSum = false,
@@ -80,6 +85,11 @@ const completePrepareApplicationMultiplePolicyType = ({
   totalContractValueOverThreshold = false,
   submitCheckYourAnswers = true,
   usingBroker = false,
+  brokerIsBasedInUk = false,
+  brokerBuildingNumberOrName,
+  brokerPostcode,
+  multipleBrokerAddressesAvailable,
+  provideBrokerAddressManually,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -109,6 +119,11 @@ const completePrepareApplicationMultiplePolicyType = ({
     policyValueOverMvpMaximum,
     submitCheckYourAnswers,
     usingBroker,
+    brokerIsBasedInUk,
+    brokerBuildingNumberOrName,
+    brokerPostcode,
+    multipleBrokerAddressesAvailable,
+    provideBrokerAddressManually,
     otherCompanyInvolved,
     needPreCreditPeriod,
     isAppointingLossPayee,

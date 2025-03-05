@@ -3,20 +3,20 @@ import { FIELD_ID } from '..';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/jointly-insured-party';
-import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/policy/another-company/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     mapAndSave.jointlyInsuredParty = updateMapAndSave;
   });
@@ -73,25 +73,10 @@ describe('controllers/insurance/policy/another-company/save-and-back', () => {
     });
   });
 
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      req.body = validBody;
-
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
-
   describe('api error handling', () => {
     describe('when mapAndSave.jointlyInsuredParty returns false', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
         mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(false));
       });
 
@@ -105,7 +90,6 @@ describe('controllers/insurance/policy/another-company/save-and-back', () => {
     describe('when mapAndSave.jointlyInsuredParty fails', () => {
       beforeEach(() => {
         req.body = validBody;
-        res.locals = mockRes().locals;
         updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.jointlyInsuredParty = updateMapAndSave;
       });

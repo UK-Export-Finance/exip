@@ -26,7 +26,7 @@ const {
   },
 } = exportContract;
 
-const { isUsingBroker } = broker;
+const { isUsingBroker, isBasedInUk: brokerIsBasedInUk, fullAddress: brokerFullAddress } = broker;
 const { hasDifferentTradingName } = company;
 const { buyerTradingHistory, relationship } = buyer;
 const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
@@ -43,6 +43,8 @@ describe('server/helpers/task-list', () => {
     finalDestinationKnown,
     jointlyInsuredParty.requested,
     isUsingBroker,
+    brokerIsBasedInUk,
+    brokerFullAddress,
     isAppointingLossPayee,
     lossPayeeIsLocatedInUk,
     lossPayeeIsLocatedInternationally,
