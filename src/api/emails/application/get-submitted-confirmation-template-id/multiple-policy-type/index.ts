@@ -1,5 +1,11 @@
-import { EMAIL_TEMPLATE_IDS } from '../../../../constants';
+import { APPLICATION, EMAIL_TEMPLATE_IDS, GBP } from '../../../../constants';
 import { isMultiplePolicyType } from '../../../../helpers/policy-type';
+import apimCurrencyExchangeRate from '../../../../helpers/get-APIM-currencies-exchange-rate';
+import roundNumber from '../../../../helpers/round-number';
+
+const {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
+} = APPLICATION;
 
 const {
   APPLICATION: {
@@ -14,15 +20,15 @@ const {
  * get
  * Get an email template ID for the "application submitted" email, for a multiple policy type.
  * @param {String} policyType: Policy type
+ * @param {String} policyCurrencyCode: Policy currency code
+ * @param {Number} maximumBuyerWillOwe: Maximum buyer will owe
  * @returns {Promise<String>} "Application submitted" template ID
  */
-const get = (policyType: string) => {
+const get = async (policyType: string, policyCurrencyCode: string, maximumBuyerWillOwe: number) => {
   try {
     console.info('Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper)');
 
     if (isMultiplePolicyType(policyType)) {
-      // TODO: EMS-4122
-      /*
       let maximumBuyerWillOweInGbp = maximumBuyerWillOwe;
 
       if (policyCurrencyCode !== GBP) {
@@ -41,7 +47,6 @@ const get = (policyType: string) => {
       if (eligibileForSmallExportBuilder) {
         return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
       }
-      */
 
       return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }

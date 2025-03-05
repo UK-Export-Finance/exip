@@ -1591,7 +1591,39 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
+// helpers/get-APIM-currencies-exchange-rate/index.ts
+var get = async (source, target) => {
+  try {
+    console.info('Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper)', source, target);
+    const response = await APIM_default.getCurrenciesExchange(source, target);
+    if (response.success && response.data) {
+      const [currency] = response.data;
+      const { midPrice: exchangeRate } = currency;
+      if (source !== GBP) {
+        const fixed = Number(1 / exchangeRate).toFixed(2);
+        return Number(fixed);
+      }
+      return exchangeRate;
+    }
+    return 0;
+  } catch (error) {
+    console.error('Error Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper) %o', source, target, error);
+    throw new Error(`Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper) ${error}`);
+  }
+};
+var apimCurrencyExchangeRate = {
+  get,
+};
+var get_APIM_currencies_exchange_rate_default = apimCurrencyExchangeRate;
+
+// helpers/round-number/index.ts
+var roundNumber = (number) => Math.round(number);
+var round_number_default = roundNumber;
+
 // emails/application/get-submitted-confirmation-template-id/multiple-policy-type/index.ts
+var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
+} = APPLICATION;
 var {
   APPLICATION: {
     SUBMISSION: {
@@ -1600,10 +1632,22 @@ var {
   },
   UNABLE_TO_DETERMINE_TEMPLATE_ID,
 } = EMAIL_TEMPLATE_IDS;
-var get = (policyType) => {
+var get2 = async (policyType, policyCurrencyCode, maximumBuyerWillOwe) => {
   try {
     console.info('Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper)');
     if (isMultiplePolicyType(policyType)) {
+      let maximumBuyerWillOweInGbp = maximumBuyerWillOwe;
+      if (policyCurrencyCode !== GBP) {
+        const source = GBP;
+        const target = String(policyCurrencyCode);
+        const exchangeRate = await get_APIM_currencies_exchange_rate_default.get(source, target);
+        maximumBuyerWillOweInGbp = round_number_default(maximumBuyerWillOwe / exchangeRate);
+      }
+      const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+      const eligibileForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
+      if (eligibileForSmallExportBuilder) {
+        return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+      }
       return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }
     return UNABLE_TO_DETERMINE_TEMPLATE_ID;
@@ -1613,7 +1657,7 @@ var get = (policyType) => {
   }
 };
 var multiplePolicyTypeTemplateId = {
-  get,
+  get: get2,
 };
 var multiple_policy_type_default = multiplePolicyTypeTemplateId;
 
@@ -1626,15 +1670,15 @@ var {
   },
   UNABLE_TO_DETERMINE_TEMPLATE_ID: UNABLE_TO_DETERMINE_TEMPLATE_ID2,
 } = EMAIL_TEMPLATE_IDS;
-var getSubmittedConfirmationTemplateId = (policy) => {
+var getSubmittedConfirmationTemplateId = async (policy) => {
   try {
     console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
-    const { maximumBuyerWillOwe, policyType } = policy;
+    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
     if (isSinglePolicyType(policyType)) {
       return CONFIRMATION2.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }
     if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
-      return multiple_policy_type_default.get(policyType);
+      return await multiple_policy_type_default.get(policyType, String(policyCurrencyCode), maximumBuyerWillOwe);
     }
     return UNABLE_TO_DETERMINE_TEMPLATE_ID2;
   } catch (error) {
@@ -1707,7 +1751,7 @@ var application = {
   submittedEmail: async (variables, policy) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = get_submitted_confirmation_template_id_default(policy);
+      const templateId = await get_submitted_confirmation_template_id_default(policy);
       const { emailAddress } = variables;
       const response = await APIM_default.sendEmail(templateId, emailAddress, variables);
       return response;
@@ -6956,11 +7000,11 @@ var {
 } = insurance_default;
 var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 var {
-  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER: SMALL_EXPORT_BUILDER2 },
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
-var maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+var maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER2?.MAXIMUM_BUYER_WILL_OWE);
 var SMALL_EXPORT_BUILDER_THRESHOLD = format_currency_default(maxBuyerWillOweThreshold, GBP_CURRENCY_CODE);
 var POLICY_FIELDS = {
   [POLICY_TYPE3]: {
@@ -9825,7 +9869,7 @@ var mapCisCountries = (countries) => {
 var map_CIS_countries_default = mapCisCountries;
 
 // helpers/get-APIM-CIS-countries/index.ts
-var get2 = async () => {
+var get3 = async () => {
   try {
     console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
@@ -9843,7 +9887,7 @@ var get2 = async () => {
   }
 };
 var apimCisCountries = {
-  get: get2,
+  get: get3,
 };
 var get_APIM_CIS_countries_default = apimCisCountries;
 
@@ -9886,7 +9930,7 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 var map_currencies_default = mapCurrencies;
 
 // helpers/get-APIM-currencies/index.ts
-var get3 = async () => {
+var get4 = async () => {
   try {
     console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
@@ -9908,7 +9952,7 @@ var get3 = async () => {
   }
 };
 var apimCurrencies = {
-  get: get3,
+  get: get4,
 };
 var get_APIM_currencies_default = apimCurrencies;
 
