@@ -9,7 +9,7 @@ const {
 
 const { broker } = mockApplication;
 
-const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = broker;
+const { addressLine1, addressLine2, town, county, postcode } = broker;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker/map-broker-address/based-in-the-uk', () => {
   describe(`when a broker only has ${BUILDING_NUMBER_OR_NAME}, ${ADDRESS_LINE_1} and ${POSTCODE} generic fields`, () => {
@@ -23,7 +23,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker/map-br
 
       const result = mapBrokerAddressBasedInTheUk(mockBroker);
 
-      const expected = `${buildingNumberOrName}\n${addressLine1}\n${postcode}`;
+      const expected = `${addressLine1}\n${postcode}`;
 
       expect(result).toEqual(expected);
     });
@@ -39,7 +39,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker/map-br
 
       const result = mapBrokerAddressBasedInTheUk(mockBroker);
 
-      const expected = `${buildingNumberOrName}\n${addressLine1}\n${addressLine2}\n${postcode}`;
+      const expected = `${addressLine1}\n${addressLine2}\n${postcode}`;
 
       expect(result).toEqual(expected);
     });
@@ -55,7 +55,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker/map-br
 
       const result = mapBrokerAddressBasedInTheUk(mockBroker);
 
-      const expected = `${buildingNumberOrName}\n${addressLine1}\n${town}\n${postcode}`;
+      const expected = `${addressLine1}\n${town}\n${postcode}`;
 
       expect(result).toEqual(expected);
     });
@@ -71,7 +71,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker/map-br
 
       const result = mapBrokerAddressBasedInTheUk(mockBroker);
 
-      const expected = `${buildingNumberOrName}\n${addressLine1}\n${county}\n${postcode}`;
+      const expected = `${addressLine1}\n${county}\n${postcode}`;
 
       expect(result).toEqual(expected);
     });
@@ -81,7 +81,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker/map-br
     it('should return a single string with all fields', () => {
       const result = mapBrokerAddressBasedInTheUk(broker);
 
-      const expected = `${buildingNumberOrName}\n${addressLine1}\n${addressLine2}\n${town}\n${county}\n${postcode}`;
+      const expected = `${addressLine1}\n${addressLine2}\n${town}\n${county}\n${postcode}`;
 
       expect(result).toEqual(expected);
     });
