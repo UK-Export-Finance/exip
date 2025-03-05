@@ -9,13 +9,9 @@ import { ApplicationBroker } from '../../../../../../types';
  * @returns {String} Broker UK address string
  */
 const mapBrokerAddressBasedInTheUk = (broker: ApplicationBroker) => {
-  const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = broker;
+  const { addressLine1, addressLine2, town, county, postcode } = broker;
 
   let addressString = '';
-
-  if (buildingNumberOrName) {
-    addressString += `${buildingNumberOrName}\n`;
-  }
 
   if (addressLine1) {
     addressString += `${addressLine1}\n`;
