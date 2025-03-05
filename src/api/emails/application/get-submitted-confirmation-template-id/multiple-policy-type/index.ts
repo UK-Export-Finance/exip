@@ -42,9 +42,9 @@ const get = async (policyType: string, policyCurrencyCode: string, maximumBuyerW
 
       const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
 
-      const eligibileForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
+      const eligibleForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
 
-      if (eligibileForSmallExportBuilder) {
+      if (eligibleForSmallExportBuilder) {
         return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
       }
 

@@ -1172,7 +1172,7 @@ var EMAIL_TEMPLATE_IDS = {
         CONFIRMATION: {
           SINGLE_OR_MULTIPLE_CONTRACT_POLICY: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
           MULTIPLE_CONTRACT_POLICY: {
-            ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+            ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION: '7ee4729d-53ba-4729-af50-f733870914de',
           },
         },
         SEND_DOCUMENTS: {
@@ -1644,8 +1644,8 @@ var get2 = async (policyType, policyCurrencyCode, maximumBuyerWillOwe) => {
         maximumBuyerWillOweInGbp = round_number_default(maximumBuyerWillOwe / exchangeRate);
       }
       const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
-      const eligibileForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
-      if (eligibileForSmallExportBuilder) {
+      const eligibleForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
+      if (eligibleForSmallExportBuilder) {
         return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
       }
       return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
