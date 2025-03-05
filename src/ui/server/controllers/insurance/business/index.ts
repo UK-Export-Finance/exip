@@ -3,7 +3,7 @@ import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import sectionStartPageVariables from '../../../helpers/page-variables/core/insurance/section-start';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../types';
+import { Request, ResponseInsurance } from '../../../../types';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
@@ -16,16 +16,12 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
  * get
  * Render the "Your business - start" page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Your business - start page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
-
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
 
     const { referenceNumber } = application;
 

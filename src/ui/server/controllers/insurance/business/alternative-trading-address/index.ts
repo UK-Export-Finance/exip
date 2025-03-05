@@ -6,7 +6,6 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -14,6 +13,7 @@ import generateMultipleFieldHtml from '../../../../helpers/generate-multiple-fie
 import mapAndSave from '../map-and-save/company-different-trading-address';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -57,16 +57,12 @@ const pageVariables = {
  * get
  * Render the alternative trading address page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Alternative trading address page
  */
-const get = (req: Request, res: Response) => {
+const get = (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
-
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
 
     const { company, referenceNumber } = application;
 
@@ -95,16 +91,12 @@ const get = (req: Request, res: Response) => {
  * post
  * Check Alternative trading address validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-const post = async (req: Request, res: Response) => {
+const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
-
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
 
     const { referenceNumber } = application;
 

@@ -7,7 +7,6 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import { Request, Response, Currency } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
@@ -16,6 +15,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import api from '../../../../api';
+import { Request, ResponseInsurance, Currency } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -77,10 +77,10 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
  * get
  * Render the outstanding or overdue payments page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Outstanding or overdue paymentspage
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -121,10 +121,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Check trading history validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

@@ -2,7 +2,7 @@ import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { APPLICATION } from '../../../constants';
 import isSubmitYourApplicationRoute from './is-submit-your-application-route';
 import canAccessSubmitYourApplicationRoutes from '../../../helpers/can-access-submit-your-application-routes';
-import { Next, Request, Response } from '../../../../types';
+import { Next, Request, ResponseInsurance } from '../../../../types';
 
 const { APPLICATION_SUBMITTED, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, INSURANCE_ROOT, COMPLETE_OTHER_SECTIONS, PROBLEM_WITH_SERVICE } =
   INSURANCE_ROUTES;
@@ -12,11 +12,11 @@ const { APPLICATION_SUBMITTED, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_S
  * if submitted, access is not allowed to application apart from application submitted page
  * if abandoned, access is not allowed to application and should be redirected to NO_ACCESS_TO_APPLICATION
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
- * @param {Next}
- * @returns {Express.Response.redirect} redirects to no access page or next
+ * @param {ResponseInsurance} Express response for "insurance" routes
+ * @param {Next} Express next
+ * @returns {Express.Response.redirect} NO_ACCESS_APPLICATION_SUBMITTED or next
  */
-export const applicationStatusMiddleware = async (req: Request, res: Response, next: Next) => {
+export const applicationStatusMiddleware = async (req: Request, res: ResponseInsurance, next: Next) => {
   try {
     const { baseUrl: url } = req;
 

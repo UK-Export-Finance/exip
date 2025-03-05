@@ -10,7 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-international';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Application, Request, Response } from '../../../../../types';
+import { Application, Request, ResponseInsurance } from '../../../../../types';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -57,10 +57,10 @@ export const pageVariables = (referenceNumber: number) => ({
 /**
  * Render the "Loss payee financial details (international)" page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} "Loss payee financial details (international)" page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -84,10 +84,10 @@ export const get = (req: Request, res: Response) => {
  * post
  * Run validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

@@ -12,10 +12,10 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/turnover';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import api from '../../../../api';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   referenceNumber,
   mockCurrencies,
@@ -48,13 +48,13 @@ const currencyValue = mockApplication.business[TURNOVER_CURRENCY_CODE];
 
 describe('controllers/insurance/business/turnover', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
@@ -123,18 +123,6 @@ describe('controllers/insurance/business/turnover', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -258,18 +246,6 @@ describe('controllers/insurance/business/turnover', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

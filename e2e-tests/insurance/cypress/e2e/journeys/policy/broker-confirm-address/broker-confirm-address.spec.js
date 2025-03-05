@@ -1,14 +1,22 @@
+import { useDifferentAddressLink } from '../../../../../../partials';
 import { insetTextHtml, insetTextHtmlLineBreak, headingCaption } from '../../../../../../pages/shared';
-import { brokerConfirmAddressPage } from '../../../../../../pages/insurance/policy';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
-import { EXPECTED_SINGLE_LINE_STRING } from '../../../../../../constants';
+import {
+  ADDRESS_LOOKUP_INPUT_EXAMPLES,
+  EXPECTED_TREASURY_SINGLE_LINE_STRING,
+  EXPECTED_UNDERGROUND_STATION_SINGLE_LINE_STRING,
+  ORDNANCE_SURVEY_EXAMPLES,
+} from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+
+const { TREASURY, WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
+const { UNDERGROUND_STATION } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -31,7 +39,13 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
+        cy.completeAndSubmitPolicyForms({
+          stopSubmittingAfter: 'brokerDetails',
+          usingBroker: true,
+          isBasedInUk: true,
+          postcode: TREASURY.POSTCODE,
+          buildingNumberOrName: TREASURY.BUILDING_NAME,
+        });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
@@ -63,37 +77,72 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it('renders a heading caption', () => {
+      it('should render a heading caption', () => {
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`renders ${FULL_ADDRESS} exactly as they were submitted, with line break elements`, () => {
+      describe('inset text', () => {
         /**
-         * Cypress text assertion does not pick up HTML characters such as <br/>.
+         * NOTE: Cypress text assertion does not pick up HTML characters such as <br/>.
          * Therefore, we have to assert the text without line breaks
-         * and instead, assert the line breaks separately.
+         * and instead, assert the line breaks separately via the following commands:
+         * cy.assertLength(insetTextHtmlLineBreak() expectedLineBreaks);
          */
-        cy.checkText(insetTextHtml(), EXPECTED_SINGLE_LINE_STRING);
 
-        const expectedLineBreaks = 3;
+        describe('when an address is entered manually', () => {
+          it(`should render ${FULL_ADDRESS} exactly as submitted, with line break elements`, () => {
+            cy.checkText(insetTextHtml(), EXPECTED_TREASURY_SINGLE_LINE_STRING);
 
-        cy.assertLength(insetTextHtmlLineBreak(), expectedLineBreaks);
+            const expectedLineBreaks = 4;
+
+            cy.assertLength(insetTextHtmlLineBreak(), expectedLineBreaks);
+          });
+        });
+
+        describe('when an address is obtained from Ordnance Survey', () => {
+          beforeEach(() => {
+            cy.navigateToUrl(url);
+
+            cy.clickUseDifferentAddressLink();
+
+            cy.completeAndSubmitBrokerDetailsForm({
+              isBasedInUk: true,
+              postcode: WESTMINSTER_BRIDGE_STREET.POSTCODE,
+              buildingNumberOrName: WESTMINSTER_BRIDGE_STREET.BUILDING_NAME,
+            });
+
+            const optionValue = `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`;
+
+            cy.completeAndSubmitBrokerAddressesForm({ optionValue });
+          });
+
+          it('should render the address with line break elements', () => {
+            cy.checkText(insetTextHtml(), EXPECTED_UNDERGROUND_STATION_SINGLE_LINE_STRING);
+
+            const expectedLineBreaks = 4;
+
+            cy.assertLength(insetTextHtmlLineBreak(), expectedLineBreaks);
+          });
+        });
       });
 
       describe('`use a different address` link', () => {
-        it('renders', () => {
-          cy.checkLink(
-            brokerConfirmAddressPage.useDifferentAddressLink(),
-            `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-            CONTENT_STRINGS.USE_DIFFERENT_ADDRESS,
-          );
+        it('should render', () => {
+          const expectedUrl = `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+          const expectedText = CONTENT_STRINGS.USE_DIFFERENT_ADDRESS;
+
+          cy.checkLink(useDifferentAddressLink(), expectedUrl, expectedText);
         });
 
         it(`should redirect to ${BROKER_DETAILS_ROOT}`, () => {
-          brokerConfirmAddressPage.useDifferentAddressLink().click();
+          cy.clickUseDifferentAddressLink();
 
           cy.assertUrl(brokerDetailsUrl);
         });
+      });
+
+      it('should render an `enter address manually` link', () => {
+        cy.assertEnterAddressManuallyLink({ referenceNumber });
       });
     });
 

@@ -12,7 +12,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -75,10 +75,10 @@ export const FIELD_IDS = [NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER];
  * get
  * Get the application and render the Pre-credit period page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Pre-credit period page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -102,10 +102,10 @@ export const get = (req: Request, res: Response) => {
  * post
  * Check Pre-credit period validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {

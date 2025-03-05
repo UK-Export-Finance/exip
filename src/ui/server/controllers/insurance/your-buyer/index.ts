@@ -3,7 +3,7 @@ import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import sectionStartPageVariables from '../../../helpers/page-variables/core/insurance/section-start';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../types';
+import { Request, ResponseInsurance } from '../../../../types';
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
@@ -16,10 +16,10 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
  * get
  * Render the "Your buyer - start" page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Your buyer - start page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

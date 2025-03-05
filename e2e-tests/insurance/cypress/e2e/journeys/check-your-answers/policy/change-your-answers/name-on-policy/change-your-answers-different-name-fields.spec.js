@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
@@ -79,6 +79,10 @@ context(
           });
         });
 
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
+        });
+
         it('should render the new answers when completing the different name on policy form', () => {
           cy.assertSummaryListRowValue(summaryList, fieldId, newPosition);
         });
@@ -110,6 +114,10 @@ context(
             email: newEmail,
             position: false,
           });
+        });
+
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
         });
 
         it('should render the new answers when completing the different name on policy form', () => {
@@ -146,6 +154,10 @@ context(
             email: false,
             position: false,
           });
+        });
+
+        it('renders a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
         });
 
         it('should render the new answers when completing the different name on policy form', () => {

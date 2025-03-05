@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../../pages/shared';
+import { summaryList, status } from '../../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { FIELD_VALUES } from '../../../../../../../../constants';
@@ -62,6 +62,10 @@ context('Insurance - Change your answers - Policy - Loss payee - Yes to no - As 
         cy.completeAndSubmitBrokerForm({ isAppointingLossPayee: false });
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: FIELD_ID });
+      });
+
+      it('renders a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
 
       it(`should render new ${FIELD_ID} answer and change link, with no other loss payee details fields`, () => {

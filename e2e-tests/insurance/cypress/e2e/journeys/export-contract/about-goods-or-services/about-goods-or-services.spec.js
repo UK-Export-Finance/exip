@@ -187,7 +187,7 @@ context(
         });
       });
 
-      describe('when the description field is a pure number and there are no other validation errors', () => {
+      describe(`when ${DESCRIPTION} is a pure number and there are no other validation errors`, () => {
         const descriptionField = aboutGoodsOrServicesPage[DESCRIPTION];
         const submittedValue = '1234';
 
@@ -199,6 +199,7 @@ context(
           cy.clickBackLink();
 
           cy.keyboardInput(descriptionField.textarea(), submittedValue);
+
           cy.clickSubmitButton();
         });
 

@@ -19,7 +19,7 @@ const MAXIMUM = MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBE
 
 /**
  * validate the "company number" in other company details response body
- * @param {RequestBody} formBody: containing an object with the company details response
+ * @param {RequestBody} formBody: Form body
  * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} Errors or empty object
  */

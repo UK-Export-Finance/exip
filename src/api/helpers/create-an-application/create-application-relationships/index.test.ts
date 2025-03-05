@@ -30,7 +30,7 @@ describe('helpers/create-an-application/create-application-relationships', () =>
     });
   });
 
-  test('it should return relationship IDs and a reference number', () => {
+  it('should return relationship IDs and a reference number', () => {
     expect(typeof result.brokerId).toEqual('string');
     expect(typeof result.businessId).toEqual('string');
     expect(typeof result.buyerId).toEqual('string');
@@ -46,7 +46,7 @@ describe('helpers/create-an-application/create-application-relationships', () =>
   });
 
   describe('when a buyer country is not found', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         result = await applicationRelationships.create({
@@ -72,7 +72,7 @@ describe('helpers/create-an-application/create-application-relationships', () =>
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         result = await applicationRelationships.create({

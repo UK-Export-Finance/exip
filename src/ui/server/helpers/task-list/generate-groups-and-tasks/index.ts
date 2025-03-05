@@ -15,6 +15,8 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  * @param {Boolean} finalDestinationKnown: "Final destination known" flag
  * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
  * @param {Boolean} isUsingBroker: "Is using broker" flag
+ * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {String} brokerFullAddress: Broker "full address" data
  * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
  * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
@@ -38,6 +40,8 @@ const generateGroupsAndTasks = (
   finalDestinationKnown?: boolean,
   jointlyInsuredParty?: boolean,
   isUsingBroker?: boolean,
+  brokerIsBasedInUk?: boolean,
+  brokerFullAddress?: string,
   isAppointingLossPayee?: boolean,
   lossPayeeIsLocatedInUk?: boolean,
   lossPayeeIsLocatedInternationally?: boolean,
@@ -74,6 +78,8 @@ const generateGroupsAndTasks = (
         finalDestinationKnown,
         jointlyInsuredParty,
         isUsingBroker,
+        brokerIsBasedInUk,
+        brokerFullAddress,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUk,
         lossPayeeIsLocatedInternationally,

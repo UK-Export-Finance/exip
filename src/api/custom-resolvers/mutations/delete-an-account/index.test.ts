@@ -23,7 +23,7 @@ describe('custom-resolvers/delete-an-account', () => {
     account = await accounts.create({ context });
   });
 
-  test('it should return success=true', async () => {
+  it('should return success=true', async () => {
     result = await deleteAnAccount({}, variables, context);
 
     const expected = {
@@ -52,7 +52,7 @@ describe('custom-resolvers/delete-an-account', () => {
       expect(retries.length).toEqual(2);
     });
 
-    test('it should delete the retries', async () => {
+    it('should delete the retries', async () => {
       result = await deleteAnAccount({}, variables, context);
 
       retries = await authRetries.findAll(context);

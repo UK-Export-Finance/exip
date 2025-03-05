@@ -6,7 +6,6 @@ context('Insurance - submit an application - Single policy - fully populated bus
       alternativeCurrencyTurnover: true,
       differentTradingName: true,
       differentTradingAddress: true,
-      usingBroker: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

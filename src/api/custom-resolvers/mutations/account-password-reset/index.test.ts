@@ -66,7 +66,7 @@ describe('custom-resolvers/account-password-reset', () => {
     await authRetries.deleteAll(context);
   });
 
-  test('it should return success=true', () => {
+  it('should return success=true', () => {
     const expected = {
       success: true,
     };
@@ -74,20 +74,20 @@ describe('custom-resolvers/account-password-reset', () => {
     expect(result).toEqual(expected);
   });
 
-  test(`it should wipe the account's retry entires`, async () => {
+  it(`should wipe the account's retry entires`, async () => {
     // get the latest retries
     const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });
 
-  test('it should add an authentication entry', async () => {
+  it('should add an authentication entry', async () => {
     const entries = await context.query.Authentication.findMany();
 
     expect(entries.length).toEqual(1);
   });
 
-  test("it should update the account's salt and hash", async () => {
+  it("should update the account's salt and hash", async () => {
     // get the latest account
     account = await accounts.get(context, account.id);
 
@@ -100,13 +100,13 @@ describe('custom-resolvers/account-password-reset', () => {
     expect(account.hash).not.toEqual(mockAccount.hash);
   });
 
-  test("it should nullify the account's password reset hash and expiry", async () => {
+  it("should nullify the account's password reset hash and expiry", async () => {
     expect(account.passwordResetHash).toEqual('');
     expect(account.passwordResetExpiry).toBeNull();
   });
 
   describe('when the account is blocked', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       await accountStatusHelper.update(context, account.status.id, { isBlocked: true });
 
       result = await accountPasswordReset({}, variables, context);
@@ -120,7 +120,7 @@ describe('custom-resolvers/account-password-reset', () => {
   });
 
   describe('when the account does not have a password reset expiry', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
@@ -142,7 +142,7 @@ describe('custom-resolvers/account-password-reset', () => {
   });
 
   describe('when the account does not have a password reset hash', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
@@ -173,7 +173,7 @@ describe('custom-resolvers/account-password-reset', () => {
       })) as Account;
     });
 
-    test('it should return success=false with expired=true', async () => {
+    it('should return success=false with expired=true', async () => {
       result = await accountPasswordReset({}, variables, context);
 
       const expected = {
@@ -186,7 +186,7 @@ describe('custom-resolvers/account-password-reset', () => {
   });
 
   describe('when the provided password matches the existing account password', () => {
-    test('it should return success=false and hasBeenUsedBefore=true', async () => {
+    it('should return success=false and hasBeenUsedBefore=true', async () => {
       // update the account to have default test password (MOCK_ACCOUNT_PASSWORD)
       await context.query.Account.updateOne({
         where: { id: account.id },
@@ -208,7 +208,7 @@ describe('custom-resolvers/account-password-reset', () => {
   });
 
   describe('when the provided password has been used before', () => {
-    test('it should return success=false and hasBeenUsedBefore=true', async () => {
+    it('should return success=false and hasBeenUsedBefore=true', async () => {
       // create an account
       account = await accounts.create({ context });
 
@@ -239,7 +239,7 @@ describe('custom-resolvers/account-password-reset', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 

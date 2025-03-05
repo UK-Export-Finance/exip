@@ -1,5 +1,5 @@
 import { documentsEmail } from '.';
-import notify from '../../integrations/notify';
+import APIM from '../../integrations/APIM';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import { mockAccount, mockApplication, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
@@ -22,15 +22,15 @@ describe('emails/documents', () => {
   };
 
   beforeAll(async () => {
-    notify.sendEmail = sendEmailSpy;
+    APIM.sendEmail = sendEmailSpy;
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
-    notify.sendEmail = sendEmailSpy;
+  it('should call APIM.sendEmail and return the response', async () => {
+    APIM.sendEmail = sendEmailSpy;
 
     const result = await documentsEmail(variables, templateId);
 
@@ -44,17 +44,13 @@ describe('emails/documents', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = mockSpyPromiseRejection;
+      APIM.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
-      try {
-        await documentsEmail(variables, templateId);
-      } catch (error) {
-        const expected = new Error(`Sending documents email Error: Sending email ${new Error(mockErrorMessage)}`);
+    it('should throw an error', async () => {
+      const response = documentsEmail(variables, templateId);
 
-        expect(error).toEqual(expected);
-      }
+      await expect(response).rejects.toThrow(`Sending documents email ${new Error(mockErrorMessage)}`);
     });
   });
 });

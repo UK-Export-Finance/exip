@@ -34,6 +34,8 @@ const companyDetails = async (formBody: RequestBody, application: Application, v
       }
 
       if (!saveResponse) {
+        console.error('No save response received from saveCompany.companyDetails %s', application.id);
+
         return false;
       }
 

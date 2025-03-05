@@ -13,6 +13,7 @@ context(
         exportingWithCodeOfConduct: true,
         policyValueOverMvpMaximum: true,
         usingBroker: true,
+        brokerIsBasedInUk: true,
         otherCompanyInvolved: true,
         differentPolicyContact: true,
         needPreCreditPeriod: true,

@@ -92,7 +92,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     expect(expiryMinutes).toEqual(expectedMinutes);
   });
 
-  test('it should call sendEmail.passwordResetLink', () => {
+  it('should call sendEmail.passwordResetLink', () => {
     const { email, passwordResetHash } = account;
 
     const name = getFullNameString(account);
@@ -117,7 +117,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   describe('when AuthenticationRetry table entry fails', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // delete the account so the relationship creation will fail
       await context.query.Account.deleteOne({
         where: {
@@ -134,7 +134,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 
@@ -181,7 +181,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       sendEmail.passwordResetLink = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await sendEmailPasswordResetLink({}, variables, context);
       } catch (error) {

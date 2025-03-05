@@ -1,28 +1,24 @@
-import { Address } from '../address';
 import { SuccessResponse } from '../generic';
 
-export interface MappedOrdnanceSurveyAddress extends Address {
-  town?: string;
-  county?: string;
-}
-
-export interface OrdnanceSurveyAddress {
+export interface OrdnanceSurveyAddressDPA {
   ADDRESS: string;
-  BUILDING_NUMBER: string;
+  BUILDING_NUMBER?: string;
   BUILDING_NAME?: string;
-  POST_TOWN: string;
-  POSTCODE: string;
   DEPENDENT_LOCALITY?: string;
   ORGANISATION_NAME?: string;
+  POST_TOWN: string;
+  POSTCODE: string;
+  SUB_BUILDING_NAME?: string;
   THOROUGHFARE_NAME?: string;
 }
 
-export interface OrdnanceSurveyResponse {
-  DPA: OrdnanceSurveyAddress;
+export interface OrdnanceSurveyAddress {
+  DPA: OrdnanceSurveyAddressDPA;
 }
 
 export interface OrdnanceSurveyAPIResponse extends SuccessResponse {
-  data?: Array<OrdnanceSurveyResponse>;
+  data?: Array<OrdnanceSurveyAddress>;
+  status: number;
 }
 
 export interface OrdnanceSurveyVariables {

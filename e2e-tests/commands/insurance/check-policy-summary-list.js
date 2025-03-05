@@ -1,6 +1,6 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
-import { EXPECTED_SINGLE_LINE_STRING, FIELD_VALUES } from '../../constants';
+import { EXPECTED_SINGLE_LINE_STRING, FIELD_VALUES, EXPECTED_TREASURY_SINGLE_LINE_STRING } from '../../constants';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy';
 import account from '../../fixtures/account';
@@ -28,6 +28,8 @@ const {
     NAME_ON_POLICY: { NAME, POSITION },
     USING_BROKER,
     BROKER_DETAILS,
+    BROKER_ADDRESSES,
+    BROKER_MANUAL_ADDRESS,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
     LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
@@ -231,20 +233,41 @@ const checkPolicySummaryList = {
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    [BROKER_DETAILS.FULL_ADDRESS]: () => {
-      const fieldId = BROKER_DETAILS.FULL_ADDRESS;
+    [BROKER_ADDRESSES.SELECT_THE_ADDRESS]: ({ shouldRender = true, expectedValue = EXPECTED_TREASURY_SINGLE_LINE_STRING }) => {
+      const fieldId = BROKER_ADDRESSES.SELECT_THE_ADDRESS;
 
-      const expectedKey = FIELDS.BROKER_DETAILS[fieldId].SUMMARY.TITLE;
+      if (shouldRender) {
+        const expectedKey = FIELDS.BROKER_ADDRESSES[fieldId].SUMMARY.TITLE;
 
-      const row = summaryList.field(fieldId);
+        const row = summaryList.field(fieldId);
 
-      cy.checkText(row.key(), expectedKey);
+        cy.checkText(row.key(), expectedKey);
 
-      row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+        row.value().contains(expectedValue);
 
-      const expectedLineBreaks = 3;
+        const expectedLineBreaks = 4;
 
-      cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
+        cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: ({ shouldRender = true, value }) => {
+      const fieldId = BROKER_MANUAL_ADDRESS.FULL_ADDRESS;
+
+      if (shouldRender) {
+        const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_MANUAL_ADDRESS);
+
+        let expectedValue = application.BROKER[fieldId];
+
+        if (value) {
+          expectedValue = value;
+        }
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
     },
     [BROKER_DETAILS.EMAIL]: () => {
       const fieldId = BROKER_DETAILS.NAME;

@@ -4,14 +4,14 @@ import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insura
 import constructPayload from '../../../../helpers/construct-payload';
 import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import save from '../save-data';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/check-your-answers/save-and-back', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../save-data');
 
@@ -22,7 +22,7 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
     req = mockReq();
     req.body[FIELD_IDS[0]] = 'true';
 
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -50,18 +50,6 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
     await post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-  });
-
-  describe('when there is no application', () => {
-    beforeEach(() => {
-      delete res.locals.application;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
   });
 
   describe('api error handling', () => {

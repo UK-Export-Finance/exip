@@ -12,7 +12,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-relationship';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -54,7 +54,6 @@ export const pageVariables = (referenceNumber: number) => ({
     CONNECTION_WITH_BUYER_DESCRIPTION: {
       ID: CONNECTION_WITH_BUYER_DESCRIPTION,
       ...FIELDS[CONNECTION_WITH_BUYER_DESCRIPTION],
-      MAXIMUM: 1000,
     },
   },
   PAGE_CONTENT_STRINGS,
@@ -76,10 +75,10 @@ export const HTML_FLAGS = {
  * get
  * Render the connection to the buyer page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Connection to the buyer page
  */
-export const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -110,10 +109,10 @@ export const get = (req: Request, res: Response) => {
  * post
  * Check connection to the buyer validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

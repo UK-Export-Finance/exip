@@ -25,6 +25,8 @@ const policyContact = async (formBody: RequestBody, application: Application, va
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.policyContact %s', application.id);
+
         return false;
       }
 

@@ -12,8 +12,8 @@ import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/jointly-insured-party';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockSpyPromiseRejection } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockCountries, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -33,7 +33,7 @@ const {
 
 describe('controllers/insurance/policy/other-company-details', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   jest.mock('../map-and-save/policy');
 
@@ -41,7 +41,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.countries.getAll = getCountriesSpy;
   });
@@ -120,18 +120,6 @@ describe('controllers/insurance/policy/other-company-details', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {
@@ -261,18 +249,6 @@ describe('controllers/insurance/policy/other-company-details', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 

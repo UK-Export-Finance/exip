@@ -8,8 +8,8 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
@@ -60,10 +60,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER
  * get
  * Render the traded with buyer page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Traded with buyer page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -92,10 +92,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Check traded with buyer validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -139,8 +139,8 @@ export const post = async (req: Request, res: Response) => {
     /**
      * If is a change route
      * the exporter has TRADED_WITH_BUYER,
-     * redirect to TRADING_HISTORY CHANGE.
-     * redirect to CHECK_YOUR_ANSWERS
+     * redirect to TRADING_HISTORY_CHANGE.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
      */
     if (isChangeRoute(req.originalUrl)) {
       if (hasTradedWithBuyer) {
@@ -154,7 +154,7 @@ export const post = async (req: Request, res: Response) => {
      * If is a check-and-change route,
      * the exporter has TRADED_WITH_BUYER,
      * redirect to TRADING_HISTORY_CHECK_AND_CHANGE.
-     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       if (hasTradedWithBuyer) {

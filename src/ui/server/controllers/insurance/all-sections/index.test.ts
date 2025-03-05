@@ -1,24 +1,22 @@
 import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-and-tasks';
 import generateTaskList from '../../../helpers/task-list';
 import flattenApplicationData from '../../../helpers/flatten-application-data';
 import mapApplicationToFormFields from '../../../helpers/mappings/map-application-to-form-fields';
-import { Request, Response } from '../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
-
-const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+import { Request, ResponseInsurance } from '../../../../types';
+import { mockReq, mockResInsurance, mockApplication } from '../../../test-mocks';
 
 describe('controllers/insurance/all-sections', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('TEMPLATE', () => {
@@ -54,7 +52,7 @@ describe('controllers/insurance/all-sections', () => {
         },
       } = exportContract;
 
-      const { isUsingBroker } = broker;
+      const { isUsingBroker, isBasedInUk: brokerIsBasedInUk, fullAddress: brokerFullAddress } = broker;
       const { hasDifferentTradingName } = company;
       const { buyerTradingHistory, relationship } = buyer;
       const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
@@ -70,6 +68,8 @@ describe('controllers/insurance/all-sections', () => {
         finalDestinationKnown,
         jointlyInsuredParty.requested,
         isUsingBroker,
+        brokerIsBasedInUk,
+        brokerFullAddress,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUk,
         lossPayeeIsLocatedInternationally,
@@ -99,18 +99,6 @@ describe('controllers/insurance/all-sections', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ALL_SECTIONS, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 });

@@ -31,7 +31,6 @@ context(
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({});
-
         cy.completeAndSubmitCheckYourAnswers();
 
         // go to the page we want to test.

@@ -22,7 +22,7 @@ describe('custom-resolvers/send-email-insurance-feedback', () => {
     sendEmail.insuranceFeedbackEmail = sendInsuranceFeedbackEmailSpy;
   });
 
-  test('it should call sendEmail.insuranceFeedbackEmail and return success=true', async () => {
+  it('should call sendEmail.insuranceFeedbackEmail and return success=true', async () => {
     const result = await sendEmailInsuranceFeedback({}, variables);
 
     expect(sendInsuranceFeedbackEmailSpy).toHaveBeenCalledTimes(1);
@@ -41,7 +41,7 @@ describe('custom-resolvers/send-email-insurance-feedback', () => {
       sendEmail.insuranceFeedbackEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await sendEmailInsuranceFeedback({}, variables);
       } catch (error) {

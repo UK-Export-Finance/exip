@@ -14,7 +14,7 @@ describe('helpers/create-a-broker', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a broker', async () => {
+  it('should return a broker', async () => {
     const result = await createABroker(context, application.id);
 
     expect(result.id).toBeDefined();
@@ -33,13 +33,13 @@ describe('helpers/create-a-broker', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(createABroker(context, mockInvalidId)).rejects.toThrow('Creating a broker');
     });
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(createABroker({}, application.id)).rejects.toThrow('Creating a broker');
     });
   });

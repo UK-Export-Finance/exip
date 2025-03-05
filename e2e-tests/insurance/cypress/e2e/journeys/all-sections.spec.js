@@ -168,7 +168,7 @@ context('Insurance - All sections - new application', () => {
       cy.checkText(insurance.allSectionsPage.submissionDeadlineHeading(), CONTENT_STRINGS.DEADLINE_TO_SUBMIT);
     });
 
-    it('should render correct submission deadline', () => {
+    it('should render the correct submission deadline', () => {
       const now = new Date();
 
       const timestamp = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);

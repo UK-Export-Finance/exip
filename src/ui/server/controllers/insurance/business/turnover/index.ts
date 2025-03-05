@@ -14,7 +14,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import api from '../../../../api';
-import { Request, Response, Currency } from '../../../../../types';
+import { Request, ResponseInsurance, Currency } from '../../../../../types';
 
 const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE } = BUSINESS_FIELD_IDS.TURNOVER;
 
@@ -75,10 +75,10 @@ const pageVariables = (referenceNumber: number, currencies: Array<Currency>, cur
 /**
  * gets the template for turnover page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} renders turnover page with/without previously submitted details
  */
-const get = async (req: Request, res: Response) => {
+const get = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 
@@ -116,10 +116,10 @@ const get = async (req: Request, res: Response) => {
  * posts turnover page
  * runs validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Broker page
  */
-const post = async (req: Request, res: Response) => {
+const post = async (req: Request, res: ResponseInsurance) => {
   try {
     const { application } = res.locals;
 

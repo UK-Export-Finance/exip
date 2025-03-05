@@ -1,5 +1,5 @@
-import { MAXIMUM_CHARACTERS } from '../../constants';
 import formatSortCode from '.';
+import { MAXIMUM_CHARACTERS } from '../../constants';
 import { DEFAULT } from '../../content-strings';
 
 const { EMPTY } = DEFAULT;

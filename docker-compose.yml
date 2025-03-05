@@ -27,6 +27,8 @@ services:
         PORT: ${API_PORT}
         SESSION_SECRET: ${SESSION_SECRET}
         GOV_NOTIFY_API_KEY: ${GOV_NOTIFY_API_KEY}
+        ORDNANCE_SURVEY_API_KEY: ${ORDNANCE_SURVEY_API_KEY}
+        ORDNANCE_SURVEY_API_URL: ${ORDNANCE_SURVEY_API_URL}
     image: api
     container_name: exip_api
     restart: always

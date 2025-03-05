@@ -23,7 +23,7 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
     nominatedLossPayee = await createANominatedLossPayee(context, application.id);
   });
 
-  test('it should return a loss payee financial UK with ID', async () => {
+  it('should return a loss payee financial UK with ID', async () => {
     const lossPayeeFinancialInternational = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
 
     expect(lossPayeeFinancialInternational.id).toBeDefined();
@@ -31,7 +31,7 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
     expect(lossPayeeFinancialInternational.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return lossPayee ID and empty loss payee financial UK fields', async () => {
+  it('should return lossPayee ID and empty loss payee financial UK fields', async () => {
     const lossPayeeFinancialInternational = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
 
     expect(lossPayeeFinancialInternational.lossPayeeId).toEqual(nominatedLossPayee.id);
@@ -40,7 +40,7 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
     expect(lossPayeeFinancialInternational.bankAddress).toEqual('');
   });
 
-  test('it should create an empty loss payee financial international vector relationship', async () => {
+  it('should create an empty loss payee financial international vector relationship', async () => {
     // create the Loss payee financial international
     const created = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
 
@@ -72,7 +72,7 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
   });
 
   describe('when an invalid nominated loss payee ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createALossPayeeFinancialInternational(context, mockInvalidId);
       } catch (error) {
@@ -82,7 +82,7 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createALossPayeeFinancialInternational({}, application.id);

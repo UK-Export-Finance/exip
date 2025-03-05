@@ -20,7 +20,7 @@ describe('helpers/create-a-policy-contact', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a policy contact with an application relationship', async () => {
+  it('should return a policy contact with an application relationship', async () => {
     const result = await createAPolicyContact(context, application.id);
 
     expect(typeof result.id).toEqual('string');
@@ -36,7 +36,7 @@ describe('helpers/create-a-policy-contact', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAPolicyContact(context, mockInvalidId);
       } catch (error) {
@@ -46,7 +46,7 @@ describe('helpers/create-a-policy-contact', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAPolicyContact({}, application.id);

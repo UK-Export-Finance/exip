@@ -125,7 +125,14 @@ interface ApplicationBusiness {
 interface ApplicationBroker {
   id: string;
   isUsingBroker?: boolean;
+  isBasedInUk?: boolean;
   name?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  buildingNumberOrName?: string;
+  town?: string;
+  county?: string;
+  postcode?: string;
   fullAddress?: string;
   email?: string;
 }
@@ -308,13 +315,12 @@ interface Application extends ApplicationCore {
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
   totalContractValueOverThreshold: boolean;
-  migratedTo?: boolean;
+  migratedTo?: number;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
   totalContractValueOverThreshold?: boolean;
-  migratedTo?: boolean;
 }
 
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclarationFlat;
@@ -333,7 +339,9 @@ interface ApplicationVersion {
   DEFAULT_CURRENCY?: string;
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
   REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
+  DECLARATIONS_MODERN_SLAVERY?: boolean;
   SMALL_EXPORT_BUILDER?: ApplicationVersionSmallExportBuilder;
+  BROKER_ADDRESS_LOOKUP?: boolean;
 }
 
 export {

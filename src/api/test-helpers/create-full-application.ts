@@ -25,128 +25,136 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @returns {Object} Application
  */
 export const createFullApplication = async (context: Context, policyType?: string): Promise<Application> => {
-  const account = await accounts.create({ context });
+  try {
+    console.info('Creating a full application (test helpers)');
 
-  const application = await createAnApplicationHelper(
-    {
-      accountId: account.id,
-      eligibilityAnswers: {},
-      company: mockCompany,
-    },
-    context,
-  );
+    const account = await accounts.create({ context });
 
-  const { eligibilityId, policyId, exportContractId, businessId, brokerId, buyerId, companyId, declarationId, policyContactId } = application;
+    const application = await createAnApplicationHelper(
+      {
+        accountId: account.id,
+        eligibilityAnswers: {},
+        company: mockCompany,
+      },
+      context,
+    );
 
-  const broker = await getBrokerById(context, brokerId);
+    const { eligibilityId, policyId, exportContractId, businessId, brokerId, buyerId, companyId, declarationId, policyContactId } = application;
 
-  const buyer = await getBuyerById(context, buyerId);
+    const broker = await getBrokerById(context, brokerId);
 
-  const buyerTradingHistory = await getBuyerTradingHistoryById(context, buyer?.buyerTradingHistoryId);
+    const buyer = await getBuyerById(context, buyerId);
 
-  const company = await getCompanyById(context, companyId);
+    const buyerTradingHistory = await getBuyerTradingHistoryById(context, buyer?.buyerTradingHistoryId);
 
-  const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
+    const company = await getCompanyById(context, companyId);
 
-  const companyDifferentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
+    const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
 
-  const eligibility = await getEligibilityById(context, eligibilityId);
+    const companyDifferentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
 
-  const exportContract = await getExportContractById(context, exportContractId);
+    const eligibility = await getEligibilityById(context, eligibilityId);
 
-  /**
-   * Create minimal policy data.
-   * If a multiple policy type is passed, use multiple policy type.
-   * Otherwise, use single policy type.
-   */
-  const policyData = {
-    policyType: POLICY_TYPE.SINGLE,
-    requestedCreditLimit: 100,
-    totalSalesToBuyer: 123,
-    totalValueOfContract: 456,
-    maximumBuyerWillOwe: 789,
-    policyCurrencyCode: GBP_CURRENCY_CODE,
-    requestedStartDate: new Date(),
-    contractCompletionDate: new Date(),
-  };
+    const exportContract = await getExportContractById(context, exportContractId);
 
-  if (policyType === POLICY_TYPE.MULTIPLE) {
-    policyData.policyType = POLICY_TYPE.MULTIPLE;
+    /**
+     * Create minimal policy data.
+     * If a multiple policy type is passed, use multiple policy type.
+     * Otherwise, use single policy type.
+     */
+    const policyData = {
+      policyType: POLICY_TYPE.SINGLE,
+      requestedCreditLimit: 100,
+      totalSalesToBuyer: 123,
+      totalValueOfContract: 456,
+      maximumBuyerWillOwe: 789,
+      policyCurrencyCode: GBP_CURRENCY_CODE,
+      requestedStartDate: new Date(),
+      contractCompletionDate: new Date(),
+    };
+
+    if (policyType === POLICY_TYPE.MULTIPLE) {
+      policyData.policyType = POLICY_TYPE.MULTIPLE;
+    }
+
+    const policy = (await context.query.Policy.updateOne({
+      where: {
+        id: policyId,
+      },
+      data: policyData,
+      query:
+        'id policyType requestedStartDate contractCompletionDate totalValueOfContract requestedCreditLimit creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+    })) as ApplicationPolicy;
+
+    /**
+     * Update all other relationships
+     * So that we have a full data set.
+     */
+    (await context.query.ExportContract.updateOne({
+      where: {
+        id: exportContractId,
+      },
+      data: mockExportContract,
+      query: 'id',
+    })) as ApplicationExportContract;
+
+    const policyContact = (await context.query.PolicyContact.updateOne({
+      where: {
+        id: policyContactId,
+      },
+      data: mockPolicyContact,
+      query: 'id firstName lastName email isSameAsOwner',
+    })) as ApplicationPolicyContact;
+
+    const business = (await context.query.Business.updateOne({
+      where: {
+        id: businessId,
+      },
+      data: mockBusiness,
+      query: 'id',
+    })) as ApplicationBusiness;
+
+    const updatedDeclaration = (await context.query.Declaration.updateOne({
+      where: {
+        id: declarationId,
+      },
+      data: mockApplicationDeclaration,
+      query: 'id hasAntiBriberyCodeOfConduct',
+    })) as ApplicationDeclaration;
+
+    // get the latest application.
+    const updatedApplication = (await context.query.Application.findOne({
+      where: { id: application.id },
+      query: 'id nominatedLossPayee { id isAppointed financialUk { id vector { id } } financialInternational { id vector { id } } } sectionReview { id }',
+    })) as Application;
+
+    return {
+      ...application,
+      owner: account,
+      broker,
+      business,
+      buyer: {
+        ...buyer,
+        buyerTradingHistory,
+      },
+      company: {
+        ...company,
+        registeredOfficeAddress: companyAddress,
+        differentTradingAddress: companyDifferentTradingAddress,
+      },
+      declaration: updatedDeclaration,
+      exportContract,
+      eligibility,
+      policy,
+      policyContact,
+      nominatedLossPayee: updatedApplication.nominatedLossPayee,
+      sectionReview: updatedApplication.sectionReview,
+    };
+  } catch (error) {
+    console.error('Error creating a full application (test helpers) %o', error);
+
+    throw new Error('Error creating a full application (test helpers) %o', error);
   }
-
-  const policy = (await context.query.Policy.updateOne({
-    where: {
-      id: policyId,
-    },
-    data: policyData,
-    query:
-      'id policyType requestedStartDate contractCompletionDate totalValueOfContract requestedCreditLimit creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
-  })) as ApplicationPolicy;
-
-  /**
-   * Update all other relationships
-   * So that we have a full data set.
-   */
-  (await context.query.ExportContract.updateOne({
-    where: {
-      id: exportContractId,
-    },
-    data: mockExportContract,
-    query: 'id',
-  })) as ApplicationExportContract;
-
-  const policyContact = (await context.query.PolicyContact.updateOne({
-    where: {
-      id: policyContactId,
-    },
-    data: mockPolicyContact,
-    query: 'id firstName lastName email isSameAsOwner',
-  })) as ApplicationPolicyContact;
-
-  const business = (await context.query.Business.updateOne({
-    where: {
-      id: businessId,
-    },
-    data: mockBusiness,
-    query: 'id',
-  })) as ApplicationBusiness;
-
-  const updatedDeclaration = (await context.query.Declaration.updateOne({
-    where: {
-      id: declarationId,
-    },
-    data: mockApplicationDeclaration,
-    query: 'id hasAntiBriberyCodeOfConduct',
-  })) as ApplicationDeclaration;
-
-  // get the latest application.
-  const updatedApplication = (await context.query.Application.findOne({
-    where: { id: application.id },
-    query: 'id nominatedLossPayee { id isAppointed financialUk { id vector { id } } financialInternational { id vector { id } } } sectionReview { id }',
-  })) as Application;
-
-  return {
-    ...application,
-    owner: account,
-    broker,
-    business,
-    buyer: {
-      ...buyer,
-      buyerTradingHistory,
-    },
-    company: {
-      ...company,
-      registeredOfficeAddress: companyAddress,
-      differentTradingAddress: companyDifferentTradingAddress,
-    },
-    declaration: updatedDeclaration,
-    exportContract,
-    eligibility,
-    policy,
-    policyContact,
-    nominatedLossPayee: updatedApplication.nominatedLossPayee,
-    sectionReview: updatedApplication.sectionReview,
-  };
 };
 
 export default createFullApplication;

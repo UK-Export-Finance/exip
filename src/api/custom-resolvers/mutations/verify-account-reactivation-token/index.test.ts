@@ -88,7 +88,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     account = await accounts.get(context, account.id);
   });
 
-  test('should return success=true', () => {
+  it('should return success=true', () => {
     const expected = {
       success: true,
     };
@@ -96,30 +96,30 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     expect(result).toEqual(expected);
   });
 
-  test(`should update the account to be ${IS_BLOCKED}=false`, () => {
+  it(`should update the account to be ${IS_BLOCKED}=false`, () => {
     expect(account.status[IS_BLOCKED]).toEqual(false);
   });
 
-  test(`should update the account to be ${IS_VERIFIED}=true`, () => {
+  it(`should update the account to be ${IS_VERIFIED}=true`, () => {
     expect(account.status[IS_VERIFIED]).toEqual(true);
   });
 
-  test(`should remove ${REACTIVATION_HASH} from the account`, () => {
+  it(`should remove ${REACTIVATION_HASH} from the account`, () => {
     expect(account[REACTIVATION_HASH]).toEqual('');
   });
 
-  test(`should nullify ${REACTIVATION_EXPIRY} from the account`, () => {
+  it(`should nullify ${REACTIVATION_EXPIRY} from the account`, () => {
     expect(account[REACTIVATION_EXPIRY]).toBeNull();
   });
 
-  test('should remove all entries for the account in the AuthenticationRetry table', async () => {
+  it('should remove all entries for the account in the AuthenticationRetry table', async () => {
     const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });
 
   describe(`when the ${REACTIVATION_EXPIRY} has expired`, () => {
-    test('it should return success=false and expired=true', async () => {
+    it('should return success=false and expired=true', async () => {
       const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const accountBlockedAndReactivationExpired = {
@@ -146,7 +146,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   describe(`when no account is found from the provided ${REACTIVATION_HASH}`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       variables.token = 'invalid';
 
       result = await verifyAccountReactivationToken({}, variables, context);
@@ -158,7 +158,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       // ensure we have the valid token that was previously created
       variables.token = reactivationHash;
 

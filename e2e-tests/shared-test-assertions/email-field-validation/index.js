@@ -22,8 +22,10 @@ export const assertEmailFieldValidation = ({
   isGenericErrorMessage = false,
   assertErrorWhenCorrectlyFormatted = true,
 }) => {
+  const field = fieldSelector(fieldId);
+
   const assertions = {
-    field: fieldSelector(fieldId),
+    field,
     errorIndex,
     expectedErrorsCount: totalExpectedErrors,
   };
@@ -80,7 +82,7 @@ export const assertEmailFieldValidation = ({
 
     if (assertErrorWhenCorrectlyFormatted) {
       it(`should NOT render a validation error when ${fieldId} is correctly formatted`, () => {
-        cy.keyboardInput(fieldSelector(fieldId).input(), VALID_EMAIL);
+        cy.keyboardInput(field.input(), VALID_EMAIL);
 
         cy.clickSubmitButton();
 
@@ -89,6 +91,8 @@ export const assertEmailFieldValidation = ({
         } else {
           cy.assertErrorSummaryListDoesNotExist();
         }
+
+        field.errorMessage().should('not.exist');
       });
     }
   });

@@ -11,10 +11,10 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import api from '../../../../api';
 import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../helpers/construct-payload';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 import {
   mockReq,
-  mockRes,
+  mockResInsurance,
   mockApplication,
   mockCurrencies,
   mockCurrenciesResponse,
@@ -46,13 +46,13 @@ const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
 describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
@@ -122,18 +122,6 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
 
     describe('api error handling', () => {
@@ -257,18 +245,6 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('get currencies call', () => {
         describe('when the get currencies API call fails', () => {
@@ -301,7 +277,6 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
       describe('when mapAndSave.buyerTradingHistory returns false', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(false));
           getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
         });
@@ -316,7 +291,6 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
       describe('when mapAndSave.buyerTradingHistory fails', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerTradingHistory = mockSpyPromiseRejection;
           getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
         });

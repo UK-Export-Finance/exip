@@ -57,7 +57,7 @@ context(`Insurance - Change your answers - ${HAS_DIFFERENT_TRADING_ADDRESS} and 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`do NOT change any answers (${HAS_DIFFERENT_TRADING_ADDRESS} remains as ${FIELD_VALUES.NO})`, () => {
+  describe(`do NOT change any answers (${HAS_DIFFERENT_TRADING_ADDRESS} remains as "no"`, () => {
     const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     describe('form submission with a new answer', () => {
@@ -77,7 +77,7 @@ context(`Insurance - Change your answers - ${HAS_DIFFERENT_TRADING_ADDRESS} and 
     });
   });
 
-  describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES}`, () => {
+  describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from "no" to "yes"`, () => {
     const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHECK_AND_CHANGE);
@@ -161,7 +161,7 @@ context(`Insurance - Change your answers - ${HAS_DIFFERENT_TRADING_ADDRESS} and 
     });
   });
 
-  describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.YES} to ${FIELD_VALUES.NO}`, () => {
+  describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from "yes" to "no"`, () => {
     const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHECK_AND_CHANGE);

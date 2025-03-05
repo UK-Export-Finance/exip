@@ -1,20 +1,20 @@
-import { callNotify } from '../call-notify';
-import { ApplicationSubmissionEmailVariables, EmailResponse } from '../../types';
+import APIM from '../../integrations/APIM';
+import { ApplicationSubmissionEmailVariables, ApimSendEmailHelperResponse } from '../../types';
 
 /**
  * documentsEmail
  * Send "we need some documents from you" email to an account
  * @param {ApplicationSubmissionEmailVariables}
  * @param {Boolean} Flag for sending anti-bribery/trading history template
- * @returns {Promise<Object>} callNotify response
+ * @returns {Promise<ApimSendEmailHelperResponse>}
  */
-export const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, templateId: string): Promise<EmailResponse> => {
+export const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, templateId: string): Promise<ApimSendEmailHelperResponse> => {
   try {
     console.info('Sending documents email');
 
     const { emailAddress } = variables;
 
-    const response = await callNotify(templateId, emailAddress, variables);
+    const response = await APIM.sendEmail(templateId, emailAddress, variables);
 
     return response;
   } catch (error) {

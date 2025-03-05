@@ -8,7 +8,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -31,10 +31,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS;
  * get
  * Get the application and render Type of policy - check your answers page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} Type of policy - check your answers page
  */
-export const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: ResponseInsurance) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -86,10 +86,10 @@ export const get = async (req: Request, res: Response) => {
  * post
  * Redirect to the next part of the flow.
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.redirect} Next part of the flow
  */
-export const post = (req: Request, res: Response) => {
+export const post = (req: Request, res: ResponseInsurance) => {
   const { referenceNumber } = req.params;
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);

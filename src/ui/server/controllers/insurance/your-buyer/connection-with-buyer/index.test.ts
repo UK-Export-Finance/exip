@@ -11,8 +11,8 @@ import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-relationship';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
+import { mockReq, mockResInsurance, mockApplication, mockBuyer, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -42,11 +42,11 @@ const { relationship } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   afterAll(() => {
@@ -87,7 +87,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           CONNECTION_WITH_BUYER_DESCRIPTION: {
             ID: CONNECTION_WITH_BUYER_DESCRIPTION,
             ...FIELDS[CONNECTION_WITH_BUYER_DESCRIPTION],
-            MAXIMUM: 1000,
           },
         },
         PAGE_CONTENT_STRINGS,
@@ -128,18 +127,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
     });
   });
 
@@ -224,23 +211,10 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        delete res.locals.application;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when mapAndSave.yourBuyer returns false', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerRelationship = jest.fn(() => Promise.resolve(false));
         });
 
@@ -254,7 +228,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       describe('when mapAndSave.yourBuyer fails', () => {
         beforeEach(() => {
           req.body = validBody;
-          res.locals = mockRes().locals;
           mapAndSave.buyerRelationship = mockSpyPromiseRejection;
         });
 

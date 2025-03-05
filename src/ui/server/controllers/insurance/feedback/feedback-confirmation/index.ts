@@ -2,7 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../../types';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { FEEDBACK_SENT_PAGE } = PAGES;
 const { FEEDBACK_SENT: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
@@ -12,10 +12,10 @@ export const TEMPLATE = FEEDBACK_TEMPLATE;
 /**
  * gets the template for the feedback page
  * @param {Express.Request} Express request
- * @param {Express.Response} Express response
+ * @param {ResponseInsurance} Express response for "insurance" routes
  * @returns {Express.Response.render} renders insurance feedback page
  */
-const get = (req: Request, res: Response) => {
+const get = (req: Request, res: ResponseInsurance) => {
   try {
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

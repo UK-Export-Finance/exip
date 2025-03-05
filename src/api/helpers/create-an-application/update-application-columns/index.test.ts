@@ -47,7 +47,7 @@ describe('helpers/create-an-application/update-application-columns', () => {
     });
   });
 
-  test('it should return an application', () => {
+  it('should return an application', () => {
     expect(result.buyerId).toEqual(createdRelationships.buyerId);
     expect(result.companyId).toEqual(createdRelationships.companyId);
     expect(result.declarationId).toEqual(createdRelationships.declarationId);
@@ -59,7 +59,7 @@ describe('helpers/create-an-application/update-application-columns', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await applicationColumns.update({

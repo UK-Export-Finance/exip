@@ -6,8 +6,14 @@ import { Relationship } from '../relationship';
 export interface ApplicationBroker extends Relationship {
   isUsingBroker?: boolean;
   name?: string;
-  fullAddress?: string;
   email?: string;
+  fullAddress?: string;
+  buildingNumberOrName?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  town?: string;
+  county?: string;
+  postcode?: string;
 }
 
 export interface ApplicationBusiness extends Relationship {
@@ -307,7 +313,7 @@ export interface Application {
   previousStatus?: string;
   eligibility: ApplicationEligibility;
   exportContract: ApplicationExportContract;
-  broker: Relationship;
+  broker: ApplicationBroker;
   business: ApplicationBusiness;
   buyer: ApplicationBuyer;
   company: ApplicationCompany;
@@ -321,7 +327,7 @@ export interface Application {
   sectionReview: Relationship;
   totalContractValueOverThreshold: boolean;
   version: number;
-  migratedV3toV4?: boolean;
+  migratedTo?: number;
 }
 
 export interface ApplicationSubmissionEmailVariables {
@@ -348,6 +354,7 @@ export interface ApplicationVersion {
   REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
   SMALL_EXPORT_BUILDER?: ApplicationVersionSmallExportBuilder;
   DECLARATIONS_MODERN_SLAVERY?: boolean;
+  BROKER_ADDRESS_LOOKUP?: boolean;
 }
 
 export interface SectionReview extends Relationship {

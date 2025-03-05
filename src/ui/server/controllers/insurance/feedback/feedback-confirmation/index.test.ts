@@ -3,8 +3,8 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { mockReq, mockRes } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
+import { mockReq, mockResInsurance } from '../../../../test-mocks';
+import { Request, ResponseInsurance } from '../../../../../types';
 
 const { FEEDBACK_SENT_PAGE } = PAGES;
 const { FEEDBACK_SENT: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
@@ -13,7 +13,7 @@ const startRoute = ROUTES.INSURANCE.START;
 
 describe('controllers/insurance/feedback/feedback-confirmation', () => {
   let req: Request;
-  let res: Response;
+  let res: ResponseInsurance;
 
   beforeEach(() => {
     req = mockReq();
@@ -25,7 +25,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
       return obj[property];
     };
 
-    res = mockRes();
+    res = mockResInsurance();
   });
 
   describe('TEMPLATE', () => {

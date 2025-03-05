@@ -26,6 +26,8 @@ const exportContract = async (formBody: RequestBody, application: Application, v
       }
 
       if (!saveResponse) {
+        console.error('No save response received from save.exportContract %s', application.id);
+
         return false;
       }
 

@@ -59,16 +59,7 @@ const typeDefs = `
   type OrdnanceSurveyAddress {
     addressLine1: String
     addressLine2: String
-    postalCode: String
-    country: String
-    county: String
-    town: String
-  }
-
-  input OrdnanceAddressInput  {
-    addressLine1: String
-    addressLine2: String
-    postalCode: String
+    postcode: String
     country: String
     county: String
     town: String
@@ -483,8 +474,8 @@ const typeDefs = `
       decryptFinancialInternational: Boolean
     ): ApplicationSuccessResponse
 
-    """ get Ordnance Survey address """
-    getOrdnanceSurveyAddress(
+    """ get Ordnance Survey addresses """
+    getOrdnanceSurveyAddresses(
       postcode: String!
       houseNameOrNumber: String!
     ): OrdnanceSurveyResponse

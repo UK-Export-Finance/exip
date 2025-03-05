@@ -53,6 +53,8 @@ env:
   CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
   CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
   APPLICATION_URL: ${{ vars.APPLICATION_URL }}
+  ORDNANCE_SURVEY_API_KEY: ${{ secrets.ORDNANCE_SURVEY_API_KEY }}
+  ORDNANCE_SURVEY_API_URL: ${{ secrets.ORDNANCE_SURVEY_API_URL }}
 
 jobs:
   # 1. Setup test infrastructure
@@ -174,6 +176,8 @@ jobs:
           CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
           CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
           APPLICATION_URL: ${{ secrets.APPLICATION_URL }}
+          ORDNANCE_SURVEY_API_KEY: ${{ secrets.ORDNANCE_SURVEY_API_KEY }}
+          ORDNANCE_SURVEY_API_URL: ${{ secrets.ORDNANCE_SURVEY_API_URL }}
         run: |
           docker compose up --build -d
           npm run ci:all
@@ -678,7 +682,10 @@ jobs:
             'policy/another-company/**/*.spec.js',
             'policy/broker/**/*.spec.js',
             'policy/broker-details/**/*.spec.js',
+            'policy/broker-addresses/**/*.spec.js',
             'policy/broker-confirm-address/**/*.spec.js',
+            'policy/broker-manual-address/**/*.spec.js',
+            'policy/broker-zero-addresses/**/*.spec.js',
             'policy/change-your-answers/another-company/**/*.spec.js',
             'policy/change-your-answers/broker/**/*.spec.js',
             'policy/change-your-answers/loss-payee/**/*.spec.js',
@@ -687,7 +694,9 @@ jobs:
             'policy/change-your-answers/other-company-details/**/*.spec.js',
             'policy/change-your-answers/pre-credit-period/**/*.spec.js',
             'policy/change-your-answers/single-policy/**/*.spec.js',
-            'policy/check-your-answers/**/*.spec.js',
+            'policy/check-your-answers/*.spec.js',
+            'policy/check-your-answers/summary-list/single-policy/**/*.spec.js',
+            'policy/check-your-answers/summary-list/multiple-policy/**/*.spec.js',
             'policy/different-name-on-policy/**/*.spec.js',
             'policy/loss-payee/**/*.spec.js',
             'policy/loss-payee-details/**/*.spec.js',

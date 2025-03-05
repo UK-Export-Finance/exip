@@ -64,7 +64,7 @@ describe('helpers/create-company-sic-codes', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createCompanySicCodes({}, mockInvalidId, mockSicCodes, mocIndustrySectorNames);
