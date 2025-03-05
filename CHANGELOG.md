@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.41.0](https://github.com/UK-Export-Finance/exip/compare/v2.40.2...v2.41.0) (2025-03-05)
+
+
+### Features
+
+* **EMS-4028-4029:** check/change your answers - broker address ([#3497](https://github.com/UK-Export-Finance/exip/issues/3497)) ([8e1bfac](https://github.com/UK-Export-Finance/exip/commit/8e1bfac26f3eb5d17f669c9228c5aa110dabe0a6))
+
+
+### Bug Fixes
+
+* **EMS-4197:** broker address lookup - line 1 data saving ([#3513](https://github.com/UK-Export-Finance/exip/issues/3513)) ([1c2dc87](https://github.com/UK-Export-Finance/exip/commit/1c2dc870ec254fa907d40a236ebc5b2a4e1559a9))
+* **EMS-4204:** fix file being sent to mdm for emails ([#3524](https://github.com/UK-Export-Finance/exip/issues/3524)) ([75e458a](https://github.com/UK-Export-Finance/exip/commit/75e458ad124c826831c444d1a7242031b30e1786))
+* **EMS-4205:** added use this address button text to view controller ([#3514](https://github.com/UK-Export-Finance/exip/issues/3514)) ([ea5f48c](https://github.com/UK-Export-Finance/exip/commit/ea5f48c0936eb61022d407d1c3d5fbb3b0e8dc29))
+* **EMS-4206-4207:** fix incorrect problem-with-service when no addresses found ([#3517](https://github.com/UK-Export-Finance/exip/issues/3517)) ([4e38d31](https://github.com/UK-Export-Finance/exip/commit/4e38d3146c678f025331b2e0aa99a9ae46d7d248))
+* **EMS-4206:** fixed certain postcode searches going to problem with service ([#3519](https://github.com/UK-Export-Finance/exip/issues/3519)) ([2978adb](https://github.com/UK-Export-Finance/exip/commit/2978adb019740db2daf7f09d458eb141946fb68c))
+* **EMS-4209:** fixed incorrect policy check-your-answers page status ([#3518](https://github.com/UK-Export-Finance/exip/issues/3518)) ([3649b7d](https://github.com/UK-Export-Finance/exip/commit/3649b7d35f068ea3b83a74513b6a989adda6845a))
+* **EMS-4214:** fix failing getISO8601 test ([#3523](https://github.com/UK-Export-Finance/exip/issues/3523)) ([3bb398f](https://github.com/UK-Export-Finance/exip/commit/3bb398fd5e5b2bcb16b3292d2737ed83f833e280))
+* **EMS-4216:** remove buildingNameOrNumber from xlsx generation ([#3528](https://github.com/UK-Export-Finance/exip/issues/3528)) ([7958ca2](https://github.com/UK-Export-Finance/exip/commit/7958ca2d01e39c98d116d00b02e2a9e248f90c5e))
+* **keystone:** updated keystone configuration ([#3516](https://github.com/UK-Export-Finance/exip/issues/3516)) ([fff25f9](https://github.com/UK-Export-Finance/exip/commit/fff25f970d3b5ed6f88048a6c9ab22ac48207564))
+
 ## [2.40.2](https://github.com/UK-Export-Finance/exip/compare/v2.40.1...v2.40.2) (2025-01-27)
 
 ### Bug Fixes
