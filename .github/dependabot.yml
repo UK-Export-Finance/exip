@@ -41,8 +41,6 @@ updates:
         versions: [">=5.0.0"]
       - dependency-name: "prettier"
         versions: [">=3.0.0"]
-      - dependency-name: "typescript"
-        versions: [">5.8.0"]
     groups:
       npm-packages:
         patterns:
