@@ -48,6 +48,18 @@ updates:
         patterns:
           - '*'
 
+  # UI package-*.json files
+  - package-ecosystem: 'npm'
+    directory: '/src/ui'
+    schedule:
+      interval: 'monthly'
+      time: '03:00'
+    labels:
+      - 'chore'
+    allow:
+      - dependency-name: "typescript"
+        versions: ["<=5.4.5"]
+
   # `UI and API` Dockerfile
   - package-ecosystem: 'docker'
     directories:
