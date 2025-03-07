@@ -2,7 +2,7 @@ import { FIELD_IDS } from '../constants';
 import { isSinglePolicyType, isMultiplePolicyType } from '../helpers/policy-type';
 import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
-import { Quote, SubmittedData, SubmittedDataQuoteEligibility } from '../../types';
+import { Quote, SubmittedData, SubmittedDataQuoteEligibility, Country, Currency } from '../../types';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
@@ -47,7 +47,7 @@ const getInsuredFor = (submittedData: SubmittedDataQuoteEligibility): number => 
     contractValue = submittedData[MAX_AMOUNT_OWED];
   }
 
-  return Number(getPercentageOfNumber(submittedData[PERCENTAGE_OF_COVER], contractValue));
+  return Number(getPercentageOfNumber(Number(submittedData[PERCENTAGE_OF_COVER]), Number(contractValue)));
 };
 
 /**
@@ -67,11 +67,11 @@ const getInsuredFor = (submittedData: SubmittedDataQuoteEligibility): number => 
  * @param {Number} Credit period
  * @returns {Number} Total months for the premium rate
  */
-const getTotalMonths = (policyType: string, policyLength: number, creditPeriod = 0) => {
+const getTotalMonths = (policyType?: string, policyLength?: number, creditPeriod = 0) => {
   const BUSINESS_BUFFER_MONTHS = 1;
 
   if (isSinglePolicyType(policyType)) {
-    const totalMonths = policyLength + BUSINESS_BUFFER_MONTHS;
+    const totalMonths = Number(policyLength) + BUSINESS_BUFFER_MONTHS;
 
     return totalMonths;
   }
@@ -106,18 +106,18 @@ const generateQuote = (submittedData: SubmittedData): Quote => {
 
     const mapped = {
       ...contractValue,
-      percentageOfCover: submittedData.quoteEligibility[PERCENTAGE_OF_COVER],
+      percentageOfCover: Number(submittedData.quoteEligibility[PERCENTAGE_OF_COVER]),
       insuredFor: getInsuredFor(submittedData.quoteEligibility),
-      buyerCountry: submittedData.quoteEligibility[BUYER_COUNTRY],
-      currency: submittedData.quoteEligibility[CURRENCY],
+      buyerCountry: submittedData.quoteEligibility[BUYER_COUNTRY] as Country,
+      currency: submittedData.quoteEligibility[CURRENCY] as Currency,
       creditPeriodInMonths: submittedData.quoteEligibility[CREDIT_PERIOD],
-      policyType: submittedData.quoteEligibility[POLICY_TYPE],
-      policyLength: submittedData.quoteEligibility[POLICY_LENGTH],
+      policyType: String(submittedData.quoteEligibility[POLICY_TYPE]),
+      policyLength: Number(submittedData.quoteEligibility[POLICY_LENGTH]),
     };
 
     const totalMonths = getTotalMonths(mapped[POLICY_TYPE], mapped[POLICY_LENGTH], mapped[CREDIT_PERIOD]);
 
-    const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].esraClassification, totalMonths, mapped[PERCENTAGE_OF_COVER]);
+    const premiumRate = getPremiumRate(String(mapped[POLICY_TYPE]), mapped[BUYER_COUNTRY].esraClassification, totalMonths, Number(mapped[PERCENTAGE_OF_COVER]));
 
     const [contractValueAmount] = Object.values(contractValue);
 

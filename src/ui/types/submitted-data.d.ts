@@ -28,6 +28,7 @@ interface SubmittedDataQuoteEligibility extends SharedEligibility {
   percentageOfCover?: number;
   policyType?: string;
   policyLength?: number;
+  validBuyerBody?: boolean;
 }
 
 interface SectionReview {
@@ -53,7 +54,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {
-  buyerCountry: Country;
+  buyerCountry?: Country;
 }
 
 interface SubmittedDataInsuranceEligibility extends InsuranceEligibilityCore {

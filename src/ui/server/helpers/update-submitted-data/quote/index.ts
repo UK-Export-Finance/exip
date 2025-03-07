@@ -26,7 +26,7 @@ const {
 const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const mapped = submittedData;
 
-  if (isSinglePolicyType(submittedData[POLICY_TYPE])) {
+  if (isSinglePolicyType(submittedData[POLICY_TYPE]!)) {
     delete mapped[CREDIT_PERIOD];
     delete mapped[MAX_AMOUNT_OWED];
 
@@ -35,7 +35,7 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
     }
   }
 
-  if (isMultiplePolicyType(submittedData[POLICY_TYPE])) {
+  if (isMultiplePolicyType(submittedData[POLICY_TYPE]!)) {
     delete mapped[CONTRACT_VALUE];
 
     // default policy length for a multiple policy

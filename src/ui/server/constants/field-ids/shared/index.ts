@@ -5,6 +5,6 @@ const SHARED = {
   POLICY_LENGTH: 'policyLength',
   NAME: 'name',
   EMAIL: 'email',
-};
+} as const;
 
 export default SHARED;

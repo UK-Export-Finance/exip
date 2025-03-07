@@ -3,6 +3,7 @@ import { ELIGIBILITY, FIELD_IDS, FIELD_VALUES, MINIMUM_CHARACTERS } from '../../
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockErrors } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const { POLICY_TYPE, POLICY_LENGTH: FIELD_ID } = FIELD_IDS;
 
@@ -11,7 +12,7 @@ const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-length', () => {
   const mockBody = {
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  };
+  } as RequestBody;
 
   describe('when policy type is single', () => {
     beforeEach(() => {

@@ -22,7 +22,7 @@ const {
  * List of field IDs that are not relevant.
  * These fields are part of eligibility field IDs, but do not require data checks.
  */
-export const IRRELEVANT_FIELD_IDS = [
+export const IRRELEVANT_FIELD_IDS: Array<string> = [
   BUYER_COUNTRY_ISO_CODE,
   COVER_PERIOD_ID,
   HAVE_AN_ACCOUNT,

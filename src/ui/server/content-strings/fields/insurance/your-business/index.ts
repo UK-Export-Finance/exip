@@ -2,6 +2,7 @@ import { MAXIMUM_CHARACTERS } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { SYMBOLS } from '../../../../constants/supported-currencies';
 import { FORM_TITLES } from '../../../form-titles';
+import { ObjectType } from '../../../../../types/object';
 
 const {
   EXPORTER_BUSINESS: {
@@ -18,7 +19,7 @@ const {
   YOUR_BUSINESS: { COMPANY_DETAILS, NATURE_OF_BUSINESS, TURNOVER, CREDIT_CONTROL },
 } = FORM_TITLES;
 
-export const EXPORTER_BUSINESS_FIELDS = {
+export const EXPORTER_BUSINESS_FIELDS: ObjectType = {
   COMPANY_DETAILS: {
     [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {

@@ -19,6 +19,7 @@
     "lint:fix": "eslint ./server --fix",
     "start": "ts-node server/index.ts",
     "test": "jest --notify --coverage --verbose --config=jest.config.js",
+    "test-dev": "jest --config=jest.config.js",
     "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles"
   },
   "dependencies": {
@@ -70,7 +71,7 @@
     "terser-webpack-plugin": "^5.3.11",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
-    "typescript": "5.4.5",
+    "typescript": "5.8.2",
     "webpack": "^5.98.0",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^6.0.1"

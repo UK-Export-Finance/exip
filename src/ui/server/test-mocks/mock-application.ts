@@ -4,7 +4,7 @@ import { APPLICATION, EXPORT_CONTRACT_AWARD_METHOD } from '../constants';
 import { GBP, EUR } from '../constants/supported-currencies';
 import mockEligibility from './mock-eligibility';
 import mockAccount from './mock-account';
-import mockCountries from './mock-countries';
+import mockCountries, { mockCountryCanApplyForInsuranceOnline } from './mock-countries';
 import mockContact from './mock-contact';
 import companyMock from './mock-company';
 import broker from './mock-broker';
@@ -211,6 +211,7 @@ const mockApplication: Application = {
   eligibility: {
     ...mockEligibility,
     id: 'clav8by1g0000kgoq5a2afr1z',
+    buyerCountry: mockCountryCanApplyForInsuranceOnline,
   },
   status: APPLICATION.STATUS.IN_PROGRESS,
   owner: mockOwner,

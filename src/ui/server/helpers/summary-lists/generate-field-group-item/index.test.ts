@@ -1,7 +1,7 @@
 import generateSummaryListItemData, { getSummaryListItemDataValue } from '.';
 import getKeyText from '../get-key-text';
 import { DEFAULT } from '../../../content-strings';
-import { SummaryListItemDataInput } from '../../../../types';
+import { ObjectType, SummaryListItemDataInput } from '../../../../types';
 
 describe('server/helpers/summary-lists/generate-field-group-item', () => {
   const mockField = {
@@ -9,11 +9,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
     title: 'Field A',
   };
 
-  type submittedData = {
-    fieldA: string | number;
-  };
-
-  let mockSubmittedData = { fieldA: 'Field A answer' } as submittedData;
+  let mockSubmittedData = { fieldA: 'Field A answer' } as ObjectType;
   const mockCustomValue = '<p>Mock html</p>';
 
   describe('generateSummaryListItemData', () => {

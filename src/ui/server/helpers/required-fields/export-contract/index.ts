@@ -65,7 +65,7 @@ export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPr
  */
 export const agentServiceChargeTasks = ({ agentIsCharging, agentChargeMethod }: RequiredFields): Array<string> => {
   if (agentIsCharging) {
-    const tasks = [METHOD, PAYABLE_COUNTRY_CODE];
+    const tasks: Array<string> = [METHOD, PAYABLE_COUNTRY_CODE];
 
     if (agentChargeMethod === AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM) {
       tasks.push(FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE);

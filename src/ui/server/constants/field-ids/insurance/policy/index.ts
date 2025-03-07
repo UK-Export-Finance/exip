@@ -9,7 +9,7 @@ export const SHARED_CONTRACT_POLICY = {
   REQUESTED_START_DATE_MONTH: `${REQUESTED_START_DATE}-month`,
   REQUESTED_START_DATE_YEAR: `${REQUESTED_START_DATE}-year`,
   POLICY_CURRENCY_CODE: 'policyCurrencyCode',
-};
+} as const;
 
 export const POLICY = {
   ...SHARED,
@@ -101,6 +101,6 @@ export const POLICY = {
   },
   FINANCIAL_ADDRESS: 'bankAddress',
   LOSS_PAYEE_FINANCIAL_ADDRESS: 'lossPayee.bankAddress',
-};
+} as const;
 
 export default POLICY;

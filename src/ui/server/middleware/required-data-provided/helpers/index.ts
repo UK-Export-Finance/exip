@@ -1,10 +1,5 @@
 import { FIELD_IDS } from '../../../constants';
-import {
-  RequiredDataStateQuoteEligibility,
-  RequiredDataStateInsuranceEligibility,
-  SubmittedDataQuoteEligibility,
-  SubmittedDataInsuranceEligibility,
-} from '../../../../types';
+import { ObjectType } from '../../../../types';
 
 /**
  * getRoutesAsArray
@@ -35,11 +30,7 @@ export const routeIsKnown = (knownRoutes: Array<string>, route: string): boolean
  * @param {Object} all submitted data
  * @returns {Boolean}
  */
-export const hasRequiredData = (
-  route: string,
-  requiredDataState: RequiredDataStateQuoteEligibility | RequiredDataStateInsuranceEligibility,
-  submittedData: SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility,
-) => {
+export const hasRequiredData = (route: string, requiredDataState: ObjectType, submittedData: ObjectType) => {
   const requiredData = requiredDataState[route];
 
   let suppliedDataCount = 0;

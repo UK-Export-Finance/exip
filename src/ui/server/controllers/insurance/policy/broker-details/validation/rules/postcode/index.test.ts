@@ -3,6 +3,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import postcodeValidation from '../../../../../../../shared-validation/postcode';
 import { mockErrors } from '../../../../../../../test-mocks';
+import { RequestBody } from '../../../../../../../../types';
 
 const {
   BROKER_DETAILS: { IS_BASED_IN_UK, POSTCODE: FIELD_ID },
@@ -15,7 +16,7 @@ const {
 describe('controllers/insurance/policy/broker-details/validation/rules/postcode', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
+  } as RequestBody;
 
   describe(`when ${IS_BASED_IN_UK} is true`, () => {
     it('should return the result of postcodeValidation', () => {

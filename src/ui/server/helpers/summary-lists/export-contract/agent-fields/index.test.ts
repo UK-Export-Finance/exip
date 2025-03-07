@@ -57,7 +57,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
             href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue[FULL_ADDRESS]),
+          mockAnswersUsingAgentTrue[FULL_ADDRESS] && replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue[FULL_ADDRESS]),
         ),
         fieldGroupItem(
           {
@@ -66,7 +66,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
             href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          getCountryByIsoCode(mockCountries, mockAnswersUsingAgentTrue[COUNTRY_CODE]).name,
+          mockAnswersUsingAgentTrue[COUNTRY_CODE] && getCountryByIsoCode(mockCountries, mockAnswersUsingAgentTrue[COUNTRY_CODE]).name,
         ),
       ];
 
@@ -86,7 +86,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
             href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${SERVICE_DESCRIPTION}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue.service[SERVICE_DESCRIPTION]),
+          mockAnswersUsingAgentTrue.service[SERVICE_DESCRIPTION] && replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue.service[SERVICE_DESCRIPTION]),
         ),
       ];
 

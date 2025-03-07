@@ -1,6 +1,6 @@
 import getSubmittedEligibilityFields from '.';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
-import { mockEligibility } from '../../../test-mocks';
+import { mockEligibility, mockCountryCanApplyForInsuranceOnline } from '../../../test-mocks';
 
 const {
   ELIGIBILITY: {
@@ -41,6 +41,7 @@ describe('server/helpers/can-create-an-application/get-submitted-eligibility-fie
       const mockAnswers = {
         ...mockEligibility,
         [BUYER_COUNTRY]: {
+          ...mockCountryCanApplyForInsuranceOnline,
           isoCode: '',
         },
       };
@@ -65,9 +66,9 @@ describe('server/helpers/can-create-an-application/get-submitted-eligibility-fie
     });
   });
 
-  describe(`when ${COVER_PERIOD} is false`, () => {
+  describe(`when ${COVER_PERIOD} is undefined`, () => {
     it('should return hasCoverPeriod=false', () => {
-      const mockAnswers = { ...mockEligibility, [COVER_PERIOD]: false };
+      const mockAnswers = { ...mockEligibility, [COVER_PERIOD]: undefined };
 
       const result = getSubmittedEligibilityFields(mockAnswers);
 
@@ -125,9 +126,9 @@ describe('server/helpers/can-create-an-application/get-submitted-eligibility-fie
     });
   });
 
-  describe(`when ${TOTAL_CONTRACT_VALUE} is false`, () => {
+  describe(`when ${TOTAL_CONTRACT_VALUE} is undefined`, () => {
     it('should return hasTotalContractValue=false', () => {
-      const mockAnswers = { ...mockEligibility, [TOTAL_CONTRACT_VALUE]: false };
+      const mockAnswers = { ...mockEligibility, [TOTAL_CONTRACT_VALUE]: undefined };
 
       const result = getSubmittedEligibilityFields(mockAnswers);
 

@@ -5,6 +5,7 @@ import generateValidationErrors from '../../../../../helpers/validation';
 import mapSubmittedData from '../../map-submitted-data/buyer-trading-history';
 import { GBP } from '../../../../../constants';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
@@ -19,7 +20,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer-trading-history', 
     [CURRENCY_CODE]: GBP,
     [ALTERNATIVE_CURRENCY_CODE]: '',
     [FAILED_PAYMENTS]: true,
-  };
+  } as RequestBody;
 
   const mockSaveBuyer = mockSpyPromise();
   save.buyerTradingHistory = mockSaveBuyer;

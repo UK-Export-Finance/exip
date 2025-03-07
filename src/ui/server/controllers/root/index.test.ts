@@ -24,7 +24,7 @@ describe('controllers/root', () => {
             [CREDIT_PERIOD]: 1,
           },
           insuranceEligibility: {
-            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
+            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: '12345',
           },
         },
       };

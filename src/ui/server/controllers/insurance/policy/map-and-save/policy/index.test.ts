@@ -4,6 +4,7 @@ import mapSubmittedData from '../../map-submitted-data/policy';
 import save from '../../save-data/policy';
 import generateValidationErrors from '../../single-contract-policy/validation';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
@@ -15,7 +16,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
   let mockFormBody = {
     _csrf: '1234',
     [POLICY_CURRENCY_CODE]: 'Example',
-  };
+  } as RequestBody;
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 

@@ -4,6 +4,7 @@ import mapSubmittedData from '../../map-submitted-data/policy-contact';
 import save from '../../save-data/policy-contact';
 import generateValidationErrors from '../../name-on-policy/validation';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   NAME_ON_POLICY: { NAME, SAME_NAME },
@@ -14,7 +15,7 @@ describe('controllers/insurance/policy/map-and-save/policy-contact', () => {
 
   let mockFormBody = {
     [NAME]: SAME_NAME,
-  };
+  } as RequestBody;
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 

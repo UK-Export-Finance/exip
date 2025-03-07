@@ -113,7 +113,7 @@ const get = async (req: Request, res: Response) => {
 
     let mappedCurrencies;
 
-    if (objectHasProperty(submittedData.quoteEligibility, CURRENCY)) {
+    if (submittedData.quoteEligibility[CURRENCY]) {
       mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
       mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies);
@@ -138,7 +138,7 @@ const get = async (req: Request, res: Response) => {
 
     const policyType = submittedData.quoteEligibility[POLICY_TYPE];
 
-    const PAGE_VARIABLES = generatePageVariables(policyType);
+    const PAGE_VARIABLES = generatePageVariables(policyType!);
 
     return res.render(TEMPLATE, {
       userName: getUserNameFromSession(req.session.user),
@@ -150,9 +150,9 @@ const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
         ORIGINAL_URL: req.originalUrl,
       }),
-      ...generatePageVariables(policyType),
-      isSinglePolicyType: isSinglePolicyType(policyType),
-      isMultiplePolicyType: isMultiplePolicyType(policyType),
+      ...generatePageVariables(policyType!),
+      isSinglePolicyType: isSinglePolicyType(policyType!),
+      isMultiplePolicyType: isMultiplePolicyType(policyType!),
       currencies: mappedCurrencies,
       percentageOfCover: mappedPercentageOfCover,
       creditPeriod: mappedCreditPeriod,
@@ -218,7 +218,7 @@ const post = async (req: Request, res: Response) => {
 
       const policyType = submittedData.quoteEligibility[POLICY_TYPE];
 
-      const PAGE_VARIABLES = generatePageVariables(policyType);
+      const PAGE_VARIABLES = generatePageVariables(policyType!);
 
       return res.render(TEMPLATE, {
         userName: getUserNameFromSession(req.session.user),
@@ -230,9 +230,9 @@ const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
           ORIGINAL_URL: req.originalUrl,
         }),
-        ...generatePageVariables(policyType),
-        isSinglePolicyType: isSinglePolicyType(policyType),
-        isMultiplePolicyType: isMultiplePolicyType(policyType),
+        ...generatePageVariables(policyType!),
+        isSinglePolicyType: isSinglePolicyType(policyType!),
+        isMultiplePolicyType: isMultiplePolicyType(policyType!),
         currencies: mappedCurrencies,
         validationErrors,
         percentageOfCover: mappedPercentageOfCover,

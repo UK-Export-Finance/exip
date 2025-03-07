@@ -1,7 +1,7 @@
 import { DEFAULT } from '../../../../../content-strings';
 import mapEligibilitySicCodeValues from '.';
+import { mockSicCodes } from '../../../../../test-mocks';
 
-const mockSicCodes = ['1234', '5678'];
 const mockIndustrySectorNames = ['Industry 1'];
 
 describe('server/helpers/summary-lists/companies-house/generate-sic-codes-value/eligibility', () => {

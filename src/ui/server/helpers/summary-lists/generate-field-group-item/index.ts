@@ -1,7 +1,7 @@
 import getKeyText from '../get-key-text';
 import { DEFAULT } from '../../../content-strings';
 import { objectHasProperty } from '../../object';
-import { SummaryListItemData, SummaryListItemDataInput } from '../../../../types';
+import { ObjectType, SummaryListItemData, SummaryListItemDataInput } from '../../../../types';
 import transformNumberToString from '../../transform-number-to-string';
 
 /**
@@ -13,7 +13,7 @@ import transformNumberToString from '../../transform-number-to-string';
  * @param {String} customValue: Custom field value
  * @returns {String} Field value or default empty string dash
  */
-export const getSummaryListItemDataValue = (fieldId: string, data?: object, customValue?: string): string => {
+export const getSummaryListItemDataValue = (fieldId: string, data?: ObjectType, customValue?: string): string => {
   if (customValue) {
     return String(customValue);
   }

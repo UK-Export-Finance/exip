@@ -87,7 +87,7 @@ describe('server/helpers/summary-lists/export-contract/about-goods-or-services-f
             ),
             renderChangeLink: true,
           },
-          replaceNewLineWithLineBreak(mockAnswers[PAYMENT_TERMS_DESCRIPTION]),
+          mockAnswers[PAYMENT_TERMS_DESCRIPTION] && replaceNewLineWithLineBreak(mockAnswers[PAYMENT_TERMS_DESCRIPTION]),
         ),
       ],
     };

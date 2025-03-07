@@ -4,6 +4,7 @@ import mapSubmittedData from '../../map-submitted-data/your-business';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
@@ -19,7 +20,7 @@ describe('controllers/insurance/business/map-and-save/business', () => {
     [GOODS_OR_SERVICES]: 'test',
     [YEARS_EXPORTING]: '5O',
     [EMPLOYEES_UK]: '3',
-  };
+  } as RequestBody;
 
   const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;

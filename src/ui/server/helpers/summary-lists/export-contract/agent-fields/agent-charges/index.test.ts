@@ -70,7 +70,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
       ...mockAnswersChargingTrue,
       charge: {
         ...mockAnswersChargingTrue.charge,
-        [PERCENTAGE_CHARGE]: null,
+        [PERCENTAGE_CHARGE]: undefined,
         [FIXED_SUM_AMOUNT]: '10.00',
       },
     };
@@ -140,7 +140,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
       ...mockAnswersChargingTrue,
       charge: {
         ...mockAnswersChargingTrue.charge,
-        [PERCENTAGE_CHARGE]: null,
+        [PERCENTAGE_CHARGE]: undefined,
         [FIXED_SUM_AMOUNT]: '10.50',
       },
     };
@@ -208,8 +208,8 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
       ...mockAnswersChargingTrue,
       charge: {
         ...mockAnswersChargingTrue.charge,
-        [FIXED_SUM_AMOUNT]: null,
-        [PERCENTAGE_CHARGE]: 10,
+        [FIXED_SUM_AMOUNT]: undefined,
+        [PERCENTAGE_CHARGE]: '10',
       },
     };
 

@@ -33,7 +33,7 @@ const {
  * Explicit list of field IDs in the insurance forms that are number fields.
  * @returns {Array} Field IDs
  */
-export const NUMBER_FIELDS = [
+export const NUMBER_FIELDS: Array<string> = [
   REQUESTED_CREDIT_LIMIT,
   EMPLOYEES_UK,
   ESTIMATED_ANNUAL_TURNOVER,

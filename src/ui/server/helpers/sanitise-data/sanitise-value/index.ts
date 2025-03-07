@@ -49,7 +49,7 @@ const {
  * - We avoid a "problem with service" page scenario where the data save fails, because it tries to save a number type as a text string type.
  * @returns {Array} Field IDs
  */
-export const STRING_NUMBER_FIELDS = [
+export const STRING_NUMBER_FIELDS: Array<string> = [
   ACCESS_CODE,
   BUILDING_NUMBER_OR_NAME,
   ADDRESS_LINE_1,

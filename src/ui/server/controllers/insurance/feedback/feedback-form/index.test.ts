@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
-import { Request, ResponseInsurance } from '../../../../../types';
+import { Request, ResponseInsurance, ObjectType } from '../../../../../types';
 import { mockReq, mockResInsurance, mockInsuranceFeedback } from '../../../../test-mocks';
 
 const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FEEDBACK_FIELD_IDS;
@@ -100,7 +100,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
       req.flash = (property: string) => {
         const obj = {
           serviceOriginUrl: req.headers.referer,
-        };
+        } as ObjectType;
 
         return obj[property];
       };

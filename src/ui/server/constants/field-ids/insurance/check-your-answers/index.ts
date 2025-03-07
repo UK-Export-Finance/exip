@@ -4,6 +4,6 @@ const CHECK_YOUR_ANSWERS = {
   BUYER: 'buyer',
   POLICY: 'policy',
   EXPORT_CONTRACT: 'exportContract',
-};
+} as const;
 
 export default CHECK_YOUR_ANSWERS;

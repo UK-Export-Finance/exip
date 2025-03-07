@@ -3,7 +3,7 @@ import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../types';
+import { Request, Response, ObjectType } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/cannot-apply', () => {
@@ -19,7 +19,7 @@ describe('controllers/quote/cannot-apply', () => {
       const obj = {
         exitReason: mockExitReason,
         previousRoute: mockPreviousRoute,
-      };
+      } as ObjectType;
 
       return obj[property];
     };

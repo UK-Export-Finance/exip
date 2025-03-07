@@ -3,6 +3,7 @@ import save from '../../save-data/company-different-trading-address';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
@@ -14,7 +15,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
   let mockFormBody = {
     _csrf: '1234',
     [FULL_ADDRESS]: 'mock address',
-  };
+  } as RequestBody;
 
   const mockSaveDifferentTradingAddress = mockSpyPromise();
   save.companyDifferentTradingAddress = mockSaveDifferentTradingAddress;

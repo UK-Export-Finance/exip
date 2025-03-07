@@ -1,6 +1,6 @@
 import { EUR, GBP, JPY, USD } from '../../../../../constants';
 import mapSelectOption from '../../../map-select-option';
-import { Currency } from '../../../../../../types';
+import { Currency, ObjectType } from '../../../../../../types';
 
 /**
  * mapAndSortCurrencies
@@ -27,7 +27,7 @@ const mapAndSortCurrencies = (currencies: Array<Currency>, selectedValue?: strin
      * 2) Loop over each currency
      * 3) Push a mapped currency to the object with an isoCode key
      */
-    const currenciesObject = {};
+    const currenciesObject: ObjectType = {};
 
     currencies.forEach((currency: Currency) => {
       const { name, isoCode } = currency;
