@@ -19,7 +19,6 @@
     "lint:fix": "eslint ./server --fix",
     "start": "ts-node server/index.ts",
     "test": "jest --notify --coverage --verbose --config=jest.config.js",
-    "test-dev": "jest --config=jest.config.js",
     "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles"
   },
   "dependencies": {
