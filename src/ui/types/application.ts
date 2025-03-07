@@ -356,12 +356,12 @@ interface ApplicationFlatBuyer extends ApplicationBuyerCore {
 }
 
 type ApplicationFlat = ApplicationFlatCore &
-  ApplicationFlatPolicy &
-  ApplicationBroker &
-  ApplicationCompany &
-  ApplicationDeclarationFlat &
-  ApplicationFlatExportContract &
-  ApplicationFlatBuyer;
+ApplicationFlatPolicy &
+ApplicationBroker &
+ApplicationCompany &
+ApplicationDeclarationFlat &
+ApplicationFlatExportContract &
+ApplicationFlatBuyer;
 
 interface ApplicationVersionSmallExportBuilder {
   MAXIMUM_BUYER_WILL_OWE: number;
