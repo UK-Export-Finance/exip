@@ -1,6 +1,7 @@
 import { EXPORT_CONTRACT_AWARD_METHOD, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
+import { ObjectType } from '../../../../../types/object';
 
 const { OPEN_TENDER, NEGOTIATED_CONTRACT, DIRECT_AWARD, COMPETITIVE_BIDDING, OTHER } = EXPORT_CONTRACT_AWARD_METHOD;
 
@@ -20,7 +21,7 @@ const {
 
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
 
-export const EXPORT_CONTRACT_FIELDS = {
+export const EXPORT_CONTRACT_FIELDS: ObjectType = {
   HOW_WAS_THE_CONTRACT_AWARDED: {
     [AWARD_METHOD]: {
       LEGEND: 'How was the contract awarded?',

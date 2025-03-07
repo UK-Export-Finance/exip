@@ -29,7 +29,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = highRisk2Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk2Months!.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -45,7 +45,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = highRisk3Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk3Months!.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });

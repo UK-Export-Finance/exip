@@ -57,7 +57,7 @@ const generatePrivateMarketFields = (answers: ApplicationPrivateMarket, referenc
           ),
           renderChangeLink: true,
         },
-        replaceNewLineWithLineBreak(answers[DECLINED_DESCRIPTION]),
+        answers[DECLINED_DESCRIPTION] && replaceNewLineWithLineBreak(answers[DECLINED_DESCRIPTION]),
       ),
     );
   }

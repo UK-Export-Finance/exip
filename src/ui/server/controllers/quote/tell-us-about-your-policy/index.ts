@@ -113,7 +113,7 @@ const get = async (req: Request, res: Response) => {
 
     let mappedCurrencies;
 
-    if (objectHasProperty(submittedData.quoteEligibility, CURRENCY)) {
+    if (submittedData.quoteEligibility[CURRENCY]) {
       mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
       mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies);
@@ -136,7 +136,7 @@ const get = async (req: Request, res: Response) => {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
     }
 
-    const policyType = submittedData.quoteEligibility[POLICY_TYPE];
+    const policyType = String(submittedData.quoteEligibility[POLICY_TYPE]);
 
     const PAGE_VARIABLES = generatePageVariables(policyType);
 
@@ -216,7 +216,7 @@ const post = async (req: Request, res: Response) => {
         mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
       }
 
-      const policyType = submittedData.quoteEligibility[POLICY_TYPE];
+      const policyType = String(submittedData.quoteEligibility[POLICY_TYPE]);
 
       const PAGE_VARIABLES = generatePageVariables(policyType);
 

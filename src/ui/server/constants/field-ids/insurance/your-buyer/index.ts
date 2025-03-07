@@ -16,6 +16,6 @@ const YOUR_BUYER = {
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'exporterHasPreviousCreditInsuranceWithBuyer',
   PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'previousCreditInsuranceWithBuyerDescription',
   HAS_BUYER_FINANCIAL_ACCOUNTS: 'exporterHasBuyerFinancialAccounts',
-};
+} as const;
 
 export default YOUR_BUYER;

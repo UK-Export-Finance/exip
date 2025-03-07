@@ -4,6 +4,7 @@ import save from '../../save-data/buyer';
 import generateValidationErrors from '../../../../../helpers/validation';
 import mapSubmittedData from '../../map-submitted-data/buyer';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS },
@@ -16,7 +17,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer', () => {
     let mockFormBody = {
       _csrf: '1234',
       [NAME]: 'Test',
-    };
+    } as RequestBody;
 
     const mockSaveBuyer = mockSpyPromise();
     save.buyer = mockSaveBuyer;

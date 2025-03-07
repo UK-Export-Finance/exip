@@ -19,10 +19,7 @@ describe('controllers/quote/check-your-answers', () => {
 
   const mockSessionData = {
     quoteEligibility: {
-      [BUYER_COUNTRY]: {
-        name: mockAnswers[BUYER_COUNTRY],
-        isoCode: 'FRA',
-      },
+      [BUYER_COUNTRY]: mockAnswers[BUYER_COUNTRY],
       [CREDIT_PERIOD]: 2,
       [CURRENCY]: {
         name: 'UK Sterling',

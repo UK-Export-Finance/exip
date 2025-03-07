@@ -55,14 +55,8 @@ import { Quote, QuoteContent } from './quote';
 import { RadioOption } from './radio-option';
 import { SelectOption } from './select-option';
 import { SicCode } from './sic-code';
-import {
-  CanCreateApplicationEligibilityFlags,
-  SubmittedDataQuoteEligibility,
-  InsuranceEligibility,
-  InsuranceEligibilityCore,
-  SubmittedDataInsuranceEligibility,
-  SubmittedData,
-} from './submitted-data';
+import { SectionReview, TotalContractValue, InsuranceEligibilityCore, InsuranceEligibility, QuoteEligibility, EligibilityData } from './eligibility';
+import { CanCreateApplicationEligibilityFlags, SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility, SubmittedData } from './submitted-data';
 import {
   SummaryListItem,
   SummaryListItemData,
@@ -157,6 +151,7 @@ export {
   DateValidationRulesParams,
   DateValidationFormatRulesParams,
   DateValidationFormatRules,
+  EligibilityData,
   ErrorMessageObject,
   Business,
   InsuranceEligibility,
@@ -169,6 +164,7 @@ export {
   ObjectType,
   PageContentStrings,
   PageVariablesContentStrings,
+  QuoteEligibility,
   PricingGrid,
   PricingGridMonth,
   PricingGridRate,
@@ -183,6 +179,7 @@ export {
   Response,
   ResponseInsurance,
   RadioOption,
+  SectionReview,
   SectionStartPageVariables,
   SectionStartPageVariablesInput,
   SelectOption,
@@ -210,6 +207,7 @@ export {
   TaskListDataGroup,
   TaskListGroup,
   TaskListTask,
+  TotalContractValue,
   ValidationErrors,
   ValidationMinAndMaxLengthParams,
   ValidationWholeNumberParams,

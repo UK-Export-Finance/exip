@@ -1,5 +1,6 @@
 import { RequestBody } from './express';
 import { DateErrorMessage, ErrorMessageObject } from './errors';
+import { ObjectType } from './object';
 
 interface DateValidationRulesParams {
   formBody: RequestBody;
@@ -21,7 +22,7 @@ type ValidationErrorsSummaryItem = {
 
 interface ValidationErrors {
   count?: number;
-  errorList?: object;
+  errorList?: ObjectType;
   summary?: Array<ValidationErrorsSummaryItem>;
 }
 

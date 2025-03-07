@@ -129,7 +129,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         ),
         renderChangeLink: true,
       },
-      answers[BUYER_COUNTRY].name,
+      answers[BUYER_COUNTRY]?.name,
     ),
     fieldGroupItem(
       {
@@ -145,7 +145,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         ),
         renderChangeLink: true,
       },
-      mapTotalContractValueField(answers[TOTAL_CONTRACT_VALUE]),
+      mapTotalContractValueField(answers[TOTAL_CONTRACT_VALUE]?.valueId),
     ),
     fieldGroupItem(
       {

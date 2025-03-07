@@ -49,14 +49,16 @@ const costRules = (formBody: RequestBody, errors: object) => {
     return updatedErrors;
   }
 
-  if (hasDisallowedCharacters(formBody[fieldId])) {
+  const value = String(formBody[fieldId]);
+
+  if (hasDisallowedCharacters(value)) {
     updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES.ELIGIBILITY[fieldId].NOT_A_NUMBER, errors);
 
     return updatedErrors;
   }
 
   // strip commas - commas are valid.
-  const cleanString = stripCommas(formBody[fieldId]);
+  const cleanString = stripCommas(value);
 
   if (Number(cleanString) < MINIMUM) {
     updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES.ELIGIBILITY[fieldId].BELOW_MINIMUM, errors);

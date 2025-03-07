@@ -37,14 +37,14 @@ export const generateFields = (company: Company | ApplicationCompany, isApplicat
         field: getFieldById(FIELDS, COMPANY_ADDRESS),
         data,
       },
-      generateMultipleFieldHtml(company[COMPANY_ADDRESS]),
+      company[COMPANY_ADDRESS] && generateMultipleFieldHtml(company[COMPANY_ADDRESS]),
     ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, COMPANY_INCORPORATED),
         data,
       },
-      formatDate(company[COMPANY_INCORPORATED]),
+      company[COMPANY_INCORPORATED] && formatDate(new Date(company[COMPANY_INCORPORATED])),
     ),
     fieldGroupItem(
       {

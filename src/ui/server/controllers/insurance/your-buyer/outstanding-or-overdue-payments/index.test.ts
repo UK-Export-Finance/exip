@@ -66,7 +66,7 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue);
+      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue!);
 
       const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -128,7 +128,7 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
+        ...pageVariables(referenceNumber, mockCurrencies, currencyValue!),
         application: mapApplicationToFormFields(mockApplication),
       };
 
@@ -246,7 +246,7 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
             BACK_LINK: req.headers.referer,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
+          ...pageVariables(referenceNumber, mockCurrencies, currencyValue!),
           submittedValues: payload,
           validationErrors,
         };

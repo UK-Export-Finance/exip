@@ -4,6 +4,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import providedAndMaxLength from '../../../../../../../shared-validation/provided-and-max-length';
 import { mockErrors } from '../../../../../../../test-mocks';
+import { RequestBody } from '../../../../../../../../types';
 
 const {
   BROKER_DETAILS: { IS_BASED_IN_UK, BUILDING_NUMBER_OR_NAME: FIELD_ID },
@@ -16,7 +17,7 @@ const {
 describe('controllers/insurance/policy/broker-details/validation/rules/building-number-or-name', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
+  } as RequestBody;
 
   describe(`when ${IS_BASED_IN_UK} is true`, () => {
     it('should return the result of providedAndMaxLength', () => {

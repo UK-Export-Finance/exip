@@ -22,11 +22,9 @@ const {
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/answers-summary-list', () => {
-  describe('generateFieldGroups - no policy type', () => {
+  describe('generateFieldGroups - policy type', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData.quoteEligibility);
-      delete mockAnswersContent[POLICY_TYPE];
-      delete mockAnswersContent[POLICY_LENGTH];
 
       const result = generateFieldGroups(mockAnswersContent);
 
@@ -51,7 +49,32 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
             href: `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
           }),
         ],
-        POLICY_DETAILS: [],
+        POLICY_DETAILS: [
+          fieldGroupItem({
+            field: getFieldById(FIELDS, POLICY_TYPE),
+            data: mockAnswersContent,
+            renderChangeLink: true,
+            href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
+          }),
+          fieldGroupItem({
+            field: getFieldById(FIELDS, POLICY_LENGTH),
+            data: mockAnswersContent,
+            renderChangeLink: true,
+            href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`,
+          }),
+          fieldGroupItem({
+            field: getFieldById(FIELDS, CONTRACT_VALUE),
+            data: mockAnswersContent,
+            renderChangeLink: true,
+            href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+          }),
+          fieldGroupItem({
+            field: getFieldById(FIELDS, PERCENTAGE_OF_COVER),
+            data: mockAnswersContent,
+            renderChangeLink: true,
+            href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+          }),
+        ],
       };
 
       expect(result).toEqual(expected);

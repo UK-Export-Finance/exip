@@ -48,7 +48,7 @@ export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: b
  * @returns {Array} Modern slavery tasks
  */
 export const getModernSlaveryTasks = (modernSlavery: ApplicationDeclarationModernSlavery) => {
-  const tasks = [WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY];
+  const tasks: Array<string> = [WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY];
 
   if (modernSlavery.willAdhereToAllRequirements === false) {
     tasks.push(CANNOT_ADHERE_TO_ALL_REQUIREMENTS);

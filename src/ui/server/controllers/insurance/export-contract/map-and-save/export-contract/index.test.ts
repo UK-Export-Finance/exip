@@ -4,6 +4,7 @@ import save from '../../save-data/export-contract';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { mockApplication, mockCountries, mockSpyPromise } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
+import { RequestBody } from '../../../../../../types';
 
 const {
   EXPORT_CONTRACT: {
@@ -18,7 +19,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract', (
     _csrf: '1234',
     [DESCRIPTION]: mockApplication.exportContract[DESCRIPTION],
     [FINAL_DESTINATION]: mockApplication.exportContract[FINAL_DESTINATION],
-  };
+  } as RequestBody;
 
   const mockSaveExportContract = mockSpyPromise();
   save.exportContract = mockSaveExportContract;

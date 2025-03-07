@@ -2,6 +2,7 @@ import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/polic
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import { mockApplication, mockContact } from '../../../../../test-mocks';
 import mapSubmittedData from '.';
+import { RequestBody } from '../../../../../../types';
 
 const {
   NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME, IS_SAME_AS_OWNER },
@@ -22,7 +23,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
     const mockBody = {
       [NAME]: SAME_NAME,
       [POSITION]: 'CEO',
-    };
+    } as RequestBody;
 
     it(`should return an object with application owner contact details and should remove ${NAME} and add ${IS_SAME_AS_OWNER} as true`, () => {
       const result = mapSubmittedData(mockBody, mockApplication);
@@ -40,7 +41,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   describe(`when ${NAME} is ${OTHER_NAME}`, () => {
     const mockBody = {
       [NAME]: OTHER_NAME,
-    };
+    } as RequestBody;
 
     it(`should return an object without ${NAME} and add ${IS_SAME_AS_OWNER} as false`, () => {
       const result = mapSubmittedData(mockBody, mockApplication);
@@ -60,7 +61,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   describe(`when ${NAME} is ${OTHER_NAME} and ${POSITION} is provided but application ${IS_SAME_AS_OWNER} is ${OTHER_NAME}`, () => {
     const mockBody = {
       [NAME]: OTHER_NAME,
-    };
+    } as RequestBody;
 
     it(`should retain ${POSITION}`, () => {
       mockBody[POSITION] = 'CEO';

@@ -1,5 +1,5 @@
 import { isPopulatedArray } from '../array';
-import { ApplicationFlat } from '../../../types';
+import { ApplicationFlat, ObjectType } from '../../../types';
 import isFieldFalseOrZero from '../is-field-false-or-zero';
 
 /**
@@ -10,7 +10,7 @@ import isFieldFalseOrZero from '../is-field-false-or-zero';
  * @param {String} field ID of the field to get
  * @returns {Boolean} True if the field is in submittedData.
  */
-export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
+export const hasSubmittedField = (submittedData: ObjectType, fieldId: string) => {
   const fieldValue = submittedData[fieldId];
 
   // if array, check it is not empty array

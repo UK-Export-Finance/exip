@@ -3,6 +3,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { mockSession } from '../test-mocks';
+import { Quote } from '../../types';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
@@ -164,10 +165,10 @@ describe('server/generate-quote/index', () => {
       const expectedTotalMonths = getTotalMonths(quoteEligibility[POLICY_TYPE], quoteEligibility[POLICY_LENGTH], quoteEligibility[CREDIT_PERIOD]);
 
       const expectedPremiumRate = getPremiumRate(
-        mockSubmittedData.quoteEligibility[POLICY_TYPE],
-        mockSubmittedData.quoteEligibility[BUYER_COUNTRY].esraClassification,
+        String(mockSubmittedData.quoteEligibility[POLICY_TYPE]),
+        mockSubmittedData.quoteEligibility[BUYER_COUNTRY]!.esraClassification,
         expectedTotalMonths,
-        mockPercentageOfCover,
+        Number(mockPercentageOfCover),
       );
 
       const expected = {
@@ -179,7 +180,7 @@ describe('server/generate-quote/index', () => {
         [CREDIT_PERIOD]: mockSubmittedData.quoteEligibility[CREDIT_PERIOD],
         [POLICY_TYPE]: mockSubmittedData.quoteEligibility[POLICY_TYPE],
         [POLICY_LENGTH]: mockSubmittedData.quoteEligibility[POLICY_LENGTH],
-      };
+      } as Quote;
 
       expected[QUOTE.PREMIUM_RATE_PERCENTAGE] = expectedPremiumRate;
 

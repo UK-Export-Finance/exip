@@ -10,7 +10,7 @@ import { isPopulatedArray } from '../array';
  * @returns {Object} constructed payload
  */
 const constructPayload = (requestBody: RequestBody, fieldIds: Array<string>) => {
-  const payload = {};
+  const payload: RequestBody = {};
 
   if (!isPopulatedArray(fieldIds)) {
     return payload;

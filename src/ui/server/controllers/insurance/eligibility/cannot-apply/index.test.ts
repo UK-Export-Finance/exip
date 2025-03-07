@@ -4,7 +4,7 @@ import { TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
+import { Request, Response, ObjectType } from '../../../../../types';
 
 describe('controllers/insurance/eligibility/cannot-apply', () => {
   let req: Request;
@@ -16,7 +16,7 @@ describe('controllers/insurance/eligibility/cannot-apply', () => {
     req.flash = (property: string) => {
       const obj = {
         exitReason: mockExitReason,
-      };
+      } as ObjectType;
 
       return obj[property];
     };

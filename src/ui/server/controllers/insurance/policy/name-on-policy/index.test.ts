@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy-contact';
 import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
-import { Request, ResponseInsurance } from '../../../../../types';
+import { Request, ResponseInsurance, RequestBody } from '../../../../../types';
 import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
@@ -176,7 +176,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         const validBody = {
           [NAME]: SAME_NAME,
           [POSITION]: 'Text',
-        };
+        } as RequestBody;
 
         describe(`when ${SAME_NAME} is selected`, () => {
           it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
@@ -211,7 +211,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         const validBody = {
           [NAME]: SAME_NAME,
           [POSITION]: 'Text',
-        };
+        } as RequestBody;
 
         describe(`when ${SAME_NAME} is selected`, () => {
           it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {

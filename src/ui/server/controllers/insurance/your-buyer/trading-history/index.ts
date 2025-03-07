@@ -138,7 +138,7 @@ export const post = async (req: Request, res: ResponseInsurance) => {
     const answer = payload[FIELD_ID];
 
     const hasTradingHistory = answer === 'true';
-    const hasNoFailedPayments = buyerTradingHistory[FAILED_PAYMENTS] === null;
+    const hasNoFailedPayments = buyerTradingHistory[FAILED_PAYMENTS] === undefined;
 
     /**
      * If the route is a "change" route,

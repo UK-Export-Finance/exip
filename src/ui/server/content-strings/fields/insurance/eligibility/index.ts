@@ -2,6 +2,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { COVER_PERIOD, TOTAL_CONTRACT_VALUE, GBP_CURRENCY_CODE } from '../../../../constants';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
+import { ObjectType } from '../../../../../types/object';
 
 const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 
@@ -13,7 +14,7 @@ const { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID, HAS_END_BUYER, IS_M
 
 const { COMPANY_NAME } = INSURANCE_FIELD_IDS.COMPANIES_HOUSE;
 
-export const ELIGIBILITY_FIELDS = {
+export const ELIGIBILITY_FIELDS: ObjectType = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
       TITLE: 'Buyer location',

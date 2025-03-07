@@ -130,7 +130,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
         ),
         renderChangeLink: true,
       },
-      mapTotalContractValueField(mockAnswers[TOTAL_CONTRACT_VALUE]),
+      mapTotalContractValueField(mockAnswers[TOTAL_CONTRACT_VALUE]?.valueId),
     ),
     fieldGroupItem(
       {

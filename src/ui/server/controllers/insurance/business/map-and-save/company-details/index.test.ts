@@ -5,6 +5,7 @@ import generateValidationErrors from '../../../../../helpers/validation';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import mapSubmittedData from '../../map-submitted-data/company-details';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER },
@@ -25,7 +26,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
     [FULL_ADDRESS]: 'Mock address',
     [PHONE_NUMBER]: '*99',
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
-  };
+  } as RequestBody;
 
   const mockSaveCompanyDetails = mockSpyPromise();
   const mockSaveCompanyAddress = mockSpyPromise();

@@ -63,7 +63,7 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
         ),
         renderChangeLink: true,
       },
-      replaceNewLineWithLineBreak(answers[FINANCIAL_ADDRESS]),
+      answers[FINANCIAL_ADDRESS] && replaceNewLineWithLineBreak(answers[FINANCIAL_ADDRESS]),
     ),
     fieldGroupItem(
       {
@@ -78,7 +78,7 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
         ),
         renderChangeLink: true,
       },
-      formatSortCode(answers[SORT_CODE]),
+      answers[SORT_CODE] && formatSortCode(answers[SORT_CODE]),
     ),
     fieldGroupItem({
       field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK, ACCOUNT_NUMBER),
@@ -124,7 +124,7 @@ export const lossPayeeLocatedInternationallyFields = (
         ),
         renderChangeLink: true,
       },
-      replaceNewLineWithLineBreak(answers[FINANCIAL_ADDRESS]),
+      answers[FINANCIAL_ADDRESS] && replaceNewLineWithLineBreak(answers[FINANCIAL_ADDRESS]),
     ),
     fieldGroupItem({
       field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL, BIC_SWIFT_CODE),

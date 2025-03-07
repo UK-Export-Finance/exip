@@ -4,6 +4,7 @@ import save from '../../save-data/modern-slavery';
 import DECLARATIONS_FIELD_IDS from '../../../../../constants/field-ids/insurance/declarations';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
+import { RequestBody } from '../../../../../../types';
 
 const {
   MODERN_SLAVERY: { WILL_ADHERE_TO_ALL_REQUIREMENTS },
@@ -15,7 +16,7 @@ describe('controllers/insurance/declarations/map-and-save/modern-slavery', () =>
   let mockFormBody = {
     _csrf: '1234',
     [WILL_ADHERE_TO_ALL_REQUIREMENTS]: 'true',
-  };
+  } as RequestBody;
 
   const mockSaveDeclarationModernSlavery = mockSpyPromise();
   save.declarationModernSlavery = mockSaveDeclarationModernSlavery;

@@ -17,17 +17,19 @@ describe('helpers/mappings/map-companies-house-data', () => {
 
     const { __typename, success, isActive, apiError, notFound, registeredOfficeAddress, ...data } = mockCompaniesHouseResponse;
 
+    const dateOfCreation = new Date(data[COMPANY_INCORPORATED]!).toISOString();
+
     const expected = {
       ...data,
-      dateOfCreation: new Date(data[COMPANY_INCORPORATED]).toISOString(),
+      dateOfCreation,
       [COMPANY_ADDRESS]: {
         [CARE_OF]: '',
         [PREMISES]: '',
-        [ADDRESS_LINE_1]: registeredOfficeAddress[ADDRESS_LINE_1],
+        [ADDRESS_LINE_1]: registeredOfficeAddress![ADDRESS_LINE_1],
         [ADDRESS_LINE_2]: '',
-        [LOCALITY]: registeredOfficeAddress[LOCALITY],
-        [REGION]: registeredOfficeAddress[REGION],
-        [POSTAL_CODE]: registeredOfficeAddress[POSTAL_CODE],
+        [LOCALITY]: registeredOfficeAddress![LOCALITY],
+        [REGION]: registeredOfficeAddress![REGION],
+        [POSTAL_CODE]: registeredOfficeAddress![POSTAL_CODE],
         [COUNTRY]: '',
       },
     };
@@ -39,7 +41,7 @@ describe('helpers/mappings/map-companies-house-data', () => {
     it(`should return an empty ${COMPANY_ADDRESS} object`, () => {
       const result = mapCompaniesHouseData({
         ...mockCompaniesHouseResponse,
-        [COMPANY_ADDRESS]: null,
+        [COMPANY_ADDRESS]: undefined,
       });
 
       expect(result[COMPANY_ADDRESS]).toEqual({});

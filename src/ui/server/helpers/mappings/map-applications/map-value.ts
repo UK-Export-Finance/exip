@@ -32,11 +32,11 @@ const mapValue = (application: Application) => {
     const currencyCode = application.policy[POLICY_CURRENCY_CODE] || GBP_CURRENCY_CODE;
 
     if (isSinglePolicyType(policyType) && objectHasProperty(policy, TOTAL_CONTRACT_VALUE)) {
-      return formatCurrency(policy[TOTAL_CONTRACT_VALUE], currencyCode);
+      return formatCurrency(Number(policy[TOTAL_CONTRACT_VALUE]), currencyCode);
     }
 
     if (isMultiplePolicyType(policyType) && objectHasProperty(policy, MAXIMUM_BUYER_WILL_OWE)) {
-      return formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], currencyCode);
+      return formatCurrency(Number(policy[MAXIMUM_BUYER_WILL_OWE]), currencyCode);
     }
   }
 

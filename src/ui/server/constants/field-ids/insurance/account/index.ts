@@ -4,6 +4,6 @@ const ACCOUNT = {
   EMAIL: 'email',
   PASSWORD: 'password',
   ACCESS_CODE: 'securityCode',
-};
+} as const;
 
 export default ACCOUNT;

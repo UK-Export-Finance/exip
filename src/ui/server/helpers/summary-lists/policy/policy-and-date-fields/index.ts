@@ -51,9 +51,9 @@ const generatePolicyAndDateFields = (answers: ApplicationPolicy, referenceNumber
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.CONTRACT_POLICY, REQUESTED_START_DATE),
-        ...changeLink(answers[POLICY_TYPE], referenceNumber, REQUESTED_START_DATE, checkAndChange),
+        ...changeLink(String(answers[POLICY_TYPE]), referenceNumber, REQUESTED_START_DATE, checkAndChange),
       },
-      formatDate(answers[REQUESTED_START_DATE]),
+      answers[REQUESTED_START_DATE] && formatDate(new Date(answers[REQUESTED_START_DATE])),
     ),
   ] as Array<SummaryListItemData>;
 
@@ -71,9 +71,9 @@ const generatePolicyAndDateFields = (answers: ApplicationPolicy, referenceNumber
       {
         field: getFieldById(FIELDS.CONTRACT_POLICY, CURRENCY_CODE),
         data: answers,
-        ...changeLink(answers[POLICY_TYPE], referenceNumber, CURRENCY_CODE, checkAndChange),
+        ...changeLink(String(answers[POLICY_TYPE]), referenceNumber, CURRENCY_CODE, checkAndChange),
       },
-      getCurrencyByCode(currencies, answers[POLICY_CURRENCY_CODE]).name,
+      getCurrencyByCode(currencies, String(answers[POLICY_CURRENCY_CODE])).name,
     ),
   ];
 
