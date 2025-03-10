@@ -29,7 +29,7 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({});
 
-        cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'confidentiality', referenceNumber });
+        cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'modernSlavery', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
@@ -42,7 +42,7 @@ context(
     });
 
     after(() => {
-      // cy.deleteApplication(referenceNumber);
+      cy.deleteApplication(referenceNumber);
     });
 
     it('renders core page elements', () => {
