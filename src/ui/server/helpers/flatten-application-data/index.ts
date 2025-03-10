@@ -93,7 +93,6 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
 
     const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = application;
     const { buyerTradingHistory, contact, relationship } = buyer;
-    const { jointlyInsuredParty, ...policyFields } = policy;
 
     const flattened = {
       ...application.eligibility,
@@ -128,7 +127,7 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
       ...getTrueAndFalseAnswers(declaration.modernSlavery),
       ...mapNominatedLossPayee(nominatedLossPayee),
       ...relationship,
-      ...policyFields,
+      ...policy,
       ...policy.jointlyInsuredParty,
       ...mapPolicyContact(policyContact),
       ...getTrueAndFalseAnswers(sectionReview),
