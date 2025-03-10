@@ -13,10 +13,10 @@ const {
 describe('controllers/insurance/declarations/map-and-save/modern-slavery', () => {
   jest.mock('../../save-data/modern-slavery');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [WILL_ADHERE_TO_ALL_REQUIREMENTS]: 'true',
-  } as RequestBody;
+  };
 
   const mockSaveDeclarationModernSlavery = mockSpyPromise();
   save.declarationModernSlavery = mockSaveDeclarationModernSlavery;

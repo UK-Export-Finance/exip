@@ -19,14 +19,14 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
   jest.mock('../../save-data/company-details');
   jest.mock('../../save-data/company-different-trading-address');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [HAS_DIFFERENT_TRADING_NAME]: 'true',
     [HAS_DIFFERENT_TRADING_ADDRESS]: 'true',
     [FULL_ADDRESS]: 'Mock address',
     [PHONE_NUMBER]: '*99',
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
-  } as RequestBody;
+  };
 
   const mockSaveCompanyDetails = mockSpyPromise();
   const mockSaveCompanyAddress = mockSpyPromise();

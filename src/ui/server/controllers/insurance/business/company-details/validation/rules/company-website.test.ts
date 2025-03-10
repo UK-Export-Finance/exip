@@ -13,9 +13,9 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const errorMessage = EXPORTER_BUSINESS[WEBSITE].INCORRECT_FORMAT;
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/company-website', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [WEBSITE]: '',
-  } as RequestBody;
+  };
 
   describe('with errors', () => {
     it(`should return a validation error when ${WEBSITE} is only 'www'`, () => {

@@ -14,10 +14,10 @@ const {
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service-charge', () => {
   jest.mock('../../save-data/export-contract-agent-service');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [PERCENTAGE_CHARGE]: mockApplication.exportContract.agent.service.charge[PERCENTAGE_CHARGE],
-  } as RequestBody;
+  };
 
   const mockSave = mockSpyPromise();
   save.exportContractAgentServiceCharge = mockSave;

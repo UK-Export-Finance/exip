@@ -44,7 +44,7 @@ import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
-import { Currency, CurrencyRadios } from './currency';
+import { Currency, CurrencyRadios, CurrencySymbol } from './currency';
 import { Business } from './business';
 import { DateErrorMessage, ErrorMessageObject } from './errors';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response, ResponseInsurance } from './express';
@@ -95,6 +95,7 @@ import {
 import { InsuranceFeedbackVariables } from './feedback';
 import { SanitiseValueObjParams } from './sanitise-value';
 import { ObjectType } from './object';
+import { SuccessBannerObject } from './successBanner';
 
 export {
   Account,
@@ -147,6 +148,7 @@ export {
   CreatePrepareApplicationTasksParams,
   Currency,
   CurrencyRadios,
+  CurrencySymbol,
   DateErrorMessage,
   DateValidationRulesParams,
   DateValidationFormatRulesParams,
@@ -191,6 +193,7 @@ export {
   SubmittedDataInsuranceEligibility,
   SanitiseValueObjParams,
   SubmittedData,
+  SuccessBannerObject,
   SummaryListItemData,
   SummaryListItemDataFieldSummary,
   SummaryListItemDataInput,

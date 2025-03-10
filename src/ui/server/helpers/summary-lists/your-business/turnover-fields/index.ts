@@ -63,7 +63,7 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${PERCENTAGE_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      answers[PERCENTAGE_TURNOVER] && mapPercentage(answers[PERCENTAGE_TURNOVER]),
+      mapPercentage(String(answers[PERCENTAGE_TURNOVER])),
     ),
   ] as Array<SummaryListItemData>;
 

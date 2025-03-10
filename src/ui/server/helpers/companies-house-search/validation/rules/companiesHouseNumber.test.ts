@@ -12,9 +12,9 @@ const {
 const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
 describe('helpers/companies-house-search/validation/rules/companiesHouseNumber', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe('when the companies house number input is incorrectly formatted', () => {
     it('should return a validation error when number is an empty string', () => {

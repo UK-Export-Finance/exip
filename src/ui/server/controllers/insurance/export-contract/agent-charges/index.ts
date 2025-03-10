@@ -168,12 +168,14 @@ export const post = async (req: Request, res: ResponseInsurance) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
+      const currencyCodeString = String(agent.service.charge[FIXED_SUM_CURRENCY_CODE]);
+
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, allCurrencies, String(agent.service.charge[FIXED_SUM_CURRENCY_CODE])),
+        ...pageVariables(referenceNumber, allCurrencies, currencyCodeString),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         countries: mapCountries(countries, payload[PAYABLE_COUNTRY_CODE]),

@@ -10,10 +10,10 @@ const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = EXPORTER_BUSINESS.N
 describe('controllers/insurance/business/map-submitted-data/your-business', () => {
   describe('when all fields are provided and all number fields contain a comma', () => {
     it('should return the formBody with the commas replaced', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         ...mockBusinessNatureOfBusiness,
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 
@@ -29,12 +29,12 @@ describe('controllers/insurance/business/map-submitted-data/your-business', () =
 
   describe('when all fields are provided and none contain a comma', () => {
     it('should return the formBody', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         [GOODS_OR_SERVICES]: 'ABC',
         [YEARS_EXPORTING]: '20',
         [EMPLOYEES_UK]: '400',
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 
@@ -50,12 +50,12 @@ describe('controllers/insurance/business/map-submitted-data/your-business', () =
 
   describe('when some fields are provided and none contain a comma', () => {
     it('should return the formBody with the populated fields populated, and the remaining as empty strings', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         [GOODS_OR_SERVICES]: 'ABC',
         [YEARS_EXPORTING]: '',
         [EMPLOYEES_UK]: '',
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 
@@ -71,12 +71,12 @@ describe('controllers/insurance/business/map-submitted-data/your-business', () =
 
   describe('when no fields are provided (all are empty strings)', () => {
     it('should return the formBody with fields as empty strings', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         [GOODS_OR_SERVICES]: '',
         [YEARS_EXPORTING]: '',
         [EMPLOYEES_UK]: '',
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 

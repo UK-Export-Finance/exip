@@ -35,10 +35,10 @@ interface SectionReview {
   eligibility?: boolean;
 }
 
-interface TotalContractValue {
-  value?: string;
-  valueId?: number;
-}
+// interface TotalContractValue {
+//   value?: string;
+//   valueId?: number;
+// }
 
 interface InsuranceEligibilityCore extends SharedEligibility {
   companyNumber?: string;
@@ -50,7 +50,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   isPartyToConsortium?: boolean;
   isMemberOfAGroup?: boolean;
   sectionReview?: SectionReview;
-  totalContractValue?: TotalContractValue;
+  totalContractValue?: number;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {

@@ -1,5 +1,5 @@
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
@@ -11,9 +11,9 @@ const {
  * if ATTEMPTED is false, delete DECLINED_DESCRIPTION
  * @param {RequestBody} formBody
  * @param {Array<Country>} countries
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   if (formBody[ATTEMPTED] === 'false') {

@@ -3,7 +3,7 @@ import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code'
 import { objectHasProperty } from '../../../../../helpers/object';
 import { isEmptyString } from '../../../../../helpers/string';
 import { EXPORT_CONTRACT_AWARD_METHOD } from '../../../../../constants';
-import { Country, RequestBody } from '../../../../../../types';
+import { Country, RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
@@ -23,9 +23,9 @@ const { DB_ID: OTHER_DB_ID } = EXPORT_CONTRACT_AWARD_METHOD.OTHER;
  * 4) if FINAL_DESTINATION_KNOWN is false, delete FINAL_DESTINATION.
  * @param {RequestBody} formBody
  * @param {Array<Country>} countries
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): object => {
+const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): ObjectType => {
   const populatedData = formBody;
 
   /**

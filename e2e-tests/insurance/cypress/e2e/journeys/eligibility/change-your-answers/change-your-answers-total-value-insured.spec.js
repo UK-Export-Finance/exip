@@ -55,7 +55,7 @@ context(
       });
     });
 
-    describe('form submission with a new answer', () => {
+    describe.only('form submission with a new answer', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 

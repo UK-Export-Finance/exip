@@ -15,12 +15,12 @@ const {
 describe('controllers/insurance/your-buyer/map-and-save/buyer-trading-history', () => {
   jest.mock('../../save-data/buyer-trading-history');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [CURRENCY_CODE]: GBP,
     [ALTERNATIVE_CURRENCY_CODE]: '',
     [FAILED_PAYMENTS]: true,
-  } as RequestBody;
+  };
 
   const mockSaveBuyer = mockSpyPromise();
   save.buyerTradingHistory = mockSaveBuyer;

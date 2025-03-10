@@ -21,6 +21,7 @@ import {
   mockCurrenciesEmptyResponse,
   mockSession,
   mockSpyPromiseRejection,
+  GBP,
 } from '../../../test-mocks';
 import { Request, Response, SelectOption } from '../../../../types';
 
@@ -370,7 +371,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       req.body = {
         ...mockAnswers,
-        [CURRENCY]: 'GBP',
+        [CURRENCY]: GBP.isoCode,
       };
       req.session.submittedData = {
         quoteEligibility: previousFlowSubmittedData,

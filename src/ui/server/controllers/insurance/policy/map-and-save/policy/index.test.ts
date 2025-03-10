@@ -13,10 +13,10 @@ const {
 describe('controllers/insurance/policy/map-and-save/policy', () => {
   jest.mock('../../save-data/policy');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [POLICY_CURRENCY_CODE]: 'Example',
-  } as RequestBody;
+  };
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 

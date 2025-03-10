@@ -1,4 +1,5 @@
 import DECLARATIONS_FIELD_IDS from '../../../constants/field-ids/insurance/declarations';
+import isNotNullOrUndefined from '../../is-not-null-or-undefined';
 import { ApplicationDeclaration, ApplicationDeclarationModernSlavery } from '../../../../types';
 
 const {
@@ -23,7 +24,7 @@ const {
  */
 export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: boolean | null): Array<string> => {
   // has not been answered yet.
-  if (hasAntiBriberyCodeOfConduct === undefined || hasAntiBriberyCodeOfConduct === null) {
+  if (!isNotNullOrUndefined(hasAntiBriberyCodeOfConduct)) {
     return [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT];
   }
 
@@ -48,7 +49,7 @@ export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: b
  * @returns {Array} Modern slavery tasks
  */
 export const getModernSlaveryTasks = (modernSlavery: ApplicationDeclarationModernSlavery) => {
-  const tasks: Array<string> = [WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY];
+  const tasks: string[] = [WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY];
 
   if (modernSlavery.willAdhereToAllRequirements === false) {
     tasks.push(CANNOT_ADHERE_TO_ALL_REQUIREMENTS);

@@ -147,9 +147,9 @@ describe('server/helpers/update-submitted-data/quote', () => {
   describe('updateSubmittedData', () => {
     describe('when there is existing data', () => {
       it('should return an object with existing and new, sanitised form data', () => {
-        const mockFormData = {
+        const mockFormData: RequestBody = {
           a: true,
-        } as RequestBody;
+        };
 
         const mockExistingData = {
           mock: true,
@@ -170,9 +170,9 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
     describe('when there is no existing data', () => {
       it('should return an object with new, sanitised form data', () => {
-        const mockFormData = {
+        const mockFormData: RequestBody = {
           a: true,
-        } as RequestBody;
+        };
 
         const mockExistingData = {};
 
@@ -190,10 +190,10 @@ describe('server/helpers/update-submitted-data/quote', () => {
     });
 
     it('should not return _csrf from provided form data', () => {
-      const mockFormData = {
+      const mockFormData: RequestBody = {
         _csrf: '123',
         a: true,
-      } as RequestBody;
+      };
 
       const mockExistingData = {};
 
@@ -208,9 +208,9 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
     describe('when there is no existing or provided data', () => {
       it('should return an empty object', () => {
-        const mockFormData = {
+        const mockFormData: RequestBody = {
           _csrf: '123',
-        } as RequestBody;
+        };
 
         const result = updateSubmittedData(mockFormData, {});
 

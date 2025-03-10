@@ -173,10 +173,10 @@ describe('controllers/insurance/policy/name-on-policy', () => {
       });
 
       describe("when the url's last substring is `change`", () => {
-        const validBody = {
+        const validBody: RequestBody = {
           [NAME]: SAME_NAME,
           [POSITION]: 'Text',
-        } as RequestBody;
+        };
 
         describe(`when ${SAME_NAME} is selected`, () => {
           it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
@@ -208,10 +208,10 @@ describe('controllers/insurance/policy/name-on-policy', () => {
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        const validBody = {
+        const validBody: RequestBody = {
           [NAME]: SAME_NAME,
           [POSITION]: 'Text',
-        } as RequestBody;
+        };
 
         describe(`when ${SAME_NAME} is selected`, () => {
           it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {

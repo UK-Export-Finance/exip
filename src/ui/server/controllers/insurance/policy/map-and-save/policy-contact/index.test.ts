@@ -13,9 +13,9 @@ const {
 describe('controllers/insurance/policy/map-and-save/policy-contact', () => {
   jest.mock('../../save-data/policy-contact');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     [NAME]: SAME_NAME,
-  } as RequestBody;
+  };
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 

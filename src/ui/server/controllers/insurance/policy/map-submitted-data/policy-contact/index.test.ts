@@ -20,10 +20,10 @@ const expectedVariables = {
 
 describe('controllers/insurance/policy/map-submitted-data/policy-contact', () => {
   describe(`when ${NAME} is ${SAME_NAME}`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: SAME_NAME,
       [POSITION]: 'CEO',
-    } as RequestBody;
+    };
 
     it(`should return an object with application owner contact details and should remove ${NAME} and add ${IS_SAME_AS_OWNER} as true`, () => {
       const result = mapSubmittedData(mockBody, mockApplication);
@@ -39,9 +39,9 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${NAME} is ${OTHER_NAME}`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: OTHER_NAME,
-    } as RequestBody;
+    };
 
     it(`should return an object without ${NAME} and add ${IS_SAME_AS_OWNER} as false`, () => {
       const result = mapSubmittedData(mockBody, mockApplication);
@@ -59,9 +59,9 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${NAME} is ${OTHER_NAME} and ${POSITION} is provided but application ${IS_SAME_AS_OWNER} is ${OTHER_NAME}`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: OTHER_NAME,
-    } as RequestBody;
+    };
 
     it(`should retain ${POSITION}`, () => {
       mockBody[POSITION] = 'CEO';
@@ -90,7 +90,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${NAME} is am empty string`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: '',
       ...expectedVariables,
     };
@@ -103,7 +103,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${OTHER_NAME} the same as the application owner`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: OTHER_NAME,
       ...mockContact,
     };

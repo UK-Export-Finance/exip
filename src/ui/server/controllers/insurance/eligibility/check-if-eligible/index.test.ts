@@ -1,6 +1,6 @@
 import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES, COMPANIES_HOUSE_NUMBER } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../../test-mocks';
@@ -33,7 +33,7 @@ describe('controllers/insurance/eligibility/check-if-eligible', () => {
             [CREDIT_PERIOD]: 1,
           },
           insuranceEligibility: {
-            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: '12345',
+            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: COMPANIES_HOUSE_NUMBER,
           },
         },
       };

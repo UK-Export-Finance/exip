@@ -10,6 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import isNotNullOrUndefined from '../../../../helpers/is-not-null-or-undefined';
 import { Request, ResponseInsurance } from '../../../../../types';
 
 const {
@@ -138,7 +139,7 @@ export const post = async (req: Request, res: ResponseInsurance) => {
     const answer = payload[FIELD_ID];
 
     const hasTradingHistory = answer === 'true';
-    const hasNoFailedPayments = buyerTradingHistory[FAILED_PAYMENTS] === undefined;
+    const hasNoFailedPayments = !isNotNullOrUndefined(buyerTradingHistory[FAILED_PAYMENTS]);
 
     /**
      * If the route is a "change" route,

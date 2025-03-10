@@ -8,6 +8,7 @@ import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
 import mapNominatedLossPayeeLocation from '../map-nominated-loss-payee-location';
 import { transformEmptyDecimalsToWholeNumber } from '../../number';
+import isNotNullOrUndefined from '../../is-not-null-or-undefined';
 import { Application, ObjectType } from '../../../../types';
 
 const {
@@ -55,19 +56,19 @@ const mapApplicationToFormFields = (application?: Application): Application | Ob
       let percentageTurnover;
       let estimatedAnnualTurnover;
 
-      if (application.business[YEARS_EXPORTING]) {
+      if (isNotNullOrUndefined(application.business[YEARS_EXPORTING])) {
         yearsExporting = transformNumberToString(Number(application.business[YEARS_EXPORTING]));
       }
 
-      if (application.business[EMPLOYEES_UK]) {
+      if (isNotNullOrUndefined(application.business[EMPLOYEES_UK])) {
         employeesUK = transformNumberToString(Number(application.business[EMPLOYEES_UK]));
       }
 
-      if (application.business[PERCENTAGE_TURNOVER]) {
+      if (isNotNullOrUndefined(application.business[PERCENTAGE_TURNOVER])) {
         percentageTurnover = transformNumberToString(Number(application.business[PERCENTAGE_TURNOVER]));
       }
 
-      if (application.business[ESTIMATED_ANNUAL_TURNOVER]) {
+      if (isNotNullOrUndefined(application.business[ESTIMATED_ANNUAL_TURNOVER])) {
         estimatedAnnualTurnover = transformNumberToString(Number(application.business[ESTIMATED_ANNUAL_TURNOVER]));
       }
       mapped.business = {

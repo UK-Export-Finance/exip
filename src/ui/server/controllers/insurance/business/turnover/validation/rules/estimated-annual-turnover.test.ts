@@ -12,9 +12,9 @@ const {
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/turnover/validation/rules/estimated-annual-turnover', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [ESTIMATED_ANNUAL_TURNOVER]: '',
-  } as RequestBody;
+  };
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is empty`, () => {
     it('should return the result of numberValidation', () => {

@@ -18,6 +18,14 @@ describe('server/helpers/policy-type', () => {
         expect(result).toEqual(false);
       });
     });
+
+    describe('when policy type is provided', () => {
+      it('should return false', () => {
+        const result = isSinglePolicyType();
+
+        expect(result).toEqual(false);
+      });
+    });
   });
 
   describe('isMultiplePolicyType', () => {
@@ -32,6 +40,14 @@ describe('server/helpers/policy-type', () => {
     describe('when policy type is NOT multi', () => {
       it('should return false', () => {
         const result = isMultiplePolicyType(FIELD_VALUES.POLICY_TYPE.SINGLE);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when policy type is provided', () => {
+      it('should return false', () => {
+        const result = isMultiplePolicyType();
 
         expect(result).toEqual(false);
       });

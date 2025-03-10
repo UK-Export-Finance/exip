@@ -10,7 +10,7 @@ import generateValidationErrors from './validation';
 import emailAndPasswordIncorrectValidationErrors from '../../../../shared-validation/email-and-password-incorrect';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
-import { ObjectType, Request, Response } from '../../../../../types';
+import { Request, Response, SuccessBannerObject } from '../../../../../types';
 import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
@@ -109,7 +109,7 @@ describe('controllers/insurance/account/sign-in', () => {
           const obj = {
             successBanner: 'newAccountVerified',
             importantBanner: '',
-          } as ObjectType;
+          } as SuccessBannerObject;
 
           return obj[property];
         };
@@ -138,7 +138,7 @@ describe('controllers/insurance/account/sign-in', () => {
           const obj = {
             successBanner: '',
             importantBanner: 'successfulSignOut',
-          } as ObjectType;
+          } as SuccessBannerObject;
 
           return obj[property];
         };

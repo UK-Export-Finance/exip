@@ -14,10 +14,10 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer', () => {
   jest.mock('../../save-data/buyer');
 
   describe('buyer', () => {
-    let mockFormBody = {
+    let mockFormBody: RequestBody = {
       _csrf: '1234',
       [NAME]: 'Test',
-    } as RequestBody;
+    };
 
     const mockSaveBuyer = mockSpyPromise();
     save.buyer = mockSaveBuyer;

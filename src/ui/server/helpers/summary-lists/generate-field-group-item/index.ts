@@ -9,7 +9,7 @@ import transformNumberToString from '../../transform-number-to-string';
  * Get a field's value from a list of data
  * Conditionally returns a custom value if passed (e.g, custom HTML for an address).
  * @param {String} fieldId: Field ID
- * @param {Object} object: Submitted data
+ * @param {ObjectType} object: Submitted data
  * @param {String} customValue: Custom field value
  * @returns {String} Field value or default empty string dash
  */

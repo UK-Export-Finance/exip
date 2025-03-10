@@ -1,5 +1,5 @@
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
@@ -9,9 +9,9 @@ const {
  * mapSubmittedData
  * if REQUESTED is false, wipe "other company"/"jointly insured party" data.
  * @param {Express.Request.body} formBody
- * @returns {Object} Page variables
+ * @returns {ObjectType} Page variables
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   if (populatedData[REQUESTED] === false) {

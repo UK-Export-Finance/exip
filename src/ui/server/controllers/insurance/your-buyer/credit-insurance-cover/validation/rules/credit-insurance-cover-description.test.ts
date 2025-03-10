@@ -15,9 +15,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rules/credit-insurance-cover-description', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
     it('should return the result of providedAndMaxLength', () => {

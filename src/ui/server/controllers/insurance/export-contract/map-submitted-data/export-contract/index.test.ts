@@ -3,7 +3,7 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contr
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
 import { EXPORT_CONTRACT_AWARD_METHOD } from '../../../../../constants';
 import { mockCountries, mockExportContract } from '../../../../../test-mocks';
-import { RequestBody, ObjectType } from '../../../../../../types';
+import { RequestBody } from '../../../../../../types';
 
 const {
   HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
@@ -27,12 +27,12 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
 
   describe(`when ${AWARD_METHOD} field is an empty string`, () => {
     it(`should return the form body without ${AWARD_METHOD}`, () => {
-      const mockBodyWithAwardMethod = {
+      const mockBodyWithAwardMethod: RequestBody = {
         ...mockFormBody,
         [AWARD_METHOD]: '',
       };
 
-      const result = mapSubmittedData(mockBodyWithAwardMethod) as ObjectType;
+      const result = mapSubmittedData(mockBodyWithAwardMethod);
 
       expect(result[AWARD_METHOD]).toBeUndefined();
     });

@@ -11,7 +11,7 @@ import generateValidationErrors from './validation';
 import accessCodeValidationErrors from './validation/rules/access-code';
 import application from '../../../../../helpers/create-an-application';
 import api from '../../../../../api';
-import { Request, Response, ObjectType } from '../../../../../../types';
+import { Request, Response, SuccessBannerObject } from '../../../../../../types';
 import {
   mockReq,
   mockRes,
@@ -102,7 +102,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         req.flash = (property: string) => {
           const obj = {
             successBanner: 'newSecurityCodeSent',
-          } as ObjectType;
+          } as SuccessBannerObject;
 
           return obj[property];
         };

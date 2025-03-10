@@ -17,7 +17,7 @@ const {
 
 describe('controllers/insurance/account/password-reset/validation/rules/email', () => {
   it('should return the result of emailValidation', () => {
-    const mockFormBody = {} as RequestBody;
+    const mockFormBody: RequestBody = {};
 
     const result = emailRules(mockFormBody, mockErrors);
 

@@ -15,9 +15,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 describe('controllers/insurance/policy/broker-details/validation/rules/building-number-or-name', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe(`when ${IS_BASED_IN_UK} is true`, () => {
     it('should return the result of providedAndMaxLength', () => {

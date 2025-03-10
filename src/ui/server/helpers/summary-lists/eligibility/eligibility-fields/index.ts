@@ -145,7 +145,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         ),
         renderChangeLink: true,
       },
-      mapTotalContractValueField(answers[TOTAL_CONTRACT_VALUE]?.valueId),
+      mapTotalContractValueField(answers[TOTAL_CONTRACT_VALUE]),
     ),
     fieldGroupItem(
       {

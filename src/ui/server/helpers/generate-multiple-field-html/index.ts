@@ -6,7 +6,7 @@ import { ObjectType } from '../../../types';
  * Handle objects with all fields present or where some are null as not present
  * maps through object and constructs an html string containing line breaks
  * skips fields where the field is null or is typename
- * @param {Object} fieldValues
+ * @param {ObjectType} fieldValues
  * @returns {String} String of HTML or default empty string
  */
 const generateMultipleFieldHtml = (fieldValues: ObjectType): string => {

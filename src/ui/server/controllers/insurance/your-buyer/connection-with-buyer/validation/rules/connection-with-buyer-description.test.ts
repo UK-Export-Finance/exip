@@ -18,10 +18,10 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rules/connection-with-buyer-description', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
     [CONNECTION_WITH_BUYER]: true,
-  } as RequestBody;
+  };
 
   describe(`when ${CONNECTION_WITH_BUYER} is false`, () => {
     it(`should return "mockErrors" when ${CONNECTION_WITH_BUYER} is false`, () => {

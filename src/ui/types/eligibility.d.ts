@@ -26,7 +26,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   isPartyToConsortium?: boolean;
   isMemberOfAGroup?: boolean;
   sectionReview?: SectionReview;
-  totalContractValue?: TotalContractValue;
+  totalContractValue?: number;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {

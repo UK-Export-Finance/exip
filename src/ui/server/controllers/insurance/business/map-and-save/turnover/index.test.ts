@@ -15,11 +15,11 @@ const {
 describe('controllers/insurance/business/map-and-save/turnover', () => {
   jest.mock('../../save-data/business');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [PERCENTAGE_TURNOVER]: '25',
     [ESTIMATED_ANNUAL_TURNOVER]: '35000',
-  } as RequestBody;
+  };
 
   const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;

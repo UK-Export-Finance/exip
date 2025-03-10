@@ -2,7 +2,7 @@ import { objectHasProperty } from '../../../../../helpers/object';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { stripCommas } from '../../../../../helpers/string';
 import mapCurrencyCodeFormData from '../../../../../helpers/mappings/map-currency-code-form-data';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -16,9 +16,9 @@ const {
  * 1) Remove commas from monetary input fields (commas are valid input).
  * 2) Transform "currency code" into "turnover currency code".
  * @param {RequestBody} formBody
- * @returns {Object} mapped / populated data
+ * @returns {ObjectType} mapped / populated data
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const { _csrf, ...otherFields } = formBody;
 
   let populatedData = otherFields;

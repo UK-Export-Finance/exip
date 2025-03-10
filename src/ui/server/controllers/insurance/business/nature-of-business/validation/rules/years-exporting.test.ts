@@ -12,9 +12,9 @@ const {
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/nature-of-business/validation/rules/years-exporting', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [YEARS_EXPORTING]: '',
-  } as RequestBody;
+  };
 
   describe(`when the ${YEARS_EXPORTING} input is empty`, () => {
     it('should return a validation error', () => {

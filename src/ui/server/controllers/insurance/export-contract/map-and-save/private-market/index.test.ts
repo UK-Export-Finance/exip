@@ -15,11 +15,11 @@ const {
 describe('controllers/insurance/export-contract/map-and-save/private-market', () => {
   jest.mock('../../save-data/private-market');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [ATTEMPTED]: mockApplication.exportContract.privateMarket[ATTEMPTED],
     [DECLINED_DESCRIPTION]: mockApplication.exportContract.privateMarket[DECLINED_DESCRIPTION],
-  } as RequestBody;
+  };
 
   const mockSaveExportContract = mockSpyPromise();
   save.privateMarket = mockSaveExportContract;

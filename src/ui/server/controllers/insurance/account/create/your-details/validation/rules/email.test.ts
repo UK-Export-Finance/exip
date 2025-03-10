@@ -17,7 +17,7 @@ const {
 
 describe('controllers/insurance/account/create/your-details/validation/rules/email', () => {
   it('should return the result of emailValidation', () => {
-    const mockFormBody = {} as RequestBody;
+    const mockFormBody: RequestBody = {};
 
     const result = emailRules(mockFormBody, mockErrors);
 

@@ -5,7 +5,7 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
 import { mockErrors } from '../../test-mocks';
 
 describe('server/helpers/percentage-number-validation', () => {
-  const mockBody = {} as RequestBody;
+  const mockBody: RequestBody = {};
 
   const FIELD_ID = 'testField';
 

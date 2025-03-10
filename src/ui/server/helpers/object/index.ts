@@ -41,7 +41,7 @@ export const isAnObjectWithKeysAndValues = (field: any): object | undefined => {
 /**
  * objectHasProperty
  * Check if an object has a certain property
- * @param {Object}
+ * @param {ObjectType}
  * @param {String} Property to check
  * @returns {Boolean}
  */

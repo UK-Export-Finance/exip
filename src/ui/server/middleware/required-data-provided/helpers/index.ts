@@ -26,8 +26,8 @@ export const routeIsKnown = (knownRoutes: Array<string>, route: string): boolean
  * Get a list of required data for a route,
  * Check if the total amount of submitted data matches the total amount of required fields.
  * @param {String} route
- * @param {Object} required data for each route
- * @param {Object} all submitted data
+ * @param {ObjectType} required data for each route
+ * @param {ObjectType} all submitted data
  * @returns {Boolean}
  */
 export const hasRequiredData = (route: string, requiredDataState: ObjectType, submittedData: ObjectType) => {

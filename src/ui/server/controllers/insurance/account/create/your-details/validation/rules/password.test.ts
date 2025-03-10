@@ -17,7 +17,7 @@ const {
 
 describe('controllers/insurance/account/create/your-details/validation/rules/password', () => {
   it('should return the result of passwordValidation', () => {
-    const mockFormBody = {} as RequestBody;
+    const mockFormBody: RequestBody = {};
 
     const result = passwordRules(mockFormBody, mockErrors);
 

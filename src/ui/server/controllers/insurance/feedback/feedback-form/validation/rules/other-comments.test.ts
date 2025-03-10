@@ -12,9 +12,9 @@ const {
 const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
 
 describe('controllers/insurance/feedback/feedback-form/validation/rules/other-comments', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe(`when the ${FIELD_ID} input is over ${MAXIMUM_CHARACTERS.FEEDBACK.OTHER_COMMENTS} characters`, () => {
     it('should return the result of "inputValidation"', () => {

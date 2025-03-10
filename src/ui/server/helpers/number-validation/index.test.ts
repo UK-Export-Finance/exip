@@ -4,9 +4,9 @@ import { RequestBody } from '../../../types';
 import { mockErrors } from '../../test-mocks';
 
 describe('server/helpers/number-validation', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     testField: '',
-  } as RequestBody;
+  };
 
   const FIELD = 'testField';
 
