@@ -1,24 +1,20 @@
 import { Quote } from '../../types';
 import { FIELD_IDS } from '../constants';
 import mockAnswers from './mock-answers';
+import { mockCountryCanGetAQuoteOnline } from './mock-countries';
+import { GBP } from './mock-currencies';
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CURRENCY },
+  ELIGIBILITY: { CONTRACT_VALUE },
   POLICY_TYPE,
   POLICY_LENGTH,
 } = FIELD_IDS;
 
 const mockQuote = {
-  buyerCountry: {
-    name: mockAnswers[BUYER_COUNTRY],
-    isoCode: 'DZA',
-  },
+  buyerCountry: mockCountryCanGetAQuoteOnline,
   contractValue: mockAnswers[CONTRACT_VALUE],
   insuredFor: mockAnswers[CONTRACT_VALUE],
-  currency: {
-    name: 'UK Sterling',
-    isoCode: mockAnswers[CURRENCY],
-  },
+  currency: GBP,
   premiumRatePercentage: 1.23,
   estimatedCost: 456,
   policyType: mockAnswers[POLICY_TYPE],

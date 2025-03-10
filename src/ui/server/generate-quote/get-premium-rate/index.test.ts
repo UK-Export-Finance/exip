@@ -9,9 +9,9 @@ const expectedPremiumRate = (policyType: string, esraClassification: string, tot
 
   const risk = PRICING_GRID[mappedPolicyType][mappedRiskCategory];
 
-  const expectedMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
+  const expectedMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths) as PricingGridMonth;
 
-  const expectedRateObj = expectedMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
+  const expectedRateObj = expectedMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor) as PricingGridRate;
 
   const expected = expectedRateObj.premiumRate;
 
@@ -29,7 +29,7 @@ const getResultAndExpected = (policyType: string, esraClassification: string, to
   };
 };
 
-const getAvailableCover = (policyType: string, risk: string, coverMonths: number) =>
+const getAvailableCover = (policyType: keyof typeof PRICING_GRID, risk: keyof (typeof PRICING_GRID)[keyof typeof PRICING_GRID], coverMonths: number) =>
   PRICING_GRID[policyType][risk].find((month: PricingGridMonth) => month.months === coverMonths);
 
 describe('server/generate-quote/get-premium-rate', () => {

@@ -1,5 +1,4 @@
 import { Company, CompaniesHouseResponse } from '../../../../types';
-import { objectHasProperty } from '../../object';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
@@ -43,13 +42,13 @@ const mapCompaniesHouseData = (apiResponse: CompaniesHouseResponse): Company => 
   /**
    * Convert the COMPANY_NUMBER to a string.
    */
-  populatedData[COMPANY_NUMBER] = populatedData[COMPANY_NUMBER].toString();
+  populatedData[COMPANY_NUMBER] = String(populatedData[COMPANY_NUMBER]).toString();
 
   /**
    * if the company has COMPANY_INCORPORATED,
    * convert COMPANY_INCORPORATED into a string.
    */
-  if (objectHasProperty(populatedData, COMPANY_INCORPORATED)) {
+  if (populatedData[COMPANY_INCORPORATED]) {
     populatedData[COMPANY_INCORPORATED] = new Date(populatedData[COMPANY_INCORPORATED]).toISOString();
   }
 

@@ -7,7 +7,7 @@ import nullifySingleContractPolicyFields from '../../../../../helpers/nullify-si
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../../../helpers/policy-type';
 import mapCurrencyCodeFormData from '../../../../../helpers/mappings/map-currency-code-form-data';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { Application, RequestBody } from '../../../../../../types';
+import { Application, RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -29,12 +29,12 @@ const {
  * 5) If a policy is a "multiple" policy, nullify "single" policy fields.
  * 6) Map submitted currency fields.
  * @param {RequestBody} formBody: Form data
- * @returns {Object} Mapped data
+ * @returns {ObjectType} Mapped data
  */
-const mapSubmittedData = (formBody: RequestBody, application: Application): object => {
+const mapSubmittedData = (formBody: RequestBody, application: Application): ObjectType => {
   const { _csrf, ...otherFields } = formBody;
 
-  let populatedData = {} as RequestBody;
+  let populatedData: RequestBody = {};
 
   populatedData = mapDateFields(otherFields);
 

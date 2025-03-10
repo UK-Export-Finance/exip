@@ -73,7 +73,7 @@ const generateCompanyOrOrganisationFields = (
         data: answers,
         renderChangeLink: false,
       },
-      answersEligibility[BUYER_COUNTRY].name,
+      answersEligibility[BUYER_COUNTRY]?.name,
     ),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, REGISTRATION_NUMBER),

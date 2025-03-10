@@ -15,7 +15,7 @@ import { ValidationErrors, ValidationMinAndMaxLengthParams } from '../../../type
  * @returns {ValidationErrors}
  */
 const minAndMaxLengthValidation = ({ fieldId, value, errorMessages, errors, minimum, maximum }: ValidationMinAndMaxLengthParams): ValidationErrors => {
-  const minValidation = minLengthValidation(value, fieldId, errorMessages.BELOW_MINIMUM, errors, minimum);
+  const minValidation: ValidationErrors = minLengthValidation(value, fieldId, errorMessages.BELOW_MINIMUM, errors, minimum);
 
   /**
    * This condition is required to ensure that "minimum" validation errors are returned,

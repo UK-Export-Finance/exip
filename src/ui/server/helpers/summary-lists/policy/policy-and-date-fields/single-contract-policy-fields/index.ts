@@ -45,7 +45,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
           checkAndChange,
         ),
       },
-      answers[CONTRACT_COMPLETION_DATE] && formatDate(answers[CONTRACT_COMPLETION_DATE]),
+      answers[CONTRACT_COMPLETION_DATE] && formatDate(new Date(answers[CONTRACT_COMPLETION_DATE])),
     ),
     fieldGroupItem(
       {
@@ -59,7 +59,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
           checkAndChange,
         ),
       },
-      answers[TOTAL_CONTRACT_VALUE] && formatCurrency(answers[TOTAL_CONTRACT_VALUE], answers[POLICY_CURRENCY_CODE]),
+      formatCurrency(Number(answers[TOTAL_CONTRACT_VALUE]), String(answers[POLICY_CURRENCY_CODE])),
     ),
     fieldGroupItem(
       {
@@ -73,7 +73,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
           checkAndChange,
         ),
       },
-      answers[REQUESTED_CREDIT_LIMIT] && formatCurrency(answers[REQUESTED_CREDIT_LIMIT], answers[POLICY_CURRENCY_CODE]),
+      formatCurrency(Number(answers[REQUESTED_CREDIT_LIMIT]), String(answers[POLICY_CURRENCY_CODE])),
     ),
   ] as Array<SummaryListItemData>;
 

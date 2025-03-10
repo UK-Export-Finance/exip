@@ -1,4 +1,4 @@
-import { SicCode } from '../../../types';
+import { SicCode, ObjectType } from '../../../types';
 
 /**
  * maps through database response for sicCode andindustrySectorName and returns array of strings
@@ -7,7 +7,7 @@ import { SicCode } from '../../../types';
  * @returns {Array<string>} array of sic codes in text form
  */
 const mapSicCodes = (codes: Array<SicCode>, codeOrDescription: string) => {
-  const sicCodes = codes.map((code) => code[codeOrDescription]);
+  const sicCodes = codes.map((code: ObjectType) => code[codeOrDescription]);
 
   return sicCodes;
 };

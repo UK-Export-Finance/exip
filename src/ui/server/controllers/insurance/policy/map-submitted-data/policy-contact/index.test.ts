@@ -2,6 +2,7 @@ import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/polic
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import { mockApplication, mockContact } from '../../../../../test-mocks';
 import mapSubmittedData from '.';
+import { RequestBody } from '../../../../../../types';
 
 const {
   NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME, IS_SAME_AS_OWNER },
@@ -19,7 +20,7 @@ const expectedVariables = {
 
 describe('controllers/insurance/policy/map-submitted-data/policy-contact', () => {
   describe(`when ${NAME} is ${SAME_NAME}`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: SAME_NAME,
       [POSITION]: 'CEO',
     };
@@ -38,7 +39,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${NAME} is ${OTHER_NAME}`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: OTHER_NAME,
     };
 
@@ -58,7 +59,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${NAME} is ${OTHER_NAME} and ${POSITION} is provided but application ${IS_SAME_AS_OWNER} is ${OTHER_NAME}`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: OTHER_NAME,
     };
 
@@ -89,7 +90,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${NAME} is am empty string`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: '',
       ...expectedVariables,
     };
@@ -102,7 +103,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy-contact', () =>
   });
 
   describe(`when ${OTHER_NAME} the same as the application owner`, () => {
-    const mockBody = {
+    const mockBody: RequestBody = {
       [NAME]: OTHER_NAME,
       ...mockContact,
     };

@@ -56,8 +56,8 @@ const applicationWithTotalSalesAndMaximumWillOwe = {
   ...mockApplication,
   policy: {
     ...mockApplication.policy,
-    [TOTAL_SALES_TO_BUYER]: '1234',
-    [MAXIMUM_BUYER_WILL_OWE]: '5678',
+    [TOTAL_SALES_TO_BUYER]: 1234,
+    [MAXIMUM_BUYER_WILL_OWE]: 5678,
   },
 };
 
@@ -65,8 +65,8 @@ const applicationWithoutTotalSalesAndMaximumWillOwe = {
   ...mockApplication,
   policy: {
     ...mockApplication.policy,
-    [TOTAL_SALES_TO_BUYER]: null,
-    [MAXIMUM_BUYER_WILL_OWE]: null,
+    [TOTAL_SALES_TO_BUYER]: undefined,
+    [MAXIMUM_BUYER_WILL_OWE]: undefined,
   },
 };
 

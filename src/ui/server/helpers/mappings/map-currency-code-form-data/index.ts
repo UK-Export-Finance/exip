@@ -17,7 +17,7 @@ const {
  * @param {String} fieldId: Currency code field ID
  * @returns {Object} Mapped object with currency field.
  */
-const mapCurrencyCodeFormData = (formBody: RequestBody, fieldId = CURRENCY_CODE) => {
+const mapCurrencyCodeFormData = (formBody: RequestBody, fieldId: string = CURRENCY_CODE) => {
   const populatedData = formBody;
 
   if (objectHasProperty(populatedData, fieldId)) {

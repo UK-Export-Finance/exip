@@ -7,9 +7,9 @@ import { RequestBody } from '../../../types';
 describe('shared-validation/full-address', () => {
   const FIELD_ID = 'field';
 
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: 'Mock name',
-  } as RequestBody;
+  };
 
   it('should return the result of providedAndMaxLength', () => {
     const response = fullAddress(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors);

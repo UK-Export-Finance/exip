@@ -14,9 +14,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/trading-history/validation/outstanding-payments', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return `emptyFieldValidation`', () => {
     const result = outstandingPaymentsRule(mockBody, mockErrors);

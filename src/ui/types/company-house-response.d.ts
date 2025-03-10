@@ -1,14 +1,14 @@
 import { SicCode } from './sic-code';
 
 interface CompaniesHouseAddress {
-  careOf: string | null;
-  premises: string | null;
-  addressLine1: string | null;
-  addressLine2: string | null;
-  locality: string | null;
-  region: string | null;
-  postalCode: string | null;
-  country: string | null;
+  careOf?: string | null;
+  premises?: string | null;
+  addressLine1?: string | null;
+  addressLine2?: string | null;
+  locality?: string | null;
+  region?: string | null;
+  postalCode?: string | null;
+  country?: string | null;
 }
 
 interface CompaniesHouseResponse {
@@ -17,7 +17,8 @@ interface CompaniesHouseResponse {
   companyNumber: string;
   companyAddress?: string;
   companyIncorporated?: string;
-  registeredOfficeAddress: CompaniesHouseAddress;
+  dateOfCreation?: string;
+  registeredOfficeAddress?: CompaniesHouseAddress;
   sicCodes?: Array<SicCode>;
   isActive?: boolean;
   success?: boolean;

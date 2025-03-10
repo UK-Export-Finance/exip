@@ -4,6 +4,7 @@ import save from '../../save-data/buyer-relationship';
 import generateValidationErrors from '../../../../../helpers/validation';
 import mapSubmittedData from '../../map-submitted-data/buyer-relationship';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   YOUR_BUYER: { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
@@ -12,7 +13,7 @@ const {
 describe('controllers/insurance/your-buyer/map-and-save/buyer-relationship', () => {
   jest.mock('../../save-data/buyer-relationship');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [CONNECTION_WITH_BUYER]: true,
     [CONNECTION_WITH_BUYER_DESCRIPTION]: 'mock description',

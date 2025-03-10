@@ -26,6 +26,6 @@ const EXPORTER_BUSINESS = {
     TURNOVER_CURRENCY_CODE: 'turnoverCurrencyCode',
   },
   HAS_CREDIT_CONTROL: 'hasCreditControlProcess',
-};
+} as const;
 
 export default EXPORTER_BUSINESS;

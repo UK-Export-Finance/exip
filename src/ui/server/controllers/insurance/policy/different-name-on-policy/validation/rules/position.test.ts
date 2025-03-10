@@ -15,9 +15,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 describe('controllers/insurance/policy/different-name-on-policy/validation/rules/position', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return the result of alphaCharactersAndMaxLengthValidation', () => {
     const response = position(mockBody, mockErrors);

@@ -1,4 +1,4 @@
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 import { objectHasProperty } from '../../../../../helpers/object';
@@ -16,9 +16,9 @@ const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, 
  * if body has OUTSTANDING_PAYMENTS as false, then TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE set to null
  * if TOTAL_OUTSTANDING_PAYMENTS or TOTAL_AMOUNT_OVERDUE are an empty string, then should be set to null
  * @param {RequestBody} formBody
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const { _csrf, ...populatedData } = formBody;
 
   /**

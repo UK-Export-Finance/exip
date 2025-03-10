@@ -1,5 +1,5 @@
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 import { objectHasProperty } from '../../../../../helpers/object';
 import stripHyphensAndSpacesFromString from '../../../../../helpers/strip-hyphens-and-spaces-from-string';
 
@@ -13,9 +13,9 @@ const {
  * if SORT_CODE, IBAN or BIC_SWIFT_CODE then run stripHyphensAndSpacesFromString to remove hyphens and spaces
  * capitalises IBAN and BIC_SWIFT_CODE
  * @param {RequestBody} formBody
- * @returns {Object} populated data
+ * @returns {ObjectType} populated data
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   if (objectHasProperty(populatedData, SORT_CODE)) {

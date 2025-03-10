@@ -200,7 +200,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           validBody[OUTSTANDING_PAYMENTS] = 'false';
 
           res.locals.application = mockApplication;
-          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = null;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = undefined;
 
           await post(req, res);
 
@@ -233,7 +233,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           validBody[OUTSTANDING_PAYMENTS] = 'false';
 
           res.locals.application = mockApplication;
-          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = null;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = undefined;
 
           await post(req, res);
 

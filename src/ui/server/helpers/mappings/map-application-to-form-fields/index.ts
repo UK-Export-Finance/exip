@@ -8,7 +8,8 @@ import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
 import mapNominatedLossPayeeLocation from '../map-nominated-loss-payee-location';
 import { transformEmptyDecimalsToWholeNumber } from '../../number';
-import { Application } from '../../../../types';
+import isNotNullOrUndefined from '../../is-not-null-or-undefined';
+import { Application, ObjectType } from '../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -36,25 +37,46 @@ const {
  * @param {Application} application
  * @returns {Application | Object} Mapped application for UI consumption
  */
-const mapApplicationToFormFields = (application?: Application): Application | object => {
+const mapApplicationToFormFields = (application?: Application): Application | ObjectType => {
   if (application && objectHasKeysAndValues(application)) {
-    const mapped = {
+    const mapped: ObjectType = {
       ...application,
       ...mapNameFields(application),
       ...mapTextareaFields(application),
     };
 
     if (mapped[SUBMISSION_DEADLINE]) {
-      mapped[SUBMISSION_DEADLINE] = formatDate(application[SUBMISSION_DEADLINE]);
+      const submissionDeadline = new Date(mapped[SUBMISSION_DEADLINE]);
+      mapped[SUBMISSION_DEADLINE] = formatDate(submissionDeadline);
     }
 
     if (application.business) {
+      let yearsExporting;
+      let employeesUK;
+      let percentageTurnover;
+      let estimatedAnnualTurnover;
+
+      if (isNotNullOrUndefined(application.business[YEARS_EXPORTING])) {
+        yearsExporting = transformNumberToString(Number(application.business[YEARS_EXPORTING]));
+      }
+
+      if (isNotNullOrUndefined(application.business[EMPLOYEES_UK])) {
+        employeesUK = transformNumberToString(Number(application.business[EMPLOYEES_UK]));
+      }
+
+      if (isNotNullOrUndefined(application.business[PERCENTAGE_TURNOVER])) {
+        percentageTurnover = transformNumberToString(Number(application.business[PERCENTAGE_TURNOVER]));
+      }
+
+      if (isNotNullOrUndefined(application.business[ESTIMATED_ANNUAL_TURNOVER])) {
+        estimatedAnnualTurnover = transformNumberToString(Number(application.business[ESTIMATED_ANNUAL_TURNOVER]));
+      }
       mapped.business = {
         ...mapped.business,
-        [YEARS_EXPORTING]: transformNumberToString(application.business[YEARS_EXPORTING]),
-        [EMPLOYEES_UK]: transformNumberToString(application.business[EMPLOYEES_UK]),
-        [PERCENTAGE_TURNOVER]: transformNumberToString(application.business[PERCENTAGE_TURNOVER]),
-        [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(application.business[ESTIMATED_ANNUAL_TURNOVER]),
+        [YEARS_EXPORTING]: yearsExporting,
+        [EMPLOYEES_UK]: employeesUK,
+        [PERCENTAGE_TURNOVER]: percentageTurnover,
+        [ESTIMATED_ANNUAL_TURNOVER]: estimatedAnnualTurnover,
       };
     }
 
@@ -66,7 +88,7 @@ const mapApplicationToFormFields = (application?: Application): Application | ob
     }
 
     if (application?.policy?.[REQUESTED_START_DATE]) {
-      const timestamp = application.policy[REQUESTED_START_DATE];
+      const timestamp = new Date(application.policy[REQUESTED_START_DATE]);
 
       mapped.policy = {
         ...mapped.policy,
@@ -75,7 +97,7 @@ const mapApplicationToFormFields = (application?: Application): Application | ob
     }
 
     if (application?.policy?.[CONTRACT_COMPLETION_DATE]) {
-      const timestamp = application.policy[CONTRACT_COMPLETION_DATE];
+      const timestamp = new Date(application.policy[CONTRACT_COMPLETION_DATE]);
 
       mapped.policy = {
         ...mapped.policy,

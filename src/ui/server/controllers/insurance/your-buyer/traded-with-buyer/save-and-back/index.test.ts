@@ -30,8 +30,8 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
   });
 
   const validBody = {
-    [CONNECTION_WITH_BUYER]: mockBuyer[CONNECTION_WITH_BUYER],
-    [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
+    [CONNECTION_WITH_BUYER]: mockBuyer.relationship[CONNECTION_WITH_BUYER],
+    [TRADED_WITH_BUYER]: mockBuyer.buyerTradingHistory[TRADED_WITH_BUYER],
   };
 
   describe('when there are no validation errors', () => {
@@ -60,7 +60,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
   describe('when there are validation errors', () => {
     it('should redirect to all sections page', async () => {
       req.body = {
-        [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
+        [TRADED_WITH_BUYER]: mockBuyer.buyerTradingHistory[TRADED_WITH_BUYER],
       };
 
       await post(req, res);
@@ -70,7 +70,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
 
     it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = {
-        [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
+        [TRADED_WITH_BUYER]: mockBuyer.buyerTradingHistory[TRADED_WITH_BUYER],
       };
 
       await post(req, res);

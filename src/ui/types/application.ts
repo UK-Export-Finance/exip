@@ -109,6 +109,11 @@ interface ApplicationCompany {
   registeredOfficeAddress: ApplicationCompanyAddress;
   sicCodes: Array<SicCode>;
   differentTradingAddress: ApplicationCompanyDifferentTradingAddress;
+  financialYearEndDate?: Date;
+  dateOfCreation?: string | Date;
+  industrySectorNames?: Array<string>;
+  differentTradingName?: string;
+  phoneNumber?: string;
 }
 
 interface ApplicationBusiness {
@@ -120,6 +125,7 @@ interface ApplicationBusiness {
   exportsTurnoverPercentage?: string;
   turnoverCurrencyCode?: string;
   hasCreditControlProcess?: boolean;
+  goodsOrServicesSupplied?: string;
 }
 
 interface ApplicationBroker {
@@ -148,6 +154,8 @@ interface ApplicationBuyerTradingHistory {
   currencyCode?: string;
   outstandingPayments?: boolean;
   failedPayments?: boolean;
+  totalOutstandingPayments?: number;
+  totalOverduePayments?: number;
 }
 
 interface ApplicationBuyerCore {
@@ -286,7 +294,7 @@ interface ApplicationNominatedLossPayee {
   name?: string;
 }
 
-interface ApplicationPolicy {
+interface ApplicationPolicyCore {
   id: string;
   policyType?: string;
   requestedStartDate?: string;
@@ -297,8 +305,12 @@ interface ApplicationPolicy {
   totalMonthsOfCover?: number;
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
-  jointlyInsuredParty: ApplicationJointlyInsuredParty;
   requestedCreditLimit?: number;
+  needPreCreditPeriodCover?: boolean;
+}
+
+interface ApplicationPolicy extends ApplicationPolicyCore {
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
 }
 
 interface Application extends ApplicationCore {
@@ -323,7 +335,33 @@ interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore,
   totalContractValueOverThreshold?: boolean;
 }
 
-type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclarationFlat;
+interface ApplicationFlatPolicy extends ApplicationPolicyCore {
+  requested?: boolean;
+  isAppointed?: boolean;
+  'broker.fullAddress'?: string;
+  isLocatedInUk?: boolean;
+  isLocatedInternationally?: boolean;
+}
+
+interface ApplicationFlatExportContract extends ApplicationExportContract {
+  attempted?: boolean;
+  isUsingAgent?: boolean;
+}
+
+interface ApplicationFlatBuyer extends ApplicationBuyerCore {
+  exporterIsConnectedWithBuyer?: boolean;
+  exporterHasTradedWithBuyer?: boolean;
+  outstandingPayments?: boolean;
+  exporterHasPreviousCreditInsuranceWithBuyer?: boolean;
+}
+
+type ApplicationFlat = ApplicationFlatCore &
+ApplicationFlatPolicy &
+ApplicationBroker &
+ApplicationCompany &
+ApplicationDeclarationFlat &
+ApplicationFlatExportContract &
+ApplicationFlatBuyer;
 
 interface ApplicationVersionSmallExportBuilder {
   MAXIMUM_BUYER_WILL_OWE: number;

@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy-contact';
 import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
-import { Request, ResponseInsurance } from '../../../../../types';
+import { Request, ResponseInsurance, RequestBody } from '../../../../../types';
 import { mockReq, mockResInsurance, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
@@ -173,7 +173,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
       });
 
       describe("when the url's last substring is `change`", () => {
-        const validBody = {
+        const validBody: RequestBody = {
           [NAME]: SAME_NAME,
           [POSITION]: 'Text',
         };
@@ -208,7 +208,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        const validBody = {
+        const validBody: RequestBody = {
           [NAME]: SAME_NAME,
           [POSITION]: 'Text',
         };

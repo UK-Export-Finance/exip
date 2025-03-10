@@ -14,9 +14,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/failed-to-pay-on-time/validation/rules/failed-payments', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return `emptyFieldValidation`', () => {
     const result = failedPaymentsRule(mockBody, mockErrors);

@@ -1,6 +1,7 @@
 import POLICY_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
+import { ObjectType } from '../../../../types';
 
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
@@ -33,9 +34,9 @@ const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
  * getContractPolicyTasks
  * Get contract policy tasks depending on the type of policy
  * @param {String} Application policy type
- * @returns {Object} Contract policy tasks
+ * @returns {ObjectType} Contract policy tasks
  */
-export const getContractPolicyTasks = (policyType?: string): object => {
+export const getContractPolicyTasks = (policyType?: string): ObjectType => {
   if (policyType && isSinglePolicyType(policyType)) {
     return {
       CONTRACT_COMPLETION_DATE,
@@ -78,7 +79,7 @@ export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: boolean, brokerFullAddress?: string) => {
-  let tasks: Array<string> = [];
+  let tasks: string[] = [];
 
   /**
    * If USING_BROKER is true:

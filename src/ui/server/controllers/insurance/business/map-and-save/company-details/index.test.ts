@@ -5,6 +5,7 @@ import generateValidationErrors from '../../../../../helpers/validation';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import mapSubmittedData from '../../map-submitted-data/company-details';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER },
@@ -18,7 +19,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
   jest.mock('../../save-data/company-details');
   jest.mock('../../save-data/company-different-trading-address');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [HAS_DIFFERENT_TRADING_NAME]: 'true',
     [HAS_DIFFERENT_TRADING_ADDRESS]: 'true',

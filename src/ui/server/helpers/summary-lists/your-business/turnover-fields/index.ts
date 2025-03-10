@@ -54,7 +54,7 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      formatCurrency(answers[ESTIMATED_ANNUAL_TURNOVER], answers[TURNOVER_CURRENCY_CODE]),
+      formatCurrency(Number(answers[ESTIMATED_ANNUAL_TURNOVER]), String(answers[TURNOVER_CURRENCY_CODE])),
     ),
     fieldGroupItem(
       {
@@ -63,7 +63,7 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${PERCENTAGE_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      mapPercentage(answers[PERCENTAGE_TURNOVER]),
+      mapPercentage(String(answers[PERCENTAGE_TURNOVER])),
     ),
   ] as Array<SummaryListItemData>;
 

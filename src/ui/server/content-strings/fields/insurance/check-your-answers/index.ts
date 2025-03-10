@@ -1,10 +1,11 @@
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { ObjectType } from '../../../../../types/object';
 
 const { CHECK_YOUR_ANSWERS } = FIELD_IDS;
 
 const { ELIGIBILITY, EXPORTER_BUSINESS, BUYER, EXPORT_CONTRACT, POLICY } = CHECK_YOUR_ANSWERS;
 
-export const CHECK_YOUR_ANSWERS_FIELDS = {
+export const CHECK_YOUR_ANSWERS_FIELDS: ObjectType = {
   [ELIGIBILITY]: {
     VALUE: true,
   },

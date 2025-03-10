@@ -49,7 +49,7 @@ export const agentDetailsFields = (answers: ApplicationExportContractAgent, refe
         href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      replaceNewLineWithLineBreak(answers[FULL_ADDRESS]),
+      answers[FULL_ADDRESS] && replaceNewLineWithLineBreak(answers[FULL_ADDRESS]),
     ),
     fieldGroupItem(
       {
@@ -58,7 +58,7 @@ export const agentDetailsFields = (answers: ApplicationExportContractAgent, refe
         href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      getCountryByIsoCode(countries, answers[COUNTRY_CODE]).name,
+      answers[COUNTRY_CODE] && getCountryByIsoCode(countries, answers[COUNTRY_CODE]).name,
     ),
   ];
 
@@ -82,7 +82,7 @@ export const agentServiceFields = (answers: ApplicationExportContractAgentServic
         href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${SERVICE_DESCRIPTION}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      replaceNewLineWithLineBreak(answers[SERVICE_DESCRIPTION]),
+      answers[SERVICE_DESCRIPTION] && replaceNewLineWithLineBreak(answers[SERVICE_DESCRIPTION]),
     ),
   ];
 

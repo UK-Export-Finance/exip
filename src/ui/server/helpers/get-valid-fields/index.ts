@@ -1,16 +1,17 @@
 import { isEmptyString } from '../string';
+import { ObjectType } from '../../../types';
 
 /**
  * getValidFields
  * Strip invalid fields from submitted form data
- * @param {Object} Form data
- * @param {Object} Errors list
+ * @param {ObjectType} Form data
+ * @param {ObjectType} Errors list
  * @returns {Object} Form data with invalid fields removed
  */
-const getValidFields = (formData: object, errorList: object) => {
+const getValidFields = (formData: ObjectType, errorList: ObjectType) => {
   const fieldsWithErrors = Object.keys(errorList);
 
-  const validFields = {};
+  const validFields: ObjectType = {};
 
   Object.keys(formData).forEach((fieldName) => {
     const fieldValue = formData[fieldName];

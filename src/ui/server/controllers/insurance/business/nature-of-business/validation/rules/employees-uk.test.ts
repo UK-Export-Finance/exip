@@ -14,9 +14,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/nature-of-business/validation/rules/employees-uk', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe(`when the ${FIELD_ID} input is empty`, () => {
     it('should return a validation error', () => {

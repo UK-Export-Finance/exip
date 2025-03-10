@@ -13,9 +13,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 describe('controllers/insurance/policy/different-name-on-policy/validation/rules/last-name', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return the result of alphaCharactersAndMaxLengthValidation', () => {
     const result = lastName(mockBody, mockErrors);

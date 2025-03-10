@@ -1,13 +1,14 @@
 import { getDate, getMonth, getYear } from 'date-fns';
+import { ObjectType } from '../../../../types';
 
 /**
  * getDateFieldsFromTimestamp
  * Generate an object with day/month/year, prefixed with the provided field ID
  * @param {Date} Timestamp
  * @param {String} fieldId: Field ID
- * @returns {Object} Object with day/month/year, prefixed with the provided field ID
+ * @returns {ObjectType} Object with day/month/year, prefixed with the provided field ID
  */
-const getDateFieldsFromTimestamp = (timestamp: Date, fieldId: string): object => {
+const getDateFieldsFromTimestamp = (timestamp: Date, fieldId: string): ObjectType => {
   if (timestamp && fieldId) {
     const date = new Date(timestamp);
 

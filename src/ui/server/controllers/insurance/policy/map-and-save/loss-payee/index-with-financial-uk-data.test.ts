@@ -24,7 +24,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee - with IS_APPOINT
 
   const mockCsrf = '1234';
 
-  let mockFormBody = {} as RequestBody;
+  let mockFormBody: RequestBody = {};
   let populatedData = {};
 
   const mockApplication = {

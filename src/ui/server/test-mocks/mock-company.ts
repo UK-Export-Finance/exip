@@ -1,4 +1,5 @@
 import { Company } from '../../types';
+import mockSicCodes from './mock-sic-codes';
 
 const mockCompany = {
   companyName: 'Mock company',
@@ -14,7 +15,7 @@ const mockCompany = {
     country: null,
   },
   dateOfCreation: '2012-08-23',
-  sicCodes: ['68201'],
+  sicCodes: [mockSicCodes[0]],
   industrySectorNames: [],
   isActive: true,
   __typename: 'Company',

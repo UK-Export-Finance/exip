@@ -14,6 +14,6 @@ const DECLARATIONS = {
       AWARE_OF_EXISTING_SLAVERY: 'awareOfExistingSlavery',
     },
   },
-};
+} as const;
 
 export default DECLARATIONS;

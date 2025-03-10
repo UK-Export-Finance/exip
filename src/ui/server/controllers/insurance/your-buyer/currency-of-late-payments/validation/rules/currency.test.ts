@@ -16,9 +16,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/currency-of-late-payments/validation/rules/currency', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return `emptyFieldValidation`', () => {
     const result = alternativeCurrencyRule(mockBody, mockErrors);

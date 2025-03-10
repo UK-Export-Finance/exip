@@ -13,9 +13,9 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER];
 
 describe('controllers/insurance/business/turnover/validation/rules/percentage-of-turnover', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [PERCENTAGE_TURNOVER]: '',
-  } as RequestBody;
+  };
 
   const errorMessages = {
     IS_EMPTY: ERROR_MESSAGE.IS_EMPTY,

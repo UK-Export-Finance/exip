@@ -12,7 +12,7 @@ export const isAString = (value: any) => typeof value === 'string';
  * @param {String}
  * @returns {Boolean}
  */
-export const isEmptyString = (str: string) => str === '';
+export const isEmptyString = (str?: string) => str === '';
 
 /**
  * isPopulatedString

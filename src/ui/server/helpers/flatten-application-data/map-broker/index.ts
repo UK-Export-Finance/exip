@@ -1,5 +1,5 @@
 import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
-import { ApplicationBroker } from '../../../../types';
+import { ApplicationBroker, ObjectType } from '../../../../types';
 
 const {
   USING_BROKER,
@@ -31,7 +31,7 @@ const {
 const mapBroker = (broker: ApplicationBroker) => {
   const { isUsingBroker, isBasedInUk, fullAddress } = broker;
 
-  const mapped = {
+  const mapped: ObjectType = {
     id: broker.id,
     [USING_BROKER]: isUsingBroker,
   };

@@ -37,7 +37,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
   it(`should return the application with a mapped ${SUBMISSION_DEADLINE}`, () => {
     const result = mapApplicationToFormFields(mockApplication) as Application;
 
-    const expected = formatDate(mockApplication[SUBMISSION_DEADLINE]);
+    const expected = formatDate(new Date(mockApplication[SUBMISSION_DEADLINE]));
 
     expect(result[SUBMISSION_DEADLINE]).toEqual(expected);
   });
@@ -47,10 +47,10 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
 
     const expected = {
       ...mockApplication.business,
-      [YEARS_EXPORTING]: transformNumberToString(mockApplication.business[YEARS_EXPORTING]),
-      [EMPLOYEES_UK]: transformNumberToString(mockApplication.business[EMPLOYEES_UK]),
-      [PERCENTAGE_TURNOVER]: transformNumberToString(mockApplication.business[PERCENTAGE_TURNOVER]),
-      [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(mockApplication.business[ESTIMATED_ANNUAL_TURNOVER]),
+      [YEARS_EXPORTING]: transformNumberToString(Number(mockApplication.business[YEARS_EXPORTING])),
+      [EMPLOYEES_UK]: transformNumberToString(Number(mockApplication.business[EMPLOYEES_UK])),
+      [PERCENTAGE_TURNOVER]: transformNumberToString(Number(mockApplication.business[PERCENTAGE_TURNOVER])),
+      [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(Number(mockApplication.business[ESTIMATED_ANNUAL_TURNOVER])),
     };
 
     expect(result.business).toEqual(expected);
@@ -71,14 +71,18 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
       ...mockApplication,
       business: {
         ...business,
-        [YEARS_EXPORTING]: null,
-        [EMPLOYEES_UK]: null,
-        [PERCENTAGE_TURNOVER]: null,
-        [ESTIMATED_ANNUAL_TURNOVER]: null,
+        [YEARS_EXPORTING]: undefined,
+        [EMPLOYEES_UK]: undefined,
+        [PERCENTAGE_TURNOVER]: undefined,
+        [ESTIMATED_ANNUAL_TURNOVER]: undefined,
+      },
+      nominatedLossPayee: {
+        ...mockApplication.nominatedLossPayee,
+        [LOCATION]: mapNominatedLossPayeeLocation(mockApplication.nominatedLossPayee),
       },
       company: {
         ...company,
-        [FINANCIAL_YEAR_END_DATE]: null,
+        [FINANCIAL_YEAR_END_DATE]: undefined,
       },
       policy: {
         id: policy.id,
@@ -94,7 +98,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
       ...minimalApplication,
       ...mapNameFields(minimalApplication),
       ...mapTextareaFields(minimalApplication),
-      [SUBMISSION_DEADLINE]: formatDate(minimalApplication[SUBMISSION_DEADLINE]),
+      [SUBMISSION_DEADLINE]: formatDate(new Date(minimalApplication[SUBMISSION_DEADLINE])),
     };
 
     expect(result).toEqual(expected);
@@ -103,8 +107,8 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
   it('should return mapped policy data with date fields from timestamps', () => {
     const result = mapApplicationToFormFields(mockApplication) as Application;
 
-    const timestampStart = mockApplication.policy[REQUESTED_START_DATE];
-    const timestampEnd = mockApplication.policy[CONTRACT_COMPLETION_DATE];
+    const timestampStart = new Date(mockApplication.policy[REQUESTED_START_DATE]!);
+    const timestampEnd = new Date(mockApplication.policy[CONTRACT_COMPLETION_DATE]!);
 
     const expected = {
       ...mockApplication.policy,

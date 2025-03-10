@@ -1,6 +1,6 @@
 import DECLARATIONS_FIELD_IDS from '../../../../../constants/field-ids/insurance/declarations';
 import { isEmptyString } from '../../../../../helpers/string';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   MODERN_SLAVERY: {
@@ -15,9 +15,9 @@ const {
  * mapSubmittedData
  * Map "Declarations - Modern slavery" fields
  * @param {RequestBody} formBody: Form body
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   /**

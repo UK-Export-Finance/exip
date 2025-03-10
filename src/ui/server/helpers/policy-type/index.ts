@@ -6,7 +6,7 @@ import { FIELD_VALUES } from '../../constants';
  * @param {String} Policy type
  * @returns {Boolean}
  */
-const isSinglePolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+const isSinglePolicyType = (policyType?: string) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 
 /**
  * isMultiplePolicyType
@@ -14,7 +14,7 @@ const isSinglePolicyType = (policyType: string) => policyType === FIELD_VALUES.P
  * @param {String} Policy type
  * @returns {Boolean}
  */
-const isMultiplePolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+const isMultiplePolicyType = (policyType?: string) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 /**
  * isValidPolicyType

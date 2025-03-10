@@ -9,7 +9,7 @@ import { ObjectType } from '../../../../types';
  * - If an object key value is an array, call sanitiseArrayOfStrings.
  * - If an object key value is an object, call sanitiseObject.
  * - Otherwise, sanitiseObjectValue is used for each value in the object.
- * @param {Object}
+ * @param {ObjectType}
  * @returns {Boolean}
  */
 const sanitiseObject = (obj: ObjectType) => {

@@ -1,5 +1,5 @@
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   USING_AGENT,
@@ -11,9 +11,9 @@ const {
  * Map agent fields
  * if USING_AGENT is false, delete AGENT_DETAILS fields
  * @param {RequestBody} formBody: Form body
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   if (formBody[USING_AGENT] === 'false') {

@@ -11,7 +11,7 @@ type Quote = {
   maximumContractAmountOwed?: number;
   percentageOfCover: number;
   policyLength: number;
-  policyType: number;
+  policyType: string;
   premiumRatePercentage: number;
 };
 
@@ -25,6 +25,8 @@ interface QuoteContent {
   percentageOfCover: string;
   premiumRatePercentage: string;
   singlePolicyLengthMonths?: string;
+  policyType?: string;
+  policyLength?: string;
 }
 
 export { Quote, QuoteContent };

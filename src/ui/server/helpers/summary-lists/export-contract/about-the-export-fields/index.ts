@@ -87,7 +87,7 @@ const generateAboutTheExportFields = (answers: ApplicationExportContract, refere
         ),
         renderChangeLink: true,
       },
-      replaceNewLineWithLineBreak(answers[PAYMENT_TERMS_DESCRIPTION]),
+      answers[PAYMENT_TERMS_DESCRIPTION] && replaceNewLineWithLineBreak(answers[PAYMENT_TERMS_DESCRIPTION]),
     ),
   ] as Array<SummaryListItemData>;
 

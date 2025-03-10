@@ -28,16 +28,17 @@ interface SubmittedDataQuoteEligibility extends SharedEligibility {
   percentageOfCover?: number;
   policyType?: string;
   policyLength?: number;
+  validBuyerBody?: boolean;
 }
 
 interface SectionReview {
   eligibility?: boolean;
 }
 
-interface TotalContractValue {
-  value?: string;
-  valueId?: number;
-}
+// interface TotalContractValue {
+//   value?: string;
+//   valueId?: number;
+// }
 
 interface InsuranceEligibilityCore extends SharedEligibility {
   companyNumber?: string;
@@ -49,11 +50,11 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   isPartyToConsortium?: boolean;
   isMemberOfAGroup?: boolean;
   sectionReview?: SectionReview;
-  totalContractValue?: TotalContractValue;
+  totalContractValue?: number;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {
-  buyerCountry: Country;
+  buyerCountry?: Country;
 }
 
 interface SubmittedDataInsuranceEligibility extends InsuranceEligibilityCore {

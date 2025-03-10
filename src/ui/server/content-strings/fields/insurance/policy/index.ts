@@ -3,6 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
+import { ObjectType } from '../../../../../types/object';
 
 const {
   ACCOUNT: { EMAIL },
@@ -43,7 +44,7 @@ const maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL
 
 const SMALL_EXPORT_BUILDER_THRESHOLD = formatCurrency(maxBuyerWillOweThreshold, GBP_CURRENCY_CODE);
 
-export const POLICY_FIELDS = {
+export const POLICY_FIELDS: ObjectType = {
   [POLICY_TYPE]: {
     ID: POLICY_TYPE,
     OPTIONS: {

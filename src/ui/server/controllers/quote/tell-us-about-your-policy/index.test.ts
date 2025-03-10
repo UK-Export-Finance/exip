@@ -21,6 +21,7 @@ import {
   mockCurrenciesEmptyResponse,
   mockSession,
   mockSpyPromiseRejection,
+  GBP,
 } from '../../../test-mocks';
 import { Request, Response, SelectOption } from '../../../../types';
 
@@ -193,7 +194,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+      const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
       const PAGE_VARIABLES = generatePageVariables(policyType);
 
@@ -229,11 +230,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should render template with currencies mapped to submitted currency and submittedValues', async () => {
         await get(req, res);
 
-        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+        const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
         const PAGE_VARIABLES = generatePageVariables(policyType);
 
-        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY]!.isoCode);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
@@ -267,11 +268,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should render template with percentage of cover mapped to submitted percentage and submittedValues', async () => {
         await get(req, res);
 
-        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+        const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
         const PAGE_VARIABLES = generatePageVariables(policyType);
 
-        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY]!.isoCode);
 
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
@@ -299,18 +300,17 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('when a credit period has been submitted', () => {
       beforeEach(() => {
         req.session.submittedData = mockSession.submittedData;
-        // @ts-ignore
         req.session.submittedData.quoteEligibility[CREDIT_PERIOD] = 2;
       });
 
       it('should render template with credit period mapped to submitted credit period and submittedValues', async () => {
         await get(req, res);
 
-        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+        const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
         const PAGE_VARIABLES = generatePageVariables(policyType);
 
-        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY]!.isoCode);
 
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
@@ -369,7 +369,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
     beforeEach(() => {
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
-      req.body = mockAnswers;
+      req.body = {
+        ...mockAnswers,
+        [CURRENCY]: GBP.isoCode,
+      };
       req.session.submittedData = {
         quoteEligibility: previousFlowSubmittedData,
         insuranceEligibility: {},
@@ -398,7 +401,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
 
-        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+        const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
         const PAGE_VARIABLES = generatePageVariables(policyType);
 
@@ -440,7 +443,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted currency from constructPayload function', async () => {
           await post(req, res);
 
-          const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+          const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
           const PAGE_VARIABLES = generatePageVariables(policyType);
 
@@ -482,7 +485,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
           const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
 
-          const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+          const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
           const PAGE_VARIABLES = generatePageVariables(policyType);
 
@@ -521,7 +524,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted credit period from constructPayload function', async () => {
           await post(req, res);
 
-          const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+          const policyType = String(req.session.submittedData.quoteEligibility[POLICY_TYPE]);
 
           const PAGE_VARIABLES = generatePageVariables(policyType);
 
@@ -580,7 +583,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         const expectedPopulatedData = {
           ...payload,
-          [CURRENCY]: getCurrencyByCode(mockCurrencies, validBody[CURRENCY]),
+          [CURRENCY]: getCurrencyByCode(mockCurrencies, String(validBody[CURRENCY])),
         };
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);

@@ -4,6 +4,7 @@ import mapSubmittedData from '../../turnover/map-submitted-data';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
@@ -14,7 +15,7 @@ const {
 describe('controllers/insurance/business/map-and-save/turnover', () => {
   jest.mock('../../save-data/business');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [PERCENTAGE_TURNOVER]: '25',
     [ESTIMATED_ANNUAL_TURNOVER]: '35000',

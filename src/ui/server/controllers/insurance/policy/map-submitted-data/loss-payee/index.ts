@@ -1,7 +1,7 @@
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import { objectHasProperty } from '../../../../../helpers/object';
 import sanitiseValue from '../../../../../helpers/sanitise-data/sanitise-value';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
@@ -14,9 +14,9 @@ const {
  * if IS_APPOINTED has a value of false, wipe IS_APPOINTED related data.
  * if LOCATION, is provided, map LOCATION related data.
  * @param {Express.Request.body} formBody
- * @returns {Object} populated data
+ * @returns {ObjectType} populated data
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   /**

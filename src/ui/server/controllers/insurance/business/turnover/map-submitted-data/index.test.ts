@@ -19,10 +19,10 @@ const {
 describe('controllers/insurance/business/turnover/map-submitted-data', () => {
   describe('when all fields are provided and all number fields contain a comma', () => {
     it('should return the formBody with the commas replaced', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         ...mockBusinessTurnover,
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 
@@ -37,11 +37,11 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
 
   describe('when all fields are provided and none contain a comma', () => {
     it(`should return the formBody with ${PERCENTAGE_TURNOVER} as a number`, () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         [ESTIMATED_ANNUAL_TURNOVER]: estimatedAnnualTurnover,
         [PERCENTAGE_TURNOVER]: exportsTurnoverPercentage,
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 
@@ -56,11 +56,11 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
 
   describe('when some fields are provided and none contain a comma', () => {
     it('should return the formBody with the populated fields populated, and the remaining as empty strings', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         [ESTIMATED_ANNUAL_TURNOVER]: estimatedAnnualTurnover,
         [PERCENTAGE_TURNOVER]: '',
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 
@@ -75,13 +75,13 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
 
   describe('when no fields are provided (all are empty strings)', () => {
     it('should return the formBody with fields as empty strings', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         _csrf: '1234',
         [ESTIMATED_ANNUAL_TURNOVER]: '',
         [PERCENTAGE_TURNOVER]: '',
         [CURRENCY_CODE]: '',
         [ALTERNATIVE_CURRENCY_CODE]: '',
-      } as RequestBody;
+      };
 
       const response = mapSubmittedData(mockBody);
 
@@ -96,7 +96,7 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
 
   describe(`when ${CURRENCY_CODE} is provided`, () => {
     it('should return an object via  mapCurrencyCodeFormData', () => {
-      const mockBody = {
+      const mockBody: RequestBody = {
         [CURRENCY_CODE]: mockApplication.business.turnoverCurrencyCode,
       };
 

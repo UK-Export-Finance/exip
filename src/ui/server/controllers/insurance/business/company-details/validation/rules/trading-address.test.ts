@@ -16,9 +16,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/trading-address', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return the result of fullAddressValidation', () => {
     const result = tradingAddress(mockBody, mockErrors);

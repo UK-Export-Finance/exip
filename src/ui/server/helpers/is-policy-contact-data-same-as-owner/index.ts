@@ -1,6 +1,6 @@
 import { ApplicationPolicyContact, ApplicationOwner } from '../../../types';
 import ACCOUNT_FIELD_IDS from '../../constants/field-ids/insurance/account';
-import { stringsAreDefined, stringsAreEqual } from '../string';
+import { stringsAreEqual } from '../string';
 
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
@@ -18,15 +18,15 @@ const isPolicyContactDataSameAsOwner = (owner: ApplicationOwner, policyContact: 
   let sameEmail = false;
 
   // if strings are defined and equal, then change to true
-  if (stringsAreDefined(owner[FIRST_NAME], policyContact[FIRST_NAME])) {
+  if (owner[FIRST_NAME] && policyContact[FIRST_NAME]) {
     sameFirstName = stringsAreEqual(owner[FIRST_NAME], policyContact[FIRST_NAME]);
   }
 
-  if (stringsAreDefined(owner[LAST_NAME], policyContact[LAST_NAME])) {
+  if (owner[LAST_NAME] && policyContact[LAST_NAME]) {
     sameLastName = stringsAreEqual(owner[LAST_NAME], policyContact[LAST_NAME]);
   }
 
-  if (stringsAreDefined(owner[EMAIL], policyContact[EMAIL])) {
+  if (owner[EMAIL] && policyContact[EMAIL]) {
     sameEmail = stringsAreEqual(owner[EMAIL], policyContact[EMAIL]);
   }
 

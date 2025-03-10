@@ -63,7 +63,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       it(`should add an ${CONTRACT_VALUE} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [POLICY_LENGTH]: 1,
+          [POLICY_LENGTH]: '1',
           [INSURED_FOR]: '£123',
           [CONTRACT_VALUE]: '£567',
         };
@@ -86,7 +86,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       it(`should add an ${INSURED_FOR} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [POLICY_LENGTH]: 1,
+          [POLICY_LENGTH]: '1',
           [INSURED_FOR]: '£123',
         };
 
@@ -106,7 +106,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       it(`should add an ${POLICY_LENGTH} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [POLICY_LENGTH]: 1,
+          [POLICY_LENGTH]: '1',
         };
 
         const result = generateFields(mockQuoteContent);

@@ -40,6 +40,6 @@ export const EXPORT_CONTRACT = {
     PERCENTAGE: 'percentage',
     PERCENTAGE_CHARGE: 'percentageCharge',
   },
-};
+} as const;
 
 export default EXPORT_CONTRACT;

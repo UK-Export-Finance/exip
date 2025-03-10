@@ -44,7 +44,7 @@ import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
-import { Currency, CurrencyRadios } from './currency';
+import { Currency, CurrencyRadios, CurrencySymbol } from './currency';
 import { Business } from './business';
 import { DateErrorMessage, ErrorMessageObject } from './errors';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response, ResponseInsurance } from './express';
@@ -55,14 +55,8 @@ import { Quote, QuoteContent } from './quote';
 import { RadioOption } from './radio-option';
 import { SelectOption } from './select-option';
 import { SicCode } from './sic-code';
-import {
-  CanCreateApplicationEligibilityFlags,
-  SubmittedDataQuoteEligibility,
-  InsuranceEligibility,
-  InsuranceEligibilityCore,
-  SubmittedDataInsuranceEligibility,
-  SubmittedData,
-} from './submitted-data';
+import { SectionReview, TotalContractValue, InsuranceEligibilityCore, InsuranceEligibility, QuoteEligibility, EligibilityData } from './eligibility';
+import { CanCreateApplicationEligibilityFlags, SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility, SubmittedData } from './submitted-data';
 import {
   SummaryListItem,
   SummaryListItemData,
@@ -101,6 +95,7 @@ import {
 import { InsuranceFeedbackVariables } from './feedback';
 import { SanitiseValueObjParams } from './sanitise-value';
 import { ObjectType } from './object';
+import { SuccessBannerObject } from './successBanner';
 
 export {
   Account,
@@ -153,10 +148,12 @@ export {
   CreatePrepareApplicationTasksParams,
   Currency,
   CurrencyRadios,
+  CurrencySymbol,
   DateErrorMessage,
   DateValidationRulesParams,
   DateValidationFormatRulesParams,
   DateValidationFormatRules,
+  EligibilityData,
   ErrorMessageObject,
   Business,
   InsuranceEligibility,
@@ -169,6 +166,7 @@ export {
   ObjectType,
   PageContentStrings,
   PageVariablesContentStrings,
+  QuoteEligibility,
   PricingGrid,
   PricingGridMonth,
   PricingGridRate,
@@ -183,6 +181,7 @@ export {
   Response,
   ResponseInsurance,
   RadioOption,
+  SectionReview,
   SectionStartPageVariables,
   SectionStartPageVariablesInput,
   SelectOption,
@@ -194,6 +193,7 @@ export {
   SubmittedDataInsuranceEligibility,
   SanitiseValueObjParams,
   SubmittedData,
+  SuccessBannerObject,
   SummaryListItemData,
   SummaryListItemDataFieldSummary,
   SummaryListItemDataInput,
@@ -210,6 +210,7 @@ export {
   TaskListDataGroup,
   TaskListGroup,
   TaskListTask,
+  TotalContractValue,
   ValidationErrors,
   ValidationMinAndMaxLengthParams,
   ValidationWholeNumberParams,

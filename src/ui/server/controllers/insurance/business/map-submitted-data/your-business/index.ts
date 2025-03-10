@@ -1,4 +1,4 @@
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { FIELD_IDS } from '../../../../../constants';
 import { stripCommas } from '../../../../../helpers/string';
@@ -13,9 +13,9 @@ const {
  * maps business formBody and returns fields in correct format
  * removes commas from numbers entered as commas are valid input
  * @param {RequestBody} formBody
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const { _csrf, ...populatedData } = formBody;
 
   if (objectHasProperty(populatedData, YEARS_EXPORTING)) {

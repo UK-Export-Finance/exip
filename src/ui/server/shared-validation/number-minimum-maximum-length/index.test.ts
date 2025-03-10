@@ -9,9 +9,9 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
   const MINIMUM = 5;
   const MAXIMUM = 7;
 
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '1234567',
-  } as RequestBody;
+  };
 
   describe('when a number is not provided', () => {
     it('should return a validation errors', () => {

@@ -1,11 +1,13 @@
+import { ObjectType } from '../../../types';
+
 /**
  * getTrueAndFalseAnswers
  * Get properties with true/false booleans in an object:
- * @param {Object}
+ * @param {ObjectType}
  * @returns {Object} Object with only true properties
  */
-const getTrueAndFalseAnswers = (obj: object) => {
-  const cleanObj = {};
+const getTrueAndFalseAnswers = (obj: ObjectType) => {
+  const cleanObj: ObjectType = {};
 
   Object.keys(obj).forEach((key) => {
     const value = obj[key];

@@ -5,7 +5,7 @@ import { RequestBody } from '../../../../../../types';
 
 describe('controllers/insurance/business/company-details/validation/company-details', () => {
   it('should return an object with results from all rule functions', () => {
-    const mockFormData = {} as RequestBody;
+    const mockFormData: RequestBody = {};
     const mockErrors = tradingName(mockFormData, {});
 
     const result = validation(mockFormData);

@@ -2,7 +2,7 @@ import { generateRequiredData, requiredInsuranceEligibilityDataProvided } from '
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
+import { Request, Response, RequiredDataStateInsuranceEligibility } from '../../../../../types';
 
 const { ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
@@ -66,7 +66,7 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     it('should return an object of all required fields for each page', () => {
       const result = generateRequiredData();
 
-      const expected = {};
+      const expected = {} as RequiredDataStateInsuranceEligibility;
 
       expected[EXPORTER_LOCATION] = [];
       expected[EXPORTER_LOCATION_CHANGE] = [];

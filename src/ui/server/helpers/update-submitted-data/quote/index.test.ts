@@ -20,7 +20,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
         const mockFormData = {
           mock: '1',
           [POLICY_TYPE]: SINGLE,
-          [POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: 10,
         } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData(mockFormData);
@@ -28,7 +28,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
         const expected = {
           mock: '1',
           [POLICY_TYPE]: SINGLE,
-          [POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: 10,
         };
 
         expect(result).toEqual(expected);
@@ -58,7 +58,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
       it('should return policy length field with only single specific fields', () => {
         const mockFormData = {
           [POLICY_TYPE]: SINGLE,
-          [POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: 10,
           [CONTRACT_VALUE]: 100,
         } as SubmittedDataQuoteEligibility;
 
@@ -71,7 +71,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
         const expected = {
           [POLICY_TYPE]: SINGLE,
-          [POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: 10,
           [CONTRACT_VALUE]: 100,
         };
 
@@ -89,7 +89,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
         const mockExistingData = {
           [POLICY_TYPE]: SINGLE,
-          [POLICY_LENGTH]: '5',
+          [POLICY_LENGTH]: 5,
           [CONTRACT_VALUE]: 100,
         };
 
@@ -109,7 +109,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
       it('should delete the credit period', () => {
         const mockFormData = {
           [POLICY_TYPE]: SINGLE,
-          [POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: 10,
         } as SubmittedDataQuoteEligibility;
 
         const mockExistingData = {
@@ -120,7 +120,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
         const expected = {
           [POLICY_TYPE]: SINGLE,
-          [POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: 10,
         };
 
         expect(result).toEqual(expected);
@@ -147,9 +147,9 @@ describe('server/helpers/update-submitted-data/quote', () => {
   describe('updateSubmittedData', () => {
     describe('when there is existing data', () => {
       it('should return an object with existing and new, sanitised form data', () => {
-        const mockFormData = {
+        const mockFormData: RequestBody = {
           a: true,
-        } as RequestBody;
+        };
 
         const mockExistingData = {
           mock: true,
@@ -170,9 +170,9 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
     describe('when there is no existing data', () => {
       it('should return an object with new, sanitised form data', () => {
-        const mockFormData = {
+        const mockFormData: RequestBody = {
           a: true,
-        } as RequestBody;
+        };
 
         const mockExistingData = {};
 
@@ -190,10 +190,10 @@ describe('server/helpers/update-submitted-data/quote', () => {
     });
 
     it('should not return _csrf from provided form data', () => {
-      const mockFormData = {
+      const mockFormData: RequestBody = {
         _csrf: '123',
         a: true,
-      } as RequestBody;
+      };
 
       const mockExistingData = {};
 
@@ -208,9 +208,9 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
     describe('when there is no existing or provided data', () => {
       it('should return an empty object', () => {
-        const mockFormData = {
+        const mockFormData: RequestBody = {
           _csrf: '123',
-        } as RequestBody;
+        };
 
         const result = updateSubmittedData(mockFormData, {});
 

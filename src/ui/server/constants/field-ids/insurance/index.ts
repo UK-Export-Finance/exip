@@ -37,6 +37,6 @@ const INSURANCE_FIELD_IDS = {
   YOUR_BUYER,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
-};
+} as const;
 
 export default INSURANCE_FIELD_IDS;

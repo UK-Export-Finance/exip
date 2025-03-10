@@ -1,6 +1,6 @@
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS },
@@ -12,9 +12,9 @@ const {
  * if HAS_DIFFERENT_TRADING_NAME is false, then set DIFFERENT_TRADING_NAME to be an empty string
  * If HAS_DIFFERENT_TRADING_NAME or HAS_DIFFERENT_TRADING_ADDRESS are empty, then delete from populatedData
  * @param {RequestBody} formBody
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   if (populatedData[HAS_DIFFERENT_TRADING_NAME] === 'false') {

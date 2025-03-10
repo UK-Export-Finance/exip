@@ -56,7 +56,7 @@ const applicationWithTotalContractValue = {
   ...mockApplication,
   policy: {
     ...mockApplication.policy,
-    [TOTAL_CONTRACT_VALUE]: '1234',
+    [TOTAL_CONTRACT_VALUE]: 1234,
   },
 };
 
@@ -64,7 +64,7 @@ const applicationWithoutTotalContractValue = {
   ...mockApplication,
   policy: {
     ...mockApplication.policy,
-    [TOTAL_CONTRACT_VALUE]: null,
+    [TOTAL_CONTRACT_VALUE]: undefined,
   },
 };
 

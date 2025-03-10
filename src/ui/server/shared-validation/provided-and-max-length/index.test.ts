@@ -9,9 +9,9 @@ const mockMaxLength = 20;
 describe('shared-validation/alpha-characters-and-max-length', () => {
   const FIELD_ID = 'field';
 
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe('when a value is empty', () => {
     it('should return the result of emptyFieldValidation', () => {

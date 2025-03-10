@@ -16,9 +16,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/business/turnover-currency/validation/rules/currency', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return emptyFieldValidation', () => {
     const result = currencyRule(mockBody, mockErrors);

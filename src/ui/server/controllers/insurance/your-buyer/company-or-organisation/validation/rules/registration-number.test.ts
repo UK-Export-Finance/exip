@@ -19,9 +19,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/your-buyer/company-or-organisation/validation/rules/registration-number', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe(`when the ${FIELD_ID} input is over ${MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER} characters`, () => {
     it('should return the result of maxLengthValidation', () => {

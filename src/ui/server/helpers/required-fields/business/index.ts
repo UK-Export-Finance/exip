@@ -34,6 +34,6 @@ const requiredFields = (hasDifferentTradingName?: boolean): Array<string> =>
     ...NATURE_OF_YOUR_BUSINESS,
     ...TURNOVER_FIELDS,
     HAS_CREDIT_CONTROL,
-  }) as Array<string>;
+  }) as string[];
 
 export default requiredFields;
