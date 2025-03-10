@@ -1,7 +1,6 @@
 import mapSubmittedData from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import { mockApplication } from '../../../../../test-mocks';
-import { ObjectType } from '../../../../../../types';
 
 const {
   USING_BROKER,
@@ -185,7 +184,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [POSTCODE]: 'Mock postcode',
       };
 
-      const result = mapSubmittedData(mockFormBody, mockBroker) as ObjectType;
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       expect(result[FULL_ADDRESS]).toEqual('');
     });
