@@ -1,5 +1,6 @@
 import { DEFAULT } from '../../../../../content-strings';
 import { isPopulatedArray, stringArrayHasValue } from '../../../../array';
+import { SicCode } from '../../../../../../types';
 
 /**
  * mapEligibilitySicCodeValues
@@ -9,7 +10,7 @@ import { isPopulatedArray, stringArrayHasValue } from '../../../../array';
  * @param {Array<String>} industrySectorNames: Industry sector names
  * @returns {String} Mapped SIC codes or default empty string
  */
-const mapEligibilitySicCodeValues = (sicCodes: Array<string>, industrySectorNames?: Array<string>) => {
+const mapEligibilitySicCodeValues = (sicCodes: Array<SicCode>, industrySectorNames?: Array<string>) => {
   if (isPopulatedArray(sicCodes)) {
     const arr = [] as Array<string>;
 

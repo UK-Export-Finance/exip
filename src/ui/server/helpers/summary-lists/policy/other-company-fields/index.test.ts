@@ -65,7 +65,7 @@ describe('server/helpers/summary-lists/policy/other-company-fields', () => {
               ),
               renderChangeLink: true,
             },
-            getCountryByIsoCode(mockCountries, mockJointlyInsuredParty[COUNTRY_CODE]).name,
+            mockJointlyInsuredParty[COUNTRY_CODE] && getCountryByIsoCode(mockCountries, mockJointlyInsuredParty[COUNTRY_CODE]).name,
           ),
           fieldGroupItem({
             field: getFieldById(REQUESTED_JOINTLY_INSURED_PARTY, COMPANY_NUMBER),

@@ -25,4 +25,4 @@ export const FIELD_IDS = {
   },
   FEEDBACK,
   INSURANCE,
-};
+} as const;

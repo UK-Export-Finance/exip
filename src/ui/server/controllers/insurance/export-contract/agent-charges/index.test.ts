@@ -112,9 +112,9 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, allCurrencies, currencyCode);
+      const result = pageVariables(referenceNumber, allCurrencies, currencyCode!);
 
-      const currency = getCurrencyByCode(allCurrencies, currencyCode);
+      const currency = getCurrencyByCode(allCurrencies, currencyCode!);
 
       const expected = {
         FIELDS: {
@@ -162,7 +162,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, allCurrencies, currencyCode),
+        ...pageVariables(referenceNumber, allCurrencies, currencyCode!),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         countries: mapCountries(countries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
@@ -257,7 +257,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(referenceNumber, allCurrencies, currencyCode),
+          ...pageVariables(referenceNumber, allCurrencies, currencyCode!),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           countries: mapCountries(countries, payload[PAYABLE_COUNTRY_CODE]),

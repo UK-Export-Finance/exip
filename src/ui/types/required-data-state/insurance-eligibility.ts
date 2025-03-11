@@ -1,14 +1,59 @@
+import { INSURANCE_ROUTES } from '../../server/constants/routes/insurance';
+
+const { ELIGIBILITY } = INSURANCE_ROUTES;
+
+const {
+  BUYER_COUNTRY,
+  BUYER_COUNTRY_CHANGE,
+  EXPORTER_LOCATION,
+  EXPORTER_LOCATION_CHANGE,
+  UK_GOODS_OR_SERVICES,
+  UK_GOODS_OR_SERVICES_CHANGE,
+  END_BUYER,
+  END_BUYER_CHANGE,
+  CHECK_YOUR_ANSWERS,
+  TOTAL_VALUE_INSURED,
+  TOTAL_VALUE_INSURED_CHANGE,
+  COVER_PERIOD,
+  COVER_PERIOD_CHANGE,
+  COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_NUMBER_CHANGE,
+  ENTER_COMPANIES_HOUSE_NUMBER,
+  ENTER_COMPANIES_HOUSE_NUMBER_CHANGE,
+  COMPANY_DETAILS,
+  COMPANY_DETAILS_CHANGE,
+  ELIGIBLE_TO_APPLY_ONLINE,
+  PARTY_TO_CONSORTIUM,
+  PARTY_TO_CONSORTIUM_CHANGE,
+  MEMBER_OF_A_GROUP,
+  MEMBER_OF_A_GROUP_CHANGE,
+} = ELIGIBILITY;
+
 type RequiredDataStateInsuranceEligibility = {
-  'buyer-country': Array<string>;
-  'exporter-location': Array<string>;
-  'uk-goods-services': Array<string>;
-  'insured-amount': Array<string>;
-  'insured-over-2-years': Array<string>;
-  'other-parties': Array<string>;
-  'letter-of-credit': Array<string>;
-  'pre-credit-period': Array<string>;
-  'companies-house-number': Array<string>;
-  'eligible-to-apply-online': Array<string>;
+  [BUYER_COUNTRY]: Array<string>;
+  [BUYER_COUNTRY_CHANGE]: Array<string>;
+  [EXPORTER_LOCATION]: Array<string>;
+  [EXPORTER_LOCATION_CHANGE]: Array<string>;
+  [UK_GOODS_OR_SERVICES]: Array<string>;
+  [UK_GOODS_OR_SERVICES_CHANGE]: Array<string>;
+  [TOTAL_VALUE_INSURED]: Array<string>;
+  [TOTAL_VALUE_INSURED_CHANGE]: Array<string>;
+  [COMPANIES_HOUSE_NUMBER]: Array<string>;
+  [COMPANIES_HOUSE_NUMBER_CHANGE]: Array<string>;
+  [ENTER_COMPANIES_HOUSE_NUMBER]: Array<string>;
+  [ENTER_COMPANIES_HOUSE_NUMBER_CHANGE]: Array<string>;
+  [COMPANY_DETAILS]: Array<string>;
+  [COMPANY_DETAILS_CHANGE]: Array<string>;
+  [COVER_PERIOD]: Array<string>;
+  [COVER_PERIOD_CHANGE]: Array<string>;
+  [END_BUYER]: Array<string>;
+  [END_BUYER_CHANGE]: Array<string>;
+  [PARTY_TO_CONSORTIUM]: Array<string>;
+  [PARTY_TO_CONSORTIUM_CHANGE]: Array<string>;
+  [MEMBER_OF_A_GROUP]: Array<string>;
+  [MEMBER_OF_A_GROUP_CHANGE]: Array<string>;
+  [CHECK_YOUR_ANSWERS]: Array<string>;
+  [ELIGIBLE_TO_APPLY_ONLINE]: Array<string>;
 };
 
 export { RequiredDataStateInsuranceEligibility };

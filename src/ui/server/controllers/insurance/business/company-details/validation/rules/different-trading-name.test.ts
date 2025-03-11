@@ -15,9 +15,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/company-details/validation/rules/different-trading-name', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it(`should return the result of providedAndMaxLength if ${HAS_DIFFERENT_TRADING_NAME} is true`, () => {
     mockBody[HAS_DIFFERENT_TRADING_NAME] = 'true';

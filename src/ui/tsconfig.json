@@ -21,7 +21,6 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
 
     "noPropertyAccessFromIndexSignature": false,
-    "suppressImplicitAnyIndexErrors": true,
     "ignoreDeprecations": "5.0",
     "resolveJsonModule": true,
 

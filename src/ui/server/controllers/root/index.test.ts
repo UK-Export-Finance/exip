@@ -1,6 +1,6 @@
 import get from '.';
 import { mockReq, mockRes } from '../../test-mocks';
-import { FIELD_IDS, ROUTES } from '../../constants';
+import { FIELD_IDS, ROUTES, COMPANIES_HOUSE_NUMBER } from '../../constants';
 import { Request, Response } from '../../../types';
 
 const {
@@ -24,7 +24,7 @@ describe('controllers/root', () => {
             [CREDIT_PERIOD]: 1,
           },
           insuranceEligibility: {
-            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
+            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: COMPANIES_HOUSE_NUMBER,
           },
         },
       };

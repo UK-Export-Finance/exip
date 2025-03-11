@@ -5,7 +5,7 @@ import { InsuranceEligibility } from '../../types';
 import mockCompany from './mock-company';
 
 // remove incompatible fields from mockCompany
-const { sicCodes, industrySectorNames, ...company } = mockCompany;
+const { industrySectorNames, ...company } = mockCompany;
 
 const mockEligibility = {
   buyerCountry: mockCountries[0],

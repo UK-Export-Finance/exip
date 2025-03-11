@@ -1,7 +1,8 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../constants';
+import { FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../constants';
 import mockAnswers from './mock-answers';
 import mockCountries from './mock-countries';
 import mockCompany from './mock-company';
+import { GBP } from './mock-currencies';
 import { RequestSession } from '../../types';
 
 const {
@@ -27,10 +28,7 @@ const mockSession = {
         ...mockCountries[0],
         canApplyOnline: true,
       },
-      currency: {
-        name: 'UK Sterling',
-        isoCode: GBP_CURRENCY_CODE,
-      },
+      currency: GBP,
     },
     insuranceEligibility: {
       [HAS_COMPANIES_HOUSE_NUMBER]: true,
@@ -39,7 +37,7 @@ const mockSession = {
         canApplyOnline: true,
       },
       company: mockCompany,
-      [COVER_PERIOD]: true,
+      [COVER_PERIOD]: 5,
       [HAS_END_BUYER]: false,
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
       [HAS_REVIEWED_ELIGIBILITY]: true,

@@ -18,9 +18,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/export-contract/how-was-the-contract-awarded/validation/rules/award-method', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return `emptyFieldValidation`', () => {
     const result = awardMethodRule(mockBody, mockErrors);

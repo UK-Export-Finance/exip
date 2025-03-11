@@ -15,6 +15,7 @@ export interface RequestBody {
 
 export interface RequestCookies {
   optionalCookies?: string;
+  '__Host-optionalCookies'?: string;
 }
 
 export interface RequestHeaders {
@@ -62,6 +63,7 @@ export interface RequestParams {
 export interface RequestQuery {
   token?: string;
   id?: string;
+  [key: string]: any;
 }
 
 export interface RequestSessionUser {

@@ -18,9 +18,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/export-contract/currency-of-agents-charge/validation/rules/currency', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return `emptyFieldValidation`', () => {
     const result = alternativeCurrencyRule(mockBody, mockErrors);

@@ -80,7 +80,7 @@ describe('server/helpers/flatten-application-data', () => {
         const expected = {
           ...expectedGenericIds,
           [IS_APPOINTED]: true,
-          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
+          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
         };
 
         expect(result).toEqual(expected);

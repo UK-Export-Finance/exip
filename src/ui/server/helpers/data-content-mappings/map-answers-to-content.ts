@@ -4,7 +4,7 @@ import mapCountry from './map-country';
 import mapCost from './map-cost';
 import mapMonthString from './map-month-string';
 import mapPolicyLength from './map-policy-length';
-import { SubmittedDataInsuranceEligibility, SubmittedDataQuoteEligibility } from '../../../types';
+import { SubmittedDataQuoteEligibility, Country } from '../../../types';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, PERCENTAGE_OF_COVER, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION },
@@ -25,16 +25,16 @@ const mapPercentageOfCover = (answer: number) => `${answer}%`;
  * @param {Object} All submitted data
  * @returns {Object} All answers in an object structure with 'text' field
  */
-const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility) => {
+const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility) => {
   const mapped = {
     [VALID_EXPORTER_LOCATION]: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
-    [BUYER_COUNTRY]: mapCountry(answers[BUYER_COUNTRY]),
+    [BUYER_COUNTRY]: mapCountry(answers[BUYER_COUNTRY] as Country),
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
     [POLICY_TYPE]: answers[POLICY_TYPE],
     ...mapCost(answers),
     ...mapPolicyLength(answers),
-    [PERCENTAGE_OF_COVER]: mapPercentageOfCover(answers[PERCENTAGE_OF_COVER]),
-    [CREDIT_PERIOD]: mapMonthString(answers[CREDIT_PERIOD]),
+    [PERCENTAGE_OF_COVER]: mapPercentageOfCover(Number(answers[PERCENTAGE_OF_COVER])),
+    [CREDIT_PERIOD]: mapMonthString(Number(answers[CREDIT_PERIOD])),
   };
 
   return mapped;

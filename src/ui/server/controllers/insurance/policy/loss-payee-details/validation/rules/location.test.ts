@@ -12,9 +12,9 @@ const {
 const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 describe('controllers/insurance/policy/loss-payee-details/validation/rules/location', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return the result of emptyFieldValidation', () => {
     const response = location(mockBody, mockErrors);

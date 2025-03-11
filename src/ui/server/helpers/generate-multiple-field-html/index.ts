@@ -1,14 +1,15 @@
 import { DEFAULT } from '../../content-strings';
+import { ObjectType } from '../../../types';
 
 /**
  * generateMultipleFieldHtml
  * Handle objects with all fields present or where some are null as not present
  * maps through object and constructs an html string containing line breaks
  * skips fields where the field is null or is typename
- * @param {Object} fieldValues
+ * @param {ObjectType} fieldValues
  * @returns {String} String of HTML or default empty string
  */
-const generateMultipleFieldHtml = (fieldValues: object): string => {
+const generateMultipleFieldHtml = (fieldValues: ObjectType): string => {
   let fieldValuesString = '';
 
   Object.keys(fieldValues).forEach((field) => {

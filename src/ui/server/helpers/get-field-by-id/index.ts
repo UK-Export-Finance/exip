@@ -1,15 +1,16 @@
 import { objectHasProperty } from '../object';
+import { ObjectType } from '../../../types';
 
 /**
  * getFieldById
  * Get a field from an object by the field ID
  * if field has optional prefix, then add to the id
- * @param {Object} fields
+ * @param {ObjectType} fields
  * @param {String} fieldId ID
  * @param {String} fieldIdPrefix optional fieldId prefix
  * @returns {Object} Field or an object with the provided field ID.
  */
-const getFieldById = (fields: object, fieldId: string, fieldIdPrefix?: string) => {
+const getFieldById = (fields: ObjectType, fieldId: string, fieldIdPrefix?: string) => {
   /**
    * If prefix,
    * add prefix before fieldId.

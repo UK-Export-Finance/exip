@@ -4,6 +4,7 @@ import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import mapSubmittedData from '../../map-submitted-data/private-market';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   EXPORT_CONTRACT: {
@@ -14,7 +15,7 @@ const {
 describe('controllers/insurance/export-contract/map-and-save/private-market', () => {
   jest.mock('../../save-data/private-market');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [ATTEMPTED]: mockApplication.exportContract.privateMarket[ATTEMPTED],
     [DECLINED_DESCRIPTION]: mockApplication.exportContract.privateMarket[DECLINED_DESCRIPTION],

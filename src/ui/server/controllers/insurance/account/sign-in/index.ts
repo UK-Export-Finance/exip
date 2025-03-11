@@ -146,7 +146,7 @@ export const post = async (req: Request, res: Response) => {
      * Invalid credentials provided.
      * Force generic "invalid credentials" validation errors for all fields.
      */
-    validationErrors = emailAndPasswordIncorrectValidationErrors(payload);
+    validationErrors = emailAndPasswordIncorrectValidationErrors({});
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

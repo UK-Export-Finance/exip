@@ -77,7 +77,7 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue);
+      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue!);
 
       const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -122,7 +122,7 @@ describe('controllers/insurance/business/turnover', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
+        ...pageVariables(referenceNumber, mockCurrencies, currencyValue!),
       });
     });
 
@@ -189,7 +189,7 @@ describe('controllers/insurance/business/turnover', () => {
             BACK_LINK: req.headers.referer,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
+          ...pageVariables(referenceNumber, mockCurrencies, currencyValue!),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: sanitiseData(payload),

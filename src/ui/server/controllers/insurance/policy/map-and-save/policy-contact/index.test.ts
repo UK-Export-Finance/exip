@@ -4,6 +4,7 @@ import mapSubmittedData from '../../map-submitted-data/policy-contact';
 import save from '../../save-data/policy-contact';
 import generateValidationErrors from '../../name-on-policy/validation';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   NAME_ON_POLICY: { NAME, SAME_NAME },
@@ -12,7 +13,7 @@ const {
 describe('controllers/insurance/policy/map-and-save/policy-contact', () => {
   jest.mock('../../save-data/policy-contact');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     [NAME]: SAME_NAME,
   };
 

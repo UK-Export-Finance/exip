@@ -86,7 +86,7 @@ describe('server/helpers/summary-lists/export-contract/private-market-fields', (
               ),
               renderChangeLink: true,
             },
-            replaceNewLineWithLineBreak(mockAnswersAttemptedTrue[DECLINED_DESCRIPTION]),
+            mockAnswersAttemptedTrue[DECLINED_DESCRIPTION] && replaceNewLineWithLineBreak(mockAnswersAttemptedTrue[DECLINED_DESCRIPTION]),
           ),
         ],
       };

@@ -27,7 +27,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
 
   describe(`when ${AWARD_METHOD} field is an empty string`, () => {
     it(`should return the form body without ${AWARD_METHOD}`, () => {
-      const mockBodyWithAwardMethod = {
+      const mockBodyWithAwardMethod: RequestBody = {
         ...mockFormBody,
         [AWARD_METHOD]: '',
       };

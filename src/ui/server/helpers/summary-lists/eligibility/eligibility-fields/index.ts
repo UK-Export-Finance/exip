@@ -129,7 +129,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         ),
         renderChangeLink: true,
       },
-      answers[BUYER_COUNTRY].name,
+      answers[BUYER_COUNTRY]?.name,
     ),
     fieldGroupItem(
       {

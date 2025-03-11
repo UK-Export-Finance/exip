@@ -46,7 +46,7 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-cont
     const result = generateSingleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange);
 
     const expected = [
-      fieldGroupItem(expectedBase[CONTRACT_COMPLETION_DATE], formatDate(mockAnswers[CONTRACT_COMPLETION_DATE])),
+      fieldGroupItem(expectedBase[CONTRACT_COMPLETION_DATE], formatDate(new Date(mockAnswers[CONTRACT_COMPLETION_DATE]))),
       fieldGroupItem(expectedBase[TOTAL_CONTRACT_VALUE], formatCurrency(mockAnswers[TOTAL_CONTRACT_VALUE], mockAnswers[POLICY_CURRENCY_CODE])),
       fieldGroupItem(expectedBase[REQUESTED_CREDIT_LIMIT], formatCurrency(mockAnswers[REQUESTED_CREDIT_LIMIT], mockAnswers[POLICY_CURRENCY_CODE])),
     ];

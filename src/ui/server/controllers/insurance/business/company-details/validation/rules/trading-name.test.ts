@@ -14,9 +14,9 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/tradingName', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return the result of emptyFieldValidation', () => {
     const result = tradingName(mockBody, mockErrors);

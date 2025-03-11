@@ -4,7 +4,7 @@ const NAME = {
   SESSION: `${PREFIX}SID`,
   CSRF: `${PREFIX}CSRF`,
   OPTION: `${PREFIX}optionalCookies`,
-};
+} as const;
 
 // Time to live
 const TTL = {

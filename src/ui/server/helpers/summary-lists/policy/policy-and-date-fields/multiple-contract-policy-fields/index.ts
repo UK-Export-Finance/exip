@@ -49,7 +49,7 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, refere
           checkAndChange,
         ),
       },
-      answers[TOTAL_MONTHS_OF_COVER] && mapMonthString(answers[TOTAL_MONTHS_OF_COVER]),
+      mapMonthString(Number(answers[TOTAL_MONTHS_OF_COVER])),
     ),
     fieldGroupItem(
       {
@@ -64,7 +64,7 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, refere
           checkAndChange,
         ),
       },
-      answers[TOTAL_SALES_TO_BUYER] && formatCurrency(answers[TOTAL_SALES_TO_BUYER], answers[POLICY_CURRENCY_CODE]),
+      formatCurrency(Number(answers[TOTAL_SALES_TO_BUYER]), String(answers[POLICY_CURRENCY_CODE])),
     ),
     fieldGroupItem(
       {
@@ -79,7 +79,7 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, refere
           checkAndChange,
         ),
       },
-      answers[MAXIMUM_BUYER_WILL_OWE] && formatCurrency(answers[MAXIMUM_BUYER_WILL_OWE], answers[POLICY_CURRENCY_CODE]),
+      formatCurrency(Number(answers[MAXIMUM_BUYER_WILL_OWE]), String(answers[POLICY_CURRENCY_CODE])),
     ),
   ] as Array<SummaryListItemData>;
 

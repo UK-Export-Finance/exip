@@ -58,7 +58,7 @@ const optionalOutstandingPaymentsFields = (answers: ApplicationBuyerTradingHisto
           ),
           renderChangeLink: true,
         },
-        formatCurrency(answers[TOTAL_OUTSTANDING_PAYMENTS], answers[CURRENCY_CODE]),
+        formatCurrency(Number(answers[TOTAL_OUTSTANDING_PAYMENTS]), String(answers[CURRENCY_CODE])),
       ),
       fieldGroupItem(
         {
@@ -73,7 +73,7 @@ const optionalOutstandingPaymentsFields = (answers: ApplicationBuyerTradingHisto
           ),
           renderChangeLink: true,
         },
-        formatCurrency(answers[TOTAL_AMOUNT_OVERDUE], answers[CURRENCY_CODE]),
+        formatCurrency(Number(answers[TOTAL_AMOUNT_OVERDUE]), String(answers[CURRENCY_CODE])),
       ),
     );
   }

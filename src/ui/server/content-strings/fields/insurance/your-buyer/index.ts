@@ -1,4 +1,5 @@
 import { FIELD_IDS, MAXIMUM_CHARACTERS } from '../../../../constants';
+import { ObjectType } from '../../../../../types/object';
 
 const {
   YOUR_BUYER: {
@@ -17,7 +18,7 @@ const {
   CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
 
-export const YOUR_BUYER_FIELDS = {
+export const YOUR_BUYER_FIELDS: ObjectType = {
   COMPANY_OR_ORGANISATION: {
     [COMPANY_OR_ORGANISATION.NAME]: {
       LABEL: "Buyer's company or organisation name",
