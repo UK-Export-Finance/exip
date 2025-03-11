@@ -15,7 +15,7 @@ export interface RequestBody {
 
 export interface RequestCookies {
   optionalCookies?: string;
-  '__Host-optionalCookies'?: any;
+  '__Host-optionalCookies'?: string;
 }
 
 export interface RequestHeaders {

@@ -19,7 +19,7 @@ describe('server/helpers/policy-type', () => {
       });
     });
 
-    describe('when policy type is provided', () => {
+    describe('when policy type is NOT provided', () => {
       it('should return false', () => {
         const result = isSinglePolicyType();
 
@@ -45,7 +45,7 @@ describe('server/helpers/policy-type', () => {
       });
     });
 
-    describe('when policy type is provided', () => {
+    describe('when policy type is NOT provided', () => {
       it('should return false', () => {
         const result = isMultiplePolicyType();
 

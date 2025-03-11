@@ -35,10 +35,6 @@ interface SectionReview {
   eligibility?: boolean;
 }
 
-// interface TotalContractValue {
-//   value?: string;
-//   valueId?: number;
-// }
 
 interface InsuranceEligibilityCore extends SharedEligibility {
   companyNumber?: string;

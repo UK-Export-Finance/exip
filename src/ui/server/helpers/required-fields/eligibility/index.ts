@@ -22,7 +22,7 @@ const {
  * List of field IDs that are not relevant.
  * These fields are part of eligibility field IDs, but do not require data checks.
  */
-export const IRRELEVANT_FIELD_IDS: Array<string> = [
+export const IRRELEVANT_FIELD_IDS: string[] = [
   BUYER_COUNTRY_ISO_CODE,
   COVER_PERIOD_ID,
   HAVE_AN_ACCOUNT,
@@ -34,9 +34,9 @@ export const IRRELEVANT_FIELD_IDS: Array<string> = [
 
 /**
  * Required fields for the insurance - eligibility section
- * @returns {Array<string>} Array of tasks/field IDs
+ * @returns {string[]} Array of tasks/field IDs
  */
-const requiredFields = (): Array<string> => {
+const requiredFields = (): string[] => {
   const fieldIds = Object.values(FIELD_IDS);
 
   const filteredFieldIds = fieldIds.filter((id) => !IRRELEVANT_FIELD_IDS.includes(id));

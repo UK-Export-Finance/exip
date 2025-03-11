@@ -35,6 +35,14 @@ describe('server/helpers/string', () => {
         expect(result).toEqual(false);
       });
     });
+
+    describe('when a string is not provided', () => {
+      it('should return false', () => {
+        const result = isEmptyString();
+
+        expect(result).toEqual(false);
+      });
+    });
   });
 
   describe('isPopulatedString', () => {
