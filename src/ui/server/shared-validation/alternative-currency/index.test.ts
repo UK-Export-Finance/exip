@@ -16,10 +16,10 @@ const {
 } = ERROR_MESSAGES;
 
 describe('shared-validation/alternative-currency', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [CURRENCY_CODE]: ALTERNATIVE_CURRENCY_CODE,
     [ALTERNATIVE_CURRENCY_CODE]: '',
-  } as RequestBody;
+  };
 
   describe(`when ${CURRENCY_CODE} equals ${ALTERNATIVE_CURRENCY_CODE}`, () => {
     describe(`when ${ALTERNATIVE_CURRENCY_CODE} is not provided`, () => {

@@ -31,9 +31,9 @@ const {
  * NUMBER_FIELDS
  * Add all number fields here
  * Explicit list of field IDs in the insurance forms that are number fields.
- * @returns {Array} Field IDs
+ * @returns {string[]} Field IDs
  */
-export const NUMBER_FIELDS = [
+export const NUMBER_FIELDS: string[] = [
   REQUESTED_CREDIT_LIMIT,
   EMPLOYEES_UK,
   ESTIMATED_ANNUAL_TURNOVER,

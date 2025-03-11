@@ -1,4 +1,6 @@
-import { FIELD_IDS, FIELD_VALUES, GBP_CURRENCY_CODE } from '../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../constants';
+import { mockCountryCanApplyForInsuranceOnline } from './mock-countries';
+import { GBP } from './mock-currencies';
 import { SubmittedDataQuoteEligibility } from '../../types';
 
 const {
@@ -16,17 +18,17 @@ const {
   POLICY_LENGTH,
 } = FIELD_IDS;
 
-const mockAnswers = {
+const mockAnswers: SubmittedDataQuoteEligibility = {
   [VALID_TYPE_OF_BUYER]: true,
   [VALID_EXPORTER_LOCATION]: true,
-  [BUYER_COUNTRY]: 'Algeria',
+  [BUYER_COUNTRY]: mockCountryCanApplyForInsuranceOnline,
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-  [CURRENCY]: GBP_CURRENCY_CODE,
-  [CONTRACT_VALUE]: '123456',
+  [CURRENCY]: GBP,
+  [CONTRACT_VALUE]: 123456,
   [CREDIT_PERIOD]: 1,
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [POLICY_LENGTH]: 2,
   [PERCENTAGE_OF_COVER]: 90,
-} as SubmittedDataQuoteEligibility;
+};
 
 export default mockAnswers;

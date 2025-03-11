@@ -10,9 +10,9 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
   const MINIMUM = 6;
   const MAXIMUM = 6;
 
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '11-22-33',
-  } as RequestBody;
+  };
 
   describe('invalid field values', () => {
     describe('when a value is not provided', () => {

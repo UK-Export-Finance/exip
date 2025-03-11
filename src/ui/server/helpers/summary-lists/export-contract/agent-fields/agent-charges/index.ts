@@ -88,7 +88,7 @@ const agentChargesFields = (
             ),
             renderChangeLink: true,
           },
-          getCurrencyByCode(currencies, answers.charge[FIXED_SUM_CURRENCY_CODE]).name,
+          answers.charge[FIXED_SUM_CURRENCY_CODE] && getCurrencyByCode(currencies, answers.charge[FIXED_SUM_CURRENCY_CODE]).name,
         ),
         fieldGroupItem(
           {
@@ -103,7 +103,7 @@ const agentChargesFields = (
             ),
             renderChangeLink: true,
           },
-          formatCurrency(Number(answer), answers.charge[FIXED_SUM_CURRENCY_CODE], decimalPlaces),
+          answers.charge[FIXED_SUM_CURRENCY_CODE] && formatCurrency(Number(answer), answers.charge[FIXED_SUM_CURRENCY_CODE], decimalPlaces),
         ),
       ];
     }
@@ -130,7 +130,7 @@ const agentChargesFields = (
           href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${PAYABLE_COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         },
-        getCountryByIsoCode(countries, answers.charge[PAYABLE_COUNTRY_CODE]).name,
+        answers.charge[PAYABLE_COUNTRY_CODE] && getCountryByIsoCode(countries, answers.charge[PAYABLE_COUNTRY_CODE]).name,
       ),
     );
   }

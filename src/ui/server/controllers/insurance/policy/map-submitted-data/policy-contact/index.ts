@@ -3,7 +3,7 @@ import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/acco
 import hasPolicyContactChanged from '../../../../../helpers/has-policy-contact-changed';
 import isPolicyContactDataSameAsOwner from '../../../../../helpers/is-policy-contact-data-same-as-owner';
 import { isEmptyString } from '../../../../../helpers/string';
-import { RequestBody, Application, ApplicationPolicyContact } from '../../../../../../types';
+import { RequestBody, Application, ApplicationPolicyContact, ObjectType } from '../../../../../../types';
 
 const {
   NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME, IS_SAME_AS_OWNER },
@@ -19,9 +19,9 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
  * If OTHER_NAME and POSITION is populated, then should be set to empty string
  * @param {RequestBody} formBody
  * @param {Application} application
- * @returns {Object} Page variables
+ * @returns {ObjectType} Page variables
  */
-const mapSubmittedData = (formBody: RequestBody, application: Application): object => {
+const mapSubmittedData = (formBody: RequestBody, application: Application): ObjectType => {
   const populatedData = formBody;
   const samePolicyContact = isPolicyContactDataSameAsOwner(application.owner, formBody as ApplicationPolicyContact);
 

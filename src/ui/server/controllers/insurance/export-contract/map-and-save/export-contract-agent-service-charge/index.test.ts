@@ -4,6 +4,7 @@ import save from '../../save-data/export-contract-agent-service-charge';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
@@ -13,7 +14,7 @@ const {
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service-charge', () => {
   jest.mock('../../save-data/export-contract-agent-service');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [PERCENTAGE_CHARGE]: mockApplication.exportContract.agent.service.charge[PERCENTAGE_CHARGE],
   };

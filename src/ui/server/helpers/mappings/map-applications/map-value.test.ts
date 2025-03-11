@@ -45,7 +45,7 @@ describe('server/helpers/mappings/map-applications/map-value', () => {
         ...mockApplication,
         policy: {
           ...mockSinglePolicy,
-          [POLICY_CURRENCY_CODE]: null,
+          [POLICY_CURRENCY_CODE]: undefined,
         },
       };
 
@@ -85,7 +85,7 @@ describe('server/helpers/mappings/map-applications/map-value', () => {
         ...mockApplication,
         policy: {
           ...mockMultiplePolicy,
-          [POLICY_CURRENCY_CODE]: null,
+          [POLICY_CURRENCY_CODE]: undefined,
         },
       };
 

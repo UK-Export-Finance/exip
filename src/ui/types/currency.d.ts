@@ -14,4 +14,8 @@ interface CurrencyRadios {
   applicationAnswer?: string;
 }
 
-export { Currency, CurrencyRadios };
+interface CurrencySymbol {
+  [key: string]: string;
+}
+
+export { Currency, CurrencyRadios, CurrencySymbol };

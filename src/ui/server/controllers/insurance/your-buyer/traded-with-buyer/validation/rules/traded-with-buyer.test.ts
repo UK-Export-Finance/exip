@@ -14,9 +14,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/traded-with-buyer/validation/rules/traded-with-buyer', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return `emptyFieldValidation`', () => {
     const result = tradedWithBuyerRule(mockBody, mockErrors);

@@ -1,4 +1,4 @@
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 import { objectHasProperty } from '../../../../../helpers/object';
 
@@ -11,9 +11,9 @@ const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANC
  * if CONNECTION_WITH_BUYER is false, then sets CONNECTION_WITH_BUYER_DESCRIPTION to an empty string
  * if HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER is false, then sets PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER to an empty string
  * @param {RequestBody} formBody
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const { _csrf, ...populatedData } = formBody;
 
   if (!objectHasProperty(populatedData, CONNECTION_WITH_BUYER)) {

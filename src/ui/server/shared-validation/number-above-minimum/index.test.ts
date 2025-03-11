@@ -8,9 +8,9 @@ describe('shared-validation/whole-number-above-minimum', () => {
   const FIELD_ID = 'FIELD_ID';
   const MINIMUM = 1;
 
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '0',
-  } as RequestBody;
+  };
 
   describe('when a number is not provided', () => {
     it('should return a validation errors', () => {

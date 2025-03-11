@@ -4,7 +4,7 @@ import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockResInsurance } from '../../../../test-mocks';
-import { Request, ResponseInsurance } from '../../../../../types';
+import { Request, ResponseInsurance, ObjectType } from '../../../../../types';
 
 const { FEEDBACK_SENT_PAGE } = PAGES;
 const { FEEDBACK_SENT: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
@@ -20,7 +20,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
     req.flash = (property: string) => {
       const obj = {
         serviceOriginUrl: startRoute,
-      };
+      } as ObjectType;
 
       return obj[property];
     };

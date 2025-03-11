@@ -50,7 +50,7 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      formatCurrency(mockAnswers[ESTIMATED_ANNUAL_TURNOVER], mockAnswers[TURNOVER_CURRENCY_CODE]),
+      formatCurrency(Number(mockAnswers[ESTIMATED_ANNUAL_TURNOVER]), mockAnswers[TURNOVER_CURRENCY_CODE]),
     ),
     fieldGroupItem(
       {

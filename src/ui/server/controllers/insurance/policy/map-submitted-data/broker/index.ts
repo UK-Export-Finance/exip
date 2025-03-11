@@ -1,7 +1,7 @@
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import { isEmptyString } from '../../../../../helpers/string';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { RequestBody, ApplicationBroker } from '../../../../../../types';
+import { RequestBody, ApplicationBroker, ObjectType } from '../../../../../../types';
 
 const {
   USING_BROKER,
@@ -15,9 +15,9 @@ const {
  * Map broker fields
  * @param {RequestBody} formBody: Form body
  * @param {ApplicationBroker} brokerData: Application broker data
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker): object => {
+const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker): ObjectType => {
   /**
    * Freeze an instance of the form body,
    * so that we can check the original data at any stage.

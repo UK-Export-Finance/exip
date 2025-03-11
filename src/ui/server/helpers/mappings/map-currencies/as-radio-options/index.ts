@@ -1,5 +1,5 @@
 import nameAndIsoCodeText from '../../../name-and-iso-code-text';
-import { Currency, CurrencyRadios } from '../../../../../types';
+import { Currency, ObjectType } from '../../../../../types';
 import { FIELDS } from '../../../../content-strings';
 
 /**
@@ -11,7 +11,7 @@ import { FIELDS } from '../../../../content-strings';
  * @returns {Object} Mapped currencies with an "alternative" option.
  */
 const mapCurrenciesAsRadioOptions = (currencies: Array<Currency>, alternativeCurrencyFieldId: string) => {
-  const mappedObj = {} as CurrencyRadios;
+  const mappedObj = {} as ObjectType;
 
   currencies.forEach((country) => {
     const { isoCode, name } = country;

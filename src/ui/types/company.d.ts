@@ -1,4 +1,5 @@
 import { CompaniesHouseAddress } from './company-house-response';
+import { SicCode } from './sic-code';
 
 interface Company {
   companyRegistration?: string;
@@ -6,10 +7,11 @@ interface Company {
   companyNumber?: string;
   companyAddress?: string;
   companyIncorporated?: string;
-  registeredOfficeAddress: CompaniesHouseAddress;
-  sicCodes?: Array<string>;
+  registeredOfficeAddress?: CompaniesHouseAddress;
+  sicCodes: Array<SicCode>;
   industrySectorNames?: Array<string>;
   isActive?: boolean;
+  dateOfCreation?: Date | string;
   __typename?: string;
 }
 

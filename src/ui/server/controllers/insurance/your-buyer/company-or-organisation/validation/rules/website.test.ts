@@ -18,9 +18,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/website', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   describe('when the website is not provided', () => {
     it('should not return validation errors', () => {

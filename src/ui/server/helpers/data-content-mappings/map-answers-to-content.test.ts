@@ -17,7 +17,7 @@ describe('server/helpers/map-answers-to-content', () => {
     it('should return a string with percentage symbol', () => {
       const mockAnswer = mockAnswers[PERCENTAGE_OF_COVER];
 
-      const result = mapPercentageOfCover(mockAnswer);
+      const result = mapPercentageOfCover(mockAnswer!);
 
       const expected = `${mockAnswers[PERCENTAGE_OF_COVER]}%`;
 
@@ -31,13 +31,13 @@ describe('server/helpers/map-answers-to-content', () => {
 
       const expected = {
         [VALID_EXPORTER_LOCATION]: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
-        [BUYER_COUNTRY]: mapCountry(mockAnswers[BUYER_COUNTRY]),
+        [BUYER_COUNTRY]: mapCountry(mockAnswers[BUYER_COUNTRY]!),
         [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
         [POLICY_TYPE]: mockAnswers[POLICY_TYPE],
         ...mapCost(mockAnswers),
         ...mapPolicyLength(mockAnswers),
-        [PERCENTAGE_OF_COVER]: mapPercentageOfCover(mockAnswers[PERCENTAGE_OF_COVER]),
-        [CREDIT_PERIOD]: mapMonthString(mockAnswers[CREDIT_PERIOD]),
+        [PERCENTAGE_OF_COVER]: mapPercentageOfCover(mockAnswers[PERCENTAGE_OF_COVER]!),
+        [CREDIT_PERIOD]: mapMonthString(mockAnswers[CREDIT_PERIOD]!),
       };
 
       expect(result).toEqual(expected);

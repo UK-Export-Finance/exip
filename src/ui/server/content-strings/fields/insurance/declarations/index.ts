@@ -1,9 +1,10 @@
 import { MAXIMUM_CHARACTERS } from '../../../../constants/validation';
 import DECLARATIONS_FIELDS_IDS from '../../../../constants/field-ids/insurance/declarations';
+import { ObjectType } from '../../../../../types/object';
 
 const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY } = DECLARATIONS_FIELDS_IDS.MODERN_SLAVERY;
 
-export const DECLARATIONS_FIELDS = {
+export const DECLARATIONS_FIELDS: ObjectType = {
   MODERN_SLAVERY: {
     [WILL_ADHERE_TO_ALL_REQUIREMENTS]: {
       VERSIONS: [

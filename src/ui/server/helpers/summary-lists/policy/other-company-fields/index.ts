@@ -71,7 +71,7 @@ export const optionalOtherCompanyFields = (
           ),
           renderChangeLink: true,
         },
-        getCountryByIsoCode(countries, answers[COUNTRY_CODE]).name,
+        answers[COUNTRY_CODE] && getCountryByIsoCode(countries, answers[COUNTRY_CODE]).name,
       ),
       fieldGroupItem({
         field: getFieldById(REQUESTED_JOINTLY_INSURED_PARTY, COMPANY_NUMBER),

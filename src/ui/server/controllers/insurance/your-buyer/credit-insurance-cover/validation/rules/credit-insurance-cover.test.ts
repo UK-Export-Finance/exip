@@ -14,9 +14,9 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rules/credit-insurance-cover', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return `emptyFieldValidation`', () => {
     const result = creditInsuranceCoverRule(mockBody, mockErrors);

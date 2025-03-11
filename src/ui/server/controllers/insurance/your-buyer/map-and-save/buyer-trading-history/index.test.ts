@@ -5,6 +5,7 @@ import generateValidationErrors from '../../../../../helpers/validation';
 import mapSubmittedData from '../../map-submitted-data/buyer-trading-history';
 import { GBP } from '../../../../../constants';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { RequestBody } from '../../../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
@@ -14,7 +15,7 @@ const {
 describe('controllers/insurance/your-buyer/map-and-save/buyer-trading-history', () => {
   jest.mock('../../save-data/buyer-trading-history');
 
-  let mockFormBody = {
+  let mockFormBody: RequestBody = {
     _csrf: '1234',
     [CURRENCY_CODE]: GBP,
     [ALTERNATIVE_CURRENCY_CODE]: '',

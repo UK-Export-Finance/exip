@@ -42,7 +42,7 @@ describe('server/helpers/summary-lists/companies-house', () => {
           field: getFieldById(FIELDS, COMPANY_ADDRESS),
           data: mockCompany,
         },
-        generateMultipleFieldHtml(mockCompany[COMPANY_ADDRESS]),
+        mockCompany[COMPANY_ADDRESS] && generateMultipleFieldHtml(mockCompany[COMPANY_ADDRESS]),
       );
 
       expect(result[2]).toEqual(expected);
@@ -54,7 +54,7 @@ describe('server/helpers/summary-lists/companies-house', () => {
           field: getFieldById(FIELDS, COMPANY_INCORPORATED),
           data: mockCompany,
         },
-        formatDate(mockCompany[COMPANY_INCORPORATED]),
+        mockCompany[COMPANY_INCORPORATED] && formatDate(new Date(mockCompany[COMPANY_INCORPORATED])),
       );
 
       expect(result[3]).toEqual(expected);

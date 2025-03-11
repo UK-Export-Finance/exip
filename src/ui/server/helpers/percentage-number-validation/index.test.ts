@@ -1,11 +1,11 @@
 import { MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../constants';
 import percentageNumberValidation from '.';
 import generateValidationErrors from '../validation';
-import { ErrorMessageObject } from '../../../types';
+import { RequestBody, ErrorMessageObject } from '../../../types';
 import { mockErrors } from '../../test-mocks';
 
 describe('server/helpers/percentage-number-validation', () => {
-  const mockBody = {};
+  const mockBody: RequestBody = {};
 
   const FIELD_ID = 'testField';
 

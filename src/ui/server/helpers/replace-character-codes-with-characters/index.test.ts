@@ -66,10 +66,10 @@ describe('server/helpers/replace-character-codes-with-characters', () => {
   });
 
   describe('when no value is provided', () => {
-    it('should return null', () => {
+    it('should return undefined', () => {
       const result = replaceCharacterCodesWithCharacters();
 
-      expect(result).toEqual(null);
+      expect(result).toBeUndefined();
     });
   });
 });

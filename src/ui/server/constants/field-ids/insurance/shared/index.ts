@@ -21,6 +21,6 @@ const SHARED_FIELD_IDS = {
       PREMISES: 'premises',
     },
   },
-};
+} as const;
 
 export default SHARED_FIELD_IDS;

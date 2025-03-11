@@ -15,9 +15,9 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const errorMessage = EXPORTER_BUSINESS[PHONE_NUMBER].INCORRECT_FORMAT;
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/phone-number', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [PHONE_NUMBER]: '',
-  } as RequestBody;
+  };
 
   describe('with errors', () => {
     it(`should return a validation error when ${PHONE_NUMBER} is not correct`, () => {

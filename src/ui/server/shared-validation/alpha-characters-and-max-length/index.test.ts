@@ -3,13 +3,14 @@ import alphaCharactersOnlyValidation from '../alpha-characters-only';
 import maxLengthValidation from '../max-length';
 import emptyFieldValidation from '../empty-field';
 import { mockErrors, mockErrorMessagesObject } from '../../test-mocks';
+import { RequestBody } from '../../../types';
 
 const mockMaxLength = 20;
 
 describe('shared-validation/alpha-characters-and-max-length', () => {
   const FIELD_ID = 'field';
 
-  const mockBody = {};
+  const mockBody: RequestBody = {};
 
   describe('when a value is empty', () => {
     it('should return the result of emptyFieldValidation', () => {

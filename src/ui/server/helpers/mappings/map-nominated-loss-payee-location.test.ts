@@ -9,7 +9,7 @@ describe('server/helpers/mappings/map-nominated-loss-payee-location', () => {
   describe(`when ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
     it(`should return ${IS_LOCATED_INTERNATIONALLY}`, () => {
       mockNominatedLossPayee[IS_LOCATED_INTERNATIONALLY] = true;
-      mockNominatedLossPayee[IS_LOCATED_IN_UK] = null;
+      mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;
 
       const response = mapNominatedLossPayeeLocation(mockNominatedLossPayee);
 
@@ -20,7 +20,7 @@ describe('server/helpers/mappings/map-nominated-loss-payee-location', () => {
   describe(`when ${IS_LOCATED_IN_UK} is true`, () => {
     it(`should return ${IS_LOCATED_IN_UK}`, () => {
       mockNominatedLossPayee[IS_LOCATED_IN_UK] = true;
-      mockNominatedLossPayee[IS_LOCATED_INTERNATIONALLY] = null;
+      mockNominatedLossPayee[IS_LOCATED_INTERNATIONALLY] = false;
 
       const response = mapNominatedLossPayeeLocation(mockNominatedLossPayee);
 
@@ -30,8 +30,8 @@ describe('server/helpers/mappings/map-nominated-loss-payee-location', () => {
 
   describe(`when neither ${IS_LOCATED_IN_UK} or ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
     it('should return undefined', () => {
-      mockNominatedLossPayee[IS_LOCATED_IN_UK] = null;
-      mockNominatedLossPayee[IS_LOCATED_INTERNATIONALLY] = null;
+      mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;
+      mockNominatedLossPayee[IS_LOCATED_INTERNATIONALLY] = false;
 
       const response = mapNominatedLossPayeeLocation(mockNominatedLossPayee);
 

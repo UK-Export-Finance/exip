@@ -4,9 +4,9 @@ import { isAString } from '../string';
  * replaceCharacterCodesWithCharacters
  * Replace certain character codes with characters
  * @param {String}
- * @returns {String | null}
+ * @returns {String | undefined}
  */
-const replaceCharacterCodesWithCharacters = (str?: string): string | null => {
+const replaceCharacterCodesWithCharacters = (str?: string): string | undefined => {
   if (str && isAString(str)) {
     return str
       .replace(/&lt;/g, '<')
@@ -19,7 +19,7 @@ const replaceCharacterCodesWithCharacters = (str?: string): string | null => {
       .replace(/\r\n/g, '\r');
   }
 
-  return null;
+  return undefined;
 };
 
 export default replaceCharacterCodesWithCharacters;

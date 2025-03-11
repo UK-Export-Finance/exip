@@ -108,7 +108,7 @@ const generatePolicyContactFields = (answers: ApplicationPolicyContact, referenc
    */
   fields.push(emailField(answers, referenceNumber, checkAndChange, !answers[IS_SAME_AS_OWNER]));
 
-  fields.push(positionField(answers, referenceNumber, answers[IS_SAME_AS_OWNER], checkAndChange));
+  fields.push(positionField(answers, referenceNumber, Boolean(answers[IS_SAME_AS_OWNER]), checkAndChange));
 
   return {
     title: FORM_TITLE,

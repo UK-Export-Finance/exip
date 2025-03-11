@@ -15,9 +15,9 @@ const {
 } = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT;
 
 describe('controllers/insurance/export-contract/agent-details/validation/rules/name', () => {
-  const mockBody = {
+  const mockBody: RequestBody = {
     [FIELD_ID]: '',
-  } as RequestBody;
+  };
 
   it('should return the result of nameValidation', () => {
     const response = name(mockBody, mockErrors);

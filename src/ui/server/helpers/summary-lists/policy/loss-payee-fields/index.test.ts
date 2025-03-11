@@ -151,6 +151,7 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
       it('should return fields from the submitted data/answers', () => {
         mockNominatedLossPayee[IS_APPOINTED] = true;
         mockNominatedLossPayee[IS_LOCATED_IN_UK] = true;
+        mockNominatedLossPayee[IS_LOCATED_INTERNATIONALLY] = false;
 
         const result = lossPayeeFields(mockNominatedLossPayee, referenceNumber, checkAndChange);
 

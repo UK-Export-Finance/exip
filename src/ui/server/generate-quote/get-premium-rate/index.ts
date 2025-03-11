@@ -12,7 +12,7 @@ const PRICING_GRID_MAP = {
     [EXTERNAL_API_MAPPINGS.CIS.RISK.HIGH]: 'HIGH',
     [EXTERNAL_API_MAPPINGS.CIS.RISK.VERY_HIGH]: 'VERY_HIGH',
   },
-};
+} as const;
 
 /**
  * getPremiumRate
@@ -34,9 +34,9 @@ const getPremiumRate = (policyType: string, esraClassification: string, totalMon
 
     const risk = pricingGrid[policyTypeKey][esraClassificationKey];
 
-    const pricingGridMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
+    const pricingGridMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths) as PricingGridMonth;
 
-    const rateObj = pricingGridMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
+    const rateObj = pricingGridMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor) as PricingGridRate;
 
     return rateObj.premiumRate;
   } catch (error) {

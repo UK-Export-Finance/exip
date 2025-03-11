@@ -2,7 +2,7 @@ import { APPLICATION } from '../../../../../constants';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { isEmptyString, stripCommas } from '../../../../../helpers/string';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ObjectType } from '../../../../../../types';
 
 const {
   EXPORT_CONTRACT: {
@@ -28,9 +28,9 @@ const {
  * If the METHOD is PERCENTAGE, nullify FIXED_SUM values.
  * If the METHOD is FIXED_SUM, nullify PERCENTAGE values.
  * @param {RequestBody} formBody: Form body
- * @returns {Object} populatedData
+ * @returns {ObjectType} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody): ObjectType => {
   const populatedData = formBody;
 
   if (objectHasProperty(populatedData, FIXED_SUM_AMOUNT)) {
