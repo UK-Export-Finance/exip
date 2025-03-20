@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.42.0](https://github.com/UK-Export-Finance/exip/compare/v2.41.0...v2.42.0) (2025-03-20)
+
+
+### Features
+
+* **EMS-4156:** acr purge test execution ([f9e76ff](https://github.com/UK-Export-Finance/exip/commit/f9e76ff552fd72e4febe55507c208fe55a40caf6))
+* **EMS-4156:** acr purge workflow ([856ee7e](https://github.com/UK-Export-Finance/exip/commit/856ee7e08e3b779305f21254355a3525979bbeae))
+* **EMS-4156:** acr purge workflow ([cb0a9cf](https://github.com/UK-Export-Finance/exip/commit/cb0a9cf7963f7b1ac5034cfc662c93ddb8ea0c6a))
+* **EMS-4156:** acr purge workflow ([6bdd989](https://github.com/UK-Export-Finance/exip/commit/6bdd9894a7c923c6fa18d64b5a6415619f11a2aa))
+* **EMS-4156:** indentation and typo fixes ([0f87885](https://github.com/UK-Export-Finance/exip/commit/0f87885f1a9970a8beafac80c507d980d241c2f0))
+* **EMS-4156:** removed branch names for test execution ([e772a87](https://github.com/UK-Export-Finance/exip/commit/e772a875de3e2a24e24ed6f8aebab1f9e45c8a9d))
+
 ## [2.41.0](https://github.com/UK-Export-Finance/exip/compare/v2.40.2...v2.41.0) (2025-03-05)
 
 
