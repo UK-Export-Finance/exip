@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: '0 23 * * *'
 
+  push:
+    branches:
+      - feat/EMS-4156-ia-c-update
+
 env:
   APPLICATION: ${{ vars.APPLICATION }}
   TIMEZONE: ${{ vars.TIMEZONE }}
