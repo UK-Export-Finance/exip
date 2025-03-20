@@ -33,8 +33,6 @@ runs:
     # Step 1: Check out the repository.
     - name: Repository 🗃️
       uses: actions/checkout@v4
-      with:
-        ref: feat/EMS-4156-ia-c-update
 
     # Step 2: Log in to Azure.
     - name: Azure 🔐

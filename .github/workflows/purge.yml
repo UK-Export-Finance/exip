@@ -5,10 +5,6 @@ on:
   schedule:
     - cron: '0 23 * * *'
 
-  push:
-    branches:
-      - feat/EMS-4156-ia-c-update
-
 env:
   APPLICATION: ${{ vars.APPLICATION }}
   TIMEZONE: ${{ vars.TIMEZONE }}
@@ -55,8 +51,6 @@ jobs:
     steps:
       - name: Repository 🗂️
         uses: actions/checkout@v4
-        with:
-          ref: feat/EMS-4156-ia-c-update
             
 
       - name: Subscription 🛠️
