@@ -6746,7 +6746,7 @@ var LINKS = {
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
     OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS:
       'https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-human-rights',
-    SMALL_EXPORT_BUILDER: 'Small Export Builder',
+    SMALL_EXPORT_BUILDER: 'https://www.gov.uk/guidance/credit-insurance-policy',
   },
 };
 
