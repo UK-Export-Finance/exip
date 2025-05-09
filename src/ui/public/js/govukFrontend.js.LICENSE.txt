@@ -52,6 +52,13 @@
  */
 
 /**
+ * File upload component
+ *
+ * @preserve
+ * @augments ConfigurableComponent<FileUploadConfig>
+ */
+
+/**
  * Header component
  *
  * @preserve
@@ -94,7 +101,7 @@
  * Skip link component
  *
  * @preserve
- * @augments GOVUKFrontendComponent<HTMLAnchorElement>
+ * @augments Component<HTMLAnchorElement>
  */
 
 /**
