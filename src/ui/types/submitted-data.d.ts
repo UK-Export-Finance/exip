@@ -35,7 +35,6 @@ interface SectionReview {
   eligibility?: boolean;
 }
 
-
 interface InsuranceEligibilityCore extends SharedEligibility {
   companyNumber?: string;
   company?: Company;
