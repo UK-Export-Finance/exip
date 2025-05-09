@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.42.0](https://github.com/UK-Export-Finance/exip/compare/v2.41.0...v2.42.0) (2025-05-09)
+
+
+### Features
+
+* **EMS-4033:** added small exporter build link ([5e4fd4c](https://github.com/UK-Export-Finance/exip/commit/5e4fd4c2788e26c93325a6ef85c0330ee4f4dea1))
+* **EMS-4033:** added small exporter build link ([649d527](https://github.com/UK-Export-Finance/exip/commit/649d527ea69a0eb26699312f36d2c5862e8eb8e9))
+* **EMS-4033:** updated GitHub PR template ([99ad658](https://github.com/UK-Export-Finance/exip/commit/99ad65865328ebea79714e8876dcd5ec17e2c88c))
+* **EMS-4156:** acr purge test execution ([f9e76ff](https://github.com/UK-Export-Finance/exip/commit/f9e76ff552fd72e4febe55507c208fe55a40caf6))
+* **EMS-4156:** acr purge workflow ([856ee7e](https://github.com/UK-Export-Finance/exip/commit/856ee7e08e3b779305f21254355a3525979bbeae))
+* **EMS-4156:** acr purge workflow ([cb0a9cf](https://github.com/UK-Export-Finance/exip/commit/cb0a9cf7963f7b1ac5034cfc662c93ddb8ea0c6a))
+* **EMS-4156:** acr purge workflow ([6bdd989](https://github.com/UK-Export-Finance/exip/commit/6bdd9894a7c923c6fa18d64b5a6415619f11a2aa))
+* **EMS-4156:** indentation and typo fixes ([0f87885](https://github.com/UK-Export-Finance/exip/commit/0f87885f1a9970a8beafac80c507d980d241c2f0))
+* **EMS-4156:** removed branch names for test execution ([e772a87](https://github.com/UK-Export-Finance/exip/commit/e772a875de3e2a24e24ed6f8aebab1f9e45c8a9d))
+* **EMS-4222:** updated GTM SRI ([69583ab](https://github.com/UK-Export-Finance/exip/commit/69583abe5bdf8bd1f7faf24dbc6770697bfd61f0))
+* **EMS-4222:** upgraded GovUK package to 5.10.0 ([77d42e8](https://github.com/UK-Export-Finance/exip/commit/77d42e82d140fbb19a3328dae3694e7e0e274036))
+* **EMS-4222:** upgraded GovUK package to 5.10.0 ([7eef73e](https://github.com/UK-Export-Finance/exip/commit/7eef73ec5d9a2b3593f9ea7e9b6d7e0fe494b870))
+
+
+### Bug Fixes
+
+* **EMS-4033:** prisma generate ([85201f8](https://github.com/UK-Export-Finance/exip/commit/85201f8ab7c5f0602d969083fdd5f3e555863187))
+* **EMS-4033:** prisma generate ([fd7a990](https://github.com/UK-Export-Finance/exip/commit/fd7a990dad989b4f1b8c9c0d46ad6b077fd7ef65))
+
 ## [2.41.0](https://github.com/UK-Export-Finance/exip/compare/v2.40.2...v2.41.0) (2025-03-05)
 
 
