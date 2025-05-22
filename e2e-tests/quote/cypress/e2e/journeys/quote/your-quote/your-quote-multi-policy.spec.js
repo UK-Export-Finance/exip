@@ -90,7 +90,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expected = '1.11%';
+        const expected = '0.51%';
         cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
@@ -102,7 +102,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expected = '£1,665.00';
+        const expected = '£765.00';
         cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
