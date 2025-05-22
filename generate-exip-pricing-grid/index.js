@@ -11,7 +11,7 @@ const { spreadsheet, outputDirectory } = args;
  * @returns {Object} multiPolicy and singlePolicy from
  */
 const getWorkSheets = () => {
-  console.info('getting worksheets');
+  console.info('📖 Reading spreadsheet');
 
   const workSheetsFromFile = xlsx.parse(spreadsheet);
 
@@ -193,7 +193,7 @@ const addPolicyToGrid = (grid, policyType, rows) => {
       const months = Number(row[1]);
 
       const rates = mapRowRates(row);
-      const esraClassification = mapEsraClassification(row[0]);
+      const esraClassification = mapEsraClassification(row[0].trim());
 
       updatedGrid = addRowToGrid(grid, months, rates, policyType, esraClassification);
     }
