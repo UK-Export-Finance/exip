@@ -16,37 +16,37 @@ This script reads the pricing grid from a XLSX spreadsheet and transforms it to 
   - The spreadsheet should now look like below:
   - Ensure only the below risk categories exists in the final spreadsheet.
 
-  ### Expected spreadsheet format
+### Expected spreadsheet format
 
-  Note that all examples do not use real data. In production, the premium rates are different and there are many more months of cover for each risk category.
+Note that all examples do not use real data. In production, the premium rates are different and there are many more months of cover for each risk category.
 
-  | Risk category  | Months | 70% cover | 75% cover | 80% cover | 85% cover | 90% cover | 95% cover |
-  | -------------- | ------ | --------- | --------- | --------- | --------- | --------- | --------- |
-  | Standard Risk  | 2      | 0.5%      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     |
-  | Standard Risk  | 3      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     |
-  | Standard Risk  | 4      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     | 0.12%     |
-  | High Risk      | 2      | 1.1%      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      |
-  | High Risk      | 3      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      |
-  | High Risk      | 4      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      | 1.8%      |
-  | Very High Risk | 2      | 2.1%      | 2.2%      | 2.3%      | 2.4%      | 2.5%      | 2.6%      |
-  | Very High Risk | 3      | 3.2%      | 3.3%      | 3.4%      | 3.5%      | 3.6%      | 3.7%      |
-  | Very High Risk | 4      | 4.3%      | 4.4%      | 4.5%      | 4.6%      | 4.7%      | 4.8%      |
+| Risk category  | Months | 70% cover | 75% cover | 80% cover | 85% cover | 90% cover | 95% cover |
+| -------------- | ------ | --------- | --------- | --------- | --------- | --------- | --------- |
+| Standard Risk  | 2      | 0.5%      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     |
+| Standard Risk  | 3      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     |
+| Standard Risk  | 4      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     | 0.12%     |
+| High Risk      | 2      | 1.1%      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      |
+| High Risk      | 3      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      |
+| High Risk      | 4      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      | 1.8%      |
+| Very High Risk | 2      | 2.1%      | 2.2%      | 2.3%      | 2.4%      | 2.5%      | 2.6%      |
+| Very High Risk | 3      | 3.2%      | 3.3%      | 3.4%      | 3.5%      | 3.6%      | 3.7%      |
+| Very High Risk | 4      | 4.3%      | 4.4%      | 4.5%      | 4.6%      | 4.7%      | 4.8%      |
 
-  Example with table headings (to explain what the columns are).
+Example with table headings (to explain what the columns are).
 
-  :warning: The table headings should not be there. The result should be a pure table body.
+:warning: The table headings should not be there. The result should be a pure table body.
 
-  | Risk category  | Months | 70% cover | 75% cover | 80% cover | 85% cover | 90% cover | 95% cover |
-  | -------------- | ------ | --------- | --------- | --------- | --------- | --------- | --------- |
-  | Standard Risk  | 2      | 0.5%      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     |
-  | Standard Risk  | 3      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     |
-  | Standard Risk  | 4      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     | 0.12%     |
-  | High Risk      | 2      | 1.1%      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      |
-  | High Risk      | 3      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      |
-  | High Risk      | 4      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      | 1.8%      |
-  | Very High Risk | 2      | 2.1%      | 2.2%      | 2.3%      | 2.4%      | 2.5%      | 2.6%      |
-  | Very High Risk | 3      | 3.2%      | 3.3%      | 3.4%      | 3.5%      | 3.6%      | 3.7%      |
-  | Very High Risk | 4      | 4.3%      | 4.4%      | 4.5%      | 4.6%      | 4.7%      | 4.8%      |
+| Risk category  | Months | 70% cover | 75% cover | 80% cover | 85% cover | 90% cover | 95% cover |
+| -------------- | ------ | --------- | --------- | --------- | --------- | --------- | --------- |
+| Standard Risk  | 2      | 0.5%      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     |
+| Standard Risk  | 3      | 0.6%      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     |
+| Standard Risk  | 4      | 0.7%      | 0.8%      | 0.9%      | 0.10%     | 0.11%     | 0.12%     |
+| High Risk      | 2      | 1.1%      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      |
+| High Risk      | 3      | 1.2%      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      |
+| High Risk      | 4      | 1.3%      | 1.4%      | 1.5%      | 1.6%      | 1.7%      | 1.8%      |
+| Very High Risk | 2      | 2.1%      | 2.2%      | 2.3%      | 2.4%      | 2.5%      | 2.6%      |
+| Very High Risk | 3      | 3.2%      | 3.3%      | 3.4%      | 3.5%      | 3.6%      | 3.7%      |
+| Very High Risk | 4      | 4.3%      | 4.4%      | 4.5%      | 4.6%      | 4.7%      | 4.8%      |
 
 - Step 2: 📦 Pre-requites
 
