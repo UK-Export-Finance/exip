@@ -11,7 +11,7 @@ const { spreadsheet, outputDirectory } = args;
  * @returns {Object} multiPolicy and singlePolicy from
  */
 const getWorkSheets = () => {
-  console.info('getting worksheets');
+  console.info('📖 Reading spreadsheet');
 
   const workSheetsFromFile = xlsx.parse(spreadsheet);
 
@@ -61,7 +61,7 @@ const getPercentage = (index) => {
  * @returns {Object}
  */
 const createEmptyGrid = () => {
-  console.info('creating empty grid');
+  console.info('🚀 Initalising grid');
 
   const emptyGrid = {
     SINGLE_POLICY: {
@@ -184,7 +184,7 @@ const addRowToGrid = (grid, months, rates, policyType, esraClassification) => {
  * @returns {Object} Updated pricing grid
  */
 const addPolicyToGrid = (grid, policyType, rows) => {
-  console.info('adding %s to the grid', policyType);
+  console.info('➕ Adding %s to the grid', policyType);
 
   let updatedGrid;
 
@@ -193,7 +193,7 @@ const addPolicyToGrid = (grid, policyType, rows) => {
       const months = Number(row[1]);
 
       const rates = mapRowRates(row);
-      const esraClassification = mapEsraClassification(row[0]);
+      const esraClassification = mapEsraClassification(row[0].trim());
 
       updatedGrid = addRowToGrid(grid, months, rates, policyType, esraClassification);
     }
@@ -208,12 +208,12 @@ const addPolicyToGrid = (grid, policyType, rows) => {
  * @param {Object} Pricing grid
  */
 const createJson = (data) => {
-  console.info('creating JSON file');
+  console.info('💾 Creating JSON');
 
   const stringified = JSON.stringify(data);
 
   fs.writeFileSync(`${outputDirectory}/pricing-grid.json`, stringified);
-  console.info('JSON file written successfully');
+  console.info('✅ Pricing Grid JSON has been successfully created.');
 };
 
 /**

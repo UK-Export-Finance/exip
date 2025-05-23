@@ -97,7 +97,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
 
       cy.checkText(row.key(), expectedKeyText);
 
-      const expected = '3.68%';
+      const expected = '1.69%';
       cy.checkText(row.value(), expected);
 
       row.changeLink().should('not.exist');
@@ -109,7 +109,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
 
       cy.checkText(row.key(), expectedKeyText);
 
-      const expected = '£5,520.00';
+      const expected = '£2,535.00';
       cy.checkText(row.value(), expected);
 
       row.changeLink().should('not.exist');
