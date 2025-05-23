@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.43.0](https://github.com/UK-Export-Finance/exip/compare/v2.42.0...v2.43.0) (2025-05-23)
+
+
+### Features
+
+* **EMS-4224:** syntax fix for README.md ([71ee5d6](https://github.com/UK-Export-Finance/exip/commit/71ee5d67bef5236bc433064b53be6912345a9242))
+* **EMS-4224:** updated pricing grid ([6ab54af](https://github.com/UK-Export-Finance/exip/commit/6ab54af2f69800f8487c13ce89b34785c0dc5be8))
+* **EMS-4224:** updated pricing grid ([d7d1f92](https://github.com/UK-Export-Finance/exip/commit/d7d1f92f735bfcdf805995f019b23b5ce0593321))
+* **EMS-4224:** updated pricing grid ([095a8f5](https://github.com/UK-Export-Finance/exip/commit/095a8f58b7be62fd68d0f26d5b0f94803a298ed9))
+
+
+### Bug Fixes
+
+* **EMS-4224:** fixed cypress test assertions ([59d1ade](https://github.com/UK-Export-Finance/exip/commit/59d1ade5574f9fbdafb6d61e29420eee275dbe77))
+* **EMS-4224:** fixed cypress tests ([e05fb81](https://github.com/UK-Export-Finance/exip/commit/e05fb817c539576c7daf06bbd5025b11dad8f46c))
+
 ## [2.42.0](https://github.com/UK-Export-Finance/exip/compare/v2.41.0...v2.42.0) (2025-05-09)
 
 
