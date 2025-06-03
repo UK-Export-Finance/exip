@@ -23,8 +23,8 @@
     "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
   },
   "dependencies": {
-    "@babel/core": "^7.27.1",
-    "@babel/plugin-transform-runtime": "^7.27.1",
+    "@babel/core": "^7.27.4",
+    "@babel/plugin-transform-runtime": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-typescript": "^7.27.1",
     "@graphql-tools/schema": "^10.0.23",
