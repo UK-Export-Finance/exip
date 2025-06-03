@@ -64,7 +64,7 @@
     "nodemon": "3.1.7",
     "nunjucks": "3.2.4",
     "path": "0.12.7",
-    "postcode-validator": "^3.10.3",
+    "postcode-validator": "^3.10.5",
     "sass": "^1.89.1",
     "sass-loader": "^16.0.5",
     "terser-webpack-plugin": "^5.3.14",
