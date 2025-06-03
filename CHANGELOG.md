@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.43.1](https://github.com/UK-Export-Finance/exip/compare/v2.43.0...v2.43.1) (2025-06-03)
+
+
+### Bug Fixes
+
+* **EMS-4224:** fixed E2E tests ([1753a64](https://github.com/UK-Export-Finance/exip/commit/1753a649c2b97e98ec137233fbecca5756f6fed7))
+* **EMS-4224:** fixed E2E tests ([00d029e](https://github.com/UK-Export-Finance/exip/commit/00d029e990dd4dd1a2de840de6f65b2587298341))
+* **EMS-4224:** fixed SRI and UI build assets ([19db83f](https://github.com/UK-Export-Finance/exip/commit/19db83f5e18d0643c08ab8127c75957f6434b163))
+* **EMS-4224:** fixed SRI and UI build assets ([51bd13b](https://github.com/UK-Export-Finance/exip/commit/51bd13bdafda7e28a89275ee301379977333f5e0))
+* **EMS-4224:** updated pricing grid ([c4149c4](https://github.com/UK-Export-Finance/exip/commit/c4149c437044e03fa1cfb40c51fb87737bc957e0))
+* **EMS-4224:** updated pricing grid ([8986da4](https://github.com/UK-Export-Finance/exip/commit/8986da4a0eaf6238915e3a5f4467d3145a22d911))
+* **EMS-4224:** updated pricing grid ([f06b7c4](https://github.com/UK-Export-Finance/exip/commit/f06b7c4e5b0b0bc797f58ebae80e6a4fc8414829))
+* **EMS-4224:** updated pricing grid ([04041e4](https://github.com/UK-Export-Finance/exip/commit/04041e4a39968669ba3386d6e9b9036a4ced2ad9))
+
 ## [2.43.0](https://github.com/UK-Export-Finance/exip/compare/v2.42.0...v2.43.0) (2025-05-23)
 
 
