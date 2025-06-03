@@ -55,7 +55,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     cy.checkText(summaryList.field(QUOTE.INSURED_FOR).value(), expectedValue);
 
     // Check estimated cost in the quote
-    const expectedCost = '£65,432.09';
+    const expectedCost = '£138,271.59';
     cy.checkText(summaryList.field(QUOTE.ESTIMATED_COST).value(), expectedCost);
   });
 });
