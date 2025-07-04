@@ -51,7 +51,7 @@ const verifyAccountReactivationToken = async (
       /**
        * Update the account:
        * - mark as unblocked
-       * - mark as verified (incase the account was previously unverified)
+       * - mark as verified (in case the account was previously unverified)
        *   - both verification and reactivation have the same mechanism (clicking token via email)
        * - nullify the reactivation hash and expiry
        * - mark the account has unblocked and nullify the verification hash and expiry.
