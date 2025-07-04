@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:21.4.0-alpine3.17 AS build
+FROM node:21.4.0-alpine3.20 AS build
 
 # Build variables
 ARG PORT
@@ -67,7 +67,7 @@ USER node
 # 2. PRODUCTION
 ###################
 
-FROM node:21.4.0-alpine3.17 AS production
+FROM node:21.4.0-alpine3.20 AS production
 
 WORKDIR /app
 
