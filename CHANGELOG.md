@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.43.2](https://github.com/UK-Export-Finance/exip/compare/v2.43.1...v2.43.2) (2025-07-05)
+
+
+### Bug Fixes
+
+* **EMS-4229:** fixed NBI form URL ([2ca4e40](https://github.com/UK-Export-Finance/exip/commit/2ca4e40077f69e20c8e09953e85f0ae02f284c12))
+* **EMS-4229:** fixed NBI form URL ([6522127](https://github.com/UK-Export-Finance/exip/commit/6522127191abf97d63c39fb71055e4203fa86017))
+* **EMS-4229:** typo fix ([9ed794a](https://github.com/UK-Export-Finance/exip/commit/9ed794af8ffbb17a2be2ad712bf1c16e7f87304e))
+* **EMS-4229:** updated dockerfile base image ([f3ba4ba](https://github.com/UK-Export-Finance/exip/commit/f3ba4ba867a65edd386afe7ac5dc926052a07a49))
+* **EMS-4229:** updated dockerfile base image ([9fe5c9b](https://github.com/UK-Export-Finance/exip/commit/9fe5c9b31500ee81a598c45e4bc8c5eee79a2efc))
+* **EMS-4229:** updated SRI ([c238e79](https://github.com/UK-Export-Finance/exip/commit/c238e793e21643d27326c882af6ea63e9de1defd))
+* **EMS-4229:** updated SRI ([ce74240](https://github.com/UK-Export-Finance/exip/commit/ce742405e8bc74f15991ed75f405d7e01a447266))
+
 ## [2.43.1](https://github.com/UK-Export-Finance/exip/compare/v2.43.0...v2.43.1) (2025-06-03)
 
 
