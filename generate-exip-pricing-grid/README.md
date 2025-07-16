@@ -1,6 +1,7 @@
 # 📊 Generate EXIP pricing grid
 
-This script reads the pricing grid from a XLSX spreadsheet and transforms it to a JSON file.
+This script reads the pricing grid from a XLSX spreadsheet and
+transforms it to a JSON file.
 
 ## How to generate
 
@@ -10,15 +11,22 @@ This script reads the pricing grid from a XLSX spreadsheet and transforms it to 
     - "Single Policy - Digital" should be the 1st sheet.
     - "Revolving Policy - Digital" should be the 2nd sheet.
   - Remove all introductory text from both the sheets.
-  - Copy all table cells, starting from the body and paste into the first row, first cell of the spreadsheet.
-  - Copy the first cell (risk category) and paste this into each appropriate column, so each section has the risk category as the first cell.
-    - For example, "Standard Risk (S)" should be "Standard Risk" and present on every single row of this section.
+  - Copy all table cells, starting from the body and paste into the
+    first row, first cell of the spreadsheet.
+  - Copy the first cell (risk category) and paste this into each
+    appropriate column, so each section has the risk category as the
+    first cell.
+    - For example, "Standard Risk (S)" should be "Standard Risk" and
+      present on every single row of this section.
   - The spreadsheet should now look like below:
-  - Ensure only the below risk categories exists in the final spreadsheet.
+  - Ensure only the below risk categories exists in the final
+    spreadsheet.
 
 ### Expected spreadsheet format
 
-Note that all examples do not use real data. In production, the premium rates are different and there are many more months of cover for each risk category.
+Note that all examples do not use real data. In production, the
+premium rates are different and there are many more months of cover
+for each risk category.
 
 | Risk category  | Months | 70% cover | 75% cover | 80% cover | 85% cover | 90% cover | 95% cover |
 | -------------- | ------ | --------- | --------- | --------- | --------- | --------- | --------- |
@@ -34,7 +42,8 @@ Note that all examples do not use real data. In production, the premium rates ar
 
 Example with table headings (to explain what the columns are).
 
-:warning: The table headings should not be there. The result should be a pure table body.
+:warning: The table headings should not be there. The result should be
+a pure table body.
 
 | Risk category  | Months | 70% cover | 75% cover | 80% cover | 85% cover | 90% cover | 95% cover |
 | -------------- | ------ | --------- | --------- | --------- | --------- | --------- | --------- |
@@ -58,13 +67,16 @@ npm install
 
 - Step 3: 📦 Execute
 
-Execute the script by passing the spreadsheet location and output directory as an arguments.
+Execute the script by passing the spreadsheet location and output
+directory as an arguments.
 
 ```bash
-node index.js --spreadsheet=./path/to/spreadsheet.xlsx --outputDirectory=./path/to/save
+node index.js --spreadsheet=./path/to/spreadsheet.xlsx \
+  --outputDirectory=./path/to/save
 ```
 
-Post execution, a JSON file will be generated in the output directory, called `pricing-grid.json`.
+Post execution, a JSON file will be generated in the output directory,
+called `pricing-grid.json`.
 
 ## JSON result
 
@@ -206,12 +218,15 @@ This is just an example with a very small amount of months.
 
 - Step 4: 🚀 Replace
 
-To update the pricing grid, simply copy the newly generated pricing grid JSON into the UI: [src/ui/server/generate-quote/pricing-grid.json](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/generate-quote/pricing-grid.json)
+To update the pricing grid, simply copy the newly generated pricing
+grid JSON into the UI:
+[src/ui/server/generate-quote/pricing-grid.json](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/generate-quote/pricing-grid.json)
 
 The UI will then automatically consume this JSON.
 
 - Step 6: 🧪 E2E
 
-Cypress E2E will also needs to be amended [quote E2E tests](https://github.com/UK-Export-Finance/exip/tree/main-application/e2e-tests/cypress/e2e/journeys/quote/your-quote), since the assertions have static price which now has been updated.
+Cypress E2E will also needs to be amended [quote E2E tests](https://github.com/UK-Export-Finance/exip/tree/main-application/e2e-tests/cypress/e2e/journeys/quote/your-quote),
+since the assertions have static price which now has been updated.
 
 ---

@@ -1,11 +1,14 @@
 # Task list generation
 
-This function consumes groups of tasks and submitted answers and returns a data structure ready for a [GOV design task list](https://design-system.service.gov.uk/patterns/task-list-pages/) UI component.
+This function consumes groups of tasks and submitted answers and
+returns a data structure ready for a [GOV design task list](https://design-system.service.gov.uk/patterns/task-list-pages/)
+UI component.
 
 ## How to use
 
 1. Create an object of groups and tasks for your app.
-2. Call the function with your groups and submitted answers. e.g `generateTaskList(groupsAndTasks, submittedAnswers);`
+2. Call the function with your groups and submitted answers. e.g
+   `generateTaskList(groupsAndTasks, submittedAnswers);`
 
 The function will:
 
@@ -34,7 +37,8 @@ Each task expects the following structure:
 ```
 
 - `fields` is a list of field IDs required for the task to be marked as "Completed".
-- `dependencies` is a list of field IDs required for the task to be unlocked and marked as "Ready to start"/"Start now".
+- `dependencies` is a list of field IDs required for the task to be unlocked and marked as
+  "Ready to start"/"Start now".
 
 ### Group(s)
 
@@ -89,7 +93,8 @@ const exampleTaskList = [
 
 Submitted answers requires a flat structure - it does not currently handle nested structures.
 
-:warning: The function assumes that any fields in submitted answers are valid. In other words, validate your field before saving it or passing to `generateTaskList`.
+:warning: The function assumes that any fields in submitted answers are valid. In other words,
+validate your field before saving it or passing to `generateTaskList`.
 
 ```js
 {
@@ -101,11 +106,14 @@ Submitted answers requires a flat structure - it does not currently handle neste
 
 ### Data generation recommendation
 
-The larger your tasks and groups become, the trickier management becomes. For easier maintenance, your data structure could be split up into single files/functions for each group. There are examples of this [here](/src/ui/server/helpers/task-list/generate-groups-and-tasks/index.ts).
+The larger your tasks and groups become, the trickier management becomes. For easier maintenance,
+your data structure could be split up into single files/functions for each group. [There are
+examples of this](/src/ui/server/helpers/task-list/generate-groups-and-tasks/index.ts).
 
 ### Returned data structure
 
-The returned data structure is simpler and only contains the data that a UI needs, including automatically generated status tags:
+The returned data structure is simpler and only contains the data that a UI needs, including
+automatically generated status tags:
 
 ```js
 [
@@ -188,10 +196,19 @@ const getTaskList = (req, res) => {
 
 Now, a task list can be rendered in a UI template or component.
 
-In this repository there is a [task-list nunjucks component](/src/ui/templates/components/task-list.njk) that can automatically render the data into a GOV design list. Example:
+In this repository there is a [task-list nunjucks component]
+(/src/ui/templates/components/task-list.njk) that can automatically render the data into a GOV
+design list. Example:
 
-```html
-// template.njk {% import '../components/task-list.njk' as taskList %} {{ taskList.render({ groups: taskListData }) }}
+```njk
+<!--template.njk-->
+{% import '../components/task-list.njk' as taskList %}
+
+{{
+  taskList.render(
+    { groups: taskListData }
+  )
+}}
 ```
 
 ---
