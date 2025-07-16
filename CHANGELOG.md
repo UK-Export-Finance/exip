@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.44.0](https://github.com/UK-Export-Finance/exip/compare/v2.43.2...v2.44.0) (2025-07-16)
+
+
+### Features
+
+* **EMS-4227:** add screenshot to github actions upon failure ([2a63b03](https://github.com/UK-Export-Finance/exip/commit/2a63b0367e6dfad59d38d1957dd7227374bcb20a))
+* **EMS-4227:** added screenshot to e2e upon failure to GHA ([1d7a8ea](https://github.com/UK-Export-Finance/exip/commit/1d7a8eae8f99015795c768e3140fa138d295cbf0))
+* **EMS-4230:** added markdown validation and linting ([3df5b80](https://github.com/UK-Export-Finance/exip/commit/3df5b805a8725be1d022d7b59d48a4edff7ccbd7))
+* **EMS-4230:** added markdown validation and linting ([4f46f5a](https://github.com/UK-Export-Finance/exip/commit/4f46f5aff5e2b572f1713723f494a8a46af74ec3))
+* **EMS-4230:** added markdown validation and linting ([2471b26](https://github.com/UK-Export-Finance/exip/commit/2471b262024f41a59aae51b62120973f6387cc9a))
+
 ## [2.43.2](https://github.com/UK-Export-Finance/exip/compare/v2.43.1...v2.43.2) (2025-07-05)
 
 
