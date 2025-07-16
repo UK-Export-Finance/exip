@@ -200,9 +200,15 @@ In this repository there is a [task-list nunjucks component]
 (/src/ui/templates/components/task-list.njk) that can automatically render the data into a GOV
 design list. Example:
 
-```html
-// template.njk {% import '../components/task-list.njk' as taskList %} {{ taskList.render({ groups:
-taskListData }) }}
+```njk
+<!--template.njk-->
+{% import '../components/task-list.njk' as taskList %}
+
+{{
+  taskList.render(
+    { groups: taskListData }
+  )
+}}
 ```
 
 ---

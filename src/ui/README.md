@@ -11,10 +11,10 @@ User interface to check if a UK based exporter can apply for credit insurance an
 - **package.json**: This file defines the application's dependencies and other metadata.
 - **public**: This directory contains static assets, such as images and CSS files.
 - **scripts**: This directory contains scripts that are used to automate tasks, such as
-running tests and building the application.
+  running tests and building the application.
 - **styles**: This directory contains stylesheets in `*.scss` format.
 - **types**: This directory contains type declaration files, which are used to describe
-the shape and are used for typechecking.
+  the shape and are used for typechecking.
 - **server**: This directory contains the application's source code.
   - **api**: This directory contains the application's APIs.
     - **external**: This directory contains APIs that are provided by external services.
