@@ -254,9 +254,17 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
-   # 5. E2E - Insurance - Account
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
+
+    # 5. E2E - Insurance - Account
   e2e-tests-insurance-account:
     name: E2E Insurance - Account 👷
     needs: [setup]
@@ -302,7 +310,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -314,7 +322,15 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-account
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
 
   # 6. E2E - Insurance - Application submission
   e2e-tests-insurance-application-submission:
@@ -370,7 +386,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -382,8 +398,16 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
-  
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-application-submission
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
+
   # 7. E2E - Insurance - Check your answers
   e2e-tests-insurance-check-your-answers:
     name: E2E Insurance - Check Your Answers 👷
@@ -445,7 +469,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-    
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -457,8 +481,16 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
-  
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-check-your-answers
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
+
   # 8. E2E - Insurance - Declarations
   e2e-tests-insurance-declarations:
     name: E2E Insurance - Declarations 👷
@@ -502,7 +534,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -514,8 +546,16 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
-  
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-declarations
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
+
   # 9. E2E - Insurance - Eligibility
   e2e-tests-insurance-eligibility:
     name: E2E Insurance - Eligibility 👷
@@ -576,7 +616,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -588,7 +628,15 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-eligibility
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
 
   # 10. E2E - Insurance - Export contract
   e2e-tests-insurance-export-contract:
@@ -649,7 +697,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -661,7 +709,15 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-export-contract
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
 
   # 11. E2E - Insurance - Policy
   e2e-tests-insurance-policy:
@@ -733,7 +789,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -745,7 +801,15 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-policy
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
 
   # 11. E2E - Insurance - Your business
   e2e-tests-insurance-your-business:
@@ -795,7 +859,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -807,7 +871,15 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-your-business
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
 
   # 12. E2E - Insurance - Your buyer
   e2e-tests-insurance-your-buyer:
@@ -860,7 +932,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -872,7 +944,15 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-insurance-your-buyer
+          path: ./e2e-tests/insurance/cypress/screenshots/
+          retention-days: 1
 
   # 5. E2E - Quote
   e2e-tests-quote:
@@ -926,7 +1006,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -938,7 +1018,15 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/quote
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-quote
+          path: ./e2e-tests/quote/cypress/screenshots/
+          retention-days: 1
 
   # 6. E2E - Switch
   e2e-tests-switch:
@@ -977,7 +1065,7 @@ jobs:
         with:
           command: npm run ci:all
           retries: ${{ vars.RETRY_LIMIT }}
-  
+
       - name: Docker
         uses: ./.github/actions/rerun
         with:
@@ -989,5 +1077,12 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/switch-between-services
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
+      - name: Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-tests-switch
+          path: ./e2e-tests/switch-between-services/cypress/screenshots/
+          retention-days: 1
