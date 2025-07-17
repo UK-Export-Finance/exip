@@ -53,6 +53,7 @@ import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibilit
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
 import { RadioOption } from './radio-option';
+import { RiskClassifications } from './risk';
 import { SelectOption } from './select-option';
 import { SicCode } from './sic-code';
 import { SectionReview, TotalContractValue, InsuranceEligibilityCore, InsuranceEligibility, QuoteEligibility, EligibilityData } from './eligibility';
@@ -181,6 +182,7 @@ export {
   Response,
   ResponseInsurance,
   RadioOption,
+  RiskClassifications,
   SectionReview,
   SectionStartPageVariables,
   SectionStartPageVariablesInput,

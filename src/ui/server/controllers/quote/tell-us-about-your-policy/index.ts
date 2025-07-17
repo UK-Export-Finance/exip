@@ -1,3 +1,4 @@
+import { Request, Response, SelectOption } from '../../../../types';
 import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
@@ -14,7 +15,7 @@ import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
-import { Request, Response, SelectOption } from '../../../../types';
+import isHighRiskCountryEligible from '../../../helpers/is-high-risk-country-eligible-for-quote'
 
 const {
   ELIGIBILITY: { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
@@ -171,6 +172,10 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
+    const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
+
+    const { esraClassification } = submittedData.quoteEligibility.buyerCountry;
+
     const validationErrors = generateValidationErrors({
       ...submittedData.quoteEligibility,
       ...payload,
@@ -196,7 +201,6 @@ const post = async (req: Request, res: Response) => {
 
       // map percentage of cover drop down options
       let mappedPercentageOfCover = [];
-      const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
 
       if (submittedPercentageOfCover) {
         mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
@@ -239,6 +243,10 @@ const post = async (req: Request, res: Response) => {
         creditPeriod: mappedCreditPeriod,
         submittedValues: payload,
       });
+    }
+
+    if (isHighRiskCountryEligible(esraClassification, submittedPercentageOfCover)) {
+      console.log('=========>Yes')
     }
 
     const populatedData = {
