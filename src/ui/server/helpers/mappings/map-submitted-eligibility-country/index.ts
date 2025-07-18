@@ -12,7 +12,7 @@ const {
  * @returns {Object} Object with BUYER_COUNTRY object, country fields and canApplyOnline flag
  */
 const mapSubmittedEligibilityCountry = (country: Country) => {
-  const { name, isoCode, esraClassification } = country;
+  const { name, isoCode, esraClassification, isHighRisk } = country;
 
   const mapped = {
     [BUYER_COUNTRY]: {
@@ -20,6 +20,7 @@ const mapSubmittedEligibilityCountry = (country: Country) => {
       isoCode,
       esraClassification,
       canApplyOnline: country.canGetAQuoteOnline || country.canApplyForInsuranceOnline,
+      isHighRisk,
     },
   };
 

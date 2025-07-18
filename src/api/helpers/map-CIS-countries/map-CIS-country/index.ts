@@ -3,6 +3,7 @@ import hasNoSupport from './has-no-support';
 import hasNoOnlineSupport from './has-no-online-support';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
+import isHighRiskCountry from './is-high-risk-country';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
 /**
@@ -46,6 +47,8 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     canApplyForInsuranceOnline: canApplyForInsuranceOnline(cisCountry),
 
     noInsuranceSupport: noSupport,
+
+    isHighRisk: isHighRiskCountry(esraClassification),
   };
 
   return mapped;

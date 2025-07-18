@@ -11,6 +11,7 @@ const getApimCisCountries = gql`
       canApplyForInsuranceOnline
       noOnlineSupport
       noInsuranceSupport
+      isHighRisk
     }
   }
 `;

@@ -40,6 +40,9 @@ const TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT = {
       HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
     },
     TEXT: `to learn more about your options.`,
+    REASON: {
+      HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD: "We do not normally offer short term cover for the country and cover perecentage you've selected.",
+    },
   },
 };
 

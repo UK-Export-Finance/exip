@@ -6736,7 +6736,7 @@ var LINKS = {
     PROPOSAL_FORM:
       'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf',
     NBI_FORM:
-      'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf',
+      'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/618316/export-insurance-non-binding-indication-request-form_20170609.pdf',
     FULL_APPLICATION: 'https://www.gov.uk/guidance/apply-for-ukef-credit-insurance',
     ABILITY_NET: 'https://mcmw.abilityNet.org.uk',
     EQUALITY_ADVISORY_SERVICE: 'https://www.equalityadvisoryservice.com',
@@ -9608,15 +9608,15 @@ var filter_cis_entries_default = filterCisEntries;
 var {
   CIS: { ESRA_CLASSIFICATION },
 } = EXTERNAL_API_DEFINITIONS;
-var mapEsraClassification = (str) => {
-  if (str === ESRA_CLASSIFICATION.STANDARD) {
+var mapEsraClassification = (classification) => {
+  if (classification === ESRA_CLASSIFICATION.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.ESRA_CLASSIFICATION.STANDARD;
   }
-  if (str === ESRA_CLASSIFICATION.HIGH) {
-    return str;
+  if (classification === ESRA_CLASSIFICATION.HIGH) {
+    return classification;
   }
-  if (str === ESRA_CLASSIFICATION.VERY_HIGH) {
-    return str;
+  if (classification === ESRA_CLASSIFICATION.VERY_HIGH) {
+    return classification;
   }
   return null;
 };
@@ -9823,6 +9823,15 @@ var canApplyForInsuranceOnline = (cisCountry) => {
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
+// helpers/map-CIS-countries/map-CIS-country/is-high-risk-country/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { HIGH: HIGH4 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var isHighRiskCountry = (riskClassification) => riskClassification === HIGH4;
+var is_high_risk_country_default = isHighRiskCountry;
+
 // helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (cisCountry) => {
   const { countryRatingDesc: countryRating, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc: shortTermCover } = cisCountry;
@@ -9846,6 +9855,7 @@ var mapCisCountry = (cisCountry) => {
     cannotGetAQuote: noSupport,
     canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
     noInsuranceSupport: noSupport,
+    isHighRisk: is_high_risk_country_default(esraClassification),
   };
   return mapped;
 };
@@ -9864,6 +9874,7 @@ var mapCisCountries = (countries) => {
   const filteredCountries = filter_cis_entries_default(countries, CIS.INVALID_COUNTRIES, 'marketName');
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, 'name');
+  console.log('===========>', sorted);
   return sorted;
 };
 var map_CIS_countries_default = mapCisCountries;

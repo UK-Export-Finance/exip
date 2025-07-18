@@ -9,6 +9,9 @@
 name: Source Code Analysis
 run-name: Executing various SCAs on ${{ github.repository }} 🔍️
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     branches: [main, main-*]

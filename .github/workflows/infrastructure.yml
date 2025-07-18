@@ -32,6 +32,9 @@
 name: Infrastructure 🔨
 run-name: EXIP base infrastructure build from ${{ github.repository }}
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:

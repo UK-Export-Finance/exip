@@ -1,1 +1,5 @@
 export const PERCENTAGES_OF_COVER = [70, 75, 80, 85, 90, 95];
+
+export const HIGH_RISK_COUNTRY = {
+  MAXIMUM_PERCENTAGE_OF_COVER: 90,
+};
