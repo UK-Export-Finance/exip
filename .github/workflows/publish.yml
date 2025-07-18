@@ -9,7 +9,6 @@
 
 name: Automated release
 run-name: Executing release on ${{ github.repository }} 🚀
-
 on:
   push:
     branches: [main]
