@@ -26,6 +26,7 @@ export const get = (req: Request, res: Response) => {
    * requested cover of percentage is over 90%,
    * then redirect the user to EFM.
    */
+
   if (!isHighRiskCountryEligible(buyerCountry?.isHighRisk, submittedPercentageOfCover)) {
     console.info('High risk country %s with high cover %i - cannot get a quote', buyerCountry?.name, submittedPercentageOfCover);
 

@@ -13,6 +13,6 @@ const {
  * @param esraClassification - The risk classification to evaluate.
  * @returns {Boolean} `true` if the classification is considered high risk, otherwise `false`.
  */
-const isHighRiskCountry = (riskClassification: RiskClassifications) => riskClassification === HIGH;
+const isHighRiskCountry = (riskClassification: RiskClassifications | null) => riskClassification === HIGH;
 
 export default isHighRiskCountry;

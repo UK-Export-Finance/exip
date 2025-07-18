@@ -230,6 +230,7 @@ const typeDefs = `
     canApplyForInsuranceOnline: Boolean
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
+    isHighRisk: Boolean
   }
 
   type MappedCurrency {
