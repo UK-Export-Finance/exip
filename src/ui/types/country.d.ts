@@ -1,8 +1,9 @@
+import { RiskClassifications } from './risk';
 interface Country {
   id?: string;
   name: string;
   isoCode: string;
-  esraClassification: string;
+  esraClassification: RiskClassifications;
   selected?: boolean;
   value?: string;
   canGetAQuoteOnline: boolean;

@@ -7,6 +7,6 @@ import { EXTERNAL_API_MAPPINGS } from '../../constants';
  * @param esraClassification - The risk classification to evaluate.
  * @returns `true` if the classification is considered high risk, otherwise `false`.
  */
-const isHighRiskCountry = (riskClassification: RiskClassifications) => riskClassification === EXTERNAL_API_MAPPINGS.CIS.RISK.HIGH;
+const isHighRiskCountry = (riskClassification: RiskClassifications | undefined) => riskClassification === EXTERNAL_API_MAPPINGS.CIS.RISK.HIGH;
 
 export default isHighRiskCountry;

@@ -15,7 +15,7 @@ import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
-import isHighRiskCountryEligible from '../../../helpers/is-high-risk-country-eligible-for-quote'
+import isHighRiskCountryEligible from '../../../helpers/is-high-risk-country-eligible-for-quote';
 
 const {
   ELIGIBILITY: { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
@@ -168,16 +168,16 @@ const get = async (req: Request, res: Response) => {
 
 const post = async (req: Request, res: Response) => {
   try {
-    const { submittedData } = req.session;
+    const {
+      submittedData: { quoteEligibility },
+    } = req.session;
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
     const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
 
-    const { esraClassification } = submittedData.quoteEligibility.buyerCountry;
-
     const validationErrors = generateValidationErrors({
-      ...submittedData.quoteEligibility,
+      ...quoteEligibility,
       ...payload,
     });
 
@@ -220,7 +220,7 @@ const post = async (req: Request, res: Response) => {
         mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
       }
 
-      const policyType = String(submittedData.quoteEligibility[POLICY_TYPE]);
+      const policyType = String(quoteEligibility[POLICY_TYPE]);
 
       const PAGE_VARIABLES = generatePageVariables(policyType);
 
@@ -245,8 +245,27 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    if (isHighRiskCountryEligible(esraClassification, submittedPercentageOfCover)) {
-      console.log('=========>Yes')
+    const { buyerCountry } = quoteEligibility;
+
+    /**
+     * If the selected country is classified as high risk and
+     * requested cover of percentage is over 90%,
+     * then redirect the user to EFM.
+     */
+    if (!isHighRiskCountryEligible(buyerCountry?.esraClassification, submittedPercentageOfCover)) {
+      console.info('High risk country %s with high cover %i - cannot get a quote', buyerCountry?.name, submittedPercentageOfCover);
+
+      const {
+        TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
+          CONTACT_EFM: {
+            REASON: { HIGH_COVER_HIGH_RISK_COUNTRY },
+          },
+        },
+      } = PAGES;
+
+      req.flash('exitReason', HIGH_COVER_HIGH_RISK_COUNTRY);
+
+      return res.redirect(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     }
 
     const populatedData = {

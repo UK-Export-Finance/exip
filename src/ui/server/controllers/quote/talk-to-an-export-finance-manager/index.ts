@@ -13,8 +13,12 @@ export const TEMPLATE = TEMPLATES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT;
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} "Talk to an export finance manager" exit page
  */
-export const get = (req: Request, res: Response) =>
+export const get = (req: Request, res: Response) => {
+  const EXIT_REASON = req.flash('exitReason');
+
   res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
     userName: getUserNameFromSession(req.session.user),
+    EXIT_REASON,
   });
+};
