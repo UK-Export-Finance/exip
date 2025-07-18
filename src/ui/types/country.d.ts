@@ -11,6 +11,7 @@ interface Country {
   canApplyForInsuranceOnline: boolean;
   noOnlineSupport: boolean;
   noInsuranceSupport: boolean;
+  isHighRisk: boolean;
 }
 
 export { Country };

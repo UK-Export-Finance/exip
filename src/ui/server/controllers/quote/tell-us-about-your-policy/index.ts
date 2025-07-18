@@ -23,6 +23,14 @@ const {
   POLICY_LENGTH,
 } = ALL_FIELD_IDS;
 
+const {
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
+    CONTACT_EFM: {
+      REASON: { HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD },
+    },
+  },
+} = PAGES;
+
 const { TELL_US_ABOUT_YOUR_POLICY } = PAGES.QUOTE;
 
 export const FIELD_IDS = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_LENGTH];
@@ -252,18 +260,14 @@ const post = async (req: Request, res: Response) => {
      * requested cover of percentage is over 90%,
      * then redirect the user to EFM.
      */
-    if (!isHighRiskCountryEligible(buyerCountry?.esraClassification, submittedPercentageOfCover)) {
-      console.info('High risk country %s with high cover %i - cannot get a quote', buyerCountry?.name, submittedPercentageOfCover);
+    if (!isHighRiskCountryEligible(buyerCountry?.isHighRisk, submittedPercentageOfCover)) {
+      console.info(
+        'Country support - no online quote support available - high risk country with percentage of cover over the threshold %s %i',
+        buyerCountry?.name,
+        submittedPercentageOfCover,
+      );
 
-      const {
-        TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
-          CONTACT_EFM: {
-            REASON: { HIGH_COVER_HIGH_RISK_COUNTRY },
-          },
-        },
-      } = PAGES;
-
-      req.flash('exitReason', HIGH_COVER_HIGH_RISK_COUNTRY);
+      req.flash('exitReason', HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD);
 
       return res.redirect(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     }

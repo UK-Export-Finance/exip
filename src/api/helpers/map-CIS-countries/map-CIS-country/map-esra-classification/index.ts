@@ -1,4 +1,5 @@
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../../constants';
+import { RiskClassifications } from '../../../../types';
 
 const {
   CIS: { ESRA_CLASSIFICATION },
@@ -10,17 +11,17 @@ const {
  * @param {String} Risk category
  * @returns {String} Consistent ESRA classification
  */
-const mapEsraClassification = (str: string): string | null => {
-  if (str === ESRA_CLASSIFICATION.STANDARD) {
-    return EXTERNAL_API_MAPPINGS.CIS.ESRA_CLASSIFICATION.STANDARD;
+const mapEsraClassification = (classification: string): RiskClassifications | null => {
+  if (classification === ESRA_CLASSIFICATION.STANDARD) {
+    return EXTERNAL_API_MAPPINGS.CIS.ESRA_CLASSIFICATION.STANDARD as RiskClassifications;
   }
 
-  if (str === ESRA_CLASSIFICATION.HIGH) {
-    return str;
+  if (classification === ESRA_CLASSIFICATION.HIGH) {
+    return classification as RiskClassifications;
   }
 
-  if (str === ESRA_CLASSIFICATION.VERY_HIGH) {
-    return str;
+  if (classification === ESRA_CLASSIFICATION.VERY_HIGH) {
+    return classification as RiskClassifications;
   }
 
   return null;

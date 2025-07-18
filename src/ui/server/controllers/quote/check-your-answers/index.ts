@@ -26,18 +26,18 @@ export const get = (req: Request, res: Response) => {
    * requested cover of percentage is over 90%,
    * then redirect the user to EFM.
    */
-  if (!isHighRiskCountryEligible(buyerCountry?.esraClassification, submittedPercentageOfCover)) {
+  if (!isHighRiskCountryEligible(buyerCountry?.isHighRisk, submittedPercentageOfCover)) {
     console.info('High risk country %s with high cover %i - cannot get a quote', buyerCountry?.name, submittedPercentageOfCover);
 
     const {
       TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
         CONTACT_EFM: {
-          REASON: { HIGH_COVER_HIGH_RISK_COUNTRY },
+          REASON: { HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD },
         },
       },
     } = PAGES;
 
-    req.flash('exitReason', HIGH_COVER_HIGH_RISK_COUNTRY);
+    req.flash('exitReason', HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD);
 
     return res.redirect(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
   }
