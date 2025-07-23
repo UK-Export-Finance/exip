@@ -255,6 +255,13 @@ const post = async (req: Request, res: Response) => {
 
     const { buyerCountry } = quoteEligibility;
 
+    const populatedData = {
+      ...payload,
+      [CURRENCY]: getCurrencyByCode(supportedCurrencies, submittedCurrencyCode),
+    };
+
+    req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
+
     /**
      * If the selected country is classified as high risk and
      * requested cover of percentage is over 90%,
@@ -271,13 +278,6 @@ const post = async (req: Request, res: Response) => {
 
       return res.redirect(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     }
-
-    const populatedData = {
-      ...payload,
-      [CURRENCY]: getCurrencyByCode(supportedCurrencies, submittedCurrencyCode),
-    };
-
-    req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
