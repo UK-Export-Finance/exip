@@ -4,14 +4,20 @@ import { PAGES } from '../../content-strings';
 import { ROUTES } from '../../constants';
 
 export const isHighRiskCountry = (req: Request, res: Response, next: () => void) => {
-  const { session } = req;
+  const {
+    TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
+      CONTACT_EFM: {
+        REASON: { HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD },
+      },
+    },
+  } = PAGES;
 
+  const { session } = req;
   const {
     submittedData: { quoteEligibility },
   } = session;
 
   const { buyerCountry, percentageOfCover } = quoteEligibility;
-
   const submittedPercentageOfCover = Number(percentageOfCover);
 
   /**
@@ -22,14 +28,6 @@ export const isHighRiskCountry = (req: Request, res: Response, next: () => void)
 
   if (!isHighRiskCountryEligible(buyerCountry?.isHighRisk, submittedPercentageOfCover)) {
     console.info('High risk country %s with high cover %i - cannot get a quote', buyerCountry?.name, submittedPercentageOfCover);
-
-    const {
-      TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
-        CONTACT_EFM: {
-          REASON: { HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD },
-        },
-      },
-    } = PAGES;
 
     req.flash('exitReason', HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD);
 

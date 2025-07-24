@@ -1,10 +1,10 @@
-import { Request, Response } from '../../../../types';
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS;
 
