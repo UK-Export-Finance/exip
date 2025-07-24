@@ -3,28 +3,34 @@ import isHighRiskCountryEligible from '../../helpers/is-high-risk-country-eligib
 import { PAGES } from '../../content-strings';
 import { ROUTES } from '../../constants';
 
-export const isHighRiskCountry = (req: Request, res: Response, next: () => void) => {
-  const {
-    TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
-      CONTACT_EFM: {
-        REASON: { HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD },
-      },
+const {
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
+    CONTACT_EFM: {
+      REASON: { HIGH_RISK_COUNTRY_COVER_ABOVE_THRESHOLD },
     },
-  } = PAGES;
+  },
+} = PAGES;
 
+/**
+ * Express middleware to check if the selected buyer country is classified as `high risk`
+ * and if the requested percentage of cover exceeds the allowed threshold (90%).
+ *
+ * If the country is high risk and the cover percentage is above `90%`, the user is redirected
+ * to the Export Finance Manager (EFM) exit page with an appropriate exit reason.
+ * Otherwise, the request proceeds to the next middleware.
+ *
+ * @param req - Express request object, expected to contain session.submittedData.quoteEligibility
+ * @param res - Express response object, used for redirection
+ * @param next - Callback to pass control to the next middleware
+ */
+export const isHighRiskCountry = (req: Request, res: Response, next: () => void) => {
   const { session } = req;
+
   const {
     submittedData: { quoteEligibility },
   } = session;
-
   const { buyerCountry, percentageOfCover } = quoteEligibility;
   const submittedPercentageOfCover = Number(percentageOfCover);
-
-  /**
-   * If the selected country is classified as high risk and
-   * requested cover of percentage is over 90%,
-   * then redirect the user to EFM.
-   */
 
   if (!isHighRiskCountryEligible(buyerCountry?.isHighRisk, submittedPercentageOfCover)) {
     console.info('High risk country %s with high cover %i - cannot get a quote', buyerCountry?.name, submittedPercentageOfCover);
