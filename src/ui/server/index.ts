@@ -22,6 +22,7 @@ import { ROUTES, COOKIE } from './constants';
 import { PAGES } from './content-strings';
 
 import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
+import { isHighRiskCountry } from './middleware/high-risk-country';
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
 import applicationAccess from './middleware/insurance/application-access';
 import applicationStatus from './middleware/insurance/application-status';
@@ -118,7 +119,8 @@ ui.use(
 
 ui.use('/', redirectRoutes);
 
-ui.use('/quote', requiredQuoteEligibilityDataProvided);
+ui.use(ROUTES.QUOTE.DEFAULT, requiredQuoteEligibilityDataProvided);
+ui.use(ROUTES.QUOTE.DEFAULT, isHighRiskCountry);
 ui.use('/apply/eligibility', requiredInsuranceEligibilityDataProvided);
 ui.use('/apply/:referenceNumber/*', getApplicationByReferenceNumber);
 ui.use('/apply/:referenceNumber/*', applicationAccess);
