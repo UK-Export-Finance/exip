@@ -14,7 +14,7 @@ const RISKS = {
   STANDARD: 'Standard',
 } as const;
 
-export type RiskClassifications = keyof typeof RISKS;
+export type RiskClassifications = (typeof RISKS)[keyof typeof RISKS];
 
 export interface CisCountry {
   countryRatingDesc: string;

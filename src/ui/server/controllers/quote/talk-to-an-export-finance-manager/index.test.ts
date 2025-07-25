@@ -18,14 +18,20 @@ describe('controllers/quote/talk-to-an-export-finance-manager', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
+      // Assert
       expect(TEMPLATE).toEqual(TEMPLATES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     });
   });
 
   describe('get', () => {
     it('should render template', () => {
+      // Arrange
+      const EXIT_REASON = req.flash('exitReason');
+
+      // Act
       get(req, res);
 
+      // Assert
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT, {
         ...corePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
@@ -33,6 +39,7 @@ describe('controllers/quote/talk-to-an-export-finance-manager', () => {
           ORIGINAL_URL: req.originalUrl,
         }),
         userName: getUserNameFromSession(req.session.user),
+        EXIT_REASON,
       });
     });
   });

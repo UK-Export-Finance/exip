@@ -3128,6 +3128,7 @@ var typeDefs = `
     canApplyForInsuranceOnline: Boolean
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
+    isHighRisk: Boolean
   }
 
   type MappedCurrency {
@@ -9874,7 +9875,6 @@ var mapCisCountries = (countries) => {
   const filteredCountries = filter_cis_entries_default(countries, CIS.INVALID_COUNTRIES, 'marketName');
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, 'name');
-  console.log('===========>', sorted);
   return sorted;
 };
 var map_CIS_countries_default = mapCisCountries;

@@ -11,6 +11,6 @@ const RISKS = {
   STANDARD: 'Standard',
 } as const;
 
-type RiskClassifications = keyof typeof RISKS;
+type RiskClassifications = (typeof RISKS)[keyof typeof RISKS];
 
 export { RiskClassifications };

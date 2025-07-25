@@ -8,7 +8,8 @@ const {
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * Determines if the provided ESRA classification indicates a high risk country.
+ * Determines if the provided ESRA classification indicates a 'high' risk country only.
+ * Note: For a very high risk country this will return false.
  *
  * @param esraClassification - The risk classification to evaluate.
  * @returns {Boolean} `true` if the classification is considered high risk, otherwise `false`.
