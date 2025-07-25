@@ -11,11 +11,7 @@ const {
   },
 } = PAGES;
 
-const RELEVANT_ROUTES = [
-  ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-  ROUTES.QUOTE.CHECK_YOUR_ANSWERS,
-  ROUTES.QUOTE.YOUR_QUOTE,
-];
+const RELEVANT_ROUTES = [ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, ROUTES.QUOTE.CHECK_YOUR_ANSWERS, ROUTES.QUOTE.YOUR_QUOTE];
 
 /**
  * Express middleware to check if the selected buyer country is classified as `high risk`
@@ -34,7 +30,7 @@ export const isHighRiskCountry = (req: Request, res: Response, next: () => void)
 
   const isRelevantRoute = (route: string) => RELEVANT_ROUTES.includes(route);
 
-  if (!session?.submittedData || !isRelevantRoute(url)) {
+  if (!session?.submittedData?.quoteEligibility?.buyerCountry || !isRelevantRoute(url)) {
     return next();
   }
 
