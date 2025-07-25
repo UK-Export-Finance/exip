@@ -234,7 +234,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance
+          name: e2e-tests-insurance-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -303,7 +303,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-account
+          name: e2e-tests-insurance-account-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -380,7 +380,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-application-submission
+          name: e2e-tests-insurance-application-submission-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -464,7 +464,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-check-your-answers
+          name: e2e-tests-insurance-check-your-answers-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -530,7 +530,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-declarations
+          name: e2e-tests-insurance-declarations-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -613,7 +613,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-eligibility
+          name: e2e-tests-insurance-eligibility-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -695,7 +695,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-export-contract
+          name: e2e-tests-insurance-export-contract-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -788,7 +788,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-policy
+          name: e2e-tests-insurance-policy-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -859,7 +859,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-your-business
+          name: e2e-tests-insurance-your-business-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -933,7 +933,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-your-buyer
+          name: e2e-tests-insurance-your-buyer-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -1008,7 +1008,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-quote
+          name: e2e-tests-quote-${{ github.run_attempt }}
           path: ./e2e-tests/quote/cypress/screenshots/
           retention-days: 1
 
@@ -1068,6 +1068,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-switch
+          name: e2e-tests-switch-${{ github.run_attempt }}
           path: ./e2e-tests/switch-between-services/cypress/screenshots/
           retention-days: 1
