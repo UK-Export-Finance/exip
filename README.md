@@ -29,8 +29,8 @@ The repository is based on the [template-typescript-package](https://github.com/
 
 **CD** 🚀
 
-| Status | Environment  |
-| - | - |
+| Status | Environment|
+| - | -|
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev)        | `dev`        |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=feature)    | `feature`    |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging)    | `staging`    |
@@ -104,14 +104,14 @@ To run unit tests for the UI, navigate to the `src/ui` directory and
 execute:
 
 ```shell
-npm run test
+npm run unit-test
 ```
 
 To run unit tests for the API, navigate to the `src/api` directory and
 execute:
 
 ```shell
-npm run test
+npm run unit-test
 ```
 
 ### Run the E2E Tests

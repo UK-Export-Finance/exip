@@ -18,8 +18,8 @@
     "lint": "eslint ./server",
     "lint:fix": "eslint ./server --fix",
     "start": "ts-node server/index.ts",
-    "test": "jest --notify --coverage --verbose --config=jest.config.js",
-    "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles"
+    "unit-test": "jest --notify --coverage --verbose --config=jest.config.js",
+    "unit-test-dev": "jest --notify --verbose --coverage=false --config=jest.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.28.0",
