@@ -18,7 +18,6 @@ module.exports = {
   coveragePathIgnorePatterns: ['/node_modules/'],
   testMatch: ['**/*.test.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  preset: 'ts-jest',
   testEnvironment: 'node',
   globals: {
     'ts-jest': {
