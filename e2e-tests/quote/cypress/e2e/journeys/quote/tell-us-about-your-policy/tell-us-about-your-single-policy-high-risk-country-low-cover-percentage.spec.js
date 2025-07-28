@@ -27,7 +27,7 @@ context(
     before(() => {
       cy.navigateToRootUrl();
 
-      cy.completeAndSubmitBuyerBodyForm({ countryName: HIGH_RISK_COUNTRY_1.NAME });
+      cy.completeAndSubmitBuyerCountryForm({ countryName: HIGH_RISK_COUNTRY_1.NAME });
       cy.completeAndSubmitBuyerBodyForm();
       cy.completeAndSubmitExporterLocationForm();
       cy.completeAndSubmitUkContentForm();
