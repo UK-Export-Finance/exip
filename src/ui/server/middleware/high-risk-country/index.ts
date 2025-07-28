@@ -25,7 +25,7 @@ const RELEVANT_ROUTES = [ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, ROUTES.QUOTE.CH
  * @param res - Express response object, used for redirection
  * @param next - Callback to pass control to the next middleware
  */
-export const isHighRiskCountry = (req: Request, res: Response, next: () => void) => {
+export const isHighRiskCountryWithHighCover = (req: Request, res: Response, next: () => void) => {
   const { originalUrl: url, session } = req;
 
   const isRelevantRoute = (route: string) => RELEVANT_ROUTES.includes(route);

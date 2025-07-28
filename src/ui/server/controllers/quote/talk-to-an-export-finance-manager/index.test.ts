@@ -3,15 +3,23 @@ import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../types';
+import { ObjectType, Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/talk-to-an-export-finance-manager', () => {
   let req: Request;
   let res: Response;
+  const mockExitReason = 'mock';
 
   beforeEach(() => {
     req = mockReq();
+    req.flash = (property: string) => {
+      const obj = {
+        exitReason: mockExitReason,
+      } as ObjectType;
+
+      return obj[property];
+    };
 
     res = mockRes();
   });
@@ -25,9 +33,6 @@ describe('controllers/quote/talk-to-an-export-finance-manager', () => {
 
   describe('get', () => {
     it('should render template', () => {
-      // Arrange
-      const EXIT_REASON = req.flash('exitReason');
-
       // Act
       get(req, res);
 
@@ -39,7 +44,7 @@ describe('controllers/quote/talk-to-an-export-finance-manager', () => {
           ORIGINAL_URL: req.originalUrl,
         }),
         userName: getUserNameFromSession(req.session.user),
-        EXIT_REASON,
+        EXIT_REASON: mockExitReason,
       });
     });
   });

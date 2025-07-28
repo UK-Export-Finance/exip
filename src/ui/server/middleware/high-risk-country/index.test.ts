@@ -3,7 +3,7 @@ import { mockReq, mockRes } from '../../test-mocks';
 import { ROUTES } from '../../constants';
 import { PAGES } from '../../content-strings';
 import { mockCountryCanGetAQuoteByEmail, mockHighRiskCountry } from '../../test-mocks/mock-countries';
-import { isHighRiskCountry } from './index';
+import { isHighRiskCountryWithHighCover } from './index';
 
 const {
   TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: {
@@ -13,7 +13,7 @@ const {
   },
 } = PAGES;
 
-describe('middleware/isHighRiskCountry', () => {
+describe('middleware/high-risk-country', () => {
   const req: Request = mockReq();
   const res: Response = mockRes();
 
@@ -36,7 +36,7 @@ describe('middleware/isHighRiskCountry', () => {
     };
 
     // Act
-    isHighRiskCountry(mockRequest, res, nextSpy);
+    isHighRiskCountryWithHighCover(mockRequest, res, nextSpy);
 
     // Assert
     expect(nextSpy).toHaveBeenCalledTimes(1);
@@ -59,7 +59,7 @@ describe('middleware/isHighRiskCountry', () => {
     };
 
     // Act
-    isHighRiskCountry(mockRequest, res, nextSpy);
+    isHighRiskCountryWithHighCover(mockRequest, res, nextSpy);
 
     // Assert
     expect(nextSpy).toHaveBeenCalledTimes(1);
@@ -84,7 +84,7 @@ describe('middleware/isHighRiskCountry', () => {
     };
 
     // Act
-    isHighRiskCountry(mockRequest, res, nextSpy);
+    isHighRiskCountryWithHighCover(mockRequest, res, nextSpy);
 
     // Assert
     expect(nextSpy).toHaveBeenCalledTimes(1);
@@ -112,7 +112,7 @@ describe('middleware/isHighRiskCountry', () => {
     };
 
     // Act
-    isHighRiskCountry(mockRequest, res, nextSpy);
+    isHighRiskCountryWithHighCover(mockRequest, res, nextSpy);
 
     // Assert
     expect(nextSpy).toHaveBeenCalledTimes(1);
@@ -140,7 +140,7 @@ describe('middleware/isHighRiskCountry', () => {
     };
 
     // Act
-    isHighRiskCountry(mockRequest, res, nextSpy);
+    isHighRiskCountryWithHighCover(mockRequest, res, nextSpy);
 
     // Assert
     expect(nextSpy).toHaveBeenCalledTimes(1);
@@ -168,7 +168,7 @@ describe('middleware/isHighRiskCountry', () => {
     };
 
     // Act
-    isHighRiskCountry(mockRequest, res, nextSpy);
+    isHighRiskCountryWithHighCover(mockRequest, res, nextSpy);
 
     // Assert
     expect(nextSpy).not.toHaveBeenCalled();

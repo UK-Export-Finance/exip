@@ -8,36 +8,36 @@ const {
 
 const assertions = [
   {
-    response: false,
+    expected: false,
     risk: null,
   },
   {
-    response: false,
+    expected: false,
     risk: ESRA_CLASSIFICATION.NONE as RiskClassifications,
   },
   {
-    response: false,
+    expected: false,
     risk: ESRA_CLASSIFICATION.STANDARD as RiskClassifications,
   },
   {
-    response: true,
+    expected: true,
     risk: ESRA_CLASSIFICATION.HIGH as RiskClassifications,
   },
   {
-    response: false,
+    expected: false,
     risk: ESRA_CLASSIFICATION.VERY_HIGH as RiskClassifications,
   },
 ];
 
-describe('isHighRiskCountry', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/is-high-risk-country', () => {
   it.each(assertions)(
     'should return $response for $risk risk classification',
-    ({ response, risk }: { response: boolean; risk: RiskClassifications | null }) => {
+    ({ expected, risk }: { expected: boolean; risk: RiskClassifications | null }) => {
       // Act
-      const expected = isHighRiskCountry(risk);
+      const result = isHighRiskCountry(risk);
 
       // Assert
-      expect(expected).toBe(response);
+      expect(result).toBe(expected);
     },
   );
 });
