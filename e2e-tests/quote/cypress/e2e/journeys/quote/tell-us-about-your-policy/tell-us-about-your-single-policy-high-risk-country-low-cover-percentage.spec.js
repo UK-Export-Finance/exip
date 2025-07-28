@@ -2,6 +2,7 @@ import { field as fieldSelector } from '../../../../../../pages/shared';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { EUR, GBP, JPY, USD } from '../../../../../../fixtures/currencies';
+import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -14,6 +15,8 @@ const {
   QUOTE: { TELL_US_ABOUT_YOUR_POLICY, POLICY_TYPE, CHECK_YOUR_ANSWERS },
 } = ROUTES;
 
+const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context(
@@ -24,7 +27,7 @@ context(
     before(() => {
       cy.navigateToRootUrl();
 
-      cy.completeAndSubmitHighRiskBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm({ countryName: HIGH_RISK_COUNTRY_1.NAME });
       cy.completeAndSubmitBuyerBodyForm();
       cy.completeAndSubmitExporterLocationForm();
       cy.completeAndSubmitUkContentForm();

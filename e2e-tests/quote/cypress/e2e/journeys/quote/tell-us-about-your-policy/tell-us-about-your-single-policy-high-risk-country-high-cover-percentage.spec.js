@@ -2,6 +2,7 @@ import { field as fieldSelector, actions } from '../../../../../../pages/shared'
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { EUR, GBP, JPY, USD } from '../../../../../../fixtures/currencies';
+import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -18,17 +19,19 @@ const {
   QUOTE: { TELL_US_ABOUT_YOUR_POLICY, POLICY_TYPE, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = ROUTES;
 
+const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Tell us about your single policy page - as an exporter, I want to provide my Credit insurance policy details for a high risk country with 95% cover percentag',
+  'Tell us about your single policy page - as an exporter, I want to provide my Credit insurance policy details for a high risk country with 95% cover percentage',
   () => {
     const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
     before(() => {
       cy.navigateToRootUrl();
 
-      cy.completeAndSubmitHighRiskBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm({ countryName: HIGH_RISK_COUNTRY_1.NAME });
       cy.completeAndSubmitBuyerBodyForm();
       cy.completeAndSubmitExporterLocationForm();
       cy.completeAndSubmitUkContentForm();
