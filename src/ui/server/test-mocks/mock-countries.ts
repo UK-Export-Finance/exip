@@ -61,7 +61,7 @@ export const mockCountryCanGetAQuoteByEmail: Country = {
 export const mockHighRiskCountry: Country = {
   ...baseCountry,
   name: 'Bahrain',
-  isoCode: 'EGY',
+  isoCode: 'BHR',
   noOnlineSupport: true,
   isHighRisk: true,
 };

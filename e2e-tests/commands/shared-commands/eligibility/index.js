@@ -15,6 +15,7 @@ import {
 } from '../../insurance/eligibility/forms';
 import completeAndSubmitCompaniesHouseSearchForm from '../../insurance/complete-and-submit-companies-house-search-form';
 import completeAndSubmitBuyerCountryForm from './complete-and-submit-buyer-country-form';
+import completeAndSubmitHighRiskBuyerCountryForm from './complete-and-submit-high-risk-buyer-country-form';
 import { assertApplyThroughPDFCopyAndLink, assertTalkToEFMCopyAndLink, assertContactUkefTeam } from '../../insurance/eligibility/assert-pdf-exit-page-content';
 
 Cypress.Commands.add('completeCheckIfEligibleForm', completeCheckIfEligibleForm);
@@ -23,6 +24,7 @@ Cypress.Commands.add('completeCompaniesHouseNumberForm', completeCompaniesHouseN
 Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', completeAndSubmitCompaniesHouseSearchForm);
 Cypress.Commands.add('completeEligibilityCompanyDetailsForm', completeCompanyDetailsForm);
 Cypress.Commands.add('completeAndSubmitBuyerCountryForm', completeAndSubmitBuyerCountryForm);
+Cypress.Commands.add('completeAndSubmitHighRiskBuyerCountryForm', completeAndSubmitHighRiskBuyerCountryForm);
 Cypress.Commands.add('completeAndSubmitTotalValueInsuredForm', completeAndSubmitTotalValueInsuredForm);
 Cypress.Commands.add('completeCoverPeriodForm', completeCoverPeriodForm);
 Cypress.Commands.add('completeUkGoodsAndServicesForm', completeUkGoodsAndServicesForm);

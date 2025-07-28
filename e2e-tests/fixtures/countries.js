@@ -63,7 +63,12 @@ export const XAD = {
   ISO_CODE: 'XAD',
 };
 
-const mockCountries = [DZA, FRA, AGO, GBR, XAD, BRA];
+export const BHR = {
+  NAME: 'Bahrain',
+  ISO_CODE: 'BHR',
+};
+
+const mockCountries = [DZA, FRA, AGO, GBR, XAD, BRA, BHR];
 
 const ONLINE_SUPPORT_1 = DZA;
 
@@ -79,6 +84,8 @@ const NOT_SUPPORTED_2 = ERI;
 const NOT_SUPPORTED_3 = IOT;
 const NOT_SUPPORTED_4 = NCL;
 
+const HIGH_RISK_COUNTRY_1 = BHR;
+
 /**
  * COUNTRY_QUOTE_SUPPORT
  * Different types of country support for a quote.
@@ -92,6 +99,7 @@ export const COUNTRY_QUOTE_SUPPORT = {
   NO_ONLINE_SUPPORT_5,
   NO_ONLINE_SUPPORT_6,
   NOT_SUPPORTED_1,
+  HIGH_RISK_COUNTRY_1,
 };
 
 /**
