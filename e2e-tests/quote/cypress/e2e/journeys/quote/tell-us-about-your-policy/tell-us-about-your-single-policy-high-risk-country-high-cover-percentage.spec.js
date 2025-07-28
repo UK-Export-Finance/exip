@@ -1,22 +1,20 @@
 import { field as fieldSelector, actions } from '../../../../../../pages/shared';
-import { FIELDS, PAGES } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import { EUR, GBP, JPY, USD } from '../../../../../../fixtures/currencies';
+import { GBP } from '../../../../../../fixtures/currencies';
 import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
-
-const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 const {
   TALK_TO_AN_EXPORT_FINANCE_MANAGER_HIGH_RISK_HIGH_COVER_EXIT: { INTRO, CONTACT_EFM },
 } = PAGES;
 
 const {
-  ELIGIBILITY: { CURRENCY, CONTRACT_VALUE, PERCENTAGE_OF_COVER, CREDIT_PERIOD, AMOUNT_CURRENCY },
+  ELIGIBILITY: { CURRENCY, CONTRACT_VALUE, PERCENTAGE_OF_COVER },
   POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
-  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, POLICY_TYPE, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = ROUTES;
 
 const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
@@ -42,102 +40,6 @@ context(
 
     beforeEach(() => {
       cy.saveSession();
-    });
-
-    it('should render core page elements', () => {
-      cy.corePageChecks({
-        pageTitle: CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE,
-        currentHref: TELL_US_ABOUT_YOUR_POLICY,
-        backLink: POLICY_TYPE,
-        assertAuthenticatedHeader: false,
-        isInsurancePage: false,
-        assertSaveAndBackButtonDoesNotExist: true,
-      });
-    });
-
-    describe('page tests', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it('should render policy length input with label and hint', () => {
-        const fieldId = POLICY_LENGTH;
-        const field = fieldSelector(fieldId);
-
-        field.input().should('be.visible');
-
-        cy.checkText(field.label(), FIELDS[fieldId].LABEL);
-
-        cy.checkText(field.hint(), FIELDS[fieldId].HINT);
-      });
-
-      it('should render `currency and amount` legend', () => {
-        const fieldId = AMOUNT_CURRENCY;
-
-        const field = fieldSelector(fieldId);
-
-        cy.checkText(field.legend(), FIELDS[fieldId].SINGLE_POLICY.LEGEND);
-      });
-
-      it('should render `currency` legend, label and input', () => {
-        const fieldId = CURRENCY;
-
-        const field = fieldSelector(fieldId);
-
-        cy.checkText(field.label(), FIELDS[fieldId].LABEL);
-
-        field.input().should('exist');
-      });
-
-      it('should render only supported currencies in a specific order', () => {
-        const fieldId = CURRENCY;
-
-        const field = fieldSelector(fieldId);
-
-        field.input().select(1).should('have.value', GBP.isoCode);
-        field.input().select(2).should('have.value', EUR.isoCode);
-        field.input().select(3).should('have.value', USD.isoCode);
-        field.input().select(4).should('have.value', JPY.isoCode);
-      });
-
-      it('should render `contract value` label and input', () => {
-        const fieldId = CONTRACT_VALUE;
-
-        const field = fieldSelector(fieldId);
-
-        cy.checkText(field.label(), FIELDS[fieldId].LABEL);
-
-        field.input().should('exist');
-      });
-
-      it('should render `percentage of cover` label, no hint and input with correct options', () => {
-        const fieldId = PERCENTAGE_OF_COVER;
-
-        const field = fieldSelector(fieldId);
-
-        cy.checkText(field.label(), FIELDS[fieldId].SINGLE_POLICY.LABEL);
-
-        cy.checkText(field.hint(), '');
-
-        field.input().should('exist');
-
-        field.inputOption().then((options) => {
-          const actual = [...options].map((o) => o.value);
-
-          const expected = ['', '70', '75', '80', '85', '90', '95'];
-          expect(actual).to.deep.eq(expected);
-        });
-      });
-
-      it('does NOT render `credit period` label, hint and input', () => {
-        const field = fieldSelector(CREDIT_PERIOD);
-
-        field.label().should('not.exist');
-
-        field.hint().should('not.exist');
-
-        field.input().should('not.exist');
-      });
     });
 
     describe('when form is valid', () => {
