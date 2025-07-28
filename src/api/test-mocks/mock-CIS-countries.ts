@@ -1,11 +1,15 @@
 import { CisCountry } from '../types';
+import { EXTERNAL_API_DEFINITIONS } from '../constants';
 
-const mockDescription = 'Mock description';
+const {
+  CIS: { ESRA_CLASSIFICATION },
+} = EXTERNAL_API_DEFINITIONS;
+const mockDescription = 'mock';
 
 const mockCisCountries = [
   {
     countryRatingDesc: 'A',
-    ESRAClassificationDesc: mockDescription,
+    ESRAClassificationDesc: ESRA_CLASSIFICATION.STANDARD,
     isoCode: 'XAD',
     marketName: 'Abu Dhabi',
     NBIIssue: '',
@@ -13,7 +17,7 @@ const mockCisCountries = [
   },
   {
     countryRatingDesc: 'B+',
-    ESRAClassificationDesc: mockDescription,
+    ESRAClassificationDesc: ESRA_CLASSIFICATION.STANDARD,
     isoCode: 'DZA',
     marketName: 'Algeria',
     NBIIssue: '',
@@ -21,7 +25,7 @@ const mockCisCountries = [
   },
   {
     countryRatingDesc: 'CCC-',
-    ESRAClassificationDesc: mockDescription,
+    ESRAClassificationDesc: ESRA_CLASSIFICATION.HIGH,
     isoCode: 'GRL',
     marketName: 'Greenland',
     NBIIssue: '',
