@@ -21,64 +21,61 @@ const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(
-  'Submit the quote form with high cover percentage of 95% for a high risk country and should be redirected to talk to an export finance manager page',
-  () => {
-    const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
+context('Submit the "tell us about your multiple policy" form with high cover percentage of 95% and a high risk country', () => {
+  const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
-    before(() => {
-      cy.navigateToRootUrl();
+  before(() => {
+    cy.navigateToRootUrl();
 
-      cy.completeAndSubmitBuyerCountryForm({ countryName: HIGH_RISK_COUNTRY_1.NAME });
-      cy.completeAndSubmitBuyerBodyForm();
-      cy.completeAndSubmitExporterLocationForm();
-      cy.completeAndSubmitUkContentForm();
-      cy.completeAndSubmitPolicyTypeSingleForm();
+    cy.completeAndSubmitBuyerCountryForm({ countryName: HIGH_RISK_COUNTRY_1.NAME });
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
+    cy.completeAndSubmitPolicyTypeSingleForm();
 
-      cy.assertUrl(url);
+    cy.assertUrl(url);
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  describe('when form is valid', () => {
+    it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 1);
+      cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), 100);
+      fieldSelector(CURRENCY).input().select(GBP.isoCode);
+      fieldSelector(PERCENTAGE_OF_COVER).input().select('95');
+
+      cy.clickSubmitButton();
+
+      const expectedUrl = `${baseUrl}${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`;
+
+      cy.assertUrl(expectedUrl);
     });
+  });
 
+  describe('page tests', () => {
     beforeEach(() => {
-      cy.saveSession();
+      cy.navigateToUrl(url);
     });
 
-    describe('when form is valid', () => {
-      it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, () => {
-        cy.navigateToUrl(url);
-
-        cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 1);
-        cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), 100);
-        fieldSelector(CURRENCY).input().select(GBP.isoCode);
-        fieldSelector(PERCENTAGE_OF_COVER).input().select('95');
-
-        cy.clickSubmitButton();
-
-        const expectedUrl = `${baseUrl}${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`;
-
-        cy.assertUrl(expectedUrl);
-      });
+    it('should render an intro copy', () => {
+      cy.checkIntroText(INTRO);
     });
 
-    describe('page tests', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
+    it('should render the `CONTACT EFM` intro', () => {
+      cy.checkText(actions.intro(), CONTACT_EFM.INTRO);
+    });
 
-      it('should render an intro copy', () => {
-        cy.checkIntroText(INTRO);
-      });
-
-      it('should render the `CONTACT EFM` intro', () => {
-        cy.checkText(actions.intro(), CONTACT_EFM.INTRO);
-      });
-
-      it('should render the `CONTACT EFM` link and text', () => {
-        cy.checkActionTalkToYourNearestEFM({
-          expectedText: `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`,
-          expectedLinkHref: CONTACT_EFM.LINK.HREF,
-          expectedLinkText: CONTACT_EFM.LINK.TEXT,
-        });
+    it('should render the `CONTACT EFM` link and text', () => {
+      cy.checkActionTalkToYourNearestEFM({
+        expectedText: `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`,
+        expectedLinkHref: CONTACT_EFM.LINK.HREF,
+        expectedLinkText: CONTACT_EFM.LINK.TEXT,
       });
     });
-  },
-);
+  });
+});

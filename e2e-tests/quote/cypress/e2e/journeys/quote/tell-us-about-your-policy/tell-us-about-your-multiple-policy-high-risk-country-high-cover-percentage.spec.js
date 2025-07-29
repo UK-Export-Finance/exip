@@ -20,7 +20,7 @@ const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Tell us about your multiple policy page - as an exporter, I should be redirected to talk to an export finance manager page', () => {
+context('Submit the "tell us about your single policy" form with high cover percentage of 95% and a high risk country', () => {
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {

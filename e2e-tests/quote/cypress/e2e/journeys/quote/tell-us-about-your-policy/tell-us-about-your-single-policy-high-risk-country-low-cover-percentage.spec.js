@@ -16,7 +16,7 @@ const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Submit the quote form with low cover percentage of 90% for a high risk country and should be redirected to check your answers page', () => {
+context('Submit the "tell us about your multiple policy" form with low cover percentage of 90% and a high risk country', () => {
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
