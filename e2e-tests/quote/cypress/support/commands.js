@@ -16,6 +16,7 @@ import {
   completeAndSubmitPolicyTypeMultiForm,
   completeAndSubmitTellUsAboutYourSinglePolicyForm,
   completeAndSubmitTellUsAboutYourMultiPolicyForm,
+  completeAndSubmitTellUsAboutYourSinglePolicyFormMaximumCoverPercentage,
 } from '../../../commands/quote/forms';
 
 Cypress.Commands.add('submitQuoteAnswersHappyPathMultiplePolicy', require('../../../commands/quote/submit-answers-happy-path-multiple-policy'));
@@ -26,4 +27,9 @@ Cypress.Commands.add('completeAndSubmitUkContentForm', completeAndSubmitUkConten
 Cypress.Commands.add('completeAndSubmitPolicyTypeSingleForm', completeAndSubmitPolicyTypeSingleForm);
 Cypress.Commands.add('completeAndSubmitPolicyTypeMultiForm', completeAndSubmitPolicyTypeMultiForm);
 Cypress.Commands.add('completeAndSubmitTellUsAboutYourSinglePolicyForm', completeAndSubmitTellUsAboutYourSinglePolicyForm);
+Cypress.Commands.add('completeAndSubmitTellUsAboutYourSinglePolicyForm', completeAndSubmitTellUsAboutYourSinglePolicyForm);
 Cypress.Commands.add('completeAndSubmitTellUsAboutYourMultiPolicyForm', completeAndSubmitTellUsAboutYourMultiPolicyForm);
+Cypress.Commands.add(
+  'completeAndSubmitTellUsAboutYourSinglePolicyFormMaximumCoverPercentage',
+  completeAndSubmitTellUsAboutYourSinglePolicyFormMaximumCoverPercentage,
+);
