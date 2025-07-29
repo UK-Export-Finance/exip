@@ -2,7 +2,7 @@ import { ROUTES } from '../../../../../../constants';
 import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
 
 const {
-  QUOTE: { YOUR_QUOTE, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
+  QUOTE: { CHECK_YOUR_ANSWERS, YOUR_QUOTE, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = ROUTES;
 
 const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
@@ -27,6 +27,18 @@ context('when manually navigating to your quote URL after being redirected to ex
 
   beforeEach(() => {
     cy.saveSession();
+  });
+
+  describe('when manually navigating to check your answers page', () => {
+    it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, () => {
+      const yourQuoteUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+      cy.navigateToUrl(yourQuoteUrl);
+
+      const expectedUrl = `${baseUrl}${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`;
+
+      cy.assertUrl(expectedUrl);
+    });
   });
 
   describe('when manually navigating to your quote page', () => {
