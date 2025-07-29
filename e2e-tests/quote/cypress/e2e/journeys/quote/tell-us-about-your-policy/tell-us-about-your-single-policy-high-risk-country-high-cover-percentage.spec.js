@@ -22,7 +22,7 @@ const { HIGH_RISK_COUNTRY_1 } = COUNTRY_QUOTE_SUPPORT;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Tell us about your single policy page - as an exporter, I want to provide my Credit insurance policy details for a high risk country with 95% cover percentage',
+  'Submit the quote form with high cover percentage of 95% for a high risk country and should be redirected to talk to an export finance manager page',
   () => {
     const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
