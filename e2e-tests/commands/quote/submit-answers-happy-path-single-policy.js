@@ -11,8 +11,8 @@ import {
  * Submit all quote answers - happy path - single policy
  * @param {Integer} policyLength: Policy length
  */
-const submitQuoteAnswersHappyPathSinglePolicy = ({ policyLength }) => {
-  cy.completeAndSubmitBuyerCountryForm({});
+const submitQuoteAnswersHappyPathSinglePolicy = ({ policyLength, countryName }) => {
+  cy.completeAndSubmitBuyerCountryForm({ countryName });
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
   completeAndSubmitUkContentForm();
