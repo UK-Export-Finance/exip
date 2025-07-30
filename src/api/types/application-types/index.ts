@@ -157,6 +157,7 @@ export interface ApplicationDeclarationVersions {
   CONFIDENTIALITY: string;
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
   HOW_YOUR_DATA_WILL_BE_USED?: string;
+  MODERN_SLAVERY?: string;
 }
 
 export interface ApplicationLossPayeeFinancialInternationalVector extends Relationship {

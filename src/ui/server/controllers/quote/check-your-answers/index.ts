@@ -9,7 +9,11 @@ import { Request, Response } from '../../../../types';
 export const TEMPLATE = TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS;
 
 export const get = (req: Request, res: Response) => {
-  const answers = mapAnswersToContent(req.session.submittedData.quoteEligibility);
+  const {
+    submittedData: { quoteEligibility },
+  } = req.session;
+
+  const answers = mapAnswersToContent(quoteEligibility);
 
   const summaryList = answersSummaryList(answers);
 

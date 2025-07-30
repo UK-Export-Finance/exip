@@ -7,6 +7,9 @@
 name: Quality Assurance - Tests
 run-name: Executing test QA on ${{ github.repository }} 🚀
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     branches: [main, main-*]
@@ -71,46 +74,87 @@ jobs:
       - name: Timezone 🌐
         run: echo 'Timezone set to ${{ env.timezone }}'
 
-  # 2. UI - Unit test cases
+  # 2. Unit test
   unit-tests:
     name: Unit 👷
     needs: [setup]
+    env:
+      NODE_ENV: ${{ vars.NODE_ENV }}
+      TLS_CERTIFICATE: '${{ secrets.TLS_CERTIFICATE }}'
+      TLS_KEY: '${{ secrets.TLS_KEY }}'
+      DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+      API_PORT: ${{ vars.API_PORT }}
+      UI_PORT: ${{ vars.UI_PORT }}
+      API_URL: ${{ secrets.API_URL_LOCAL }}
+      API_KEY: ${{ secrets.API_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
+      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+      APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+      APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+      APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
+      GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
+      COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
+      COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
+      GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+      GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+      UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+      FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
+      MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+      JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+      CRON_SCHEDULE_UNVERIFIED_ACCOUNT: ${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}
+      CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
+      CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
+      APPLICATION_URL: ${{ vars.APPLICATION_URL }}
+      ORDNANCE_SURVEY_API_KEY: ${{ secrets.ORDNANCE_SURVEY_API_KEY }}
+      ORDNANCE_SURVEY_API_URL: ${{ secrets.ORDNANCE_SURVEY_API_URL }}
+      GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+      GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        services: ['ui', 'api']
+
     concurrency:
-      group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
+      group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.services }}
       cancel-in-progress: true
 
     steps:
-      - name: Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Repository
-        uses: actions/checkout@v4
-
       - name: Node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+      - name: Repository
+        uses: actions/checkout@v4
 
-      - name: UI
-        working-directory: ./src/ui
-        env:
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
-          GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-        run: npm run test
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        uses: ./.github/actions/rerun
+        with:
+          command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
+
+      - name: Docker
+        uses: ./.github/actions/rerun
+        with:
+          command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
+
+      - name: Execute
+        working-directory: ./src/${{ matrix.services }}
+        run: npm run unit-test
 
       - name: Coverage
         uses: codecov/codecov-action@v5
@@ -119,78 +163,7 @@ jobs:
           flags: unit-test
           verbose: true
 
-  # 3. API - API test cases
-  api-tests:
-    name: API 👷
-    needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
-
-    concurrency:
-      group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
-      cancel-in-progress: true
-
-    steps:
-      - name: Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Repository
-        uses: actions/checkout@v4
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
-
-      - name: API
-        working-directory: ./
-        env:
-          NODE_ENV: ${{ vars.NODE_ENV }}
-          TLS_CERTIFICATE: '${{ secrets.TLS_CERTIFICATE }}'
-          TLS_KEY: '${{ secrets.TLS_KEY }}'
-          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
-          API_PORT: ${{ vars.API_PORT }}
-          UI_PORT: ${{ vars.UI_PORT }}
-          API_URL: ${{ secrets.API_URL_LOCAL }}
-          API_KEY: ${{ secrets.API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
-          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
-          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
-          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
-          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
-          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-          CRON_SCHEDULE_UNVERIFIED_ACCOUNT: ${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}
-          CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
-          CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
-          APPLICATION_URL: ${{ vars.APPLICATION_URL }}
-          ORDNANCE_SURVEY_API_KEY: ${{ secrets.ORDNANCE_SURVEY_API_KEY }}
-          ORDNANCE_SURVEY_API_URL: ${{ secrets.ORDNANCE_SURVEY_API_URL }}
-        run: |
-          docker compose up --build -d
-          npm run ci:all
-          npm run test --prefix ./src/api
-
-      - name: Coverage
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: api-test
-          verbose: true
-
-  # 4. E2E - Insurance
+  # 3. E2E - Insurance
   e2e-tests-insurance:
     name: E2E Insurance 👷
     needs: [setup]
@@ -225,17 +198,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -260,11 +234,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance
+          name: e2e-tests-insurance-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-    # 5. E2E - Insurance - Account
+  # 4. E2E - Insurance - Account
   e2e-tests-insurance-account:
     name: E2E Insurance - Account 👷
     needs: [setup]
@@ -293,17 +267,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -328,11 +303,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-account
+          name: e2e-tests-insurance-account-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-  # 6. E2E - Insurance - Application submission
+  # 5. E2E - Insurance - Application submission
   e2e-tests-insurance-application-submission:
     name: E2E Insurance - Application Submission 👷
     needs: [setup]
@@ -369,17 +344,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -404,11 +380,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-application-submission
+          name: e2e-tests-insurance-application-submission-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-  # 7. E2E - Insurance - Check your answers
+  # 6. E2E - Insurance - Check your answers
   e2e-tests-insurance-check-your-answers:
     name: E2E Insurance - Check Your Answers 👷
     needs: [setup]
@@ -452,17 +428,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -487,11 +464,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-check-your-answers
+          name: e2e-tests-insurance-check-your-answers-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-  # 8. E2E - Insurance - Declarations
+  # 7. E2E - Insurance - Declarations
   e2e-tests-insurance-declarations:
     name: E2E Insurance - Declarations 👷
     needs: [setup]
@@ -517,17 +494,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -552,11 +530,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-declarations
+          name: e2e-tests-insurance-declarations-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-  # 9. E2E - Insurance - Eligibility
+  # 8. E2E - Insurance - Eligibility
   e2e-tests-insurance-eligibility:
     name: E2E Insurance - Eligibility 👷
     needs: [setup]
@@ -599,17 +577,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -634,11 +613,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-eligibility
+          name: e2e-tests-insurance-eligibility-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-  # 10. E2E - Insurance - Export contract
+  # 9. E2E - Insurance - Export contract
   e2e-tests-insurance-export-contract:
     name: E2E Insurance - Export Contract 👷
     needs: [setup]
@@ -680,17 +659,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -715,11 +695,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-export-contract
+          name: e2e-tests-insurance-export-contract-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-  # 11. E2E - Insurance - Policy
+  # 10. E2E - Insurance - Policy
   e2e-tests-insurance-policy:
     name: E2E Insurance - Policy 👷
     needs: [setup]
@@ -772,17 +752,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -807,7 +788,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-policy
+          name: e2e-tests-insurance-policy-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -842,17 +823,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -877,7 +859,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-your-business
+          name: e2e-tests-insurance-your-business-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
@@ -915,17 +897,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -950,11 +933,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-insurance-your-buyer
+          name: e2e-tests-insurance-your-buyer-${{ github.run_attempt }}
           path: ./e2e-tests/insurance/cypress/screenshots/
           retention-days: 1
 
-  # 5. E2E - Quote
+  # 13. E2E - Quote
   e2e-tests-quote:
     name: E2E Quote 👷
     needs: [setup]
@@ -989,17 +972,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -1024,11 +1008,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-quote
+          name: e2e-tests-quote-${{ github.run_attempt }}
           path: ./e2e-tests/quote/cypress/screenshots/
           retention-days: 1
 
-  # 6. E2E - Switch
+  # 14. E2E - Switch
   e2e-tests-switch:
     name: E2E Switch 👷
     needs: [setup]
@@ -1048,17 +1032,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Repository
+        uses: actions/checkout@v4
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         uses: ./.github/actions/rerun
@@ -1083,6 +1068,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: e2e-tests-switch
+          name: e2e-tests-switch-${{ github.run_attempt }}
           path: ./e2e-tests/switch-between-services/cypress/screenshots/
           retention-days: 1

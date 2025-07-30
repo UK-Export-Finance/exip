@@ -20,6 +20,9 @@
 name: Deployment
 run-name: 🚀 Deploying from ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 on:
   schedule:
     - cron: '0 2 * * *'

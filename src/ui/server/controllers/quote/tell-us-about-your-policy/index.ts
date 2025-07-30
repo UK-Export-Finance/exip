@@ -1,3 +1,4 @@
+import { Request, Response, SelectOption } from '../../../../types';
 import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
@@ -14,7 +15,6 @@ import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
-import { Request, Response, SelectOption } from '../../../../types';
 
 const {
   ELIGIBILITY: { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
@@ -167,12 +167,16 @@ const get = async (req: Request, res: Response) => {
 
 const post = async (req: Request, res: Response) => {
   try {
-    const { submittedData } = req.session;
+    const {
+      submittedData: { quoteEligibility },
+    } = req.session;
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
+    const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
+
     const validationErrors = generateValidationErrors({
-      ...submittedData.quoteEligibility,
+      ...quoteEligibility,
       ...payload,
     });
 
@@ -196,7 +200,6 @@ const post = async (req: Request, res: Response) => {
 
       // map percentage of cover drop down options
       let mappedPercentageOfCover = [];
-      const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
 
       if (submittedPercentageOfCover) {
         mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
@@ -216,7 +219,7 @@ const post = async (req: Request, res: Response) => {
         mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
       }
 
-      const policyType = String(submittedData.quoteEligibility[POLICY_TYPE]);
+      const policyType = String(quoteEligibility[POLICY_TYPE]);
 
       const PAGE_VARIABLES = generatePageVariables(policyType);
 

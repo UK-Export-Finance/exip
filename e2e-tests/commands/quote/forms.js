@@ -50,6 +50,21 @@ export const completeAndSubmitTellUsAboutYourSinglePolicyForm = ({ policyLength 
 };
 
 /**
+ * Completes and submits the "Tell Us About Your Single Policy" form with the maximum cover percentage.
+ *
+ * @param {number} [policyLength=3] - The length of the policy in years.
+ *
+ * @returns {void}
+ */
+export const completeAndSubmitTellUsAboutYourSinglePolicyFormMaximumCoverPercentage = ({ policyLength = 3 }) => {
+  cy.keyboardInput(field(POLICY_LENGTH).input(), policyLength);
+  field(CURRENCY).input().select(GBP_CURRENCY_CODE);
+  cy.keyboardInput(field(CONTRACT_VALUE).input(), '150000');
+  field(PERCENTAGE_OF_COVER).input().select('95');
+  cy.clickSubmitButton();
+};
+
+/**
  * completeAndSubmitTellUsAboutYourMultiPolicyForm
  * Complete and submit the "tell us about your multiple policy" form
  */

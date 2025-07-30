@@ -7,6 +7,7 @@ import hasNoSupport from './has-no-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import { MappedCisCountry } from '../../../types';
 import { mockCisCountry } from '../../../test-mocks';
+import isHighRiskCountry from './is-high-risk-country';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
@@ -54,6 +55,8 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
         esraClassification: mockCisCountry.ESRAClassificationDesc,
         shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
       }),
+
+      isHighRisk: isHighRiskCountry(esraClassification),
     };
 
     expect(result).toEqual(mapped);

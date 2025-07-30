@@ -43,6 +43,19 @@ const TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT = {
   },
 };
 
+const TALK_TO_AN_EXPORT_FINANCE_MANAGER_HIGH_RISK_HIGH_COVER_EXIT = {
+  PAGE_TITLE: 'Talk to an export finance manager',
+  INTRO: "We do not normally offer short term cover for the country and cover perecentage you've selected.",
+  CONTACT_EFM: {
+    INTRO: 'You might still be able to apply for credit insurance through UKEF - contact',
+    LINK: {
+      TEXT: 'your nearest export finance manager',
+      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+    },
+    TEXT: `to learn more about your options.`,
+  },
+};
+
 const ACCESSIBILITY_STATEMENT_PAGE = {
   PAGE_TITLE: 'Apply for credit insurance - accessibility statement',
   HEADING: 'Apply for credit insurance - accessibility statement',
@@ -232,6 +245,7 @@ const PAGES = {
   UK_GOODS_OR_SERVICES,
   CANNOT_APPLY_EXIT,
   TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_HIGH_RISK_HIGH_COVER_EXIT,
   ACCESSIBILITY_STATEMENT_PAGE,
   COOKIES_PAGE,
   COOKIES_SAVED_PAGE,

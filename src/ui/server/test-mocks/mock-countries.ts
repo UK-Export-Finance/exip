@@ -1,5 +1,5 @@
 import { EXTERNAL_API_MAPPINGS } from '../constants';
-import { Country } from '../../types';
+import { RiskClassifications, Country } from '../../types';
 
 const {
   CIS: { RISK },
@@ -12,7 +12,8 @@ const baseCountry = {
   canApplyForInsuranceOnline: false,
   noInsuranceSupport: false,
   shortTermCover: false,
-  esraClassification: RISK.STANDARD,
+  esraClassification: RISK.STANDARD as RiskClassifications,
+  isHighRisk: false,
 };
 
 export const mockCountryCannotGetAQuote: Country = {
@@ -57,6 +58,14 @@ export const mockCountryCanGetAQuoteByEmail: Country = {
   noOnlineSupport: true,
 };
 
-export const mockCountries = [mockCountryCannotGetAQuote, mockCountryCanGetAQuoteOnline, mockCountryCanGetAQuoteByEmail] as Array<Country>;
+export const mockHighRiskCountry: Country = {
+  ...baseCountry,
+  name: 'Bahrain',
+  isoCode: 'BHR',
+  noOnlineSupport: true,
+  isHighRisk: true,
+};
+
+export const mockCountries = [mockCountryCannotGetAQuote, mockCountryCanGetAQuoteOnline, mockCountryCanGetAQuoteByEmail, mockHighRiskCountry] as Array<Country>;
 
 export default mockCountries;
