@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.45.0](https://github.com/UK-Export-Finance/exip/compare/v2.44.0...v2.45.0) (2025-07-30)
+
+
+### Features
+
+* **EMS-4227:** cypress test added assertion ([4e76655](https://github.com/UK-Export-Finance/exip/commit/4e7665515892f33a258c1e8067fbb0ce92b49ed1))
+* **EMS-4227:** moved cypress test ([4a6bbfd](https://github.com/UK-Export-Finance/exip/commit/4a6bbfde9719e681ea6138d518ca684ad83fc61c))
+* **EMS-4227:** renamed assertions tests ([63c7c66](https://github.com/UK-Export-Finance/exip/commit/63c7c6603024db647569e582fc781dd56b983a00))
+* **EMS-4227:** renamed assertions tests ([91f3c27](https://github.com/UK-Export-Finance/exip/commit/91f3c270993427dbffdaeb166389af3441c4aaca))
+* **EMS-4227:** restrict quote generation for high risk country and high risk cover percentage ([ebf7312](https://github.com/UK-Export-Finance/exip/commit/ebf7312cbdddf0b7391cdec4fe97c8622261a554))
+* **EMS-4227:** updated the external link and dependencies updates ([1bd55de](https://github.com/UK-Export-Finance/exip/commit/1bd55de46c4eec2da2f827a2be1a3e239ea909e1))
+* **EMS-4227:** updated the external link and dependencies updates ([7022a13](https://github.com/UK-Export-Finance/exip/commit/7022a134d27b6c74fd0c0b8baf32943ada282c48))
+* **EMS-4231:** fixed js/ts docs types ([abfa908](https://github.com/UK-Export-Finance/exip/commit/abfa908c4464615b6f41b140f34a4c22e7b89cfc))
+* **EMS-4231:** fixed js/ts docs types ([ee23646](https://github.com/UK-Export-Finance/exip/commit/ee23646afeb01976741848f1c038a01b8847852f))
+
 ## [2.44.0](https://github.com/UK-Export-Finance/exip/compare/v2.43.2...v2.44.0) (2025-07-16)
 
 
