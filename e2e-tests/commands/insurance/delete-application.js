@@ -3,7 +3,7 @@ import api from '../api';
 /**
  * deleteApplication
  * Delete an application so we have a clean state during tests
- * @param {String}: Application reference number
+ * @param {string}: Application reference number
  */
 const deleteApplication = (referenceNumber) => {
   try {

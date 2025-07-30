@@ -10,9 +10,9 @@ import { SummaryListGroupData, SummaryListParamsBusiness } from '../../../../typ
  * Create all fields for the insurance - Your business govukSummaryList
  * @param {ApplicationBusiness} business: Application business object
  * @param {ApplicationCompany} company: Application company object
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All your business values in an object structure for GOVUK summary list structure
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = ({ business, company, referenceNumber, checkAndChange }: SummaryListParamsBusiness): Array<SummaryListGroupData> => {
   const fields = [
@@ -30,9 +30,9 @@ const generateFields = ({ business, company, referenceNumber, checkAndChange }: 
  * Create multiple groups with govukSummaryList data structure
  * @param {ApplicationBusiness} business: Application business object
  * @param {ApplicationCompany} company: Application company object
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBusinessSummaryLists = ({ business, company, referenceNumber, checkAndChange }: SummaryListParamsBusiness) => {
   const fields = generateFields({ business, company, referenceNumber, checkAndChange });

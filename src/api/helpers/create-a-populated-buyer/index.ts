@@ -10,9 +10,9 @@ import { Context } from '../../types';
  * 2) An application relationship
  * 3) A Buyer trading history and relationship
  * @param {Context} context: KeystoneJS context API
- * @param {String} countryId: Country ID
- * @param {String} applicationId: Application ID
- * @returns {Promise<Object>} Created buyer
+ * @param {string} countryId: Country ID
+ * @param {string} applicationId: Application ID
+ * @returns {Promise<object>} Created buyer
  */
 const createAPopulatedBuyer = async (context: Context, countryId: string, applicationId: string) => {
   console.info('Creating a buyer for %s', applicationId);

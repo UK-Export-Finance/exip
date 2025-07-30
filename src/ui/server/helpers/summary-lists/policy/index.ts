@@ -9,15 +9,15 @@ import { SummaryListParamsPolicy, SummaryListGroupData } from '../../../../types
 /**
  * generateFields
  * Create all fields for the insurance - Type of policy govukSummaryList
- * @param {Object} policy: Submitted "policy" data
- * @param {Object} policyContact: Submitted "policy contact" data
- * @param {Object} broker: Submitted "broker" data
- * @param {Object} nominatedLossPayee: Submitted "Nominated loss payee" data
- * @param {Integer} referenceNumber: Application reference number
+ * @param {object} policy: Submitted "policy" data
+ * @param {object} policyContact: Submitted "policy contact" data
+ * @param {object} broker: Submitted "broker" data
+ * @param {object} nominatedLossPayee: Submitted "Nominated loss payee" data
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All policy values in an object structure for GOVUK summary list structure
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All policy values in an object structure for GOVUK summary list structure
  */
 const generateFields = ({
   policy,
@@ -47,11 +47,11 @@ const generateFields = ({
  * @param {ApplicationPolicyContact} policyContact: Policy contact answers/submitted data in a simple object/text structure
  * @param {ApplicationBroker} broker: Broker answers/submitted data in a simple object/text structure
  * @param {ApplicationNominatedLossPayee} nominatedLossPayee: Nominated loss payee answers/submitted data in a simple object/text structure
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const policySummaryLists = ({
   policy,

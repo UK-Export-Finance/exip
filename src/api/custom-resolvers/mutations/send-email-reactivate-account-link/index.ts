@@ -4,8 +4,8 @@ import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLink
 /**
  * sendEmailReactivateAccountLink
  * Generate a hash, update account and send a link to the account via email.
- * @param {Object} root: GraphQL root variables
- * @param {Object} variables: GraphQL variables for the SendReactivateAccountEmail mutation
+ * @param {object} root: GraphQL root variables
+ * @param {object} variables: GraphQL variables for the SendReactivateAccountEmail mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<AccountSendEmailReactivateLinkResponse>} Object with success flag
  */

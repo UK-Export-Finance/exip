@@ -17,7 +17,7 @@ const {
  * validate the "tradingAddress" in "company details" request body
  * throws validation errors if there is no tradingAddress property
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} fullAddressValidation
  */
 const tradingAddress = (formBody: RequestBody, errors: object) => fullAddressValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);

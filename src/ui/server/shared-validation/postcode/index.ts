@@ -5,11 +5,11 @@ import generateValidationErrors from '../../helpers/validation';
  * postcodeValidation
  * Check if an postcode is valid
  * Returns generateValidationErrors if there are any errors or if is empty.
- * @param {String} fieldId
- * @param {String} postcode
- * @param {String} errorMessageEmpty error message if postcode is empty
- * @param {String} errorMessageFormat error message if postcode is the incorrect format
- * @param {Object} errors object from previous validation errors
+ * @param {string} fieldId
+ * @param {string} postcode
+ * @param {string} errorMessageEmpty error message if postcode is empty
+ * @param {string} errorMessageFormat error message if postcode is the incorrect format
+ * @param {object} errors object from previous validation errors
  * @returns {ValidationErrors}
  */
 const postcodeValidation = (fieldId: string, postcode: string, errorMessageEmpty: string, errorMessageFormat: string, errors: object) => {

@@ -5,7 +5,7 @@ import DECLARATION_MODERN_SLAVERY_VERSIONS from './modern-slavery-versions';
  * DECLARATIONS
  * DECLARATION constants - declarations need to be versioned so we have a record of which version a user accepted.
  * These constants are used to populate the declarations and to keep a record of the version submitted.
- * @returns {Object} Declaration constants
+ * @returns {object} Declaration constants
  */
 export const DECLARATIONS = {
   VERSIONS: DECLARATION_VERSIONS,

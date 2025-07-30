@@ -27,7 +27,7 @@ const MINIMUM = MINIMUM_CHARACTERS.POLICY.MAXIMUM_BUYER_WILL_OWE;
  * Check submitted form data for errors with the maximum buyer will owe field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) =>

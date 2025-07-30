@@ -6,8 +6,8 @@ const { API_KEY } = process.env;
 /**
  * checkApiKey
  * Check that the x-api-key header is valid
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {object} req Request object
+ * @param {object} res Response object
  * @param {Function} next Callback function
  * @returns {Express.Response} next() or 401 status and error message
  */

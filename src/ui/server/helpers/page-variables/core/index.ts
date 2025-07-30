@@ -18,13 +18,13 @@ const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 /**
  * corePageVariables
  * Generate page variables required for every page
- * @param {Object} Page content strings bespoke to the page
- * @param {String} Link to the previous page
- * @param {String} Link to feedback
- * @param {String} ORIGINAL_URL for the page user is on
- * @param {String} USE_GENERIC_HEADER
- * @param {Object} HTML_FLAGS object containing HTML flags - CUSTOM_CONTENT_HTML, CONDITIONAL_YES/NO_HTML, HINT_HTML, LEGEND_CLASS, HORIZONTAL_RADIOS
- * @returns {Object} Common page content strings
+ * @param {object} Page content strings bespoke to the page
+ * @param {string} Link to the previous page
+ * @param {string} Link to feedback
+ * @param {string} ORIGINAL_URL for the page user is on
+ * @param {string} USE_GENERIC_HEADER
+ * @param {object} HTML_FLAGS object containing HTML flags - CUSTOM_CONTENT_HTML, CONDITIONAL_YES/NO_HTML, HINT_HTML, LEGEND_CLASS, HORIZONTAL_RADIOS
+ * @returns {object} Common page content strings
  */
 const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_GENERIC_HEADER, HTML_FLAGS }: CorePageVariablesInput): CorePageVariables => {
   /**

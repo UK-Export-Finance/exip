@@ -18,7 +18,7 @@ const {
  * - The application's policy type.
  * - If the "maximum buyer will owe" (in GBP) is below a threshold.
  * @param {ApplicationPolicy} policy: Application policy
- * @returns {Promise<String>} "Application submitted" template ID
+ * @returns {Promise<string>} "Application submitted" template ID
  */
 const getSubmittedConfirmationTemplateId = async (policy: ApplicationPolicy): Promise<string> => {
   try {

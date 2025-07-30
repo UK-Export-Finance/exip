@@ -16,7 +16,7 @@ const baseUrl = Cypress.config('baseUrl');
  * Steps:
  * 1) Invoke cy.intercept() for the "post companies house number route"
  * 2) Depending on the company number, return a redirect to a route, as per the user journey.
- * @param {String} Company number - defaults to VALID_COMPANIES_HOUSE_NUMBER
+ * @param {string} Company number - defaults to VALID_COMPANIES_HOUSE_NUMBER
  */
 const interceptCompaniesHousePost = ({ companyNumber = VALID_COMPANIES_HOUSE_NUMBER }) => {
   console.info('Intercepting companies house POST with company number: %s', companyNumber);

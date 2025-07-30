@@ -34,10 +34,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POL
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
- * @param {String} policyCurrencyCode: Policy currency code
- * @returns {Object} Page variables
+ * @param {string} policyCurrencyCode: Policy currency code
+ * @returns {object} Page variables
  */
 export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => {
   const currency = getCurrencyByCode(currencies, policyCurrencyCode);

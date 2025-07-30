@@ -9,8 +9,8 @@ const {
 /**
  * esraClassificationIsStandardHighOrVeryHigh
  * Check if a country's "ESRA classification" is STANDARD, HIGH or VERY_HIGH
- * @param {String} esraClassification: ESRA classification
- * @returns {Boolean}
+ * @param {string} esraClassification: ESRA classification
+ * @returns {boolean}
  */
 const esraClassificationIsStandardHighOrVeryHigh = (esraClassification: string): boolean => {
   switch (esraClassification) {

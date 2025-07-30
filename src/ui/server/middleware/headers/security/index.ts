@@ -18,9 +18,9 @@ import { Request, Response } from '../../../../types';
  * - CORP
  * - Permissions Policy
  * - Removes `X-Powered-By`
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @param {String} next Callback function name
+ * @param {object} req Request object
+ * @param {object} res Response object
+ * @param {string} next Callback function name
  */
 
 export const security = (req: Request, res: Response, next: () => void) => {

@@ -11,7 +11,7 @@ const {
  * getApplicationSubmittedEmailTemplateIds
  * Get "application submitted" email template IDs team depending on submitted answers
  * @param {Application} application
- * @returns {Object} Email template IDs for application owner/account and UKEF underwriting team
+ * @returns {object} Email template IDs for application owner/account and UKEF underwriting team
  */
 const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
   const { buyer, declaration } = application;

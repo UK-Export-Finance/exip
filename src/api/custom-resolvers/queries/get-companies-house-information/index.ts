@@ -7,9 +7,9 @@ import { GetCompaniesHouseInformationVariables } from '../../../types';
 /**
  * getCompaniesHouseInformation
  * Get companies house information
- * @param {Object} root: GraphQL root variables
- * @param {Object} variables: GraphQL variables for the GetCompaniesHouseInformation mutation
- * @returns {Promise<Object>} Object with success flag and mapped companies house response
+ * @param {object} root: GraphQL root variables
+ * @param {object} variables: GraphQL variables for the GetCompaniesHouseInformation mutation
+ * @returns {Promise<object>} Object with success flag and mapped companies house response
  */
 const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHouseInformationVariables) => {
   try {

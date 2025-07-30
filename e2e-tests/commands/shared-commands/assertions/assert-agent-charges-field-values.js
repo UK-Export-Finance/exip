@@ -10,10 +10,10 @@ const {
 /**
  * assertAgentChargesFieldValues
  * Assert all field values in the "agent charges" form.
- * @param {Boolean} fixedSumMethod: Method as "Fixed sum"
- * @param {Boolean} percentageMethod: Method as "Percentage"
- * @param {String} expectedPercentageCharge: Expected charge percentage
- * @param {String} expectedPayableCountry: Expected payable country
+ * @param {boolean} fixedSumMethod: Method as "Fixed sum"
+ * @param {boolean} percentageMethod: Method as "Percentage"
+ * @param {string} expectedPercentageCharge: Expected charge percentage
+ * @param {string} expectedPayableCountry: Expected payable country
  */
 const assertAgentChargesFieldValues = ({
   fixedSumMethod = false,

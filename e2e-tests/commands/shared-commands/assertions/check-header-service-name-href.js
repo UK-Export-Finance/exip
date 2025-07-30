@@ -12,7 +12,7 @@ const {
 /**
  * checks service name based on if isInsuranceRoute is true or false
  * If true, then header should be linked to insuranceStart and have the application content string
- * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
+ * @param {boolean} isInsurancePage - If page is an insurance page or otherwise
  */
 const checkHeaderServiceNameHref = ({ isInsurancePage }) => {
   if (isInsurancePage) {

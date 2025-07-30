@@ -14,7 +14,7 @@ const { COOKIES_SAVED, INSURANCE } = ROUTES;
 /**
  * PAGE_VARIABLES
  * Page fields and content
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 export const PAGE_VARIABLES = {
   FIELD_ID,

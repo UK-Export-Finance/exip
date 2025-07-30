@@ -16,9 +16,9 @@ const {
  * assertFullyPopulatedExportContractSummaryListRows
  * Assert fully populated "export contract" summary list rows.
  * This includes all possible optional answers.
- * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum"
- * @param {String} agentChargeFixedSumAmount: Agent charge fixed sum amount
- * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
+ * @param {boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum"
+ * @param {string} agentChargeFixedSumAmount: Agent charge fixed sum amount
+ * @param {boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  */
 const assertFullyPopulatedExportContractSummaryListRows = ({ agentChargeMethodFixedSum, agentChargeMethodPercentage, agentChargeFixedSumAmount }) => {
   assertGenericExportContractSummaryListRows({});

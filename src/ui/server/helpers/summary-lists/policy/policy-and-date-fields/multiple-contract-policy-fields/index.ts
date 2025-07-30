@@ -30,9 +30,9 @@ const {
 /**
  * generateMultipleContractPolicyFields
  * Create all fields and values for the Insurance - Type of policy - single contract policy govukSummaryList
- * @param {Object} All submitted policy data
- * @param {Boolean} checkAndChange true if coming application level check your answers (/check-and-change)
- * @returns {Object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
+ * @param {object} All submitted policy data
+ * @param {boolean} checkAndChange true if coming application level check your answers (/check-and-change)
+ * @returns {object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
  */
 const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [

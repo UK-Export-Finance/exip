@@ -11,7 +11,7 @@ const {
 /**
  * completeHowYouWillGetPaidForm
  * Complete the "How you will get paid" form
- * @param {String} paymentTermsDescription: Description value
+ * @param {string} paymentTermsDescription: Description value
  */
 const completeHowYouWillGetPaidForm = ({ paymentTermsDescription = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID] }) => {
   cy.keyboardInput(field(FIELD_ID).textarea(), paymentTermsDescription);

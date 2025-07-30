@@ -4,8 +4,8 @@ import { ValidationErrors } from '../../../types';
 /**
  * generateValidationErrors
  * Generate an error count, error list and summary for GOV design errors.
- * @param {String} fieldId: Field ID
- * @param {String} errorText: Error text
+ * @param {string} fieldId: Field ID
+ * @param {string} errorText: Error text
  * @param {ValidationErrors} errors: Existing validation errors
  * @returns {ValidationErrors} Error count, error list and summary
  */

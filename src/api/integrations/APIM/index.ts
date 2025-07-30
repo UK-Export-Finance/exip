@@ -22,9 +22,9 @@ interface ResponseObject {
 /**
  * statusIsValid
  * Check if a status is valid
- * @param {Number} status
- * @param {Number} expectedStatus. Defaults to 200
- * @returns {Boolean}
+ * @param {number} status
+ * @param {number} expectedStatus. Defaults to 200
+ * @returns {boolean}
  */
 export const statusIsValid = (status: number, expectedStatus: number = 200) => status === expectedStatus;
 
@@ -32,8 +32,8 @@ export const statusIsValid = (status: number, expectedStatus: number = 200) => s
  * responseIsValid
  * Check if a response is valid
  * @param {ResponseObject} response
- * @param {Number} expectedStatus
- * @returns {Boolean}
+ * @param {number} expectedStatus
+ * @returns {boolean}
  */
 export const responseIsValid = (response: ResponseObject, expectedStatus?: number) => {
   if (response.data && statusIsValid(response.status, expectedStatus)) {
@@ -144,9 +144,9 @@ const APIM = {
   /**
    * sendEmail
    * Send an email via APIM
-   * @param {String} templateId: Template ID
-   * @param {String} sendToEmailAddress: Email recipient
-   * @param {Object} personalisation: Custom variables for the email template
+   * @param {string} templateId: Template ID
+   * @param {string} sendToEmailAddress: Email recipient
+   * @param {object} personalisation: Custom variables for the email template
    * @returns {ApimSendEmailHelperResponse}
    */
   sendEmail: async (templateId: string, sendToEmailAddress: string, personalisation: object): Promise<ApimSendEmailHelperResponse> => {

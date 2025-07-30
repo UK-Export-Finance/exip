@@ -47,11 +47,11 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_ADDRESSES;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} referenceNumber: Application reference number
- * @param {Number} totalAddresses: Total amount of addresses found
- * @param {Boolean} isAChangeRoute: If the last part of a string/URL is 'change'
- * @param {Boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
- * @returns {Object} Page variables
+ * @param {number} referenceNumber: Application reference number
+ * @param {number} totalAddresses: Total amount of addresses found
+ * @param {boolean} isAChangeRoute: If the last part of a string/URL is 'change'
+ * @param {boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
+ * @returns {object} Page variables
  */
 export const pageVariables = (referenceNumber: number, totalAddresses: number, isAChangeRoute: boolean, isACheckAndChangeRoute: boolean) => {
   let ADDRESS_STRING = PAGE_CONTENT_STRINGS.INTRO.ADDRESSES;

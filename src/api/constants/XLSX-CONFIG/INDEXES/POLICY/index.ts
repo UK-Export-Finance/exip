@@ -23,7 +23,7 @@ export const DEFAULT_INDEXES = {
  * POLICY_INDEXES
  * Generate row indexes for the XLSX's "Policy" worksheet.
  * @param {Application} application
- * @returns {Object}
+ * @returns {object}
  */
 const POLICY_INDEXES = (application: Application) => {
   const {

@@ -25,10 +25,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 /**
  * pageVariables
  * "Use different address" and "Save and go back" URL
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} isAChangeRoute: If the last part of a string/URL is 'change'
- * @param {Boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
- * @returns {Object} Page variables
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} isAChangeRoute: If the last part of a string/URL is 'change'
+ * @param {boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
+ * @returns {object} Page variables
  */
 export const pageVariables = (referenceNumber: number, isAChangeRoute: boolean, isACheckAndChangeRoute: boolean) => ({
   USE_DIFFERENT_ADDRESS_URL: generateUseDifferentBrokerAddressUrl(referenceNumber, isAChangeRoute, isACheckAndChangeRoute),

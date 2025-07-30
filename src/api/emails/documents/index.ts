@@ -5,7 +5,7 @@ import { ApplicationSubmissionEmailVariables, ApimSendEmailHelperResponse } from
  * documentsEmail
  * Send "we need some documents from you" email to an account
  * @param {ApplicationSubmissionEmailVariables}
- * @param {Boolean} Flag for sending anti-bribery/trading history template
+ * @param {boolean} Flag for sending anti-bribery/trading history template
  * @returns {Promise<ApimSendEmailHelperResponse>}
  */
 export const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, templateId: string): Promise<ApimSendEmailHelperResponse> => {

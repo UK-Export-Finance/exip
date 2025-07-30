@@ -14,9 +14,9 @@ const {
  * Otherwise, call eligibility SIC codes mapping function.
  * Application and eligibility have different companies house data structure.
  * Therefore, we need to map them differently.
- * @param {Object} company: Company data
- * @param {Boolean} isApplicationData: Company data has an application structure.
- * @returns {String} Mapped SIC codes
+ * @param {object} company: Company data
+ * @param {boolean} isApplicationData: Company data has an application structure.
+ * @returns {string} Mapped SIC codes
  */
 const generateSicCodesValue = (company: Company | ApplicationCompany, isApplicationData?: boolean) => {
   if (isApplicationData) {

@@ -7,12 +7,12 @@ import { Context } from '../../types';
  * 2) An application
  * 3) A total contract value
  * @param {Context} context: KeystoneJS context API
- * @param {String} countryId: Country ID
- * @param {String} applicationId: Application ID
- * @param {String} coverPeriodId: Cover period value ID
- * @param {String} totalContractValueId: Total contract value ID
- * @param {Object} eligibilityData: Optional eligibility data
- * @returns {Promise<Object>} Created eligibility
+ * @param {string} countryId: Country ID
+ * @param {string} applicationId: Application ID
+ * @param {string} coverPeriodId: Cover period value ID
+ * @param {string} totalContractValueId: Total contract value ID
+ * @param {object} eligibilityData: Optional eligibility data
+ * @returns {Promise<object>} Created eligibility
  */
 const createAnEligibility = async (
   context: Context,

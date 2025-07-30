@@ -5,8 +5,8 @@ import { APPLY } from '../../constants';
  * checks if route has ORIGINAL_URL or if the url contains APPLY
  * if empty or contains APPLY, then is an APPLY route so returns true
  * if does not contain APPLY, then returns false
- * @param {String} ORIGINAL_URL: Current URL
- * @returns {Boolean}
+ * @param {string} ORIGINAL_URL: Current URL
+ * @returns {boolean}
  */
 const isInsuranceRoute = (ORIGINAL_URL?: string) => {
   if (!ORIGINAL_URL) {

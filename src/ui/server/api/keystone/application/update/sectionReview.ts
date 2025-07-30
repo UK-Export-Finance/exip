@@ -5,9 +5,9 @@ import { ApolloResponse } from '../../../../../types';
 /**
  * updateSectionReview
  * Update an application's "section review" (confirming answers have been reviewed)
- * @param {String} Section review ID
- * @param {Object} Section review update
- * @returns {Promise<Object>} Updated section review
+ * @param {string} Section review ID
+ * @param {object} Section review update
+ * @returns {Promise<object>} Updated section review
  */
 const updateSectionReview = async (id: string, update: object) => {
   try {

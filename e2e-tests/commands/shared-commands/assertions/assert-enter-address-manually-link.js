@@ -12,8 +12,8 @@ const baseUrl = Cypress.config('baseUrl');
 /**
  * assertEnterAddressManuallyLink
  * Check the "enter address manually" link and redirection
- * @param {Number} referenceNumber: Application reference number
- * @param {Number} expectedText: Expected link text
+ * @param {number} referenceNumber: Application reference number
+ * @param {number} expectedText: Expected link text
  */
 const assertEnterAddressManuallyLink = ({ referenceNumber, expectedText = LINKS.ENTER_ADDRESS_MANUALLY }) => {
   const expectedRoute = `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;

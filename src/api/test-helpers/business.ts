@@ -25,7 +25,7 @@ const create = async (context: Context) => {
  * Get business test helper
  * Get an business by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} businessId: Business ID
+ * @param {string} businessId: Business ID
  * @returns {Promise<ApplicationExportContract>} Business
  */
 const get = async (context: Context, businessId: string) => {

@@ -19,8 +19,8 @@ const { BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE }
  * If IS_BASED_IN_UK is true, populate and return UK address field (BROKER_ADDRESSES)
  * If IS_BASED_IN_UK is false, populate and return a non-UK address field (BROKER_MANUAL_ADDRESS)
  * @param {ApplicationBroker} answers: Broker answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {SummaryListItemData} Broker address field
  */
 const brokerAddressField = (answers: ApplicationBroker, referenceNumber: number, checkAndChange?: boolean) => {

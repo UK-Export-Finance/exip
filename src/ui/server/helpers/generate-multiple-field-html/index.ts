@@ -7,7 +7,7 @@ import { ObjectType } from '../../../types';
  * maps through object and constructs an html string containing line breaks
  * skips fields where the field is null or is typename
  * @param {ObjectType} fieldValues
- * @returns {String} String of HTML or default empty string
+ * @returns {string} String of HTML or default empty string
  */
 const generateMultipleFieldHtml = (fieldValues: ObjectType): string => {
   let fieldValuesString = '';

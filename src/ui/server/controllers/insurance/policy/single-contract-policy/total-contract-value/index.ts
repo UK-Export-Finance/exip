@@ -36,10 +36,10 @@ export const FIELD_IDS = [TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT];
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
- * @param {String} policyCurrencyCode: Policy currency code
- * @returns {Object} Page variables
+ * @param {string} policyCurrencyCode: Policy currency code
+ * @returns {object} Page variables
  */
 export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => {
   const currency = getCurrencyByCode(currencies, policyCurrencyCode);

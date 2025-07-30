@@ -11,9 +11,9 @@ const {
 /**
  * completeAboutGoodsOrServicesForm
  * Complete the "About goods or services" form
- * @param {Boolean} description: description value
- * @param {String} finalDestinationKnown: flag for if the final destination is known. Defaults to false.
- * @param {Boolean} includeFinalDestination: flag for if the final destination should be included. Defaults to true.
+ * @param {boolean} description: description value
+ * @param {string} finalDestinationKnown: flag for if the final destination is known. Defaults to false.
+ * @param {boolean} includeFinalDestination: flag for if the final destination should be included. Defaults to true.
  */
 const completeAboutGoodsOrServicesForm = ({
   description = application.EXPORT_CONTRACT[DESCRIPTION],

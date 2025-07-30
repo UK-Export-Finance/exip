@@ -6,13 +6,13 @@ import { SingleInputPageVariablesInput, SingleInputPageVariables } from '../../.
 /**
  * singleInputPageVariables
  * Generate page variables for a page with a single input form
- * @param {String} Field/input ID
- * @param {Object} Page content strings bespoke to the page
- * @param {String} Product string
- * @param {String} Link to the previous page
- * @param {String} Link to the start route for the header
- * @param {Object} HTML_FLAGS object containing HTML flags - CUSTOM_CONTENT_HTML, CONDITIONAL_YES/NO_HTML, HINT_HTML, LEGEND_CLASS, HORIZONTAL_RADIOS
- * @returns {Object} Common page content strings combined with field specifics
+ * @param {string} Field/input ID
+ * @param {object} Page content strings bespoke to the page
+ * @param {string} Product string
+ * @param {string} Link to the previous page
+ * @param {string} Link to the start route for the header
+ * @param {object} HTML_FLAGS object containing HTML flags - CUSTOM_CONTENT_HTML, CONDITIONAL_YES/NO_HTML, HINT_HTML, LEGEND_CLASS, HORIZONTAL_RADIOS
+ * @returns {object} Common page content strings combined with field specifics
  */
 const singleInputPageVariables = ({
   FIELD_ID,

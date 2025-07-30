@@ -4,12 +4,12 @@ import { field as fieldSelector } from '../../pages/shared';
 /**
  * monetaryFieldValidation
  * Assert monetary field validation
- * @param {String} fieldId: Monetary field ID
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Object} errorMessages: Percentage error messages
- * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithValidMonetaryValue: Total expected errors in the form when the monetary field is valid.
- * @param {Boolean} minimum: Minimum allowed value.
+ * @param {string} fieldId: Monetary field ID
+ * @param {number} errorIndex: Index of the summary list error
+ * @param {object} errorMessages: Percentage error messages
+ * @param {number} totalExpectedErrors: Total expected errors in the form
+ * @param {number} totalExpectedOtherErrorsWithValidMonetaryValue: Total expected errors in the form when the monetary field is valid.
+ * @param {boolean} minimum: Minimum allowed value.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const monetaryFieldValidation = ({

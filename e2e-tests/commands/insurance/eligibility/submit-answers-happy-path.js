@@ -4,7 +4,7 @@ import { completeCheckIfEligibleForm } from './forms';
 /**
  * submitAnswersHappyPath
  * Submit the eligibility answers
- * @param {String} companyNumber
+ * @param {string} companyNumber
  */
 const submitAnswersHappyPath = (companyNumber) => {
   cy.navigateToCheckIfEligibleUrl();

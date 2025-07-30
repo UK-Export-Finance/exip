@@ -7,7 +7,7 @@ import createFullApplication from './create-full-application';
  * 1) Create a full application.
  * 2) Populate the application.
  * 3) Create and return an object with submitted date
- * @returns {Object} Submitted application
+ * @returns {object} Submitted application
  */
 export const generateSubmittedApplication = async () => {
   try {

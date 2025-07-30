@@ -6,7 +6,7 @@ const { PRIVACY, REPORT_VULNERABILITY, ACCESSIBILITY_STATEMENT, COOKIES, CONTACT
 /**
  * checks footer links based on isInsuranceRoute is true or false
  * If true, then links should point to insurance routes
- * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
+ * @param {boolean} isInsurancePage - If page is an insurance page or otherwise
  */
 const checkFooterLinks = ({ isInsurancePage }) => {
   cy.checkLink(footer.supportLinks.privacy(), PRIVACY.HREF, PRIVACY.TEXT);

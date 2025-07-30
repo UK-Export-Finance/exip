@@ -5,8 +5,8 @@ import getAuthenticationRetriesByAccountId from '../get-authentication-retries-b
  * deleteAuthenticationRetries
  * Delete Authentication table entries by account ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} Account ID
- * @returns {Promise<Boolean>}
+ * @param {string} Account ID
+ * @returns {Promise<boolean>}
  */
 const deleteAuthenticationRetries = async (context: Context, accountId: string) => {
   console.info('Deleting authentication retries for account %s', accountId);

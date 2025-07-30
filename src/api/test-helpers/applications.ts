@@ -9,7 +9,7 @@ const { GET_QUERY } = APPLICATION;
  * create application test helper
  * Create an application with mock application data and any provied custom application data.
  * @param {Context} context: KeystoneJS context API, application data
- * @returns {Object} Created application
+ * @returns {object} Created application
  */
 const create = async ({ context }: TestHelperApplicationCreate) => {
   try {
@@ -38,8 +38,8 @@ const create = async ({ context }: TestHelperApplicationCreate) => {
  * get application test helper
  * Get an application by ID.
  * @param {Context} context: KeystoneJS context API, application ID
- * @param {String} applicationId: Application ID
- * @returns {Object} Application
+ * @param {string} applicationId: Application ID
+ * @returns {object} Application
  */
 const get = async ({ context, applicationId }: TestHelperApplicationGet): Promise<Application> => {
   try {
@@ -62,7 +62,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
  * get all applications test helper
  * Get all applications.
  * @param {Context} context: KeystoneJS context API
- * @returns {Object} Application
+ * @returns {object} Application
  */
 const getAll = async (context: Context): Promise<Application> => {
   try {
@@ -82,7 +82,7 @@ const getAll = async (context: Context): Promise<Application> => {
  * update application test helper
  * Update an application by ID.
  * @param {Context} context: KeystoneJS context API, application ID
- * @returns {Object} Application
+ * @returns {object} Application
  */
 const update = async ({ context, applicationId, data }: TestHelperApplicationUpdate): Promise<Application> => {
   try {

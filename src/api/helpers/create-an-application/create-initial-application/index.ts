@@ -17,8 +17,8 @@ const { status: inititalStatus, ...APPLICATION_FIELDS } = INITIAL_APPLICATION_DA
  * - updatedAt timestamp.
  * - version of LATEST_VERSION_NUMBER
  * @param {Context} context: KeystoneJS context API
- * @param {String} accountId: Account ID to own the application
- * @param {String} status: Application status. Defaults to IN_PROGRESS
+ * @param {string} accountId: Account ID to own the application
+ * @param {string} status: Application status. Defaults to IN_PROGRESS
  * @returns {Promise<Application>} Created application
  */
 const createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }: CreateInitialApplicationParams) => {

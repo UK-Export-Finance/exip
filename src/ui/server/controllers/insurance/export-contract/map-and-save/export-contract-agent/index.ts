@@ -12,8 +12,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * and if AGENT_SERVICE data exists in the application, nullify all AGENT_SERVICE and AGENT_CHARGES data.
  * @param {RequestBody} formBody: Form body
  * @param {Application} application
- * @param {Object} validationErrors: Validation errors
- * @returns {Promise<Boolean>}
+ * @param {object} validationErrors: Validation errors
+ * @returns {Promise<boolean>}
  */
 const exportContractAgent = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

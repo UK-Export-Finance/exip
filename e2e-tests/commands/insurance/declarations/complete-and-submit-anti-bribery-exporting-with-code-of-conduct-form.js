@@ -3,7 +3,7 @@ import { FIELD_VALUES } from '../../../constants';
 /**
  * completeAndSubmitAntiBriberyExportingWithCodeOfConductForm
  * Complete and submit the "anti-bribery - exporting with code of conduct" form.
- * @param {Boolean} Yes/no answer
+ * @param {boolean} Yes/no answer
  */
 const completeAndSubmitAntiBriberyExportingWithCodeOfConductForm = (answer) => {
   if (answer === FIELD_VALUES.NO) {

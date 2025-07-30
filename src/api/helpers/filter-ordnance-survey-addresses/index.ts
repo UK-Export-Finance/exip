@@ -4,7 +4,7 @@ import { OrdnanceSurveyAddress } from '../../types';
  * filterOrdnanceSurveyAddress
  * Filter an Ordnance Survey address from the provided building name/number
  * @param {OrdnanceSurveyAddress} addresses
- * @param {String} houseNameOrNumber
+ * @param {string} houseNameOrNumber
  * @returns {Address} Filtered address
  */
 export const filterOrdnanceSurveyAddress = (address: OrdnanceSurveyAddress, houseNameOrNumber: string): OrdnanceSurveyAddress | null => {
@@ -31,7 +31,7 @@ export const filterOrdnanceSurveyAddress = (address: OrdnanceSurveyAddress, hous
  * filterOrdnanceSurveyAddresses
  * Filter Ordnance Survey addresses from a provided building name/number
  * @param {Array<OrdnanceSurveyAddress>} addresses
- * @param {String} houseNameOrNumber
+ * @param {string} houseNameOrNumber
  * @returns {Array<Address>} Filtered addresses
  */
 const filterOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyAddress>, houseNameOrNumber: string): Array<OrdnanceSurveyAddress> =>

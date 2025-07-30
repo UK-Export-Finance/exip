@@ -7,7 +7,7 @@ import { CisCountry } from '../../../../types';
  * canGetAQuoteOnline
  * Check if a country can apply for a quote online.
  * @param {CisCountry} CIS Country
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const canGetAQuoteOnline = (cisCountry: CisCountry) => {
   const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;

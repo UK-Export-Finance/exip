@@ -12,7 +12,7 @@ const {
  * If IS_CHARGING is false and the application has some charge data, the charge data should be nullified.
  * @param {RequestBody} formBody: Form body
  * @param {ApplicationExportContractAgentServiceCharge} chargeData: Agent service charge data
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const shouldNullifyAgentServiceChargeData = (formBody: RequestBody, chargeData: ApplicationExportContractAgentServiceCharge) => {
   const isNotCharging = formBody[IS_CHARGING] === 'false';

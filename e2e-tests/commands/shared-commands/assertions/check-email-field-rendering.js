@@ -3,8 +3,8 @@ import { field as fieldSelector } from '../../../pages/shared';
 /**
  * checkEmailFieldRendering
  * Check the rendering of an email field
- * @param {String} fieldId: Field ID
- * @param {Object} contentStrings: field content strings
+ * @param {string} fieldId: Field ID
+ * @param {object} contentStrings: field content strings
  */
 const checkEmailFieldRendering = ({ fieldId, contentStrings }) => {
   const field = fieldSelector(fieldId);

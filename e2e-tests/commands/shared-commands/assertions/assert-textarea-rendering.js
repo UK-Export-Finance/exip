@@ -3,10 +3,10 @@ import { field as fieldSelector } from '../../../pages/shared';
 /**
  * assertTextareaRendering
  * Assert the rendering of a textarea.
- * @param {String} fieldId: Field ID
- * @param {String} expectedLabel: Expected label (optional)
- * @param {String} expectedHint: Expected label hint (optional)
- * @param {Integer} maximumCharacters: Maximum characters allowed
+ * @param {string} fieldId: Field ID
+ * @param {string} expectedLabel: Expected label (optional)
+ * @param {string} expectedHint: Expected label hint (optional)
+ * @param {number} maximumCharacters: Maximum characters allowed
  */
 const assertTextareaRendering = ({ fieldId, expectedLabel, expectedHint, maximumCharacters }) => {
   const field = fieldSelector(fieldId);

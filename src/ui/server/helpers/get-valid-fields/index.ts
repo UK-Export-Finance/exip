@@ -6,7 +6,7 @@ import { ObjectType } from '../../../types';
  * Strip invalid fields from submitted form data
  * @param {ObjectType} Form data
  * @param {ObjectType} Errors list
- * @returns {Object} Form data with invalid fields removed
+ * @returns {object} Form data with invalid fields removed
  */
 const getValidFields = (formData: ObjectType, errorList: ObjectType) => {
   const fieldsWithErrors = Object.keys(errorList);

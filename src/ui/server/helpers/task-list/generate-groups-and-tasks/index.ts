@@ -9,28 +9,28 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 /**
  * generateGroupsAndTasks
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} declaration: Application declaration answers
- * @param {String} policyType: "Policy type"
- * @param {Boolean} finalDestinationKnown: "Final destination known" flag
- * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
- * @param {Boolean} isUsingBroker: "Is using broker" flag
- * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
- * @param {String} brokerFullAddress: Broker "full address" data
- * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
- * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
- * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
- * @param {Boolean} hasDifferentTradingName "Has different trading name" flag
- * @param {Boolean} connectionWithBuyer: "Exporter has a connection with the buyer" flag
- * @param {Boolean} tradedWithBuyer: "Exporter has a traded with the buyer" flag
- * @param {Boolean} outstandingPayments: "Buyer has outstanding payments" flag
- * @param {Boolean} hasPreviousCreditInsuranceWithBuyer: "Exporter has previous credit insurance with buyer" flag
- * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
- * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
- * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
- * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
- * @param {String} agentChargeMethod: Agent charge method
- * @param {String} awardMethodId: Export contract award method ID
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} declaration: Application declaration answers
+ * @param {string} policyType: "Policy type"
+ * @param {boolean} finalDestinationKnown: "Final destination known" flag
+ * @param {boolean} jointlyInsuredParty: "Jointly insured party" flag
+ * @param {boolean} isUsingBroker: "Is using broker" flag
+ * @param {boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {string} brokerFullAddress: Broker "full address" data
+ * @param {boolean} isAppointingLossPayee: "Is using loss payee" flag
+ * @param {boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
+ * @param {boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
+ * @param {boolean} hasDifferentTradingName "Has different trading name" flag
+ * @param {boolean} connectionWithBuyer: "Exporter has a connection with the buyer" flag
+ * @param {boolean} tradedWithBuyer: "Exporter has a traded with the buyer" flag
+ * @param {boolean} outstandingPayments: "Buyer has outstanding payments" flag
+ * @param {boolean} hasPreviousCreditInsuranceWithBuyer: "Exporter has previous credit insurance with buyer" flag
+ * @param {boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
+ * @param {boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
+ * @param {boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
+ * @param {string} agentChargeMethod: Agent charge method
+ * @param {string} awardMethodId: Export contract award method ID
  * @returns {Array} Task list groups and tasks
  */
 const generateGroupsAndTasks = (

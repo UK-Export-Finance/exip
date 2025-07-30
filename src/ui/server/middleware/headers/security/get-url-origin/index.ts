@@ -6,8 +6,8 @@ import isUrl from 'is-url';
  * 2) :
  * 3) .
  * This ensures that the split will work for all environments including localhost.
- * @param {String} URL
- * @returns {String} URL origin
+ * @param {string} URL
+ * @returns {string} URL origin
  */
 const getUrlOrigin = (url: string) => {
   if (isUrl(url)) {

@@ -6,7 +6,7 @@ import { Context } from '../../types';
  * createADeclaration
  * Create a declaration with application and declaration version relationships.
  * @param {Context} context: KeystoneJS context API
- * @param {String} applicationId: Application ID
+ * @param {string} applicationId: Application ID
  * @returns {Promise<ApplicationDeclaration>}  Created declaration
  */
 const createADeclaration = async (context: Context, applicationId: string) => {

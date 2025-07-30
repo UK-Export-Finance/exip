@@ -26,9 +26,9 @@ const {
  * nameOnPolicyField
  * returns fieldGroupItem for summary list for nameOnPolicy
  * @param {ApplicationPolicyContact} answers: submitted policyContact data
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} fieldGroupItem for name on policy
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} fieldGroupItem for name on policy
  */
 const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange?: boolean) =>
   fieldGroupItem(
@@ -45,10 +45,10 @@ const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: n
  * returns fieldGroupItem for summary list for position
  * generates changeLink to name on policy page or different name on policy page based on if sameName is true or not
  * @param {ApplicationPolicyContact} answers: submitted policyContact data
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} sameName: if IS_SAME_AS_OWNER is true
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} fieldGroupItem for position
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} sameName: if IS_SAME_AS_OWNER is true
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} fieldGroupItem for position
  */
 const positionField = (answers: ApplicationPolicyContact, referenceNumber: number, sameName: boolean, checkAndChange?: boolean) => {
   let changeLink = generateChangeLink(NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_CHECK_AND_CHANGE, `#${POSITION}-label`, referenceNumber, checkAndChange);
@@ -77,10 +77,10 @@ const positionField = (answers: ApplicationPolicyContact, referenceNumber: numbe
  * emailField
  * returns fieldGroupItem for summary list for email
  * @param {ApplicationPolicyContact} answers: submitted policyContact data
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @param {Boolean} shouldRenderChangeLink: if renders change link - provided by answer to IS_SAME_AS_OWNER - if IS_SAME_AS_OWNER - no change link
- * @returns {Object} fieldGroupItem for name on email
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {boolean} shouldRenderChangeLink: if renders change link - provided by answer to IS_SAME_AS_OWNER - if IS_SAME_AS_OWNER - no change link
+ * @returns {object} fieldGroupItem for name on email
  */
 const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange?: boolean, shouldRenderChangeLink?: boolean) =>
   fieldGroupItem(
@@ -95,10 +95,10 @@ const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, 
 /**
  * generatePolicyContactFields
  * Create all policy fields and values for the Insurance - policy contact govukSummaryList
- * @param {Object} answers: All submitted policyContact data
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All policyContact fields and values in an object structure for GOVUK summary list structure
+ * @param {object} answers: All submitted policyContact data
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All policyContact fields and values in an object structure for GOVUK summary list structure
  */
 const generatePolicyContactFields = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [nameOnPolicyField(answers, referenceNumber, checkAndChange)] as Array<SummaryListItemData>;

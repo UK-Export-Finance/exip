@@ -12,11 +12,11 @@ import { errorSummaryListItems } from '../../partials';
  * 7) withTwoDateFields.cannotBeTheSame
  * 8) withTwoDateFields.cannotBeBefore
  * 9) withTwoDateFields.cannotBeAfter
- * @param {Number} errorSummaryLength: The number of expected errors in the summary list
- * @param {Number} errorIndex: Index of summary list error
- * @param {String} field: Cypress field selector
- * @param {String} fieldId: Field ID
- * @param {Object} errorMessages: Error messages
+ * @param {number} errorSummaryLength: The number of expected errors in the summary list
+ * @param {number} errorIndex: Index of summary list error
+ * @param {string} field: Cypress field selector
+ * @param {string} fieldId: Field ID
+ * @param {object} errorMessages: Error messages
  */
 const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, errorMessages }) => {
   const assertFieldErrorsParams = {

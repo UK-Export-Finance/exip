@@ -19,8 +19,8 @@ import { Account, Context } from '../../../../types';
  *
  * @param {Context} context: KeystoneJS context API
  * @param {Account} account: Account
- * @param {String} urlOrigin: URL origin
- * @returns {Promise<Object>} Object with success flag
+ * @param {string} urlOrigin: URL origin
+ * @returns {Promise<object>} Object with success flag
  */
 const accountSignInChecks = async (context: Context, account: Account, urlOrigin: string) => {
   try {

@@ -4,8 +4,8 @@ import { Context } from '../../types';
  * createAReferenceNumber
  * Create a reference number with an application relationship
  * @param {Context} context: KeystoneJS context API
- * @param {String} applicationId: Application ID
- * @returns {Promise<Object>} Created reference number
+ * @param {string} applicationId: Application ID
+ * @returns {Promise<object>} Created reference number
  */
 const createAReferenceNumber = async (context: Context, applicationId: string) => {
   console.info('Creating a reference number for %s', applicationId);

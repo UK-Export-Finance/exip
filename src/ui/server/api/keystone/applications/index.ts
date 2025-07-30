@@ -6,11 +6,11 @@ import { MAX_APPLICATIONS_PER_PAGE } from '../../../constants/pagination';
 const applications = {
   /**
    * getAll
-   * @param {String} accountID - Account ID
-   * @param {Number} skip - Amount of applications to skip.
+   * @param {string} accountID - Account ID
+   * @param {number} skip - Amount of applications to skip.
    * E.g, if an account has 20 applications and skip is 5,
    * the first 5 applications are skipped.
-   * @returns {Object} Applications and totals count
+   * @returns {object} Applications and totals count
    */
   getAll: async (accountId: string, skip?: number) => {
     try {

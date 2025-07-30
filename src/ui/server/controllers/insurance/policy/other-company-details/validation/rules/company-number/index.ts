@@ -20,8 +20,8 @@ const MAXIMUM = MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBE
 /**
  * validate the "company number" in other company details response body
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} Errors or empty object
+ * @param {object} errors: Other validation errors for the same form
+ * @returns {object} Errors or empty object
  */
 const companyNumber = (formBody: RequestBody, errors: object) => {
   if (objectHasProperty(formBody, FIELD_ID)) {

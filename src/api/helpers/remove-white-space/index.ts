@@ -1,8 +1,8 @@
 /**
  * removeWhiteSpace
  * removes spaces from a string
- * @param {String} string
- * @returns {String}
+ * @param {string} string
+ * @returns {string}
  */
 const removeWhiteSpace = (string: string) => string.replace(' ', '');
 

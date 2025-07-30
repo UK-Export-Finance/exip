@@ -5,7 +5,7 @@ import executeSqlQuery from '../execute-sql-query';
  * getAllCompanyDifferentTradingAddresses
  * Get all entries in the "CompanyDifferentTradingAddress" table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Object>} Companies
+ * @returns {Promise<object>} Companies
  */
 const getAllCompanyDifferentTradingAddresses = async (connection: Connection) => {
   const loggingMessage = 'Getting all company different trading addresses';

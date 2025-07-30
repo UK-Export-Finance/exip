@@ -50,8 +50,8 @@ export const NUMBER_FIELDS: string[] = [
 /**
  * isDayMonthYearField
  * Checks if a field is a day, month or year field
- * @param {String} Form field name
- * @returns {Boolean}
+ * @param {string} Form field name
+ * @returns {boolean}
  */
 export const isDayMonthYearField = (fieldName: string): boolean => {
   if (fieldName.includes('-day') || fieldName.includes('-month') || fieldName.includes('-year')) {
@@ -64,9 +64,9 @@ export const isDayMonthYearField = (fieldName: string): boolean => {
 /**
  * shouldIncludeAndSanitiseField
  * Check if we should include and sanitise a form field.
- * @param {String} Form field key/ID
- * @param {String} Form field value
- * @returns {Boolean}
+ * @param {string} Form field key/ID
+ * @param {string} Form field value
+ * @returns {boolean}
  */
 export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
   /**
@@ -91,7 +91,7 @@ export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
 /**
  * sanitiseFormField
  * Sanitise a form field, depending on the field type/value
- * @param {String} Form field key
+ * @param {string} Form field key
  * @param {String | Boolean | Object | Array} Form field value
  * @returns {String | Boolean | Object | Array}
  */
@@ -134,7 +134,7 @@ export const sanitiseFormField = (key: string, value: string | boolean | null | 
  * sanitiseData
  * Sanitise form data
  * @param {Express.Request.body} Form body
- * @returns {Object} sanitised form data
+ * @returns {object} sanitised form data
  */
 export const sanitiseData = (formBody: RequestBody) => {
   const formData = formBody;

@@ -24,7 +24,7 @@ const {
 /**
  * pageVariables
  * Page fields and SUBMIT_BUTTON_COPY
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 export const pageVariables = {
   FIELD: {

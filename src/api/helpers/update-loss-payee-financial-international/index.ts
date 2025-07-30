@@ -4,7 +4,7 @@ import { ApplicationLossPayeeFinancialInternational } from '../../types';
 /**
  * updateLossPayeeFinancialInternational
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Loss payee financial international ID
+ * @param {string} id: Loss payee financial international ID
  * @param {LossPayeeFinancialInternationalUpdateInput} data
  * @returns {Promise<ApplicationLossPayeeFinancialInternational>}
  */

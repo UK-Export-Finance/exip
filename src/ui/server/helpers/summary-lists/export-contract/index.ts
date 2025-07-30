@@ -8,12 +8,12 @@ import { SummaryListParamsExportContract, SummaryListGroupData } from '../../../
  * generateFields
  * Create all fields for the Insurance - "Export contract - about the export" govukSummaryList
  * @param {ApplicationExportContract} exportContract: All submitted export contract data
- * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
- * @param {Number} referenceNumber: Application reference number
+ * @param {boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Array<Currency>} currencies: Currencies
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} Fields and values in an object structure for GOVUK summary list structure
  */
 export const generateFields = ({
   exportContract,
@@ -38,12 +38,12 @@ export const generateFields = ({
  * exportContractSummaryLists
  * Create multiple groups with govukSummaryList data structure
  * @param {ApplicationExportContract} exportContract: Export contract answers/submitted data in a simple object.text structure
- * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
- * @param {Number} referenceNumber: Application reference number
+ * @param {boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Array<Currency>} currencies: Currencies
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 export const exportContractSummaryLists = ({
   exportContract,

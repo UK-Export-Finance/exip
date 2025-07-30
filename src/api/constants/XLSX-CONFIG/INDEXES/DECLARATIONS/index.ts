@@ -24,7 +24,7 @@ export const DEFAULT_INDEXES = () => ({
  * - If an OFFENSES_OR_INVESTIGATIONS answer is provided, the XLSX has 1 additional row.
  * - If an AWARE_OF_EXISTING_SLAVERY answer is provided, the XLSX has 1 additional row.
  * @param {ApplicationDeclarationModernSlavery} modernSlavery
- * @return {Object}
+ * @return {object}
  */
 const DECLARATIONS_INDEXES = (modernSlavery: ApplicationDeclarationModernSlavery) => {
   const INDEXES = DEFAULT_INDEXES();

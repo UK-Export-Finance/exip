@@ -11,7 +11,7 @@ const {
  * Check a task has:
  * - A "cannot start" status.
  * - No link
- * @param {Object} selectors: Cypress selectors
+ * @param {object} selectors: Cypress selectors
  */
 const checkTaskStatusCannotStart = (selectors) => {
   cy.checkText(selectors.status(), CANNOT_START);

@@ -16,19 +16,19 @@ import { UpdateApplicationRelationshipParams } from '../../../types';
  * 11) Reference number
  * 12) Section review
  * @param {Context} context: KeystoneJS context API
- * @param {String} applicationId: Application ID
- * @param {String} brokerId: Broker ID
- * @param {String} businessId: Business ID
- * @param {String} buyerId: Buyer ID
- * @param {String} companyId: Company ID
- * @param {String} declarationId: Declaration ID
- * @param {String} eligibilityId: Eligibility ID
- * @param {String} exportContractId: Export contract ID
- * @param {String} nominatedLossPayeeId: Nominated loss payee ID
- * @param {String} policyId: Policy ID
- * @param {String} policyContactId: Policy contact ID
- * @param {String} referenceNumberId: Reference number ID
- * @param {String} sectionReviewId: Section review ID
+ * @param {string} applicationId: Application ID
+ * @param {string} brokerId: Broker ID
+ * @param {string} businessId: Business ID
+ * @param {string} buyerId: Buyer ID
+ * @param {string} companyId: Company ID
+ * @param {string} declarationId: Declaration ID
+ * @param {string} eligibilityId: Eligibility ID
+ * @param {string} exportContractId: Export contract ID
+ * @param {string} nominatedLossPayeeId: Nominated loss payee ID
+ * @param {string} policyId: Policy ID
+ * @param {string} policyContactId: Policy contact ID
+ * @param {string} referenceNumberId: Reference number ID
+ * @param {string} sectionReviewId: Section review ID
  */
 const updateApplicationColumns = async ({
   context,

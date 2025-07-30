@@ -8,7 +8,7 @@ import getCompanyDifferentTradingAddressById from '../get-company-different-trad
  * getPopulatedCompany
  * Get a populated company
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Company ID
+ * @param {string} id: Company ID
  * @returns {Promise<ApplicationCompany>}
  */
 const getPopulatedCompany = async (context: Context, id: string) => {

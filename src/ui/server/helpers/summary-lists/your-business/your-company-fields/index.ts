@@ -31,9 +31,9 @@ const { COMPANY_DETAILS } = EXPORTER_BUSINESS_FIELDS;
  * generateYourCompanyFields
  * Create all Your company fields and values for the Insurance - Company details govukSummaryList
  * @param {ApplicationCompany} answers: Company answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All company fields and values in an object structure for GOVUK summary list structure
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All company fields and values in an object structure for GOVUK summary list structure
  */
 const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const addressObject = generateAddressObject(answers[DIFFERENT_TRADING_ADDRESS]?.[FULL_ADDRESS]);

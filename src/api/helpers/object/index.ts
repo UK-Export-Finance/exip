@@ -4,7 +4,7 @@ import { ObjectType } from '../../types';
  * objectHasKeysAndValues
  * Check if an object has keys and values
  * @param {ObjectType} Object to check
- * @returns {Boolean}
+ * @returns {boolean}
  */
 export const objectHasKeysAndValues = (obj?: ObjectType) => {
   if (!obj) {

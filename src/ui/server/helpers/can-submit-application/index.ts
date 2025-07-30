@@ -13,7 +13,7 @@ const { IN_PROGRESS } = APPLICATION.STATUS;
  * - Has a valid submission deadline.
  * - Has a submissionCount of 0.
  * @param {Application} application
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const canSubmitApplication = (application: Application): boolean => {
   console.info('Checking if an application can be submitted (canSubmitApplication helper)');

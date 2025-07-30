@@ -4,8 +4,8 @@ import { ApplicationVersion } from '../../../../types';
 /**
  * getApplicationDefinition
  * Get the latest application config
- * @param {String} versionNumber: Application version number
- * @returns {Object} Latest application config
+ * @param {string} versionNumber: Application version number
+ * @returns {object} Latest application config
  */
 const getApplicationDefinition = (versionNumber: string): ApplicationVersion => {
   const applicationDefinition = VERSIONS.find((VERSION) => VERSION.VERSION_NUMBER === versionNumber);

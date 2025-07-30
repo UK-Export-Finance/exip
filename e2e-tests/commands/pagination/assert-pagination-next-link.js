@@ -8,7 +8,7 @@ const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 /**
  * assertPaginationNextLink
  * Check the pagination "next" link
- * @param {Integer} Expected page number
+ * @param {number} Expected page number
  */
 const assertPaginationNextLink = (pageNumber) => {
   checkLink(pagination.nextLink(), `${DASHBOARD_PAGE}/${pageNumber}`, BUTTONS.NEXT);

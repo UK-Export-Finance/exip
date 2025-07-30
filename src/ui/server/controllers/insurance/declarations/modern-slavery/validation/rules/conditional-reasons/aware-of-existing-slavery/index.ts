@@ -24,7 +24,7 @@ const MAXIMUM = MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASO
 /**
  * awareOfExistingSlaveryRules
  * @param {Express.Request.body} Express response body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
  */
 const awareOfExistingSlaveryRules = (formBody: RequestBody, errors: object) => {

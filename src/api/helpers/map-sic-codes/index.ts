@@ -5,7 +5,7 @@ import { SicCode } from '../../types';
  * Map SIC codes and industry sector names with a company ID.
  * @param {Array<string>} sicCodes
  * @param {Array<string>} industrySectorNames
- * @param {String} companyId
+ * @param {string} companyId
  * @returns {Array} Mapped SIC codes
  */
 const mapSicCodes = (sicCodes: Array<string>, industrySectorNames: Array<string>, companyId?: string): Array<SicCode> => {

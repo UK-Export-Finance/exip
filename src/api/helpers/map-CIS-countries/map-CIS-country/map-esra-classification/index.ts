@@ -8,8 +8,8 @@ const {
 /**
  * mapEsraClassification
  * Transform a country's ESRAClassificationDesc field into a consistent string
- * @param {String} Risk category
- * @returns {String} Consistent ESRA classification
+ * @param {string} Risk category
+ * @returns {string} Consistent ESRA classification
  */
 const mapEsraClassification = (classification: string): RiskClassifications | null => {
   if (classification === ESRA_CLASSIFICATION.STANDARD) {

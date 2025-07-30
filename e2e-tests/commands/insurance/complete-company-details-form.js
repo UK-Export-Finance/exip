@@ -13,11 +13,11 @@ const {
 /**
  * completeCompaniesDetailsForm
  * fills in the company details form
- * @param {Boolean} differentTradingName
- * @param {Boolean} differentTradingAddress
- * @param {String} phoneNumber
- * @param {String} companyWebsite
- * @param {Boolean} completeDifferentTradingName
+ * @param {boolean} differentTradingName
+ * @param {boolean} differentTradingAddress
+ * @param {string} phoneNumber
+ * @param {string} companyWebsite
+ * @param {boolean} completeDifferentTradingName
  */
 const completeCompaniesDetailsForm = ({
   differentTradingName = false,

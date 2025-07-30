@@ -12,10 +12,10 @@ const { ACCOUNT } = MAXIMUM_CHARACTERS;
  * Check if a name field is valid.
  * Returns alphaCharactersAndMaxLength.
  * @param {RequestBody} formBody
- * @param {String} fieldId
- * @param {String} errorMessage message
- * @param {Object} errors object from previous validation errors
- * @param {Number} maximum length of name - default to ACCOUNT.NAME value
+ * @param {string} fieldId
+ * @param {string} errorMessage message
+ * @param {object} errors object from previous validation errors
+ * @param {number} maximum length of name - default to ACCOUNT.NAME value
  * @returns {ValidationErrors}
  */
 const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object, maximum = ACCOUNT.NAME) => {

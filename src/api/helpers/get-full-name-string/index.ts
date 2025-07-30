@@ -4,7 +4,7 @@ import { Account, ApplicationOwner } from '../../types';
  * getFullNameString
  * Combine firstName and lastName
  * @param {Account} Account
- * @returns {String} Full name
+ * @returns {string} Full name
  */
 const getFullNameString = (account: Account | ApplicationOwner) => {
   const { firstName, lastName } = account;

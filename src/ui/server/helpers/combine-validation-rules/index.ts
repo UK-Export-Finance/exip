@@ -6,7 +6,7 @@ import { ValidationErrors } from '../../../types';
  * combine multiple validation rule results into a single object
  * throws validation errors if any fields are not completed or incorrectly completed
  * @param {RequestBody} formBody: Form body
- * @returns {Object} Errors or empty object
+ * @returns {object} Errors or empty object
  */
 /* eslint-disable no-unused-vars, prettier/prettier */
 const combineValidationRules = (rules: Array<(formBody: object, errors: ValidationErrors) => ValidationErrors>, data: object) => {

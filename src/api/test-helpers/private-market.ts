@@ -25,7 +25,7 @@ const create = async (context: Context) => {
  * Get private market test helper
  * Get an private market by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} privateMarketId: Private market ID
+ * @param {string} privateMarketId: Private market ID
  * @returns {Promise<ApplicationPrivateMarket>} Private market
  */
 const get = async (context: Context, agentId: string) => {

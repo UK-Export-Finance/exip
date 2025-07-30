@@ -9,7 +9,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * This is used for any save functionality in the "Declarations - Modern slavery" form of an application
  * @param {Application} application
  * @param {Express.Request.body} formBody
- * @returns {Promise<Object>} Saved data
+ * @returns {Promise<object>} Saved data
  */
 const declarationModernSlavery = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save

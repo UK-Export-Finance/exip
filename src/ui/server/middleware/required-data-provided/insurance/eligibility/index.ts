@@ -113,9 +113,9 @@ export const generateRequiredData = (): RequiredDataStateInsuranceEligibility =>
  * requiredInsuranceEligibilityDataProvided
  * Prevent users from accessing a page if all previous forms in the user flow have not been submitted.
  * Without this, a user could manually navigate to e.g, page/form no.4 - bypassing previous forms or, manually go directly to the final "you are eligible" page.
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @param {String} next Callback function name
+ * @param {object} req Request object
+ * @param {object} res Response object
+ * @param {string} next Callback function name
  * @returns {Function} next() if all required data is provided, otherwise redirect to an exit page.
  */
 export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Response, next: () => void) => {

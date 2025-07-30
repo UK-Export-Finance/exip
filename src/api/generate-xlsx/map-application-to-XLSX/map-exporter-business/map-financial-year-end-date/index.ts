@@ -15,7 +15,7 @@ const { FIELDS } = XLSX;
  * financial year end date should only be populated if it exists.
  * Otherwise, return default text.
  * @param {ApplicationCompany} company: Application company
- * @returns {String}
+ * @returns {string}
  */
 const mapFinancialYearEndDate = (company: ApplicationCompany) => {
   if (company[FINANCIAL_YEAR_END_DATE]) {

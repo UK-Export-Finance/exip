@@ -17,7 +17,7 @@ export const DEFAULT_INDEXES = () => ({
  * - If "has different trading address" is true, the worksheet has 1 additional row.
  * - If "has different trading name" is true, the worksheet has 1 additional row.
  * @param {Application} application
- * @returns {Object}
+ * @returns {object}
  */
 const EXPORTER_BUSINESS_INDEXES = (application: Application) => {
   const {

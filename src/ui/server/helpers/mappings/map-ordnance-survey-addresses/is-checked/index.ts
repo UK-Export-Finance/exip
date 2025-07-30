@@ -5,7 +5,7 @@ import { MappedOrdnanceSurveyAddress, ApplicationBroker } from '../../../../../t
  * Check if a provided address is a submitted broker address.
  * @param {MappedOrdnanceSurveyAddress} Ordnance survey address
  * @param {ApplicationBroker} Application broker address
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const isChecked = (address: MappedOrdnanceSurveyAddress, submittedAddress: ApplicationBroker) => {
   const { addressLine1, addressLine2, town, postcode } = address;

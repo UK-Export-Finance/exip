@@ -2,11 +2,11 @@
  * completeAndSubmitEligibilityForms
  * completes eligibility forms up to the specified form to stop at
  * eg, when 'companyDetails' is passed, it will complete all forms up to and including 'companyDetails'
- * @param {String} stopSubmittingAfter: The final form to submit
- * @param {String} companyNumber: the company number to use in the companies house search form
- * @param {Boolean} coverPeriodIsUnderThreshold: whether the cover period is under the threshold
- * @param {Boolean} memberOfAGroup: whether the company is a member of a group
- * @param {Boolean} partyToConsortium: whether the company is a party to a consortium
+ * @param {string} stopSubmittingAfter: The final form to submit
+ * @param {string} companyNumber: the company number to use in the companies house search form
+ * @param {boolean} coverPeriodIsUnderThreshold: whether the cover period is under the threshold
+ * @param {boolean} memberOfAGroup: whether the company is a member of a group
+ * @param {boolean} partyToConsortium: whether the company is a party to a consortium
  */
 const completeAndSubmitEligibilityForms = ({ stopSubmittingAfter, companyNumber, coverPeriodIsUnderThreshold, memberOfAGroup, partyToConsortium }) => {
   cy.navigateToCheckIfEligibleUrl();

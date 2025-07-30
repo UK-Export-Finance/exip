@@ -5,8 +5,8 @@ import ordnanceSurveyAddressesQuery from '../../../graphql/queries/ordnance-surv
 /**
  * keystone GraphQL API call for Ordnance Survey addresses
  * returns address or errors
- * @param {String} postcode
- * @param {String} houseNameOrNumber
+ * @param {string} postcode
+ * @param {string} houseNameOrNumber
  */
 const getOrdnanceSurveyAddresses = async (postcode: string, houseNameOrNumber: string) => {
   try {

@@ -8,7 +8,7 @@ import getBuyerTradingHistoryById from '../get-buyer-trading-history-by-id';
  * getPopulatedBuyer
  * Get a populated buyer
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Buyer ID
+ * @param {string} id: Buyer ID
  * @returns {Promise<ApplicationBuyer>}
  */
 const getPopulatedBuyer = async (context: Context, id: string) => {

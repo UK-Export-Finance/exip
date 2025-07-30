@@ -4,8 +4,8 @@ import { RequestBody, ObjectType } from '../../../types';
  * stripEmptyFormFields
  * Filters out form fields with empty values
  * @param {Express.Request.body} formBody
- * @param {Array<String>} nullOrEmptyStringFields strings that should not be removed from formData even if empty
- * @returns {Object} Form data without empty values
+ * @param {Array<string>} nullOrEmptyStringFields strings that should not be removed from formData even if empty
+ * @returns {object} Form data without empty values
  */
 const stripEmptyFormFields = (formBody: RequestBody, nullOrEmptyStringFields?: Array<string>) => {
   const fieldsWithValues = {} as ObjectType;

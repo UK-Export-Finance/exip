@@ -3,7 +3,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 /**
  * create sectionReview test helper
  * @param {Context} context: KeystoneJS context API
- * @returns {Object} Created sectionReview
+ * @returns {object} Created sectionReview
  */
 const create = async (context: Context) => {
   try {

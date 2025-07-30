@@ -1,10 +1,10 @@
 /**
  * formatCurrency
  * Transform a number into a currency string
- * @param {Number} Amount
- * @param {String} Currency code
- * @param {Number} Decimal places
- * @returns {String}
+ * @param {number} Amount
+ * @param {string} Currency code
+ * @param {number} Decimal places
+ * @returns {string}
  */
 const formatCurrency = (number: number, currencyCode: string, decimalPlaces?: number): string =>
   number.toLocaleString('en', {

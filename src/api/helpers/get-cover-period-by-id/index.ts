@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getCoverPeriodById
  * Get a cover period by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: CoverPeriod ID
+ * @param {string} id: CoverPeriod ID
  * @returns {Promise<CoverPeriod>}
  */
 const getCoverPeriodById = async (context: Context, id: string) => {

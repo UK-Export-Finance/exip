@@ -5,24 +5,24 @@ const { POLICY_TYPE } = APPLICATION;
 /**
  * completePolicySection
  * Complete the "policy" section
- * @param {Boolean} viaTaskList: Start the "policy" section from the task list.
- * @param {String} policyType: If single or multiple policy - defaults to single
- * @param {Boolean} policyValueOverMvpMaximum: If the value should be over the MVP maximum amount
- * @param {String} isoCode: Policy currency ISO code
- * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
- * @param {String} maximumBuyerWillOwe: Maximum buyer will owe
- * @param {Boolean} sameName: If name on policy is the same as the signed in user - defaults to true
- * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
- * @param {Boolean} usingBroker: If "using broker" - defaults to false
- * @param {Boolean} brokerIsBasedInUk: Broker is based in the UK - defaults to false
- * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey
- * @param {Boolean} provideBrokerAddressManually: Provide a broker address manually, instead of selecting a result from Ordnance Survey
- * @param {String} brokerBuildingNumberOrName: Broker building name or number
- * @param {String} brokerPostcode: Broker postcode
- * @param {Boolean} otherCompanyInvolved: Should submit "yes" to "another company to be insured". Defaults to false.
- * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to false.
- * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
- * @param {Boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
+ * @param {boolean} viaTaskList: Start the "policy" section from the task list.
+ * @param {string} policyType: If single or multiple policy - defaults to single
+ * @param {boolean} policyValueOverMvpMaximum: If the value should be over the MVP maximum amount
+ * @param {string} isoCode: Policy currency ISO code
+ * @param {boolean} alternativeCurrency: Select the "alternative currency" option
+ * @param {string} maximumBuyerWillOwe: Maximum buyer will owe
+ * @param {boolean} sameName: If name on policy is the same as the signed in user - defaults to true
+ * @param {boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
+ * @param {boolean} usingBroker: If "using broker" - defaults to false
+ * @param {boolean} brokerIsBasedInUk: Broker is based in the UK - defaults to false
+ * @param {boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey
+ * @param {boolean} provideBrokerAddressManually: Provide a broker address manually, instead of selecting a result from Ordnance Survey
+ * @param {string} brokerBuildingNumberOrName: Broker building name or number
+ * @param {string} brokerPostcode: Broker postcode
+ * @param {boolean} otherCompanyInvolved: Should submit "yes" to "another company to be insured". Defaults to false.
+ * @param {boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to false.
+ * @param {boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
+ * @param {boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
  */
 const completePolicySection = ({
   viaTaskList,

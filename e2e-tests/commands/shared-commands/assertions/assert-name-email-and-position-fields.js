@@ -11,10 +11,10 @@ const {
 /**
  * assertNameEmailAndPositionFields
  * Asserts FIRST_NAME, LAST_NAME, EMAIL and POSITION fields' values.
- * @param {String} expectedFirstName: First name
- * @param {String} expectedLastName: Last name
- * @param {String} expectedEmail: Email address
- * @param {String} expectedPosition: Position
+ * @param {string} expectedFirstName: First name
+ * @param {string} expectedLastName: Last name
+ * @param {string} expectedEmail: Email address
+ * @param {string} expectedPosition: Position
  */
 const assertNameEmailAndPositionFields = ({ expectedFirstName, expectedLastName, expectedEmail, expectedPosition }) => {
   cy.checkValue(field(FIRST_NAME), expectedFirstName);

@@ -5,8 +5,8 @@ import checkAriaLabel from './check-aria-label';
 /**
  * checkRadioInputYesAriaLabel
  * Check a "yes" radio input's aria label
- * @param {String} Expected message without "Yes" copy
- * @param {Integer} index: Optional radio index
+ * @param {string} Expected message without "Yes" copy
+ * @param {number} index: Optional radio index
  */
 const checkRadioInputYesAriaLabel = (message, index) => {
   const expectedMessage = `${message} ${FIELD_VALUES.YES}`;

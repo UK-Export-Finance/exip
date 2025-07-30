@@ -1,8 +1,8 @@
 /**
  * takes an input value, types it into the input box and submits form
- * @param {Object} fieldVariables
+ * @param {object} fieldVariables
  * @param {Function} input cypress input selector for field
- * @param {Boolean} shouldSubmit flag for if submit button should be pressed, default to true
+ * @param {boolean} shouldSubmit flag for if submit button should be pressed, default to true
  */
 const changeAnswerField = (fieldVariables, input, shouldSubmit = true) => {
   const { newValueInput } = fieldVariables;

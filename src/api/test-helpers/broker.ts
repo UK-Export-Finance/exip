@@ -25,7 +25,7 @@ const create = async (context: Context) => {
  * Get broker test helper
  * Get an broker by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} brokerId: Broker ID
+ * @param {string} brokerId: Broker ID
  * @returns {Promise<ApplicationExportContract>} Broker
  */
 const get = async (context: Context, brokerId: string) => {

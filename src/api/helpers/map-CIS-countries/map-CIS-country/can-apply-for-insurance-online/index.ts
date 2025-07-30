@@ -7,7 +7,7 @@ import { CisCountry } from '../../../../types';
  * canApplyForInsuranceOnline
  * Check if a country can apply for insurance online.
  * @param {CisCountry} cisCountry: CIS country
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const canApplyForInsuranceOnline = (cisCountry: CisCountry): boolean => {
   const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;

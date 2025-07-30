@@ -2,7 +2,7 @@
  * isFieldFalseOrZero
  * checks if field is false or zero and returns a boolean
  * @param {Any} field
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const isFieldFalseOrZero = (field: any) => field === false || field === 0;
 

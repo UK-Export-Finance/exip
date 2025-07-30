@@ -9,10 +9,10 @@ import { REGEX } from '../../constants';
  * - Uses joi to check that the field value is an alphanumeric string
  * - Uses joi to check if the field value only contains numbers
  * - If the field values is not an alpha or alphanumberic string, or if the field value is only numbers, then returns an error
- * @param {String} fieldValue: Field value to assert
- * @param {String} fieldId: Field ID
- * @param {String} errorMessage: Error message to use if invalid
- * @param {Object} errors: Validation errors
+ * @param {string} fieldValue: Field value to assert
+ * @param {string} fieldId: Field ID
+ * @param {string} errorMessage: Error message to use if invalid
+ * @param {object} errors: Validation errors
  * @returns {Object | Boolean} Validation errors
  */
 const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object) => {

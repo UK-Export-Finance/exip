@@ -19,7 +19,7 @@ const {
 /**
  * getAntiBriberyCodeOfConductTasks
  * Get "Anti-bribery code of conduct" tasks depending on if "has anti-bribery code of conduct" answer
- * @param {Boolean} hasAntiBriberyCodeOfConduct: "Has anti-bribery code of conduct" flag
+ * @param {boolean} hasAntiBriberyCodeOfConduct: "Has anti-bribery code of conduct" flag
  * @returns {Array} Anti-bribery code of conduct tasks
  */
 export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: boolean | null): Array<string> => {

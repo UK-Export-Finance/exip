@@ -9,11 +9,11 @@ const {
 /**
  * notBasedInUkRedirectUrl
  * Get a redirect URL for "Broker details - Not based in UK" conditions.
- * @param {String} baseUrl: Base URL, e.g /apply/:referenceNumber
- * @param {Boolean} isAChangeRoute: If the route is a "change" route
- * @param {Boolean} isACheckAndChangeRoute: If the route is a "check and change" route
- * @param {Boolean} manualAddressRequired: If a manual address is required
- * @returns {String} Redirect URL
+ * @param {string} baseUrl: Base URL, e.g /apply/:referenceNumber
+ * @param {boolean} isAChangeRoute: If the route is a "change" route
+ * @param {boolean} isACheckAndChangeRoute: If the route is a "check and change" route
+ * @param {boolean} manualAddressRequired: If a manual address is required
+ * @returns {string} Redirect URL
  */
 const notBasedInUkRedirectUrl = ({ baseUrl, isAChangeRoute, isACheckAndChangeRoute, manualAddressRequired }: BrokerDetailsNotBasedInUkRedirectUrlParams) => {
   if (isAChangeRoute) {

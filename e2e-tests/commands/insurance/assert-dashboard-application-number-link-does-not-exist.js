@@ -5,7 +5,7 @@ const { table } = dashboardPage;
 /**
  * assertDashboardApplicationNumberLinkDoesNotExist
  * Assert that an application does NOT have a link in the dashboard.
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  */
 const assertDashboardApplicationNumberLinkDoesNotExist = (referenceNumber) => {
   table.body.row(referenceNumber).submittedLink().should('not.exist');

@@ -17,8 +17,8 @@ const { ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 /**
  * mapQuoteToContent
  * Map all quote values (generated from submitted data and calculator) into an object structure for GOVUK summary list structure
- * @param {Object} Quote
- * @returns {Object} All quote values in an object structure with 'text' field
+ * @param {object} Quote
+ * @returns {object} All quote values in an object structure with 'text' field
  */
 const mapQuoteToContent = (quote: Quote): QuoteContent => {
   const currencyCode = quote[CURRENCY].isoCode;

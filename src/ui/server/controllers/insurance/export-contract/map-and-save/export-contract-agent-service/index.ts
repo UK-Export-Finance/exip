@@ -14,8 +14,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * Nullify all AGENT_CHARGES data.
  * @param {RequestBody} formBody: Form body
  * @param {Application} application
- * @param {Object} validationErrors: Validation errors
- * @returns {Promise<Boolean>}
+ * @param {object} validationErrors: Validation errors
+ * @returns {Promise<boolean>}
  */
 const exportContractAgentService = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

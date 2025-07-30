@@ -12,7 +12,7 @@ const {
  * Change Companies House fields to be in camel case.
  * @param {CompaniesHouseResponse} Companies House response
  * @param {Array<IndustrySector>} Industry sectors
- * @returns {Object} Mapped companies house data
+ * @returns {object} Mapped companies house data
  */
 const mapCompaniesHouseFields = (companiesHouseResponse: CompaniesHouseResponse, sectors: Array<IndustrySector>) => ({
   companyName: companiesHouseResponse.company_name,

@@ -1,8 +1,8 @@
 /**
  * clickAlternativeCurrencyRadioAndCompleteCurrency
  * Click an "alternative currency" radio and complete the "currency" field.
- * @param {String} fieldId: Field ID
- * @param {String} currency: Currency
+ * @param {string} fieldId: Field ID
+ * @param {string} currency: Currency
  */
 const clickAlternativeCurrencyRadioAndCompleteCurrency = ({ fieldId, currency }) => {
   cy.clickAlternativeCurrencyRadioOption();

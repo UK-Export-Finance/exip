@@ -11,10 +11,10 @@ const { MIN_LENGTH, MIN_LOWERCASE, MIN_UPPERCASE, MIN_NUMERIC, MIN_SPECIAL_CHARA
  * passwordValidation
  * Check if an password is valid
  * Returns generateValidationErrors if there are any errors.
- * @param {String} fieldId: Field ID
- * @param {String} password: Password
- * @param {String} errorMessage: Error message
- * @param {Object} errors: Errors object from previous validation errors
+ * @param {string} fieldId: Field ID
+ * @param {string} password: Password
+ * @param {string} errorMessage: Error message
+ * @param {object} errors: Errors object from previous validation errors
  * @returns {ValidationErrors}
  */
 const passwordValidation = (fieldId: string, password: string, errorMessage: string, errors: object) => {

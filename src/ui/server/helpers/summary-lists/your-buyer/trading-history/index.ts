@@ -22,8 +22,8 @@ const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
  * tradingHistoryFields
  * Create all trading history fields and values for the Insurance - your buyer govukSummaryList
  * @param {ApplicationBuyerTradingHistory} answers: buyer trading history data
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: Is "check and change"
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: Is "check and change"
  * @returns {Array<SummaryListItemData>} All trading history fields and values in an object structure for GOVUK summary list structure
  */
 const tradingHistoryFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {

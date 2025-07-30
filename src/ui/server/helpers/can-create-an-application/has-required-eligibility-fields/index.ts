@@ -5,7 +5,7 @@ import { CanCreateApplicationEligibilityFlags } from '../../../../types';
  * Check if all required eligibility answers are provided
  * and have the expected true/false value.
  * @param {CanCreateApplicationEligibilityFlags} eligibilityAnswerFlags: Eligibility answer flags
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const hasRequiredEligibilityFields = ({
   hasBuyerCountry,

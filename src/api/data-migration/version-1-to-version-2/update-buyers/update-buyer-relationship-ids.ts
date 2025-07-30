@@ -9,7 +9,7 @@ import { ApplicationBuyerMvp } from '../../../types';
  * getObjectByApplicationId
  * Get an object with a matching application ID
  * @param {Array} arr: Array of objects
- * @param {String} id: Application ID
+ * @param {string} id: Application ID
  * @returns {object} Object with a matching application ID
  */
 const getObjectByApplicationId = (arr: Array<object>, id: string) => arr.find((obj) => obj.application === id);

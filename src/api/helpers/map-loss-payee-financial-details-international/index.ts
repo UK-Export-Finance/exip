@@ -6,7 +6,7 @@ import { ApplicationLossPayeeFinancialInternational } from '../../types';
  * mapLossPayeeFinancialDetailsInternational
  * maps loss payee financial to generate object for saving
  * @param {ApplicationLossPayeeFinancialInternational} variables: loss payee financial international variables
- * @returns {Object} mapped data for saving
+ * @returns {object} mapped data for saving
  */
 const mapLossPayeeFinancialDetailsInternational = (variables: ApplicationLossPayeeFinancialInternational) => {
   try {

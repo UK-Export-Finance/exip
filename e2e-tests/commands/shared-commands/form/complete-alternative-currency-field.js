@@ -8,8 +8,8 @@ const {
 /**
  * completeAlternativeCurrencyField
  * Complete an "alternative currency" field
- * @param {String} fieldId: Field ID. Defaults to ALTERNATIVE_CURRENCY_CODE
- * @param {String} currency: Currency. Defaults to NON_STANDARD_CURRENCY_NAME
+ * @param {string} fieldId: Field ID. Defaults to ALTERNATIVE_CURRENCY_CODE
+ * @param {string} currency: Currency. Defaults to NON_STANDARD_CURRENCY_NAME
  */
 const completeAlternativeCurrencyField = ({ fieldId = ALTERNATIVE_CURRENCY_CODE, currency = NON_STANDARD_CURRENCY_NAME }) => {
   cy.autocompleteKeyboardInput(fieldId, currency);

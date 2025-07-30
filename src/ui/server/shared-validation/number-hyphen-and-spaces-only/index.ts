@@ -11,11 +11,11 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
  * Check that a string contains only number, hyphen and space characters
  * Checks that it is within minimum and maximum length
  * @param {RequestBody} formBody
- * @param {String} fieldId
- * @param {String} errorMessage
- * @param {Object} errors object from previous validation errors
- * @param {Number} minimum minimum length to check against
- * @param {Number} maximum maximum length to check against
+ * @param {string} fieldId
+ * @param {string} errorMessage
+ * @param {object} errors object from previous validation errors
+ * @param {number} minimum minimum length to check against
+ * @param {number} maximum maximum length to check against
  * @returns {ValidationErrors} or null
  */
 const numberHyphenSpacesOnlyValidation = (

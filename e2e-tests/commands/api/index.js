@@ -162,11 +162,11 @@ const queryStrings = {
 /**
  * createAnAccount
  * Create an account
- * @param {String} Name
- * @param {String} Last name
- * @param {String} Email address
- * @param {String} Password
- * @returns {Object} Account
+ * @param {string} Name
+ * @param {string} Last name
+ * @param {string} Email address
+ * @param {string} Password
+ * @returns {object} Account
  */
 const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
   apollo
@@ -186,8 +186,8 @@ const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
 /**
  * createBuyer
  * Create a buyer with a country relationship
- * @param {String} Country ID
- * @returns {Object} Buyer
+ * @param {string} Country ID
+ * @returns {object} Buyer
  */
 const createBuyer = (countryId) =>
   apollo
@@ -209,11 +209,11 @@ const createBuyer = (countryId) =>
 /**
  * createAnApplication
  * Create an application
- * @param {String} Account/application owner ID
- * @param {Object} Eligibility answers
- * @param {Object} Company object (obtained from eligibility companies house call)
- * @param {Object} sectionReview object (with eligibility set to true)
- * @returns {Object} Created application
+ * @param {string} Account/application owner ID
+ * @param {object} Eligibility answers
+ * @param {object} Company object (obtained from eligibility companies house call)
+ * @param {object} sectionReview object (with eligibility set to true)
+ * @returns {object} Created application
  */
 const createAnApplication = (accountId, eligibilityAnswers, company, sectionReview) =>
   apollo
@@ -232,11 +232,11 @@ const createAnApplication = (accountId, eligibilityAnswers, company, sectionRevi
 /**
  * createAnApplication
  * Create an application
- * @param {String} Account/application owner ID
- * @param {Object} Eligibility answers
- * @param {Object} Company object (obtained from eligibility companies house call)
- * @param {Object} sectionReview object (with eligibility set to true)
- * @returns {Object} Created application
+ * @param {string} Account/application owner ID
+ * @param {object} Eligibility answers
+ * @param {object} Company object (obtained from eligibility companies house call)
+ * @param {object} sectionReview object (with eligibility set to true)
+ * @returns {object} Created application
  */
 const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, sectionReview) =>
   apollo
@@ -255,8 +255,8 @@ const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, se
 /**
  * createApplications
  * Create multiple applications
- * @param {String} Account id
- * @param {Number} Count of applications to create
+ * @param {string} Account id
+ * @param {number} Count of applications to create
  * @returns {Array} Created applications
  */
 const createApplications = (accountId, count) => {
@@ -283,8 +283,8 @@ const createApplications = (accountId, count) => {
 /**
  * getAccountByEmail
  * Get's an account by email from the API
- * @param {String} Account email address
- * @returns {Object} Account
+ * @param {string} Account email address
+ * @returns {object} Account
  */
 const getAccountByEmail = async (email) => {
   try {
@@ -313,8 +313,8 @@ const getAccountByEmail = async (email) => {
 /**
  * updateAccount
  * Update an account
- * @param {String} Account ID
- * @returns {String} Account ID
+ * @param {string} Account ID
+ * @returns {string} Account ID
  */
 const updateAccount = async (id, updateObj) => {
   try {
@@ -340,7 +340,7 @@ const updateAccount = async (id, updateObj) => {
 /**
  * updateAccountStatus
  * Update an account status
- * @param {String} AccountStatus ID
+ * @param {string} AccountStatus ID
  * @returns {AccountStatus} AccountStatus
  */
 const updateAccountStatus = async (id, updateObj) => {
@@ -367,8 +367,8 @@ const updateAccountStatus = async (id, updateObj) => {
 /**
  * deleteAnAccount
  * Delete an account by email address
- * @param {String} Account email address
- * @returns {Boolean} Success flag
+ * @param {string} Account email address
+ * @returns {boolean} Success flag
  */
 const deleteAnAccount = async (email) => {
   try {
@@ -397,8 +397,8 @@ const deleteAnAccount = async (email) => {
  * The alternative approach is to either intercept the UI requests and fake the access code validation,
  * or have email inbox testing capabilities which can be risky/flaky.
  * This approach practically mimics "get my access code from my email inbox".
- * @param {String} Account email address
- * @returns {Object} access code
+ * @param {string} Account email address
+ * @returns {object} access code
  */
 const addAndGetOTP = async (emailAddress) => {
   let email = emailAddress;
@@ -433,7 +433,7 @@ const addAndGetOTP = async (emailAddress) => {
  * The alternative approach is to either intercept the UI requests and fake the password reset token generation,
  * or have email inbox testing capabilities which can be risky/flaky.
  * This approach practically mimics "get my password reset link from my email inbox".
- * @returns {String} Account password reset token
+ * @returns {string} Account password reset token
  */
 const getAccountPasswordResetToken = async () => {
   const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
@@ -458,8 +458,8 @@ const getAccountPasswordResetToken = async () => {
 /**
  * getApplicationByReferenceNumber
  * Get's an application by reference number from the API
- * @param {Number} referenceNumber: Application reference number
- * @returns {Object} Application
+ * @param {number} referenceNumber: Application reference number
+ * @returns {object} Application
  */
 const getApplicationByReferenceNumber = async (referenceNumber) => {
   try {
@@ -481,8 +481,8 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
 /**
  * deleteApplicationByReferenceNumber
  * Delete applications by Application reference number
- * @param {Number} referenceNumber: Application reference number
- * @returns {Object}
+ * @param {number} referenceNumber: Application reference number
+ * @returns {object}
  */
 const deleteApplicationByReferenceNumber = async (referenceNumber) => {
   try {
@@ -506,7 +506,7 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
  * deleteApplications
  * Delete applications by ID
  * @param {Array} Application objects with ID
- * @returns {Object}
+ * @returns {object}
  */
 const deleteApplications = async (applications) => {
   try {
@@ -531,7 +531,7 @@ const deleteApplications = async (applications) => {
 /**
  * getACountry
  * Get a country
- * @returns {Object} Country
+ * @returns {object} Country
  */
 const getACountry = async () => {
   try {

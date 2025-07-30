@@ -6,12 +6,12 @@ import { ValidationErrors, ValidationMinAndMaxLengthParams } from '../../../type
  * Validate an input is not:
  * 1) Below a minimum length
  * 2) Above a maximum length
- * @param {String} value: Field value to validate
- * @param {String} fieldId: Field ID
+ * @param {string} value: Field value to validate
+ * @param {string} fieldId: Field ID
  * @param {ErrorMessageObject} errorMessages: Error messages
- * @param {Object} errors: Errors object from previous validation errors
- * @param {Integer} minimum: Minimum allowed length
- * @param {Integer} maximum: Maximum allowed length
+ * @param {object} errors: Errors object from previous validation errors
+ * @param {number} minimum: Minimum allowed length
+ * @param {number} maximum: Maximum allowed length
  * @returns {ValidationErrors}
  */
 const minAndMaxLengthValidation = ({ fieldId, value, errorMessages, errors, minimum, maximum }: ValidationMinAndMaxLengthParams): ValidationErrors => {

@@ -14,7 +14,7 @@ const { ABOVE: COVER_PERIOD_ABOVE, BELOW: COVER_PERIOD_BELOW } = ELIGIBILITY_FIE
 /**
  * selectRadioAndSubmit
  * Select a yes or no radio and submit the form
- * @param {String} Yes or no string
+ * @param {string} Yes or no string
  */
 const selectRadioAndSubmit = (answer) => {
   if (answer === FIELD_VALUES.YES) {
@@ -48,7 +48,7 @@ export const completeCompanyDetailsForm = () => {
  * completeAndSubmitTotalValueInsuredForm
  * completes and submits the total value insured form
  * either selects above or below maximum value based on param
- * @param {Boolean} underThreshold - if above or below maximum value radio should be selected
+ * @param {boolean} underThreshold - if above or below maximum value radio should be selected
  */
 export const completeAndSubmitTotalValueInsuredForm = ({ underThreshold = true }) => {
   let fieldId = `${TOTAL_CONTRACT_VALUE}-${TOTAL_CONTRACT_VALUE_ABOVE.ID}`;
@@ -65,7 +65,7 @@ export const completeAndSubmitTotalValueInsuredForm = ({ underThreshold = true }
  * completeCoverPeriodForm
  * completes and submits the cover period form
  * either selects less than or over X years based on param
- * @param {Boolean} underThreshold - if less than or over X years value radio should be selected
+ * @param {boolean} underThreshold - if less than or over X years value radio should be selected
  */
 export const completeCoverPeriodForm = ({ underThreshold = true }) => {
   let fieldId = `${COVER_PERIOD}-${COVER_PERIOD_ABOVE.ID}`;
@@ -89,7 +89,7 @@ export const completeEndBuyerForm = () => {
 /**
  * completePartyToConsortiumForm
  * completes and submits the party to consortium form
- * @param {Boolean} partyToConsortium if true, then selects yes radio, otherwise no
+ * @param {boolean} partyToConsortium if true, then selects yes radio, otherwise no
  */
 export const completePartyToConsortiumForm = ({ partyToConsortium = false }) => {
   if (partyToConsortium) {
@@ -102,7 +102,7 @@ export const completePartyToConsortiumForm = ({ partyToConsortium = false }) => 
 /**
  * completeMemberOfAGroupForm
  * completes and submits the member of a group form
- * @param {Boolean} memberOfAGroup if true, then selects yes radio, otherwise no
+ * @param {boolean} memberOfAGroup if true, then selects yes radio, otherwise no
  */
 export const completeMemberOfAGroupForm = ({ memberOfAGroup = false }) => {
   if (memberOfAGroup) {

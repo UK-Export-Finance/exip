@@ -5,7 +5,7 @@ import { startNowLink } from '../../pages/shared';
  * Start the "your business" section of an application.
  * 1) Click the "your business" task list item.
  * 2) Click the "start now" link in the "your business" start page.
- * @param {Boolean} viaTaskList: Start the "your business" section from the task list.
+ * @param {boolean} viaTaskList: Start the "your business" section from the task list.
  */
 const startYourBusinessSection = ({ viaTaskList = true }) => {
   if (viaTaskList) {

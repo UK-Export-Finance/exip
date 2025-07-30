@@ -20,8 +20,8 @@ const {
  * If the policy type is multiple:
  * - Delete contract value.
  * - Add a default policy length.
- * @param {Object} All submitted data
- * @returns {Object} Submitted data
+ * @param {object} All submitted data
+ * @returns {object} Submitted data
  */
 const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const mapped = submittedData;
@@ -50,8 +50,8 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
  * update quote eligibility session data with sanitised form data
  * Map and sanitise form data
  * @param {Express.Request.body} Form body
- * @param {Object} Existing submitted data
- * @returns {Object} Mapped and sanitised data
+ * @param {object} Existing submitted data
+ * @returns {object} Mapped and sanitised data
  */
 const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const modifiedData = {

@@ -1,8 +1,8 @@
 /**
  * radios
  * Radio cypress selectors
- * @param {String} Radio field ID
- * @param {String} Radio field/option value
+ * @param {string} Radio field ID
+ * @param {string} Radio field/option value
  */
 const radios = (fieldId, fieldValue) => {
   if (fieldValue) {

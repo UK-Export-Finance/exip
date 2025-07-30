@@ -10,11 +10,11 @@ const {
 /**
  * completeSignInAndGoToApplication
  * Create an account, sign in and create an application via the API or via the full eligibility flow.
- * @param {String} email: Account email address
- * @param {Boolean} createApplicationViaApi: Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
- * @param {String} companyNumber: Company number/Companies house number
- * @param {Boolean} totalContractValueOverThreshold: if total contract value in eligibility should be over threshold
- * @return {Object} Account ID, application reference number
+ * @param {string} email: Account email address
+ * @param {boolean} createApplicationViaApi: Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
+ * @param {string} companyNumber: Company number/Companies house number
+ * @param {boolean} totalContractValueOverThreshold: if total contract value in eligibility should be over threshold
+ * @return {object} Account ID, application reference number
  */
 const completeSignInAndGoToApplication = ({
   email = mockAccount[EMAIL],

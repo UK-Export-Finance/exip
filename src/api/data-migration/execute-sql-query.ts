@@ -9,8 +9,8 @@ interface ExecuteSqlQueryParams {
 /**
  * Execute a SQL query.
  * @param {Connection} connection: SQL database connection
- * @param {String} query: SQL query
- * @param {String} loggingMessage: Logging message
+ * @param {string} query: SQL query
+ * @param {string} loggingMessage: Logging message
  * @returns {Array} The result of connection.query()
  */
 const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSqlQueryParams) => {

@@ -5,9 +5,9 @@ import getUrlOrigin from '../get-url-origin';
  * Check if a request header's origin is:
  * 1) A valid URL
  * 2) Matches the services' origin
- * @param {String} True URL origin
- * @param {String} Provided request header URL
- * @returns {Boolean}
+ * @param {string} True URL origin
+ * @param {string} Provided request header URL
+ * @returns {boolean}
  */
 const isRequestHeaderOriginValid = (origin: string, requestHeader: string) => {
   if (isUrl(requestHeader)) {

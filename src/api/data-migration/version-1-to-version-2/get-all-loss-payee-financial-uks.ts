@@ -5,7 +5,7 @@ import executeSqlQuery from '../execute-sql-query';
  * getAllLossPayeeFinancialUk
  * Get all entries in the "LossPayeeFinancialUk" table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Object>} Loss payee - nominated loss payee - financial UK entries
+ * @returns {Promise<object>} Loss payee - nominated loss payee - financial UK entries
  */
 const getAllLossPayeeFinancialUk = async (connection: Connection) => {
   const loggingMessage = 'Getting all loss payee - financial UK entries';

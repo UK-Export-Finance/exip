@@ -12,7 +12,7 @@ import getAllAccounts from '../get-all-accounts';
  * 3) Get all account statuses
  * 4) Update status ID columns in the "Account" table
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Boolean>}
+ * @returns {Promise<boolean>}
  */
 const createNewAccountStatusRelationships = async (connection: Connection): Promise<boolean> => {
   const loggingMessage = 'Creating new status relationships for all accounts';

@@ -5,8 +5,8 @@ import { MAX_APPLICATIONS_PER_PAGE } from '../../../constants';
  * If the current page number is above 1,
  * calculate the amount of applications to skip.
  * This is used in the GraphQL API call for pagination.
- * @param {Number} Current page number
- * @returns {Number}
+ * @param {number} Current page number
+ * @returns {number}
  */
 export const getSkipCount = (currentPageNumber: number) => {
   if (currentPageNumber > 1) {

@@ -8,10 +8,10 @@ const { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = ACCOUNT_FIELD_IDS;
 /**
  * verifyAccountPasswordResetToken
  * - Get an account's reset password token and return in the response.
- * @param {Object} root: GraphQL root variables
- * @param {Object} variables: GraphQL variables for the VerifyAccountPasswordResetToken mutation
+ * @param {object} root: GraphQL root variables
+ * @param {object} variables: GraphQL variables for the VerifyAccountPasswordResetToken mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<Object>} Object with success flag
+ * @returns {Promise<object>} Object with success flag
  */
 const verifyAccountPasswordResetToken = async (
   root: any,

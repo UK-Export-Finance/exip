@@ -12,10 +12,10 @@ const { POLICY } = application;
 /**
  * completeLossPayeeFinancialDetailsInternationalForm
  * Complete the "loss payee financial details (international)" form
- * @param {String} bicSwiftCode: BIC/Swift value - defaults to application fixture.
- * @param {String} iban: IBAN value - defaults to application fixture.
- * @param {String} financialAddress: financialAddress value - defaults to application fixture.
- * @param {Boolean} clearInputs: Clear all inputs before submitting new values
+ * @param {string} bicSwiftCode: BIC/Swift value - defaults to application fixture.
+ * @param {string} iban: IBAN value - defaults to application fixture.
+ * @param {string} financialAddress: financialAddress value - defaults to application fixture.
+ * @param {boolean} clearInputs: Clear all inputs before submitting new values
  */
 const completeLossPayeeFinancialDetailsInternationalForm = ({
   bicSwiftCode = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],

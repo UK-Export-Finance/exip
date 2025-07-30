@@ -7,8 +7,8 @@ import { AddAndGetOtpResponse, Context } from '../../types';
  * - Generate an OTP, save to the account
  * - Set the account's isInactive flag to false, since the user is signing in and is therefore active.
  * @param {Context} context: KeystoneJS context API
- * @param {String} Exporter account ID
- * @returns {Promise<Object>} Object with success flag and access code
+ * @param {string} Exporter account ID
+ * @returns {Promise<object>} Object with success flag and access code
  */
 const generateOTPAndUpdateAccount = async (context: Context, accountId: string): Promise<AddAndGetOtpResponse> => {
   try {

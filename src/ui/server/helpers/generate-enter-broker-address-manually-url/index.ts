@@ -11,10 +11,10 @@ const {
  * If the route is a "check-and-change" route, the URL should be BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE.
  * Otherwise, BROKER_MANUAL_ADDRESS.
  * Without this, during the "change your answers" journey, a user would not be immediately taken back to "check your answers"
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} isAChangeRoute: If the last part of a string/URL is 'change'
- * @param {Boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
- * @return {String} "Enter address manually" URL
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} isAChangeRoute: If the last part of a string/URL is 'change'
+ * @param {boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
+ * @return {string} "Enter address manually" URL
  */
 const generateEnterBrokerAddressManuallyUrl = (referenceNumber: number, isAChangeRoute: boolean, isACheckAndChangeRoute: boolean) => {
   let url = `${INSURANCE_ROOT}/${referenceNumber}`;

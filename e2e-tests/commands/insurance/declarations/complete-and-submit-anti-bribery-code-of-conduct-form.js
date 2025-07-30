@@ -2,7 +2,7 @@ import { FIELD_VALUES } from '../../../constants';
 
 /**
  * completeAndSubmitDeclarationAntiBriberyCodeOfConduct
- * @param {Boolean} Yes/no answer
+ * @param {boolean} Yes/no answer
  */
 const completeAndSubmitDeclarationAntiBriberyCodeOfConduct = (answer) => {
   if (answer === FIELD_VALUES.NO) {

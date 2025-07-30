@@ -7,8 +7,8 @@ import { Application } from '../../../types';
 /**
  * sectionStatus
  * @param {Array} requiredFields Task data object
- * @param {Object} application Submitted application data
- * @returns {String} Task status - cannot start/start now/in progress/completed
+ * @param {object} application Submitted application data
+ * @returns {string} Task status - cannot start/start now/in progress/completed
  */
 export const sectionStatus = (requiredFields: Array<string>, application: Application): string => {
   const submittedData = flattenApplicationData(application);

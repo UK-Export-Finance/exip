@@ -1,7 +1,7 @@
 /**
  * checkAuthHeader
  * Run authenticated header check if flag is true
- * @param {Boolean} assertAuthenticatedHeader
+ * @param {boolean} assertAuthenticatedHeader
  */
 const checkAuthHeader = (assertAuthenticatedHeader) => {
   if (assertAuthenticatedHeader) {
@@ -12,8 +12,8 @@ const checkAuthHeader = (assertAuthenticatedHeader) => {
 /**
  * submitAnswersFromExporterLocationHappyPath
  * Check the auth header before submitting an eligibility fom
- * @param {Boolean} assertAuthenticatedHeader
- * @param {String} companyNumber
+ * @param {boolean} assertAuthenticatedHeader
+ * @param {string} companyNumber
  */
 const submitAnswersFromExporterLocationHappyPath = ({ assertAuthenticatedHeader = false, companyNumber }) => {
   checkAuthHeader(assertAuthenticatedHeader);

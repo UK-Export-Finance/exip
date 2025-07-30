@@ -10,11 +10,11 @@ import { ValidationErrors, ValidationMinAndMaxLengthParams } from '../../../type
  * 3) Is not below a minimum length
  * 4) Is not over a maximum length
  * Returns generateValidationErrors if there are any errors.
- * @param {String} fieldId: Field ID
- * @param {Object} errorMessages: Error messages
- * @param {Object} errors: Object from previous validation errors
- * @param {Integer} minimum: Minimum length of characters
- * @param {Integer} maximum: Maximum length of characters
+ * @param {string} fieldId: Field ID
+ * @param {object} errorMessages: Error messages
+ * @param {object} errors: Object from previous validation errors
+ * @param {number} minimum: Minimum length of characters
+ * @param {number} maximum: Maximum length of characters
  * @returns {ValidationErrors}
  */
 const alphaCharactersAndMinMaxLength = ({ fieldId, value, errorMessages, errors, minimum, maximum }: ValidationMinAndMaxLengthParams): ValidationErrors => {

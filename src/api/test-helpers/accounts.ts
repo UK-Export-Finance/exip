@@ -38,8 +38,8 @@ const deleteAll = async (context: Context) => {
  * get account test helper
  * Get an account by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} Account ID
- * @returns {Object} Account
+ * @param {string} Account ID
+ * @returns {object} Account
  */
 const get = async (context: Context, accountId: string): Promise<Account> => {
   try {
@@ -63,7 +63,7 @@ const get = async (context: Context, accountId: string): Promise<Account> => {
  * create account test helper
  * Create an account with mock account data and any provided custom account data.
  * @param {Context} context: KeystoneJS context API, account data, deleteAccounts flag
- * @returns {Object} Created account
+ * @returns {object} Created account
  */
 const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
   try {
@@ -104,7 +104,7 @@ const create = async ({ context, data, deleteAccounts = true }: TestHelperAccoun
  * update account test helper
  * updates an account by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} Account ID
+ * @param {string} Account ID
  * @param {AccountCreationCore} Account update data
  * @returns {Account} Account
  */

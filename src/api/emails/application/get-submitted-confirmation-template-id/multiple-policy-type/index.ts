@@ -19,10 +19,10 @@ const {
 /**
  * get
  * Get an email template ID for the "application submitted" email, for a multiple policy type.
- * @param {String} policyType: Policy type
- * @param {String} policyCurrencyCode: Policy currency code
- * @param {Number} maximumBuyerWillOwe: Maximum buyer will owe
- * @returns {Promise<String>} "Application submitted" template ID
+ * @param {string} policyType: Policy type
+ * @param {string} policyCurrencyCode: Policy currency code
+ * @param {number} maximumBuyerWillOwe: Maximum buyer will owe
+ * @returns {Promise<string>} "Application submitted" template ID
  */
 const get = async (policyType: string, policyCurrencyCode: string, maximumBuyerWillOwe: number) => {
   try {

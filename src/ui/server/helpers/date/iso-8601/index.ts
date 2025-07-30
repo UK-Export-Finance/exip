@@ -9,7 +9,7 @@ export const now = (): Date => new Date();
  * Returns the current date and time in ISO 8601 format.
  *
  * @param {Date} date JavaScript date object
- * @returns {String} The current date and time as an ISO 8601 string.
+ * @returns {string} The current date and time as an ISO 8601 string.
  */
 export const getISO8601 = (date: Date = now()): string => date.toISOString();
 

@@ -4,9 +4,9 @@ import { Context } from '../../types';
  * createABuyerContact
  * Create a buyer contact with buyer relationships.
  * @param {Context} context: KeystoneJS context API
- * @param {String} buyerId: Buyer ID
- * @param {String} applicationId: Application ID
- * @returns {Promise<Object>} Created buyer contact
+ * @param {string} buyerId: Buyer ID
+ * @param {string} applicationId: Application ID
+ * @returns {Promise<object>} Created buyer contact
  */
 const createABuyerContact = async (context: Context, buyerId: string, applicationId: string) => {
   console.info('Creating a buyer contact for %s', buyerId);

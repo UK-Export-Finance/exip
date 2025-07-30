@@ -8,7 +8,7 @@ import { ApplicationBuyerMvp } from '../../../types';
  * Move MVP "buyers" fields into the new "No PDF" data model/structure.
  * @param {Array<ApplicationBuyerMvp>} buyers: Buyers
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Boolean>}
+ * @returns {Promise<boolean>}
  */
 const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, connection: Connection): Promise<Array<object>> => {
   console.info('✅ Moving buyer contact relationships for all buyers');

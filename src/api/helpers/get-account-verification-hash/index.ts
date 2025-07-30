@@ -15,9 +15,9 @@ const {
 /**
  * generateAccountVerificationHash
  * Generate a new account verification has
- * @param {String} Account email address
- * @param {String} Account salt
- * @returns {Object} Verification hash and expiry
+ * @param {string} Account email address
+ * @param {string} Account salt
+ * @returns {object} Verification hash and expiry
  */
 const generateAccountVerificationHash = (email: string, salt: string): AccountVerification => {
   const verificationHash = crypto.pbkdf2Sync(email, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);

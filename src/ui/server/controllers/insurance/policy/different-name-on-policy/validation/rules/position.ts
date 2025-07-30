@@ -18,8 +18,8 @@ const MAXIMUM = MAXIMUM_CHARACTERS.DIFFERENT_NAME_ON_POLICY_POSITION;
  * validates position field
  * checks if response has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} errors
+ * @param {object} errors: Other validation errors for the same form
+ * @returns {object} errors
  */
 const position = (formBody: RequestBody, errors: object) => alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
 

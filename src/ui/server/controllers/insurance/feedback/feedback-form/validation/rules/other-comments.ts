@@ -16,8 +16,8 @@ const MAXIMUM = MAXIMUM_CHARACTERS.FEEDBACK.OTHER_COMMENTS;
  * validates other comments field
  * checks if answer has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} errors
+ * @param {object} errors: Other validation errors for the same form
+ * @returns {object} errors
  */
 const otherComments = (formBody: RequestBody, errors: object) => {
   if (objectHasProperty(formBody, FIELD_ID)) {

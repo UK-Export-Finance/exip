@@ -7,7 +7,7 @@ import { REGEX } from '../../constants';
  * if error on validation, returns false
  * otherwise, return true
  * @param {string} originalUrl - The original URL to validate.
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const isValidReqOriginalUrl = (originalUrl: string) => {
   const joiString = Joi.string();

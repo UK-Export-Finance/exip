@@ -9,7 +9,7 @@ import { Application } from '../../../types';
  * applicationIsComplete
  * Check if the application is complete
  * @param {Application} application
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const applicationIsComplete = (application: Application): boolean => {
   const { declaration } = application;

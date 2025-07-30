@@ -18,7 +18,7 @@ const {
 
 /**
  * getAboutGoodsOrServicesTasks
- * @param {Boolean} finalDestinationKnown: "Final destination known"
+ * @param {boolean} finalDestinationKnown: "Final destination known"
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getAboutGoodsOrServicesTasks = (finalDestinationKnown?: boolean) => {
@@ -41,8 +41,8 @@ interface RequiredFields {
 
 /**
  * privateCoverTasks
- * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
- * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @returns {string[]} Array of tasks/field IDs
  */
 export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): string[] => {
@@ -59,8 +59,8 @@ export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPr
 
 /**
  * agentServiceChargeTasks
- * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
- * @param {Boolean} agentChargeMethod: Agent charge method
+ * @param {boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
+ * @param {boolean} agentChargeMethod: Agent charge method
  * @returns {string[]} Array of tasks/field IDs
  */
 export const agentServiceChargeTasks = ({ agentIsCharging, agentChargeMethod }: RequiredFields): string[] => {
@@ -83,9 +83,9 @@ export const agentServiceChargeTasks = ({ agentIsCharging, agentChargeMethod }: 
 
 /**
  * agentTasks
- * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
- * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
- * @param {Boolean} agentChargeMethod: Agent charge method
+ * @param {boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
+ * @param {boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
+ * @param {boolean} agentChargeMethod: Agent charge method
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const agentTasks = ({ isUsingAgent, agentIsCharging, agentChargeMethod }: RequiredFields): Array<string> => {
@@ -107,7 +107,7 @@ export const agentTasks = ({ isUsingAgent, agentIsCharging, agentChargeMethod }:
 
 /**
  * awardMethodTasks
- * @param {String} awardMethodId: Export contract award method ID
+ * @param {string} awardMethodId: Export contract award method ID
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const awardMethodTasks = (awardMethodId?: string): Array<string> => {
@@ -120,14 +120,14 @@ export const awardMethodTasks = (awardMethodId?: string): Array<string> => {
 
 /**
  * Required fields for the insurance - export contract section
- * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
- * @param {Boolean} finalDestinationKnown: "Final destination known"
- * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
- * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
- * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
- * @param {Boolean} agentChargeMethod: Agent charge method
- * @param {String} awardMethodId: Export contract award method ID
- * @param {Boolean} agentChargeMethod: Agent charge method
+ * @param {boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {boolean} finalDestinationKnown: "Final destination known"
+ * @param {boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
+ * @param {boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
+ * @param {boolean} agentChargeMethod: Agent charge method
+ * @param {string} awardMethodId: Export contract award method ID
+ * @param {boolean} agentChargeMethod: Agent charge method
  * @returns {Array} Required field IDs
  */
 const requiredFields = ({

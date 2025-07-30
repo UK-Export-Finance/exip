@@ -6,7 +6,7 @@ const {
 
 /**
  * asserts 'apply through PDF copy and link' section on PDF exit page
- * @param {Object} contentStrings: content strings for PDF_FORM
+ * @param {object} contentStrings: content strings for PDF_FORM
  */
 export const assertApplyThroughPDFCopyAndLink = ({ contentStrings = PDF_FORM }) =>
   cy.checkActionApplyThroughPDF({
@@ -17,7 +17,7 @@ export const assertApplyThroughPDFCopyAndLink = ({ contentStrings = PDF_FORM }) 
 
 /**
  * asserts 'talk to EFM' section on PDF exit page
- * @param {Object} contentStrings: content strings for CONTACT_EFM
+ * @param {object} contentStrings: content strings for CONTACT_EFM
  */
 export const assertTalkToEFMCopyAndLink = ({ contentStrings = CONTACT_EFM }) =>
   cy.checkActionTalkToYourNearestEFM({
@@ -28,7 +28,7 @@ export const assertTalkToEFMCopyAndLink = ({ contentStrings = CONTACT_EFM }) =>
 
 /**
  * asserts 'contact UKEF' section on PDF exit page
- * @param {Object} contentStrings: content strings for CONTACT_UKEF_TEAM
+ * @param {object} contentStrings: content strings for CONTACT_UKEF_TEAM
  */
 export const assertContactUkefTeam = ({ contentStrings = CONTACT_UKEF_TEAM }) =>
   cy.checkActionContactUKEFTeam({

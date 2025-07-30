@@ -7,7 +7,7 @@ const attemptsToMake = [...Array(ACCOUNT.MAX_AUTH_RETRIES)];
  * completeAndSubmitSignInAccountFormMaximumInvalidRetries
  * Complete and submit the sign in form multiple times,
  * Matching the maximum retries allowed before an account becomes blocked.
- * @param {Object} Object with custom flags
+ * @param {object} Object with custom flags
  * - clickBackLinkOnLastAttempt
  * - password
  */

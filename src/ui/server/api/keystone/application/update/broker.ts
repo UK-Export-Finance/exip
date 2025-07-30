@@ -5,9 +5,9 @@ import { ApolloResponse } from '../../../../../types';
 /**
  * updateBroker
  * Update an application's "broker"
- * @param {String} Broker ID
- * @param {Object} Broker update
- * @returns {Promise<Object>} Updated broker
+ * @param {string} Broker ID
+ * @param {object} Broker update
+ * @returns {Promise<object>} Updated broker
  */
 const updateBroker = async (id: string, update: object) => {
   try {

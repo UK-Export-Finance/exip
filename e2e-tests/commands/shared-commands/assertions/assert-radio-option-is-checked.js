@@ -4,7 +4,7 @@
  * If an index is provided, use eq() to select the radio index.
  * Otherwise, simply use the provided input.
  * @param {Function} input: Cypress selector
- * @param {Integer} index: Optional radio index
+ * @param {number} index: Optional radio index
  */
 const assertRadioOptionIsChecked = (input, index) => {
   let radioSelector = input;

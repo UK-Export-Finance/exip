@@ -8,7 +8,7 @@ import getCountryByField from '../get-country-by-field';
  * getPopulatedExportContract
  * Get a populated export contract
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: ExportContract ID
+ * @param {string} id: ExportContract ID
  * @returns {Promise<ApplicationExportContract>}
  */
 const getPopulatedExportContract = async (context: Context, id: string) => {

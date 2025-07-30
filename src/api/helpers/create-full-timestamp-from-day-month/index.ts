@@ -2,8 +2,8 @@
  * createFullTimestampFromDayAndMonth
  * Create a date from day, month
  * Adds a default year of this year
- * @param {String} day
- * @param {String} month
+ * @param {string} day
+ * @param {string} month
  * @returns {Date}
  */
 const createFullTimestampFromDayAndMonth = (day?: string, month?: string): Date | null => {

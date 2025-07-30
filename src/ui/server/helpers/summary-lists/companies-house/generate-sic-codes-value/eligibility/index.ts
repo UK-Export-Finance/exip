@@ -6,9 +6,9 @@ import { SicCode } from '../../../../../../types';
  * mapEligibilitySicCodeValues
  * Map company SIC codes in eligibility answers.
  * This is used to render in an eligibility summary list.
- * @param {Array<String>} sicCodes: SIC codes
- * @param {Array<String>} industrySectorNames: Industry sector names
- * @returns {String} Mapped SIC codes or default empty string
+ * @param {Array<string>} sicCodes: SIC codes
+ * @param {Array<string>} industrySectorNames: Industry sector names
+ * @returns {string} Mapped SIC codes or default empty string
  */
 const mapEligibilitySicCodeValues = (sicCodes: Array<SicCode>, industrySectorNames?: Array<string>) => {
   if (isPopulatedArray(sicCodes)) {

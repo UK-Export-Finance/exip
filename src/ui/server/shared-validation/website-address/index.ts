@@ -3,10 +3,10 @@ import isValidWebsiteAddress from '../../helpers/is-valid-website-address';
 
 /**
  * validates website string and adds errorMessage and fieldId to errors if not in the correct format
- * @param {String} website
- * @param {String} fieldId
- * @param {String} errorMessage
- * @param {Object} errors: Other validation errors for the same form
+ * @param {string} website
+ * @param {string} fieldId
+ * @param {string} errorMessage
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors}
  */
 const validateWebsiteAddress = (website: string, fieldId: string, errorMessage: string, errors: object) => {

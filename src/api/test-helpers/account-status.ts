@@ -34,8 +34,8 @@ const deleteAll = async (context: Context) => {
  * Create an account with mock accountStatus data and any connections to account
  * @param {Context} context: KeystoneJS context API, accountStatus data, accountId and deleteAccountStatus flag
  * @param {AccountStatusCore} data update data
- * @param {String} accountId
- * @param {Boolean} deleteAccountStatus: should delete account statuses
+ * @param {string} accountId
+ * @param {boolean} deleteAccountStatus: should delete account statuses
  * @returns {TestHelperAccountStatusCreate} Created accountStatus
  */
 const create = async ({ context, data, accountId, deleteAccountStatus = true }: TestHelperAccountStatusCreate) => {
@@ -78,7 +78,7 @@ const create = async ({ context, data, accountId, deleteAccountStatus = true }: 
  * get account status test helper
  * Get an accountStatus by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} AccountStatus ID
+ * @param {string} AccountStatus ID
  * @returns {AccountStatus} Account
  */
 const get = async (context: Context, accountStatusId: string) => {
@@ -102,7 +102,7 @@ const get = async (context: Context, accountStatusId: string) => {
  * update account status test helper
  * Updates an accountStatus by accountStatus ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} AccountStatus ID
+ * @param {string} AccountStatus ID
  * @param {AccountStatusCore} data
  * @returns {AccountStatus} Account
  */

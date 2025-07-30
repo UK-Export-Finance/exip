@@ -9,7 +9,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  * applicationSubmittedEmails.send
  * Send "application submitted" emails
  * @param {Application} application
- * @param {String} xlsxPath: Path to XLSX file for underwriting team email
+ * @param {string} xlsxPath: Path to XLSX file for underwriting team email
  * @returns {Promise<SuccessResponse>} Object with success flag and emailRecipient
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {

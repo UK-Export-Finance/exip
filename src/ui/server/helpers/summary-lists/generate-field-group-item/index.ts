@@ -8,10 +8,10 @@ import transformNumberToString from '../../transform-number-to-string';
  * getSummaryListItemDataValue
  * Get a field's value from a list of data
  * Conditionally returns a custom value if passed (e.g, custom HTML for an address).
- * @param {String} fieldId: Field ID
+ * @param {string} fieldId: Field ID
  * @param {ObjectType} object: Submitted data
- * @param {String} customValue: Custom field value
- * @returns {String} Field value or default empty string dash
+ * @param {string} customValue: Custom field value
+ * @returns {string} Field value or default empty string dash
  */
 export const getSummaryListItemDataValue = (fieldId: string, data?: ObjectType, customValue?: string): string => {
   if (customValue) {
@@ -41,9 +41,9 @@ export const getSummaryListItemDataValue = (fieldId: string, data?: ObjectType, 
  * generateSummaryListItemData
  * Generate all data required for a field to be consumed by summary list mapping functions
  * For GOV summary list
- * @param {Object} obj: Field
- * @param {String} customValue: Custom field value
- * @returns {Object} Field mapped with with key/title text, a value, and optional "change" href.
+ * @param {object} obj: Field
+ * @param {string} customValue: Custom field value
+ * @returns {object} Field mapped with with key/title text, a value, and optional "change" href.
  */
 const generateSummaryListItemData = (obj: SummaryListItemDataInput, customValue?: string): SummaryListItemData => {
   const { field } = obj;

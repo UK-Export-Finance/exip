@@ -5,9 +5,9 @@ import { ApolloResponse } from '../../../../../types';
 /**
  * updatePrivateMarket
  * Update an application's "privateMarket"
- * @param {String} privateMarket ID
- * @param {Object} privateMarket update
- * @returns {Promise<Object>} Updated private market
+ * @param {string} privateMarket ID
+ * @param {object} privateMarket update
+ * @returns {Promise<object>} Updated private market
  */
 const updatePrivateMarket = async (id: string, update: object) => {
   try {

@@ -40,7 +40,7 @@ const isProdEnvironment = NODE_ENV === 'production';
  * - KeystoneJS lists schema (API and DB fields/operations that will be automatically generated)
  * - KeystoneJS custom schema (custom GraphQL operations defined outside of the supported lists schema)
  * - KeystoneJS telemetry data (disabled, otherwise is enabled by default)
- * @returns {Object} AuthConfig
+ * @returns {object} AuthConfig
  */
 export default withAuth(
   config({

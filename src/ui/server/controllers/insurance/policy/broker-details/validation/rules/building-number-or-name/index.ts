@@ -15,7 +15,7 @@ const {
 /**
  * validate the "broker building number or name" field
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors} providedAndMaxLength
  */
 const buildingNumberOrNameRules = (formBody: RequestBody, errors: object) => {

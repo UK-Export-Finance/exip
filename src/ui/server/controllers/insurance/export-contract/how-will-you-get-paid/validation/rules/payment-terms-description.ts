@@ -17,7 +17,7 @@ const {
 /**
  * validate the "payment terms description" field
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
  */
 const paymentTermsDescription = (formBody: RequestBody, errors: object) =>

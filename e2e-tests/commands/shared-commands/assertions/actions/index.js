@@ -36,8 +36,8 @@ export const checkActionContactApprovedBroker = () => {
 /**
  * checkActionTalkToYourNearestEFMLink
  * Check "talk to your nearest EFM" action content link.
- * @param {String} Expected link href
- * @param {String} Expected link text
+ * @param {string} Expected link href
+ * @param {string} Expected link text
  */
 export const checkActionTalkToYourNearestEFMLink = ({ expectedHref, expectedText }) => {
   cy.checkLink(actionSelectors.contactEFMLink(), expectedHref || CONTACT_EFM.LINK.HREF, expectedText || CONTACT_EFM.LINK.TEXT);
@@ -46,9 +46,9 @@ export const checkActionTalkToYourNearestEFMLink = ({ expectedHref, expectedText
 /**
  * checkActionTalkToYourNearestEFM
  * Check "talk to your nearest EFM" action content.
- * @param {String} Expected text
- * @param {String} Expected link href
- * @param {String} Expected link text
+ * @param {string} Expected text
+ * @param {string} Expected link href
+ * @param {string} Expected link text
  */
 export const checkActionTalkToYourNearestEFM = ({ expectedText, expectedLinkHref, expectedLinkText }) => {
   const textAssertion = expectedText || `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`;
@@ -64,9 +64,9 @@ export const checkActionTalkToYourNearestEFM = ({ expectedText, expectedLinkHref
 /**
  * checkActionApplyThroughPDF
  * Check "apply through PDF" action content and link.
- * @param {String} Expected text
- * @param {String} Expected link href
- * @param {String} Expected link text
+ * @param {string} Expected text
+ * @param {string} Expected link href
+ * @param {string} Expected link text
  */
 export const checkActionApplyThroughPDF = ({ expectedText, expectedLinkHref, expectedLinkText }) => {
   cy.checkText(actionSelectors.pdfForm(), expectedText);
@@ -77,7 +77,7 @@ export const checkActionApplyThroughPDF = ({ expectedText, expectedLinkHref, exp
 /**
  * checkActionApplyThroughPDF
  * Check "contact UKEF team" action content.
- * @param {String} Expected text
+ * @param {string} Expected text
  */
 export const checkActionContactUKEFTeam = ({ expectedText }) => {
   cy.checkText(actionSelectors.contactUKEFTeam(), expectedText);

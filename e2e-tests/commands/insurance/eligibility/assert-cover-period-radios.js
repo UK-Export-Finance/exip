@@ -11,8 +11,8 @@ const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[COVER_PERIOD].OPTIONS;
 /**
  * assertCoverPeriodRadios
  * can assert above or below threshold radio and if checked or not
- * @param {Boolean} underThreshold if under set threshold - default true
- * @param {Boolean} checked if radio is checked or not
+ * @param {boolean} underThreshold if under set threshold - default true
+ * @param {boolean} checked if radio is checked or not
  */
 const assertCoverPeriodRadios = ({ underThreshold = true, checked = true }) => {
   let fieldId = `${COVER_PERIOD}-${ABOVE.ID}`;

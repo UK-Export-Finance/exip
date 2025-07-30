@@ -8,8 +8,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * Map and save any valid jointlyInsuredParty fields
  * @param {RequestBody} formBody: Form body
  * @param {Application} application
- * @param {Object} validationErrors: Validation errors
- * @returns {Boolean}
+ * @param {object} validationErrors: Validation errors
+ * @returns {boolean}
  */
 const jointlyInsuredParty = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

@@ -1,8 +1,8 @@
 /**
  * roundNumber
  * Round a number to the nearest integer
- * @param {Number} number
- * @returns {Number}
+ * @param {number} number
+ * @returns {number}
  */
 const roundNumber = (number: number) => Math.round(number);
 

@@ -16,7 +16,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
  * adds value to NAME field for showing if radio is selected
  * @param {ApplicationOwner} owner
  * @param {ApplicationPolicyContact} policyContact
- * @returns {Object}
+ * @returns {object}
  */
 const getNameEmailPositionFromOwnerAndPolicy = (owner: ApplicationOwner, policyContact: ApplicationPolicyContact) => {
   const firstName = replaceCharacterCodesWithCharacters(owner[FIRST_NAME]);

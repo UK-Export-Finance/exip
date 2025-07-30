@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getDeclarationModernSlaveryById
  * Get a declaration by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Declaration modern slavey ID
+ * @param {string} id: Declaration modern slavey ID
  * @returns {Promise<ApplicationDeclaration>}
  */
 const getDeclarationModernSlaveryById = async (context: Context, id: string) => {

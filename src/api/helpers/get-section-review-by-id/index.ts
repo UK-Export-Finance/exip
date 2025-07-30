@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getSectionReviewById
  * Get a section review by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: SectionReview ID
+ * @param {string} id: SectionReview ID
  * @returns {Promise<SectionReview>}
  */
 const getSectionReviewById = async (context: Context, id: string) => {

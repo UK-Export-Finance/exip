@@ -20,7 +20,7 @@ const {
  * mapNameFields
  * Replace character codes in name fields with characters
  * @param {Application} application
- * @returns {Object} Application with mapped name field characters
+ * @returns {object} Application with mapped name field characters
  */
 const mapNameFields = (application: Application): Application => {
   const { buyer, company, exportContract, nominatedLossPayee, policyContact } = application;

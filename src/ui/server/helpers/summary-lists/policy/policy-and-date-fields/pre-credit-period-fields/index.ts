@@ -17,8 +17,8 @@ const {
  * generatePreCreditPeriodFields
  * if yes is selected for NEED_PRE_CREDIT_PERIOD, populates additional CREDIT_PERIOD_WITH_BUYER field.
  * @param {ApplicationPolicy} answers: Application policy answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>}
  */
 const generatePreCreditPeriodFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange?: boolean) => {

@@ -7,9 +7,9 @@
  * 5) Add a new OTP/access code and get it directly from the API
  * 6) Complete and submit the "enter access code" form
  * 7) Check we are on the "all sections" application page.
- * @param {String} Account email address
- * @param {String} Company number/companies house number to use for application creation
- * @param {Boolean} totalContractValueOverThreshold if total contract value in eligibility should be over threshold
+ * @param {string} Account email address
+ * @param {string} Company number/companies house number to use for application creation
+ * @param {boolean} totalContractValueOverThreshold if total contract value in eligibility should be over threshold
  */
 const createAnAccountAndApplicationAndSignIn = (emailAddress, companyNumber, totalContractValueOverThreshold = false) =>
   cy.createAccount({ emailAddress }).then(({ accountId, verifyAccountUrl }) => {

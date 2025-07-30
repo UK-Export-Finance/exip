@@ -8,7 +8,7 @@ import { Country } from '../../types';
  * getPopulatedEligibility
  * Get a populated eligibility
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Eligibility ID
+ * @param {string} id: Eligibility ID
  * @param {Country} buyerCountry: Buyer country
  * @returns {Promise<ApplicationEligibility>}
  */

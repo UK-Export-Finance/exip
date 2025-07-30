@@ -33,8 +33,8 @@ const {
  * Create all company or organisation fields and values for the Insurance - Your buyer govukSummaryList
  * @param {ApplicationBuyer} answers: buyer data
  * @param {InsuranceEligibility} answersEligibility: Eligibility data
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {SummaryListGroupData} All company fields and values in an SummaryListGroupData structure for GOVUK summary list structure
  */
 const generateCompanyOrOrganisationFields = (

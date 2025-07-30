@@ -5,7 +5,7 @@ import { ApplicationCompanySicCode } from '../../../../types';
  * mapSicCodes
  * Map an application's array of company SIC codes into a single string
  * @param {Array} Application company SIC codes
- * @returns {String} String of company SIC codes for XLSX generation
+ * @returns {string} String of company SIC codes for XLSX generation
  */
 const mapSicCodes = (sicCodes: Array<ApplicationCompanySicCode>) => {
   let mapped = '';

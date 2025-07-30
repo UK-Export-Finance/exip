@@ -9,8 +9,8 @@ import { Application, RequestBody } from '../../../../../../types';
  * This is used for any save functionality in the Policy Contact section of the application.
  * @param {Application} Application
  * @param {Express.Request.body} formBody
- * @param {Object} errorList: Field error list
- * @returns {Promise<Object>} Saved data
+ * @param {object} errorList: Field error list
+ * @returns {Promise<object>} Saved data
  */
 const policyContact = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = getDataToSave(formBody, errorList);

@@ -15,7 +15,7 @@ export const DEFAULT_INDEXES = () => ({
  * - If "final destination is known" is true, the worksheet has 1 additional row.
  * - If "has attempted private market cover" is true, the worksheet has 1 additional row.
  * @param {Application} application
- * @returns {Object}
+ * @returns {object}
  */
 const EXPORT_CONTRACT_INDEXES = (application: Application) => {
   const { exportContract } = application;

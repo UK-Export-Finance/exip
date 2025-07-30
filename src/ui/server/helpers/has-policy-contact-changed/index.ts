@@ -10,7 +10,7 @@ const {
  * check if policyContact IS_SAME_AS_OWNER has changed
  * @param {ApplicationPolicyContact} oldPolicyContact: Old policyContact data before update
  * @param {ApplicationPolicyContact} newPolicyContact: Updated policyContact data after update
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const hasPolicyContactChanged = (oldPolicyContact: ApplicationPolicyContact, newPolicyContact: ApplicationPolicyContact) =>
   oldPolicyContact[IS_SAME_AS_OWNER] !== newPolicyContact[IS_SAME_AS_OWNER];

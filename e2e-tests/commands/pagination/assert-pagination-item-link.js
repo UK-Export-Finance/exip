@@ -7,8 +7,8 @@ const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 /**
  * assertPaginationItemLink
  * Check a pagination item link's href and text.
- * @param {Integer} Pagination item index
- * @param {Integer} Expected page number - defaults to index + 1 if not provided.
+ * @param {number} Pagination item index
+ * @param {number} Expected page number - defaults to index + 1 if not provided.
  */
 const assertPaginationItemLink = ({ index, pageNumber }) => {
   let expectedPageNumber = pageNumber;

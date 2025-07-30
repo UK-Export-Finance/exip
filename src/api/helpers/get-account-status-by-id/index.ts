@@ -3,8 +3,8 @@ import { AccountStatus, Context } from '../../types';
 /**
  * getAccountStatusById
  * Get an account status by account status ID
- * @param {Object} context: KeystoneJS context API
- * @param {String} id: Account status ID
+ * @param {object} context: KeystoneJS context API
+ * @param {string} id: Account status ID
  * @returns {Promise<Account>} Account
  */
 const getAccountStatusById = async (context: Context, id: string): Promise<AccountStatus | boolean> => {

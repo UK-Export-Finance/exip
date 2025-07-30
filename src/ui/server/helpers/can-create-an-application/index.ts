@@ -10,7 +10,7 @@ import { InsuranceEligibility, RequestSession } from '../../../types';
  * that are required to create an application.
  * If so, return true. Otherwise, return false.
  * @param {Express.Request.session} Express request session
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const canCreateAnApplication = (session: RequestSession) => {
   console.info('Checking if an application can be created from eligibility session data');

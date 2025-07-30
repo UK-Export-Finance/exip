@@ -16,7 +16,7 @@ const {
 /**
  * generateOtp
  * Generate a one time password/access code
- * @returns {Object} Access code, salt, hash, expiry date
+ * @returns {object} Access code, salt, hash, expiry date
  */
 const generateOtp = () => {
   try {

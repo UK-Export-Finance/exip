@@ -23,7 +23,7 @@ import sectionReview from './sectionReview';
 /**
  * update
  * Various API update calls for an application
- * @returns {Object} API calls
+ * @returns {object} API calls
  */
 const update = {
   broker,

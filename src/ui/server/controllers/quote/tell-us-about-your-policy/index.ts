@@ -29,8 +29,8 @@ export const FIELD_IDS = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURREN
 /**
  * generatePageVariables
  * Page title and fields
- * @param {String} Policy type
- * @returns {Object} Page variables
+ * @param {string} Policy type
+ * @returns {object} Page variables
  */
 const generatePageVariables = (policyType: string) => {
   const pageVariables = {

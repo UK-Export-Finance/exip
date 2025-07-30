@@ -9,8 +9,8 @@ const {
 /**
  * shortTermCoverIsYesReferOrUnlisted
  * Check if a country's "short term cover" flag can apply for insurance online.
- * @param {String} shortTermCover: Short term cover
- * @returns {Boolean}
+ * @param {string} shortTermCover: Short term cover
+ * @returns {boolean}
  */
 const shortTermCoverIsYesReferOrUnlisted = (shortTermCover: string): boolean => {
   switch (shortTermCover) {

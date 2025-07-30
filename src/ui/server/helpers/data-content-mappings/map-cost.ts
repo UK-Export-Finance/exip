@@ -10,8 +10,8 @@ const {
 /**
  * mapCost
  * Map cost answer into an object for GOV summary list structure
- * @param {Object} All submitted data
- * @returns {Object} Answer in an object
+ * @param {object} All submitted data
+ * @returns {object} Answer in an object
  */
 const mapCost = (answers: SubmittedDataQuoteEligibility) => {
   let mapped;

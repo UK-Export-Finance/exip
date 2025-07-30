@@ -14,7 +14,7 @@ const {
 /**
  * PAGE_VARIABLES
  * Page content
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 export const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.COOKIES_SAVED_PAGE,

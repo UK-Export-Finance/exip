@@ -4,7 +4,7 @@ import { Context, ObjectType } from '../../types';
  * updateApplicationsData
  * Updates many applications with the provided data
  * @param {Context} context: KeystoneJS context API
- * @param {String} applicationData: update applications data
+ * @param {string} applicationData: update applications data
  * @returns {Promise<Array<Application>>} Created applications and reference number
  */
 const updateApplicationsData = async (context: Context, updateData: ObjectType) => {

@@ -15,7 +15,7 @@ const {
  * 2) Broker object with address line 1, address line 2, postcode etc.
  * Therefore we need to use different helpers depending on the data.
  * @param {ApplicationBroker} broker
- * @returns {String} Broker address string with <br />'s
+ * @returns {string} Broker address string with <br />'s
  */
 const generateBrokerAddressInsetTextHtml = (broker: ApplicationBroker) => {
   if (broker[FULL_ADDRESS]) {

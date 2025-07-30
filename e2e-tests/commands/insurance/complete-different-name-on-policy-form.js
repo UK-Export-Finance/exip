@@ -14,10 +14,10 @@ const { POLICY_CONTACT } = mockApplication;
 /**
  * completeDifferentNameOnPolicyForm
  * Complete the "different name on policy form"
- * @param {String} firstName: First name
- * @param {String} lastName: Last name
- * @param {String} email: Email
- * @param {String} position: Position
+ * @param {string} firstName: First name
+ * @param {string} lastName: Last name
+ * @param {string} email: Email
+ * @param {string} position: Position
  */
 const completeDifferentNameOnPolicyForm = ({
   firstName = POLICY_CONTACT[FIRST_NAME],

@@ -8,8 +8,8 @@ export const SORT_CODE_LENGTH = 6;
  * formatSortCode
  * Format a sort code.
  * Transforms a sort code string of e.g 123456 into 12-34-56.
- * @param {String} sortCode: Sort code
- * @returns {String} Formatted sort code
+ * @param {string} sortCode: Sort code
+ * @returns {string} Formatted sort code
  */
 const formatSortCode = (sortCode) => {
   if (sortCode.length === SORT_CODE_LENGTH) {

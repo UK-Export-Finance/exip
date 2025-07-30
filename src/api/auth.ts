@@ -16,7 +16,7 @@ if (!sessionSecret) {
  * Uses standard setup as per documentation: https://keystonejs.com/docs/config/auth
  * This essentially adds account creation in the admin UI/CMS.
  * Without this, anyone could open the admin UI/CMS.
- * @returns {Object} AuthConfig
+ * @returns {object} AuthConfig
  */
 const { withAuth } = createAuth({
   listKey: 'User',
@@ -38,7 +38,7 @@ const sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
 /**
  * KeystoneJS admin UI/CMS session configuration
  * Uses standard setup as per documentation: https://keystonejs.com/docs/config/session
- * @returns {Object} SessionStrategy
+ * @returns {object} SessionStrategy
  */
 const session = statelessSessions({
   maxAge: sessionMaxAge,

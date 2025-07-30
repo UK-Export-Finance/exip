@@ -1,7 +1,7 @@
 /**
  * completeAgentForm
  * Complete the "Using an agent" form
- * @param {Boolean} isUsingAgent: Is using an agent to help win the export contract. Defaults to false.
+ * @param {boolean} isUsingAgent: Is using an agent to help win the export contract. Defaults to false.
  */
 const completeAgentForm = ({ isUsingAgent = false }) => {
   if (isUsingAgent) {

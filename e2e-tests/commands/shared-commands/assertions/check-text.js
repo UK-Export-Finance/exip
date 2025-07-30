@@ -2,7 +2,7 @@
  * checkText
  * Check an element's text
  * @param {Function} selector: Cypress selector
- * @param {String} expected: Expected text
+ * @param {string} expected: Expected text
  */
 const checkText = (selector, expected) => {
   selector.invoke('text').then((text) => {

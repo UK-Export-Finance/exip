@@ -10,8 +10,8 @@ const { BUYER } = mockApplication;
 /**
  * completeAndSubmitCompanyOrOrganisationForm
  * Complete and submit the "company or organisation" form.
- * @param {String} buyerName: Buyer name
- * @param {String} buyerAddress: Buyer address
+ * @param {string} buyerName: Buyer name
+ * @param {string} buyerAddress: Buyer address
  */
 const completeAndSubmitCompanyOrOrganisationForm = ({ buyerName = BUYER[NAME], buyerAddress = BUYER[ADDRESS] }) => {
   cy.completeCompanyOrOrganisationForm({ buyerName, buyerAddress });

@@ -15,7 +15,7 @@ const key = generateKey();
  * decipher.update processes encrypted text in hex encoding and produces decrypted output in utf-8 format
  * decipher.final finishes the process and produces the last portion of decrypted data in utf-8 format
  * @param {EncryptedData} dataToDecrypt
- * @returns {String} decrypted string
+ * @returns {string} decrypted string
  */
 const decryptData = (dataToDecrypt: EncryptedData) => {
   try {

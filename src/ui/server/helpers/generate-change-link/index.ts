@@ -6,12 +6,12 @@ const { INSURANCE_ROOT } = ROUTES.INSURANCE;
  * generateChangeLink
  * generates a change link depending on if coming from a section's check your answers page (/change)
  * or application level check your answers (/check-and-change)
- * @param {String} route: Route for page if coming from check your answers in prepare application
- * @param {String} routeCheckAndChange: Route for if coming from check your answers section
- * @param {String} anchorTag: Change link's anchor tag
- * @param {String} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @param {Boolean} isInsuranceEligibility: If change link is for insurance eligibility section - defaults to false
+ * @param {string} route: Route for page if coming from check your answers in prepare application
+ * @param {string} routeCheckAndChange: Route for if coming from check your answers section
+ * @param {string} anchorTag: Change link's anchor tag
+ * @param {string} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {boolean} isInsuranceEligibility: If change link is for insurance eligibility section - defaults to false
  * @returns
  */
 const generateChangeLink = (

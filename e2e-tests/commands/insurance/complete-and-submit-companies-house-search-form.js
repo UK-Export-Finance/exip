@@ -9,7 +9,7 @@ const {
 /**
  * completeAndSubmitCompaniesHouseSearchForm
  * Complete and submit the companies house search form
- * @param {String} Companies house number
+ * @param {string} Companies house number
  */
 const completeAndSubmitCompaniesHouseSearchForm = ({ companyNumber = COMPANIES_HOUSE_NUMBER }) => {
   cy.interceptCompaniesHousePost({ companyNumber });

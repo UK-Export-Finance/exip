@@ -10,8 +10,8 @@ const { POLICY } = application;
 /**
  * completeAndSubmitLossPayeeDetailsForm
  * Complete and submit "loss payee details" form
- * @param {Boolean} name: loss payee name
- * @param {Boolean} locatedInUK: if located in UK radio should be selected
+ * @param {boolean} name: loss payee name
+ * @param {boolean} locatedInUK: if located in UK radio should be selected
  */
 const completeAndSubmitLossPayeeDetailsForm = ({ name = POLICY[NAME], locatedInUK = true }) => {
   cy.completeLossPayeeDetailsForm({ name, locatedInUK });

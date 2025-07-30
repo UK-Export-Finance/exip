@@ -37,7 +37,7 @@ export const FIELD_IDS = [FULL_ADDRESS];
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 const pageVariables = {
   FIELDS: {

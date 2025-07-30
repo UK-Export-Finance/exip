@@ -3,11 +3,11 @@ import { LINKS, DEFAULT } from '../../../content-strings';
 /**
  * assertSummaryListRow
  * Assert a summary list row.
- * @param {Object} summaryList: Summary list cypress selectors from pages/partials.
- * @param {String} fieldId: Field ID in the summary list to assert
- * @param {String} expectedKey: Expected key of the row
- * @param {String} expectedValue: Expected value of the row
- * @param {String} expectedChangeLinkText: Expected change link text - either add/change or should not exist
+ * @param {object} summaryList: Summary list cypress selectors from pages/partials.
+ * @param {string} fieldId: Field ID in the summary list to assert
+ * @param {string} expectedKey: Expected key of the row
+ * @param {string} expectedValue: Expected value of the row
+ * @param {string} expectedChangeLinkText: Expected change link text - either add/change or should not exist
  */
 const assertSummaryListRow = (summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
   cy.assertSummaryListRowKey(summaryList, fieldId, expectedKey);

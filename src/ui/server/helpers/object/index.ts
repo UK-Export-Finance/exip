@@ -4,7 +4,7 @@ import { ObjectType } from '../../../types';
  * objectHasKeysAndValues
  * Check if an object has keys and values
  * @param {ObjectType} Object to check
- * @returns {Boolean}
+ * @returns {boolean}
  */
 export const objectHasKeysAndValues = (obj?: ObjectType) => {
   if (!obj) {
@@ -42,8 +42,8 @@ export const isAnObjectWithKeysAndValues = (field: any): object | undefined => {
  * objectHasProperty
  * Check if an object has a certain property
  * @param {ObjectType}
- * @param {String} Property to check
- * @returns {Boolean}
+ * @param {string} Property to check
+ * @returns {boolean}
  */
 export const objectHasProperty = (obj: ObjectType, propertyName: string) => {
   if (obj[propertyName]) {

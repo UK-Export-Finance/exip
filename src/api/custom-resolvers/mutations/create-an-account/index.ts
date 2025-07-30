@@ -25,10 +25,10 @@ import { Account, AccountCreationVariables, AccountCreationCore, Context } from 
  * - Create initial account data.
  * - Create account status connection
  * - Send "confirm email address" email.
- * @param {Object} root: GraphQL root variables
+ * @param {object} root: GraphQL root variables
  * @param {AccountCreationVariables} GraphQL variables for the CreateAnAccount mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<Object>} Object with success flag and some account data
+ * @returns {Promise<object>} Object with success flag and some account data
  */
 const createAnAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
   console.info('Account creation - %s', variables.email);

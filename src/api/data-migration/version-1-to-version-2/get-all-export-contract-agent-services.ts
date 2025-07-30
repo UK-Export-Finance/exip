@@ -5,7 +5,7 @@ import executeSqlQuery from '../execute-sql-query';
  * getAllExportContractAgentServices
  * Get all entries in the "ExportContractAgentService" table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Object>} Export contracts agent services
+ * @returns {Promise<object>} Export contracts agent services
  */
 const getAllExportContractAgentServices = async (connection: Connection) => {
   const loggingMessage = 'Getting all export contract agent services';

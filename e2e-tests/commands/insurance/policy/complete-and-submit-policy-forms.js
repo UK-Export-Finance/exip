@@ -6,19 +6,19 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * completeAndSubmitPolicyForms
  * completes policy forms up to the specified form to stop at
  * eg, when 'exportValue' is passed, it will complete all forms up to and including 'exportValue'
- * @param {String} stopSubmittingAfter: The final form to submit
- * @param {String} policyType: Single or multiple. Defaults to single.
- * @param {Boolean} sameName: if name on policy is the same as the signed in user - defaults to true
- * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker"
- * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee".
- * @param {Boolean} locatedInUK: Should submit "UK" to "loss payee details".
- * @param {String} isoCode: Policy currency ISO code
- * @param {Boolean} alternativeCurrency: Select the "turnover - alternative currency" option
- * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
- * @param {Boolean} isBasedInUk: Broker is based in the UK
- * @param {String} postcode: Broker postcode
- * @param {String} buildingNumberOrName: Broker building name or number
- * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey
+ * @param {string} stopSubmittingAfter: The final form to submit
+ * @param {string} policyType: Single or multiple. Defaults to single.
+ * @param {boolean} sameName: if name on policy is the same as the signed in user - defaults to true
+ * @param {boolean} usingBroker: Should submit "yes" or "no" to "using a broker"
+ * @param {boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee".
+ * @param {boolean} locatedInUK: Should submit "UK" to "loss payee details".
+ * @param {string} isoCode: Policy currency ISO code
+ * @param {boolean} alternativeCurrency: Select the "turnover - alternative currency" option
+ * @param {boolean} otherCompanyInvolved: If "another company to be insured" is on.
+ * @param {boolean} isBasedInUk: Broker is based in the UK
+ * @param {string} postcode: Broker postcode
+ * @param {string} buildingNumberOrName: Broker building name or number
+ * @param {boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey
  */
 const completeAndSubmitPolicyForms = ({
   stopSubmittingAfter,

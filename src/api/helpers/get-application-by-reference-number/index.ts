@@ -4,7 +4,7 @@ import { Application, Context } from '.keystone/types'; // eslint-disable-line
  * getApplicationByReferenceNumber
  * get ids of application sections by reference number
  * returns application section ids or if not found, returns null
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Context} context: KeystoneJS context API
  * @returns {Application} application section ids or null
  */

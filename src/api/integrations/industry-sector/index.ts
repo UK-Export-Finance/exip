@@ -16,7 +16,7 @@ const headers = {
 /**
  * industrySectorNames
  * get
- * @returns {Object} Object with success flag array with all industry sectors
+ * @returns {object} Object with success flag array with all industry sectors
  */
 const industrySectorNames = {
   get: async () => {

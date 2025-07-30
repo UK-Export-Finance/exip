@@ -33,7 +33,7 @@ const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
 /**
  * getContractPolicyTasks
  * Get contract policy tasks depending on the type of policy
- * @param {String} Application policy type
+ * @param {string} Application policy type
  * @returns {ObjectType} Contract policy tasks
  */
 export const getContractPolicyTasks = (policyType?: string): ObjectType => {
@@ -59,7 +59,7 @@ export const getContractPolicyTasks = (policyType?: string): ObjectType => {
 /**
  * getJointlyInsuredPartyTasks
  * Get "Jointly insured party" tasks depending on the jointlyInsuredParty field.
- * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
+ * @param {boolean} jointlyInsuredParty: "Jointly insured party" flag
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
@@ -73,9 +73,9 @@ export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
 /**
  * getBrokerTasks
  * Get "Broker" tasks depending on the isUsingBroker field
- * @param {Boolean} isUsingBroker: "Is using broker" flag
- * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
- * @param {String} brokerFullAddress: Broker "full address" data
+ * @param {boolean} isUsingBroker: "Is using broker" flag
+ * @param {boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {string} brokerFullAddress: Broker "full address" data
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: boolean, brokerFullAddress?: string) => {
@@ -104,9 +104,9 @@ export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: bool
 /**
  * lossPayeeTasks
  * Get "Loss payee" section tasks depending on the isUsingBroker field
- * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
- * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
- * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
+ * @param {boolean} isAppointingLossPayee: "Is using loss payee" flag
+ * @param {boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
+ * @param {boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocatedInUk?: boolean, lossPayeeIsLocatedInternationally?: boolean) => {
@@ -138,15 +138,15 @@ interface RequiredFields {
 
 /**
  * Required fields for the insurance - policy section
- * @param {String} policyType: Application "Policy type"
- * @param {Boolean} finalDestinationKnown: "Final destination known"
- * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
- * @param {Boolean} isUsingBroker: "Is using broker"
- * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
- * @param {String} brokerFullAddress: Broker "full address" data
- * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
- * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
- * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
+ * @param {string} policyType: Application "Policy type"
+ * @param {boolean} finalDestinationKnown: "Final destination known"
+ * @param {boolean} jointlyInsuredParty: "Jointly insured party" flag
+ * @param {boolean} isUsingBroker: "Is using broker"
+ * @param {boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {string} brokerFullAddress: Broker "full address" data
+ * @param {boolean} isAppointingLossPayee: "Is using loss payee" flag
+ * @param {boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
+ * @param {boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
  * @returns {Array} Required field IDs
  */
 const requiredFields = ({

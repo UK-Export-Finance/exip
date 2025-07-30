@@ -13,10 +13,10 @@ const {
  * Or the location is IS_LOCATED_INTERNATIONALLY
  * and the application has some financial UK data,
  * the UK data should be nullified.
- * @param {String} isAppointed: Is appointed form field
- * @param {String} location: Loss payee location form field
+ * @param {string} isAppointed: Is appointed form field
+ * @param {string} location: Loss payee location form field
  * @param {ApplicationNominatedLossPayee} lossPayeeData: Loss payee data
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const shouldNullifyLossPayeeFinancialUkData = (isAppointed: string, location: string, lossPayeeData: ApplicationNominatedLossPayee) => {
   const {

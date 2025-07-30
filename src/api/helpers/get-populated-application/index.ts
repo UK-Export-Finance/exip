@@ -47,8 +47,8 @@ export const EXPECTED_RELATIONSHIPS: Array<string> = [
  * Get data associated with an application
  * @param {Context} context: KeystoneJS context API
  * @param {Application} application
- * @param {Boolean} decryptFinancialUk: should financialUk data be decrypted
- * @param {Boolean} decryptFinancialInternational: should financialInternational data be decrypted
+ * @param {boolean} decryptFinancialUk: should financialUk data be decrypted
+ * @param {boolean} decryptFinancialInternational: should financialInternational data be decrypted
  * @returns {Promise<Application>} Populated application
  */
 const getPopulatedApplication = async ({

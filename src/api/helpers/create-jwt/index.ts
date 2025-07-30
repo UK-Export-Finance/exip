@@ -15,7 +15,7 @@ const PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 /**
  * createJWT
  * Generate a JWT
- * @returns {Object} JWT token
+ * @returns {object} JWT token
  */
 const createJWT = (accountId: string) => {
   const sessionIdentifier = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);

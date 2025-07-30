@@ -5,9 +5,9 @@ import { ApolloResponse } from '../../../../../types';
 /**
  * updateJointlyInsuredParty
  * Update an application's "jointly insured party"
- * @param {String} Jointly insured party ID
- * @param {Object} Jointly insured party update
- * @returns {Promise<Object>} Updated jointly insured party
+ * @param {string} Jointly insured party ID
+ * @param {object} Jointly insured party update
+ * @returns {Promise<object>} Updated jointly insured party
  */
 const updateJointlyInsuredParty = async (id: string, update: object) => {
   try {

@@ -22,7 +22,7 @@ const {
  * Map the agent to avoid clashes with other address fields.
  * AGENT_NAME - has dot notation to stop clashes with other name fields.
  * @param {ApplicationExportContractAgent} agent
- * @returns {Object} ApplicationExportContractAgent with slightly different field IDs
+ * @returns {object} ApplicationExportContractAgent with slightly different field IDs
  */
 export const mapExportContractAgentDetails = (agent: ApplicationExportContractAgent) => ({
   id: agent.id,
@@ -37,7 +37,7 @@ export const mapExportContractAgentDetails = (agent: ApplicationExportContractAg
  * Map the policy contact to avoid clashes with other name fields.
  * POLICY_CONTACT_EMAIL - has dot notation to stop clashes with other email fields.
  * @param {ApplicationPolicyContact} policyContact
- * @returns {Object} ApplicationPolicyContact with slightly different field IDs
+ * @returns {object} ApplicationPolicyContact with slightly different field IDs
  */
 export const mapPolicyContact = (policyContact: ApplicationPolicyContact) => ({
   id: policyContact.id,
@@ -52,7 +52,7 @@ export const mapPolicyContact = (policyContact: ApplicationPolicyContact) => ({
  * mapNominatedLossPayee
  * Map the nominated loss payee to avoid clashes with other name and address fields.
  * @param {ApplicationNominatedLossPayee} nominatedLossPayee
- * @returns {Object} ApplicationNominatedLossPayee with slightly different field IDs
+ * @returns {object} ApplicationNominatedLossPayee with slightly different field IDs
  */
 export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLossPayee) => {
   if (nominatedLossPayee[IS_APPOINTED]) {

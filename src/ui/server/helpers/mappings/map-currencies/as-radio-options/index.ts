@@ -7,8 +7,8 @@ import { FIELDS } from '../../../../content-strings';
  * Map supported currencies into the required structure for GOV radios component.
  * for alternative currency, returns text based on provided fieldId
  * @param {Array} Array of currency objects
- * @param {String} alternativeCurrencyFieldId fieldId for alternative currency
- * @returns {Object} Mapped currencies with an "alternative" option.
+ * @param {string} alternativeCurrencyFieldId fieldId for alternative currency
+ * @returns {object} Mapped currencies with an "alternative" option.
  */
 const mapCurrenciesAsRadioOptions = (currencies: Array<Currency>, alternativeCurrencyFieldId: string) => {
   const mappedObj = {} as ObjectType;

@@ -6,9 +6,9 @@ import { ApplicationNominatedLossPayee } from '../../../types';
  * getNominatedLossPayee
  * Get an application's nominated loss payee by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} lossPayeeId: Loss payee ID
- * @param {Boolean} decryptFinancialUk: should financialUk data be decrypted
- * @param {Boolean} decryptFinancialInternational: should financialInternational data be decrypted
+ * @param {string} lossPayeeId: Loss payee ID
+ * @param {boolean} decryptFinancialUk: should financialUk data be decrypted
+ * @param {boolean} decryptFinancialInternational: should financialInternational data be decrypted
  * @returns {ApplicationPolicy} mapped policy
  */
 const getNominatedLossPayee = async (context: Context, lossPayeeId: string, decryptFinancialUk?: boolean, decryptFinancialInternational?: boolean) => {

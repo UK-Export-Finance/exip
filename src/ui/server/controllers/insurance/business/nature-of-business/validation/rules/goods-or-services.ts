@@ -15,8 +15,8 @@ const {
  * validates goods or services input
  * errors if empty or more than 1000 characters
  * @param {RequestBody} formBody
- * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} errors
+ * @param {object} errors: Other validation errors for the same form
+ * @returns {object} errors
  */
 const goodsOrServices = (formBody: RequestBody, errors: object) =>
   providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION);

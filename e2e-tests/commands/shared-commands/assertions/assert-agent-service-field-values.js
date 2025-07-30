@@ -8,8 +8,8 @@ const {
 /**
  * assertAgentServiceFieldValues
  * Assert all field values in the "agent service" form.
- * @param {String} expectedDescription: Expected service description
- * @param {String} agentIsCharging: Agent is charging
+ * @param {string} expectedDescription: Expected service description
+ * @param {string} agentIsCharging: Agent is charging
  */
 const assertAgentServiceFieldValues = ({ expectedDescription = EXPECTED_MULTI_LINE_STRING, agentIsCharging = false }) => {
   cy.checkTextareaValue({

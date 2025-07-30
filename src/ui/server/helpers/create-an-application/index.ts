@@ -15,7 +15,7 @@ interface ApplicationCreationResponse {
  * 2) Map sanitised eligibility answers.
  * 3) Create an application via the API
  * @param {SubmittedDataInsuranceEligibility} eligibilitySessionData: Eligibility answers
- * @param {String} userId: User ID
+ * @param {string} userId: User ID
  * @returns {Application} Created application
  */
 const createAnApplication = async (eligibilitySessionData: SubmittedDataInsuranceEligibility, userId: string): Promise<ApplicationCreationResponse> => {

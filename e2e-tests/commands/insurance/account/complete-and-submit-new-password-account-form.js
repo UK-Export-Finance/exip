@@ -9,7 +9,7 @@ const {
 /**
  * completeAndSubmitNewPasswordAccountForm
  * Enter a new password a submit the form
- * @param {Object}: Arguments/values to complete the form
+ * @param {object}: Arguments/values to complete the form
  */
 const completeAndSubmitNewPasswordAccountForm = ({ password = account[PASSWORD] }) => {
   cy.keyboardInput(passwordField.input(), password);

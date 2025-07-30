@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getExportContractAgentServiceById
  * Get an export contract agent service by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: ExportContractAgentService ID
+ * @param {string} id: ExportContractAgentService ID
  * @returns {Promise<ApplicationExportContractAgentService>}
  */
 const getExportContractAgentServiceById = async (context: Context, id: string) => {

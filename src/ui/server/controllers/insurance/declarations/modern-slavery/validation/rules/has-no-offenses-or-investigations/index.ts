@@ -17,7 +17,7 @@ const {
  * hasNoOffensesOrInvestigationsRule
  * Returns the result of emptyFieldValidation
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const hasNoOffensesOrInvestigationsRule = (formBody: RequestBody, errors: object) =>

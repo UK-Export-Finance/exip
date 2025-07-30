@@ -6,8 +6,8 @@ import { RequestBody, SubmittedDataInsuranceEligibility } from '../../../../type
  * update insurance eligibility session data with sanitised form data
  * Map and sanitise form data
  * @param {Express.Request.body} Form body
- * @param {Object} Existing submitted data
- * @returns {Object} Mapped and sanitised data
+ * @param {object} Existing submitted data
+ * @returns {object} Mapped and sanitised data
  */
 const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataInsuranceEligibility): SubmittedDataInsuranceEligibility => {
   // only sanitise the new form data

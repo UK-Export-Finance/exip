@@ -5,10 +5,10 @@ import { Context, SicCode } from '../../types';
  * createCompanySicCodes
  * Map and create company SIC codes with industry sector names and company ID.
  * @param {Context} context: KeystoneJS context API
- * @param {String} companyId: Company ID
+ * @param {string} companyId: Company ID
  * @param {Array} sicCodes: SIC codes
  * @param {Array} industrySectorNames: Industry sector names
- * @returns {Promise<Object>} Created company SIC codes
+ * @returns {Promise<object>} Created company SIC codes
  */
 const createCompanySicCodes = async (
   context: Context,

@@ -8,7 +8,7 @@ import { Application, RequestBody } from '../../../../../types';
  * This is used for any save functionality in the Check your answers section of an application
  * @param {Application} application
  * @param {Express.Request.body} formBody
- * @returns {Promise<Object>} Saved data
+ * @returns {Promise<object>} Saved data
  */
 const sectionReview = async (application: Application, formBody: RequestBody) => {
   const sanitisedData = sanitiseData(formBody);

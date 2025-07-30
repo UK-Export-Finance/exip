@@ -4,7 +4,7 @@
  * @param {Function} legend: Assert currency radio legend
  * @param {Function} radios: Assert currency radios
  * @param {Function} hint: Assert currency hint
- * @param {Boolean} gbpCurrencyCheckedByDefault: Flag for if we should assert that the GBP currency is checked by default.
+ * @param {boolean} gbpCurrencyCheckedByDefault: Flag for if we should assert that the GBP currency is checked by default.
  * @param {Function} assertGbpCurrencyCheckedByDefault: Assert the GBP currency is checked by default.
  * @param {Function} alternativeCurrencyInput: Assert the alternative currency input
  * @param {Function} doesNotRenderSupportedCurrencies: Assert that the alternative currency input does NOT render supported currencies.

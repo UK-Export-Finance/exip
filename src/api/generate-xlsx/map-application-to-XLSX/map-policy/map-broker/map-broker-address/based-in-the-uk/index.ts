@@ -6,7 +6,7 @@ import { ApplicationBroker } from '../../../../../../types';
  * A broker's UK address is saved in multiple fields.
  * The XLSX requires this data to be rendered in a single string field/column.
  * @param {ApplicationBroker} broker
- * @returns {String} Broker UK address string
+ * @returns {string} Broker UK address string
  */
 const mapBrokerAddressBasedInTheUk = (broker: ApplicationBroker) => {
   const { addressLine1, addressLine2, town, county, postcode } = broker;

@@ -11,7 +11,7 @@ const { FINANCIAL_YEAR_END_DATE, TURNOVER_CURRENCY_CODE, ...TURNOVER_FIELDS } = 
 /**
  * getYourCompanyTasks
  * Get your company tasks depending on the hasDifferentTradingName field
- * @param {Boolean} hasDifferentTradingName "has different trading name" flag
+ * @param {boolean} hasDifferentTradingName "has different trading name" flag
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<string> => {
@@ -24,8 +24,8 @@ export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<st
 
 /**
  * Required fields for the insurance - business section
- * @param {Boolean} Is using broker
- * @param {Boolean} hasDifferentTradingName flag
+ * @param {boolean} Is using broker
+ * @param {boolean} hasDifferentTradingName flag
  * @returns {Array} Required field IDs
  */
 const requiredFields = (hasDifferentTradingName?: boolean): Array<string> =>

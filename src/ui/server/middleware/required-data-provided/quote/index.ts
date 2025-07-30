@@ -41,8 +41,8 @@ const {
  * allRequiredData
  * For each route that requires data submitted from a previous route in the user flow,
  * Create an array of all field IDs from the previous routes.
- * @param {Object} all submitted data
- * @returns {Object}
+ * @param {object} all submitted data
+ * @returns {object}
  */
 export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): RequiredDataStateQuoteEligibility => {
   const requiredDataState = {} as RequiredDataStateQuoteEligibility;
@@ -106,9 +106,9 @@ export const generateRequiredDataState = (submittedData: SubmittedDataQuoteEligi
  * Without this, a user could manually navigate to e.g, page/form no.4 - bypassing previous forms or, manually go directly to the final quote page.
  * The last 3 pages in the user flow require data from the previous forms. Not having this data will result in errors/bad UX.
  * Depending on the URL/part of the user flow, and previously submitted data.
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @param {String} next Callback function name
+ * @param {object} req Request object
+ * @param {object} res Response object
+ * @param {string} next Callback function name
  * @returns {Function} next() if all required data is provided, otherwise redirect to an exit page.
  */
 export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response, next: () => void) => {

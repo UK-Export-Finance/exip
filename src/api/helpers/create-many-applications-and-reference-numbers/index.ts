@@ -5,8 +5,8 @@ import { Context, Application, ObjectType } from '../../types';
  * Creates many applications
  * Creates reference numbers for each application
  * @param {Context} context: KeystoneJS context API
- * @param {String} applicationData: create applications data
- * @returns {Promise<Object>} Created applications and reference numbers
+ * @param {string} applicationData: create applications data
+ * @returns {Promise<object>} Created applications and reference numbers
  */
 const createManyApplicationsAndReferenceNumbers = async (context: Context, applicationData: Array<ObjectType>) => {
   console.info('Creating many applications and reference numbers');

@@ -3,7 +3,7 @@ import { SYMBOLS, USD_CURRENCY_CODE, JPY_CURRENCY_CODE, EUR_CURRENCY_CODE } from
 /**
  * prefixAssertions
  * Prefix assertions for currency form fields.
- * @param {String} fieldId: Field ID of input for prefix assertion
+ * @param {string} fieldId: Field ID of input for prefix assertion
  * @returns {Function} Mocha describe block with assertions.
  */
 const prefixAssertions = ({ fieldId }) => {

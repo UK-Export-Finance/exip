@@ -23,7 +23,7 @@ export const FIELD_ID = FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD;
 /**
  * PAGE_VARIABLES
  * Page fields
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 export const PAGE_VARIABLES = {
   FIELD: {

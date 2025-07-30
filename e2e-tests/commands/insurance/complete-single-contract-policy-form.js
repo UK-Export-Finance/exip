@@ -19,9 +19,9 @@ const { POLICY } = application;
 /**
  * completeSingleContractPolicyForm
  * Complete the "single contract policy" form.
- * @param {String} isoCode: Policy currency ISO code
- * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
- * @param {Boolean} chooseCurrency: Whether to choose a currency or not
+ * @param {string} isoCode: Policy currency ISO code
+ * @param {boolean} alternativeCurrency: Select the "alternative currency" option
+ * @param {boolean} chooseCurrency: Whether to choose a currency or not
  */
 const completeSingleContractPolicyForm = ({ isoCode = application.POLICY[POLICY_CURRENCY_CODE], alternativeCurrency = false, chooseCurrency = true }) => {
   cy.completeDateFormFields({

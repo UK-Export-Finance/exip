@@ -10,9 +10,9 @@ const {
 /**
  * assertAgentDetailsFieldValues
  * Assert all field values in the "agent details" form.
- * @param {String} expectedName: Expected agent name
- * @param {String} expectedFullAddress: Expected agent address
- * @param {String} expectedCountryCode: Expected agent's country code
+ * @param {string} expectedName: Expected agent name
+ * @param {string} expectedFullAddress: Expected agent address
+ * @param {string} expectedCountryCode: Expected agent's country code
  */
 const assertAgentDetailsFieldValues = ({
   expectedName = mockApplication.EXPORT_CONTRACT.AGENT_DETAILS[NAME],
