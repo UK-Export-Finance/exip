@@ -5,7 +5,7 @@ import { ObjectType } from '../../../../types';
  * getDateFieldsFromTimestamp
  * Generate an object with day/month/year, prefixed with the provided field ID
  * @param {Date} Timestamp
- * @param {String} fieldId: Field ID
+ * @param {string} fieldId: Field ID
  * @returns {ObjectType} Object with day/month/year, prefixed with the provided field ID
  */
 const getDateFieldsFromTimestamp = (timestamp: Date, fieldId: string): ObjectType => {

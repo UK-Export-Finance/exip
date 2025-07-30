@@ -15,7 +15,7 @@ const {
  * If REQUESTED_START_DATE and/or CONTRACT_COMPLETION_DATE fields are provided,
  * transform the day/month/year fields into a timestamp.
  * @param {RequestBody} formBody: Form data
- * @returns {Object} Mapped data
+ * @returns {object} Mapped data
  */
 const mapDateFields = (formBody: RequestBody) => {
   const mapped = formBody;

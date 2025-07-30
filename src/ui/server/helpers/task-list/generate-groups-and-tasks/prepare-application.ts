@@ -20,20 +20,20 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
 
 /**
  * createPrepareApplicationTasks
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array} otherGroups: Task list groups
- * @param {String} policyType: Application "Policy type"
- * @param {Boolean} isUsingBroker: "Is using broker" flag
- * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
- * @param {String} brokerFullAddress: Broker "full address" data
- * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
- * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
- * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
- * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
- * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
- * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
- * @param {String} agentChargeMethod: Agent charge method
- * @param {String} awardMethodId: Export contract award method ID
+ * @param {string} policyType: Application "Policy type"
+ * @param {boolean} isUsingBroker: "Is using broker" flag
+ * @param {boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {string} brokerFullAddress: Broker "full address" data
+ * @param {boolean} isAppointingLossPayee: "Is using loss payee" flag
+ * @param {boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
+ * @param {boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
+ * @param {boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
+ * @param {boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
+ * @param {string} agentChargeMethod: Agent charge method
+ * @param {string} awardMethodId: Export contract award method ID
  * @returns {Array} Prepare application tasks
  */
 const createPrepareApplicationTasks = ({

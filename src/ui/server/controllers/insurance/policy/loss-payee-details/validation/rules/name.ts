@@ -14,7 +14,7 @@ const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
  * validates name field
  * checks if response has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} nameValidation
  */
 const name = (formBody: RequestBody, errors: object) => nameValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME);

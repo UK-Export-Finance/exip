@@ -24,7 +24,7 @@ const {
  * - If METHOD is PERCENTAGE, validate PERCENTAGE_CHARGE via percentageNumberValidation.
  * - Otherwise, assert empty field validation.
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors}
  */
 const method = (formBody: RequestBody, errors: object) => {

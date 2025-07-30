@@ -4,13 +4,13 @@ import { field as fieldSelector } from '../../pages/shared';
 /**
  * assertEmailFieldValidation
  * Assert email field validation
- * @param {String} fieldId: Email field ID
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Object} errorMessages: Email error messages
- * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithValidEmail: Total expected errors in the form when an email is valid.
- * @param {Boolean} isGenericErrorMessage: Email has a generic error message for incorrect formatting errors.
- * @param {Boolean} assertErrorWhenCorrectlyFormatted: Assert a validation error if the email is valid, but is an incorrect credential. E.g, account sign in.
+ * @param {string} fieldId: Email field ID
+ * @param {number} errorIndex: Index of the summary list error
+ * @param {object} errorMessages: Email error messages
+ * @param {number} totalExpectedErrors: Total expected errors in the form
+ * @param {number} totalExpectedOtherErrorsWithValidEmail: Total expected errors in the form when an email is valid.
+ * @param {boolean} isGenericErrorMessage: Email has a generic error message for incorrect formatting errors.
+ * @param {boolean} assertErrorWhenCorrectlyFormatted: Assert a validation error if the email is valid, but is an incorrect credential. E.g, account sign in.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const assertEmailFieldValidation = ({

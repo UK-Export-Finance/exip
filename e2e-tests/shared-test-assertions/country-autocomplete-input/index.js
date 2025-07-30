@@ -8,8 +8,8 @@ const { NAME: ALGERIA } = DZA;
 /**
  * assertCountryAutocompleteInput
  * Assert a country autocomplete field
- * @param {String} fieldId: Country field ID
- * @param {Boolean} assertFilteredCisCountries: Whether to check for filtered CIS countries.
+ * @param {string} fieldId: Country field ID
+ * @param {boolean} assertFilteredCisCountries: Whether to check for filtered CIS countries.
  */
 export const assertCountryAutocompleteInput = ({ fieldId, assertFilteredCisCountries }) => {
   const field = autoCompleteField(fieldId);

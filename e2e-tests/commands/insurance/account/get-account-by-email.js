@@ -3,8 +3,8 @@ import api from '../../api';
 /**
  * getAccountByEmail
  * Get an exporter directly from the API,
- * @param {String} Account email
- * @returns {Object} Account
+ * @param {string} Account email
+ * @returns {object} Account
  */
 const getAccountByEmail = (email) => {
   try {

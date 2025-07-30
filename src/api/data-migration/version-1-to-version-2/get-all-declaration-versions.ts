@@ -5,7 +5,7 @@ import executeSqlQuery from '../execute-sql-query';
  * getAllDeclarationVersions
  * Get all entries in the "DeclarationVersion" table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Object>} Declaration versions
+ * @returns {Promise<object>} Declaration versions
  */
 const getAllDeclarationVersions = async (connection: Connection) => {
   const loggingMessage = 'Getting all declaration versions';

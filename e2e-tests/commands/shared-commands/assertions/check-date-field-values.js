@@ -2,9 +2,9 @@
  * checkDateFieldValues
  * Check an date field's day, month and year input values
  * @param {Function} selector: Cypress selector
- * @param {String} day: Expected day value
- * @param {String} month: Expected month value
- * @param {String} year: Expected year value
+ * @param {string} day: Expected day value
+ * @param {string} month: Expected month value
+ * @param {string} year: Expected year value
  */
 const checkDateFieldValues = ({ selector, day = '', month = '', year = '' }) => {
   selector.dayInput().should('have.value', day);

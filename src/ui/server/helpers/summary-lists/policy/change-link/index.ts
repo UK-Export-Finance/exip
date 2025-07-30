@@ -16,11 +16,11 @@ const {
 /**
  * changeLink
  * Change link object depending on the policy type
- * @param {String} policyType: Policy type
- * @param {Number} referenceNumber: Application reference number
- * @param {String} fieldId: Field ID
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} Link object
+ * @param {string} policyType: Policy type
+ * @param {number} referenceNumber: Application reference number
+ * @param {string} fieldId: Field ID
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} Link object
  */
 const changeLink = (policyType: string, referenceNumber: number, fieldId: string, checkAndChange?: boolean) => {
   if (isSinglePolicyType(policyType)) {

@@ -4,7 +4,7 @@ import { MappedOrdnanceSurveyAddress, ObjectType } from '../../../../types';
  * getOrdnanceSurveyAddressById
  * Get a chosen Ordnance Survey address by ID
  * @param {ObjectType} payload: Form body payload
- * @param {String} fieldId: Field ID
+ * @param {string} fieldId: Field ID
  * @param {Array<MappedOrdnanceSurveyAddress>} addresses: Mapped Ordnance Survey addressess
  * @returns {MappedOrdnanceSurveyAddress}
  */

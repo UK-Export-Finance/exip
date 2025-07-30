@@ -13,10 +13,10 @@ const { IS_BASED_IN_UK } = POLICY_FIELD_IDS.BROKER_DETAILS;
 /**
  * getBrokerDetailsPostRedirectUrl
  * Get a redirect URL for the "Broker details" POST controller.
- * @param {Number} referenceNumber: Application reference number
- * @param {String} originalUrl: Original URL
+ * @param {number} referenceNumber: Application reference number
+ * @param {string} originalUrl: Original URL
  * @param {RequestBody} formBody: Form body
- * @returns {Object} Application
+ * @returns {object} Application
  */
 const getBrokerDetailsPostRedirectUrl = ({ referenceNumber, originalUrl, formBody }: BrokerDetailsRedirectUrlParams) => {
   const baseUrl = `${INSURANCE_ROOT}/${referenceNumber}`;

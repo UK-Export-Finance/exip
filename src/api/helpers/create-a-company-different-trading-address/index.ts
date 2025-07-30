@@ -4,8 +4,8 @@ import { Context } from '../../types';
  * createACompanyDifferentTradingAddress
  * Create a company different trading address with company relationships.
  * @param {Context} context: KeystoneJS context API
- * @param {String} Company ID
- * @returns {Promise<Object>} Created company different trading address
+ * @param {string} Company ID
+ * @returns {Promise<object>} Created company different trading address
  */
 const createACompanyDifferentTradingAddress = async (context: Context, companyId: string) => {
   console.info('Creating a different trading address for %s', companyId);

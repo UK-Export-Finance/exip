@@ -5,7 +5,7 @@ import { ApimSendEmailHelperResponse, SubmissionDeadlineEmailVariables } from '.
 /**
  * submissionDeadlineEmail
  * Send the submission deadline email
- * @param {String} Email address
+ * @param {string} Email address
  * @param {SubmissionDeadlineEmailVariables} submissionDeadlineEmailVariables
  * @returns {Promise<ApimSendEmailHelperResponse>}
  */

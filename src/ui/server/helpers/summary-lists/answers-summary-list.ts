@@ -28,8 +28,8 @@ const {
  * - Policy length depending on the Policy type (must have single/multiple input ID)
  * - Contract value or Max contract value depending on the Policy type
  * - Credit period if Policy type is multi
- * @param {Object} All submitted data
- * @returns {Object} All quote values in an object structure for GOVUK summary list structure
+ * @param {object} All submitted data
+ * @returns {object} All quote values in an object structure for GOVUK summary list structure
  */
 const generateFieldGroups = (answers: AnswersContent) => {
   const policyType = answers[POLICY_TYPE];
@@ -128,8 +128,8 @@ const generateFieldGroups = (answers: AnswersContent) => {
 /**
  * answersSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {Object} All answers/submitted data in a simple object.text structure
- * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
+ * @param {object} All answers/submitted data in a simple object.text structure
+ * @returns {object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const answersSummaryList = (answersContent: AnswersContent) => {
   const fieldGroups = generateFieldGroups(answersContent);

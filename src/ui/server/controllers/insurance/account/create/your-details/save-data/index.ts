@@ -6,7 +6,7 @@ import { RequestBody, Account } from '../../../../../../../types';
  * account
  * Sanitise form data for user account creation and save the data.
  * @param {Express.Request.body} formBody
- * @returns {Promise<Object>} Saved data
+ * @returns {Promise<object>} Saved data
  */
 const account = async (urlOrigin: string, formBody: RequestBody) => {
   const sanitisedData = sanitiseData(formBody) as Account;

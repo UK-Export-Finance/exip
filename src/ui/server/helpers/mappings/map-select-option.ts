@@ -5,11 +5,11 @@ import { SelectOption } from '../../../types';
  * mapSelectOption
  * Map a select option into the required structure for GOV select component.
  * Handles "is selected" requirement.
- * @param {String} Option name
- * @param {String} Option value
- * @param {Boolean} Render the option value in text
- * @param {String} Selected option value
- * @returns {Object} Mapped select option
+ * @param {string} Option name
+ * @param {string} Option value
+ * @param {boolean} Render the option value in text
+ * @param {string} Selected option value
+ * @returns {object} Mapped select option
  */
 
 const mapSelectOption = (name: string, value: string, renderValueInText: boolean, selectedValue?: string): SelectOption => {

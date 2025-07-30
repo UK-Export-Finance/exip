@@ -5,8 +5,8 @@ import { ApplicationFlat } from '../../../../types';
 /**
  * sectionIsComplete
  * @param {Array} fields Array of field ids associated with the task
- * @param {Object} submittedData Submitted application data
- * @returns {Boolean}
+ * @param {object} submittedData Submitted application data
+ * @returns {boolean}
  */
 const sectionIsComplete = (fields: Array<string>, submittedData: ApplicationFlat): boolean => {
   const submittedFields = getSubmittedFields(fields, submittedData);

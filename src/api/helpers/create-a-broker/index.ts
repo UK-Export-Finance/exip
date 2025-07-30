@@ -4,8 +4,8 @@ import { Context } from '../../types';
  * createABroker
  * Create a broker with an application relationship
  * @param {Context} context: KeystoneJS context API
- * @param {String} applicationId: Application ID
- * @returns {Promise<Object>} Created broker
+ * @param {string} applicationId: Application ID
+ * @returns {Promise<object>} Created broker
  */
 const createABroker = async (context: Context, applicationId: string) => {
   console.info('Creating a broker for %s', applicationId);

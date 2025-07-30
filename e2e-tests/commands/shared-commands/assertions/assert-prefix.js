@@ -3,8 +3,8 @@ import { field } from '../../../pages/shared';
 /**
  * assertPrefix
  * asserts prefix value or if it does not exist
- * @param {String} fieldId: Field ID
- * @param {String} value: Prefix value
+ * @param {string} fieldId: Field ID
+ * @param {string} value: Prefix value
  */
 const assertPrefix = ({ fieldId, value }) => {
   if (value) {

@@ -21,7 +21,7 @@ const {
  * Check submitted form data for errors with the company/organisation name field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors object from previous validation errors
+ * @param {object} errors: Errors object from previous validation errors
  * @returns {ValidationErrors} providedAndMaxLength
  */
 const companyOrOrganisationNameRules = (formBody: RequestBody, errors: object) =>

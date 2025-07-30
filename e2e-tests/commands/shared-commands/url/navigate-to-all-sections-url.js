@@ -7,7 +7,7 @@ const baseUrl = Cypress.config('baseUrl');
 /**
  * navigateToAllSectionsUrl
  * Navigate to the "all sections" URL of an application
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @returns {Window}
  */
 const navigateToAllSectionsUrl = (referenceNumber) => {

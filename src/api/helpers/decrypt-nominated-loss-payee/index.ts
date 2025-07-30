@@ -8,8 +8,8 @@ import decryptFinancialInternationalData from '../decrypt-financial-internationa
  * if decryptFinancialUk - decrypts accountNumber and sortCode
  * returns nominatedLossPayee with decrypted data
  * @param {ApplicationNominatedLossPayee} nominatedLossPayee
- * @param {Boolean} decryptFinancialUk: should financialUk data be decrypted
- * @param {Boolean} decryptFinancialInternational: should financialInternational data be decrypted
+ * @param {boolean} decryptFinancialUk: should financialUk data be decrypted
+ * @param {boolean} decryptFinancialInternational: should financialInternational data be decrypted
  * @returns {ApplicationNominatedLossPayee} decrypted nominatedLossPayee
  */
 const decryptNominatedLossPayee = (

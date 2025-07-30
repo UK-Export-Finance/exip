@@ -16,8 +16,8 @@ const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD
  * optional TRADED_WITH_BUYER fields for the trading history summary list
  * if TRADED_WITH_BUYER is true, render additional rows in summary list
  * @param {ApplicationBuyerTradingHistory} answers: Buyer trading history answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Array including or excluding OUTSTANDING_PAYMENTS and FAILED_PAYMENTS in correct structure
  */
 const optionalTradedWithBuyerFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean) => {

@@ -4,10 +4,10 @@ import regexValidation from '../regex-validation';
 /**
  * alphaCharactersOnlyValidation
  * Check that a string contains only alpha characters
- * @param {String} fieldValue: Field value to assert
- * @param {String} fieldId: Field ID
- * @param {String} errorMessage: Error message to use if invalid
- * @param {Object} errors: Validation errors
+ * @param {string} fieldValue: Field value to assert
+ * @param {string} fieldId: Field ID
+ * @param {string} errorMessage: Error message to use if invalid
+ * @param {object} errors: Validation errors
  * @returns {Object | Boolean} Validation errors
  */
 const alphaCharactersOnlyValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object) =>

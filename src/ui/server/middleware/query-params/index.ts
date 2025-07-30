@@ -6,9 +6,9 @@ const MAXIMUM_PARAMS = 2;
 
 /**
  * Global middleware, ensures that only allowed query parameters are consumed and sanitised.
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @param {String} next Callback function name
+ * @param {object} req Request object
+ * @param {object} res Response object
+ * @param {string} next Callback function name
  */
 export const queryParams = (req: Request, res: Response, next: () => void) => {
   const arr = Object.keys(req.query);

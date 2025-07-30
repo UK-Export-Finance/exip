@@ -2,16 +2,16 @@
  * completeAndSubmitYourBuyerForms
  * completes your buyer forms up to the specified form to stop at
  * eg, when 'connectionWithTheBuyer' is passed, it will complete all forms up to and including 'connectionWithTheBuyer'
- * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
- * @param {Boolean} exporterHasTradedWithBuyer: whether the exporter has traded with the buyer
- * @param {Boolean} failedToPay: whether the buyer has failed to pay the exporter
- * @param {String} stopSubmittingAfter: The final form to submit
- * @param {Boolean} fullyPopulatedBuyerTradingHistory: whether to fully populate the buyer trading history form
- * @param {Boolean} hasConnectionToBuyer: whether the exporter has a connection with the buyer
- * @param {Boolean} exporterHasBuyerFinancialAccounts: whether the exporter has buyer financial accounts
- * @param {String} isoCode: Policy currency ISO code
- * @param {Boolean} outstandingPayments: whether the exporter has outstanding payments with the buyer
- * @param {Boolean} viaTaskList: whether to complete the section via the task list
+ * @param {boolean} alternativeCurrency: If alternative currency should be entered.
+ * @param {boolean} exporterHasTradedWithBuyer: whether the exporter has traded with the buyer
+ * @param {boolean} failedToPay: whether the buyer has failed to pay the exporter
+ * @param {string} stopSubmittingAfter: The final form to submit
+ * @param {boolean} fullyPopulatedBuyerTradingHistory: whether to fully populate the buyer trading history form
+ * @param {boolean} hasConnectionToBuyer: whether the exporter has a connection with the buyer
+ * @param {boolean} exporterHasBuyerFinancialAccounts: whether the exporter has buyer financial accounts
+ * @param {string} isoCode: Policy currency ISO code
+ * @param {boolean} outstandingPayments: whether the exporter has outstanding payments with the buyer
+ * @param {boolean} viaTaskList: whether to complete the section via the task list
  */
 const completeAndSubmitYourBuyerForms = ({
   alternativeCurrency,

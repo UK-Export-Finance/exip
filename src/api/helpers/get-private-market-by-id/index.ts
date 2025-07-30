@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getPrivateMarketById
  * Get a private market by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: PrivateMarket ID
+ * @param {string} id: PrivateMarket ID
  * @returns {Promise<ApplicationPrivateMarket>}
  */
 const getPrivateMarketById = async (context: Context, id: string) => {

@@ -14,9 +14,9 @@ import { SummaryListGroupData, ApplicationBuyer, InsuranceEligibility } from '..
  * if totalContractValueOverThreshold is false,
  * return an empty array
  * @param {ApplicationBuyer} answersBuyer: Buyer answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListGroupData>} empty array or fields and values for credit insurance history
  */
 const optionalFields = (
@@ -39,10 +39,10 @@ const optionalFields = (
  * Create all fields for the insurance - Your buyer govukSummaryList
  * @param {ApplicationBuyer} answers: Buyer answers
  * @param {InsuranceEligibility} eligibilityAnswers: Eligibility answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All your buyer values in an object structure for GOVUK summary list structure
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All your buyer values in an object structure for GOVUK summary list structure
  */
 const generateFields = (
   answers: ApplicationBuyer,
@@ -67,10 +67,10 @@ const generateFields = (
  * Create multiple groups with govukSummaryList data structure
  * @param {ApplicationBuyer} answers: Buyer answers
  * @param {InsuranceEligibility} eligibilityAnswers: Eligibility answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBuyerSummaryList = (
   answers: ApplicationBuyer,

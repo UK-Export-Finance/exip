@@ -18,7 +18,7 @@ const {
  * Returns the result of emptyFieldValidation
  * else returns provided errors object
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const isNotAwareOfExistingSlavery = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT.IS_EMPTY, errors);

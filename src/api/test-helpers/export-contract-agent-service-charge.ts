@@ -26,7 +26,7 @@ const create = async (context: Context, data = {}) => {
  * Get export contract agent service charge test helper
  * Get an export contract agent service charge by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} chargeId: Export contract agent service charge ID
+ * @param {string} chargeId: Export contract agent service charge ID
  * @returns {Promise<ApplicationExportContractAgentServiceCharge>} Export contract agent service charge
  */
 const get = async (context: Context, chargeId: string) => {

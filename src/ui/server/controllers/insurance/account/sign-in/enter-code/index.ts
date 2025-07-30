@@ -32,7 +32,7 @@ export const FIELD_ID = ACCESS_CODE;
 /**
  * PAGE_VARIABLES
  * Page fields
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 export const PAGE_VARIABLES = {
   FIELD: {

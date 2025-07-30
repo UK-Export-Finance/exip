@@ -15,7 +15,7 @@ const {
 /**
  * validate the "full address" field
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
  */
 const fullAddress = (formBody: RequestBody, errors: object) =>

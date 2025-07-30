@@ -16,11 +16,11 @@ const PRICING_GRID_MAP = {
 
 /**
  * getPremiumRate
- * @param {String} policyType: Type of policy
+ * @param {string} policyType: Type of policy
  * @param {String | null} esraClassification: ESRA classification
- * @param {Number} totalMonths: Length of the policy in months
- * @param {Number} insuredFor: Percentage of the export that will be insured
- * @returns {Number} Premium rate percentage
+ * @param {number} totalMonths: Length of the policy in months
+ * @param {number} insuredFor: Percentage of the export that will be insured
+ * @returns {number} Premium rate percentage
  */
 const getPremiumRate = (policyType: string, esraClassification: string, totalMonths: number, insuredFor: number): number => {
   try {

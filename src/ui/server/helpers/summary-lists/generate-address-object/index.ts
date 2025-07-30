@@ -4,8 +4,8 @@ import { DEFAULT } from '../../../content-strings';
 /**
  * generateAddressObject
  * generates object with address to generate html string for address section
- * @param {String} rawAddress
- * @returns {Object}
+ * @param {string} rawAddress
+ * @returns {object}
  */
 const generateAddressObject = (rawAddress?: string) => (rawAddress ? { address: replaceNewLineWithLineBreak(rawAddress) } : { address: DEFAULT.EMPTY });
 

@@ -21,7 +21,7 @@ const expiryDate = () => {
 
 /**
  * Set's cookie value
- * @param {Boolean} value cookie value
+ * @param {boolean} value cookie value
  */
 const setCookie = (value) => (document.cookie = cookieName + '=' + value + '; path=/; SameSite=Strict; secure; ' + expiryDate());
 

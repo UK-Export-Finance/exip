@@ -14,7 +14,7 @@ import { graphql } from '@keystone-6/core';
  * We need these fields to be null to indicate that an answer has not been submitted yet.
  * Documentation: https://keystonejs.com/docs/guides/custom-fields
  * Official examples: https://github.com/keystonejs/keystone/tree/main/examples/custom-field
- * @param {Boolean} Default value to set the checkbox to. Defaults to null.
+ * @param {boolean} Default value to set the checkbox to. Defaults to null.
  * @returns {Function} Function with Keystone config for the custom field.
  */
 const nullableCheckboxConfig = (defaultValue?: boolean) =>
@@ -80,7 +80,7 @@ const nullableCheckboxConfig = (defaultValue?: boolean) =>
  * NOTE: "any" type is required here because:
  * - No keystone field type is available to easily use.
  * - Without an appropriate type, or any, the keystone schema displays type errors, purely because of this custom component.
- * @param {Boolean} Default value to set the checkbox to.
+ * @param {boolean} Default value to set the checkbox to.
  * @returns {Function} Keystone custom field
  */
 export const nullableCheckbox = (defaultValue?: boolean) => () => nullableCheckboxConfig(defaultValue) as any;

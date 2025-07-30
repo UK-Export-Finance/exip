@@ -10,7 +10,7 @@ import { ObjectType } from '../../../../types';
  * - If an object key value is an object, call sanitiseObject.
  * - Otherwise, sanitiseObjectValue is used for each value in the object.
  * @param {ObjectType}
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const sanitiseObject = (obj: ObjectType) => {
   const sanitised = {} as ObjectType;

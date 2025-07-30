@@ -1,8 +1,8 @@
 /**
  * completeAndSubmitAgentServiceForm
  * Complete and submit the "Agent service" form
- * @param {String} description: Expected service description
- * @param {Boolean} agentIsCharging: Agent is charging
+ * @param {string} description: Expected service description
+ * @param {boolean} agentIsCharging: Agent is charging
  */
 const completeAndSubmitAgentServiceForm = ({ serviceDescription, agentIsCharging }) => {
   cy.completeAgentServiceForm({

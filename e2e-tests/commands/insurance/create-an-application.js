@@ -14,10 +14,10 @@ const { ELIGIBILITY: mockEligibilityAnswers, COMPANY: mockCompany } = mockApplic
 /**
  * createAnApplication
  * Create an application with eligibility answers and company directly via the API
- * @param {String} Account ID for the application owner
- * @param {String} Company number/companies house number
- * @param {Boolean} totalContractValueOverThreshold if total contract value in eligibility should be over threshold
- * @returns {Object} Created application
+ * @param {string} Account ID for the application owner
+ * @param {string} Company number/companies house number
+ * @param {boolean} totalContractValueOverThreshold if total contract value in eligibility should be over threshold
+ * @returns {object} Created application
  */
 const createAnApplication = (accountId, companyNumber, totalContractValueOverThreshold = false) => {
   if (accountId) {

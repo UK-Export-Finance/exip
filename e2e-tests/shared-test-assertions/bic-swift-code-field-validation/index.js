@@ -16,8 +16,8 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
  * runAssertion
  * Run the submitAndAssertFieldErrors command.
  * This saves repeated instances of this command in each mocha describe block.
- * @param {String} value: Field value
- * @param {String} expectedErrorMessage: Expected error message
+ * @param {string} value: Field value
+ * @param {string} expectedErrorMessage: Expected error message
  */
 const runAssertion = ({ value, expectedErrorMessage = errorMessages.INCORRECT_FORMAT }) => {
   cy.submitAndAssertFieldErrors({

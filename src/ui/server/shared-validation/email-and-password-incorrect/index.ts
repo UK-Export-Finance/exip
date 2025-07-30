@@ -12,7 +12,7 @@ const {
 /**
  * emailAndPasswordIncorrectValidationErrors
  * Return "incorrect" validation errors for both EMAIL and PASSWORD fields.
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const emailAndPasswordIncorrectValidationErrors = (errors: ValidationErrors) => {

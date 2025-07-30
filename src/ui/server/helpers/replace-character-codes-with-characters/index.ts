@@ -3,7 +3,7 @@ import { isAString } from '../string';
 /**
  * replaceCharacterCodesWithCharacters
  * Replace certain character codes with characters
- * @param {String}
+ * @param {string}
  * @returns {String | undefined}
  */
 const replaceCharacterCodesWithCharacters = (str?: string): string | undefined => {

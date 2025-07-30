@@ -18,7 +18,7 @@ const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
  * 3) Below the minimum length
  * 4) Above the maximum length
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Object from previous validation errors
+ * @param {object} errors: Object from previous validation errors
  * @returns {ValidationErrors}
  */
 const bicSwiftCodeValidation = (formBody: RequestBody, errors: object) => {

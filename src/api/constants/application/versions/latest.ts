@@ -12,7 +12,7 @@ import VERSIONS from '.';
  * - Version number 4: New declaration - "Modern slavery".
  * - Version number 5: Broker address lookup (Ordnance Survey integration)
  * - Version number 6: Payments integration
- * @returns {String} Latest application version number
+ * @returns {string} Latest application version number
  */
 const LATEST_VERSION_NUMBER = VERSIONS[VERSIONS.length - 1].VERSION_NUMBER;
 

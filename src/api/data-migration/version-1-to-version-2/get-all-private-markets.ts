@@ -5,7 +5,7 @@ import executeSqlQuery from '../execute-sql-query';
  * getAllPrivateMarkets
  * Get all entries in the "PrivateMarket" table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Object>} Private markets
+ * @returns {Promise<object>} Private markets
  */
 const getAllPrivateMarkets = async (connection: Connection) => {
   const loggingMessage = 'Getting all private markets';

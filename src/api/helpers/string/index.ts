@@ -1,7 +1,7 @@
 /**
  * isEmptyString
  * Check if a string is empty
- * @param {String}
- * @returns {Boolean}
+ * @param {string}
+ * @returns {boolean}
  */
 export const isEmptyString = (str: string) => str === '';

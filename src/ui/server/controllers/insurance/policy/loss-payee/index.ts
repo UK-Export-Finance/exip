@@ -43,8 +43,8 @@ export const HTML_FLAGS = {
 
 /**
  * pageVariables
- * @param {Number} referenceNumber: Application reference number
- * @returns {Object} with FIELD_ID, PAGE_CONTENT_STRINGS, save and back url and FIELD_HINT
+ * @param {number} referenceNumber: Application reference number
+ * @returns {object} with FIELD_ID, PAGE_CONTENT_STRINGS, save and back url and FIELD_HINT
  */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,

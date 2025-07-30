@@ -5,9 +5,9 @@ import { ApimSendEmailHelperResponse } from '../../types';
 /**
  * passwordResetLink
  * Send "reset your password" email to an account
- * @param {String} Email address
- * @param {String} Name
- * @param {String} Password reset token
+ * @param {string} Email address
+ * @param {string} Name
+ * @param {string} Password reset token
  * @returns {Promise<ApimSendEmailHelperResponse>}
  */
 export const passwordResetLink = async (

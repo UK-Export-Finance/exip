@@ -18,7 +18,7 @@ import { CreateManyApplicationsVariables, Context, ObjectType } from '../../../t
  * 7) updates ReferenceNumber table with application reference numbers
  * 8) updates application tables with relevant reference numbers
  * 9) returns applications array and success flag
- * @param {Object} root: GraphQL root variables
+ * @param {object} root: GraphQL root variables
  * @param {CreateManyApplicationsVariables} GraphQL variables for the createManyApplications mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<SuccessResponse>} Object with success flag and applications array

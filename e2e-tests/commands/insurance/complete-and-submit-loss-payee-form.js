@@ -1,7 +1,7 @@
 /**
  * completeAndSubmitLossPayeeForm
  * Complete and submit "loss payee" form
- * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to false.
+ * @param {boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to false.
  */
 const completeAndSubmitLossPayeeForm = ({ isAppointingLossPayee = false }) => {
   if (isAppointingLossPayee) {

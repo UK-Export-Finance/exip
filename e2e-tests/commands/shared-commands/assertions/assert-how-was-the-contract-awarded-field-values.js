@@ -12,12 +12,12 @@ const { OPEN_TENDER, NEGOTIATED_CONTRACT, DIRECT_AWARD, COMPETITIVE_BIDDING, OTH
 /**
  * assertHowWasTheContractAwardedFieldValues
  * Assert all field values in the "how was the contract awarded" form.
- * @param {Boolean} openTender: Award method as OPEN_TENDER
- * @param {Boolean} negotiatedContract: Award method as NEGOTIATED_CONTRACT
- * @param {String} directAward: Award method as DIRECT_AWARD
- * @param {String} competitiveBidding: Award method as COMPETITIVE_BIDDING
- * @param {String} otherMethod: Award method as OTHER
- * @param {String} otherMethodText: OTHER award method text
+ * @param {boolean} openTender: Award method as OPEN_TENDER
+ * @param {boolean} negotiatedContract: Award method as NEGOTIATED_CONTRACT
+ * @param {string} directAward: Award method as DIRECT_AWARD
+ * @param {string} competitiveBidding: Award method as COMPETITIVE_BIDDING
+ * @param {string} otherMethod: Award method as OTHER
+ * @param {string} otherMethodText: OTHER award method text
  */
 const assertHowWasTheContractAwardedFieldValues = ({
   openTender = false,

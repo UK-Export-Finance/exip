@@ -35,10 +35,10 @@ const {
  * agentChargesFields
  * Create all fields and values for the Insurance - "Export contract - agent charges" govukSummaryList
  * @param {ApplicationExportContractAgentService} answers: All submitted agent data
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Array<Currency>} currencies: Currencies
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent charges fields
  */
 const agentChargesFields = (

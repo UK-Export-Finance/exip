@@ -9,9 +9,9 @@ import removeWhiteSpace from '../../../helpers/remove-white-space';
  * Checks postcode is valid
  * Calls Ordnance Survey API with postcode
  * Finds address by house name/number
- * @param {Object} root: GraphQL root variables
- * @param {Object} variables: GraphQL variables for the getOrdnanceSurveyAddresses mutation - postcode and houseNameOrNumber
- * @returns {Promise<Object>} Object with success flag and addresses in an array
+ * @param {object} root: GraphQL root variables
+ * @param {object} variables: GraphQL variables for the getOrdnanceSurveyAddresses mutation - postcode and houseNameOrNumber
+ * @returns {Promise<object>} Object with success flag and addresses in an array
  */
 const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVariables) => {
   try {

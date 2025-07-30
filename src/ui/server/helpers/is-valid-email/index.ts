@@ -3,8 +3,8 @@ import Joi from 'joi';
 /**
  * isValidEmail
  * Check if an email is valid.
- * @param {String} email
- * @returns {Boolean}
+ * @param {string} email
+ * @returns {boolean}
  */
 const isValidEmail = (email: string) => {
   /**

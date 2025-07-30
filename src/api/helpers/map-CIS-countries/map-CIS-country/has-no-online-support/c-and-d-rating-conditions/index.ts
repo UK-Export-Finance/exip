@@ -13,10 +13,10 @@ const {
  * cAndDRatingConditions
  * Country conditions for "C and D country ratings",
  * to determine if a country does NOT have insurance support available.
- * @param {String} countryRating: Country rating
- * @param {String} esraClassification: ESRA classification
- * @param {String} shortTermCover: Short term cover
- * @returns {Boolean}
+ * @param {string} countryRating: Country rating
+ * @param {string} esraClassification: ESRA classification
+ * @param {string} shortTermCover: Short term cover
+ * @returns {boolean}
  */
 const cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }: NoInsuranceSupportParams): boolean => {
   if (!countryRatingIsCorD(countryRating)) {

@@ -5,11 +5,11 @@ import { ApimSendEmailHelperResponse } from '../../types';
 /**
  * confirmEmailAddress
  * Send "confirm your email address" email to an account
- * @param {String} emailAddress: Email address
- * @param {String} urlOrigin: URL origin
- * @param {String} name: Name
- * @param {String} verificationHash: Verification hash
- * @param {String} id: Account ID
+ * @param {string} emailAddress: Email address
+ * @param {string} urlOrigin: URL origin
+ * @param {string} name: Name
+ * @param {string} verificationHash: Verification hash
+ * @param {string} id: Account ID
  * @returns {Promise<ApimSendEmailHelperResponse>}
  */
 export const confirmEmailAddress = async (

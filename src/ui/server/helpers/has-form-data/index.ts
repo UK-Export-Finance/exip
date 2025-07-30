@@ -5,7 +5,7 @@ import { RequestBody } from '../../../types';
  * hasFormData
  * Checks if form data has values
  * @param {Express.Request.body} formBody
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const hasFormData = (formBody: RequestBody) => {
   const { _csrf, ...formData } = formBody;

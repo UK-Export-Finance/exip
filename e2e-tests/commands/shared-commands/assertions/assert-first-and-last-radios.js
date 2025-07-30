@@ -8,7 +8,7 @@ import { radioInputs } from '../../../pages/shared';
  * Such commands would make this assertion harder to read.
  * Mostly due to being unable to assign cy.wrap to a variable.
  * It is simpler and easier to follow to have as below.
- * @param {Boolean} noRadioFirst: No radio should be the first radio. Defaults to false.
+ * @param {boolean} noRadioFirst: No radio should be the first radio. Defaults to false.
  */
 const assertYesNoRadiosOrder = ({ noRadioFirst = false }) => {
   cy.get(radioInputs).each((element, index) => {

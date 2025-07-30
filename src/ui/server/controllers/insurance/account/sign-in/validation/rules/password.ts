@@ -12,7 +12,7 @@ const { PASSWORD: FIELD_ID } = FIELD_IDS;
  * This ensures that a validation error is returned for both EMIL and PASSWORD,
  * to indicate to a user that the credentials are invalid.
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {Function} emailAndPasswordValidation
  */
 const passwordRules = (formBody: RequestBody, errors: object) => {

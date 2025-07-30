@@ -8,8 +8,8 @@ const {
 /**
  * mapSubmittedEligibilityCountry
  * Map a submitted eligibility country and canApplyOnline into an object with BUYER_COUNTRY
- * @param {Object} Country
- * @returns {Object} Object with BUYER_COUNTRY object, country fields and canApplyOnline flag
+ * @param {object} Country
+ * @returns {object} Object with BUYER_COUNTRY object, country fields and canApplyOnline flag
  */
 const mapSubmittedEligibilityCountry = (country: Country) => {
   const { name, isoCode, esraClassification, isHighRisk } = country;

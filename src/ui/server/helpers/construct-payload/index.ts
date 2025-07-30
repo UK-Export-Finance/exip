@@ -6,8 +6,8 @@ import { isPopulatedArray } from '../array';
  * constructs payload from requestBody
  * filters out anything which is not part of specified fieldIds
  * @param {RequestBody} requestBody
- * @param {Array<String>} fieldIds
- * @returns {Object} constructed payload
+ * @param {Array<string>} fieldIds
+ * @returns {object} constructed payload
  */
 const constructPayload = (requestBody: RequestBody, fieldIds: Array<string>) => {
   const payload: RequestBody = {};

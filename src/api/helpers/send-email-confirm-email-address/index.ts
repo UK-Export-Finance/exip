@@ -9,8 +9,8 @@ import { Context, SuccessResponse } from '../../types';
 /**
  * confirmEmailAddressEmail.send
  * @param {Context} context: KeystoneJS context API
- * @param {String} Account ID
- * @returns {Promise<Object>} Object with success flag and emailRecipient
+ * @param {string} Account ID
+ * @returns {Promise<object>} Object with success flag and emailRecipient
  */
 const send = async (context: Context, urlOrigin: string, accountId: string): Promise<SuccessResponse> => {
   try {

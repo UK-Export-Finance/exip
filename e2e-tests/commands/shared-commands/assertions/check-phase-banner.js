@@ -7,7 +7,7 @@ const { PREFIX, LINK_TEXT, SUFFIX } = PHASE_BANNER;
 /**
  * checkPhaseBanner
  * checks phasebanner text, link based on if insurancePage or not
- * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
+ * @param {boolean} isInsurancePage - If page is an insurance page or otherwise
  */
 const checkPhaseBanner = ({ isInsurancePage }) => {
   cy.checkText(phaseBanner.tag(), 'Beta');

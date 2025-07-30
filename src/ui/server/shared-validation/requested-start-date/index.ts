@@ -19,8 +19,8 @@ const {
  * requestedStartDateRules
  * Requested start date validation rules
  * @param {RequestBody} formBody
- * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} Result of dateRules
+ * @param {object} errors: Other validation errors for the same form
+ * @returns {object} Result of dateRules
  */
 const requestedStartDateRules = (formBody: RequestBody, errors: object) => {
   const rules = dateRules({

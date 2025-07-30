@@ -5,7 +5,7 @@ import { Context } from '../../types';
  * createADeclarationModernSlavery
  * Create a "modern slavery declaration" with declaration and version relationships.
  * @param {Context} context: KeystoneJS context API
- * @param {String} declarationId: Declaration ID
+ * @param {string} declarationId: Declaration ID
  * @returns {Promise<ApplicationDeclarationModernSlavery>}  Created modern slavery declaration
  */
 const createADeclarationModernSlavery = async (context: Context, declarationId: string) => {

@@ -7,7 +7,7 @@ import { HIGH_RISK_COUNTRY } from '../../constants';
  *
  * @param isHighRisk - Indicates whether the country is considered high-risk. If `undefined`, treated as not high-risk.
  * @param cover - The percentage of cover requested.
- * @returns {Boolean} `true` if eligible for a quote, `false` otherwise.
+ * @returns {boolean} `true` if eligible for a quote, `false` otherwise.
  */
 const isHighRiskCountryEligible = (isHighRisk: boolean | undefined, cover: number) => {
   const isOverCover = cover > HIGH_RISK_COUNTRY.MAXIMUM_PERCENTAGE_OF_COVER; // 90

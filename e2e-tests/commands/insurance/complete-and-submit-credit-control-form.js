@@ -1,7 +1,7 @@
 /**
  * completeAndSubmitCreditControlForm
  * complete and submit the "credit control" form.
- * @param {Boolean}: hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input
+ * @param {boolean}: hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input
  */
 const completeAndSubmitCreditControlForm = ({ hasCreditControlProcess = true }) => {
   if (hasCreditControlProcess) {

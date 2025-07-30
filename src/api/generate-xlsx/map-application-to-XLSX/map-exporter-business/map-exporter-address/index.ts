@@ -4,8 +4,8 @@ import { ApplicationCompanyAddress } from '../../../../types';
 /**
  * mapExporterAddress
  * Map an exporter's address
- * @param {Object} Exporter address
- * @returns {String} Exporter address string
+ * @param {object} Exporter address
+ * @returns {string} Exporter address string
  */
 const mapExporterAddress = (address: ApplicationCompanyAddress) => {
   let addressString = '';

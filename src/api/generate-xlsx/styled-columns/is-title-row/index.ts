@@ -7,9 +7,9 @@ const { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_IN
 /**
  * isTitleRow
  * Check if a row is a title row.
- * @param {String} sheetName: ExcelJS worksheet name
- * @param {Integer} rowNumber: Row number
- * @returns {Boolean}
+ * @param {string} sheetName: ExcelJS worksheet name
+ * @param {number} rowNumber: Row number
+ * @returns {boolean}
  */
 const isTitleRow = (sheetName: string, rowNumber: number) => {
   const isInfoSheet = sheetName === APPLICATION_INFORMATION;

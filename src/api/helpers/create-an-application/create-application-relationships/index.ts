@@ -29,11 +29,11 @@ import { CreateApplicationRelationshipParams } from '../../../types';
  * 9) Create a new company with an application relationship.
  * 10) Create a new sectionReview with an application relationship
  * @param {Context} context: KeystoneJS context API
- * @param {String} applicationId: Application ID
+ * @param {string} applicationId: Application ID
  * @param {ApplicationCompanyCore} companyData: Company data
  * @param {ApplicationEligibility} eligibilityAnswers: Eligibility answers/data
  * @param {SectionReview} sectionReviewData: Section review data
- * @returns {Promise<Array<String>>} Application relationship IDs
+ * @returns {Promise<Array<string>>} Application relationship IDs
  */
 const createApplicationRelationships = async ({
   context,

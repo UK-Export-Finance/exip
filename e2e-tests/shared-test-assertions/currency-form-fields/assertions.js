@@ -13,9 +13,9 @@ const {
  * returns field for currency/alternative currency
  * if currency provided, then returns radio for respective currency option
  * if no currency provided, then returns radio for alternative currency
- * @param {String} fieldId - fieldId for currency radio
- * @param {String} alternativeCurrencyFieldId - fieldId for alternative currency radio
- * @param {String} currency - Currency string
+ * @param {string} fieldId - fieldId for currency radio
+ * @param {string} alternativeCurrencyFieldId - fieldId for alternative currency radio
+ * @param {string} currency - Currency string
  * @return {Function} radio
  */
 const currencyRadio = ({ fieldId, currency, alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE }) => {
@@ -31,7 +31,7 @@ const currencyRadio = ({ fieldId, currency, alternativeCurrencyFieldId = ALTERNA
 /**
  * assertCurrencyFormFields
  * validates various parts of a form with currency fields.
- * @param {Object} variables: Variables for a form with currency fields.
+ * @param {object} variables: Variables for a form with currency fields.
  * - fieldId: Field ID for currency radios
  * - legend: Text for legend component
  * - hint: Text for hint

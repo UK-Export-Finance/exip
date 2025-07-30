@@ -4,8 +4,8 @@ import { Context } from '../../types';
  * createABuyer
  * Create a buyer
  * @param {Context} context: KeystoneJS context API
- * @param {String} countryId: Country ID
- * @returns {Promise<Object>} Created buyer
+ * @param {string} countryId: Country ID
+ * @returns {Promise<object>} Created buyer
  */
 const createABuyer = async (context: Context, countryId: string) => {
   console.info('Creating a buyer');

@@ -15,10 +15,10 @@ const {
 /**
  * noInsuranceSupport
  * Check if a country has no insurance support (online or offline)
- * @param {String} countryRating: Country rating
- * @param {String} esraClassification: ESRA classification
- * @param {String} shortTermCover: Short term cover
- * @returns {Boolean}
+ * @param {string} countryRating: Country rating
+ * @param {string} esraClassification: ESRA classification
+ * @param {string} shortTermCover: Short term cover
+ * @returns {boolean}
  */
 const noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: NoInsuranceSupportParams): boolean => {
   const shortTermCoverIsUnlisted = shortTermCover === UNLISTED;

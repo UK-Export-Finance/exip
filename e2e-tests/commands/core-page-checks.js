@@ -17,8 +17,8 @@ const baseUrl = Cypress.config('baseUrl');
  * checkBackLink
  * - Check the back link copy, HREF and previous page URL
  * - Navigate to the original page to continue the tests
- * @param {String} currentHref - Current HREF/route
- * @param {String} expectedHref - Expected "back" HREF/route
+ * @param {string} currentHref - Current HREF/route
+ * @param {string} expectedHref - Expected "back" HREF/route
  */
 const checkBackLink = (currentHref, expectedHref) => {
   cy.checkText(backLinkSelector(), LINKS.BACK);
@@ -44,7 +44,7 @@ const checkBackLink = (currentHref, expectedHref) => {
 /**
  * checkPageTitleAndHeading
  * Check the page title and heading
- * @param {String} pageTitle - Expected page title
+ * @param {string} pageTitle - Expected page title
  */
 const checkPageTitleAndHeading = (pageTitle) => {
   const expectedPageTitle = `${pageTitle} - ${ORGANISATION}`;
@@ -56,16 +56,16 @@ const checkPageTitleAndHeading = (pageTitle) => {
 /**
  * corePageChecks
  * Check core/common page elements.
- * @param {String} pageTitle - Expected page title
- * @param {String} currentHref - Expected page HREF
- * @param {String} backLink - Expected "back" HREF
- * @param {Boolean} hasAForm - Flag for if a page has a form, to check check form attributes and submit button (some paged do not have a form)
- * @param {String} submitButtonCopy - Expected submit button copy
- * @param {Boolean} assertSaveAndBackButtonDoesNotExist - Flag for if we should check that a "save and back" button does not exist.
- * @param {Boolean} assertBackLink - Should check "back" link (some pages do not have a back link)
- * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
- * @param {Boolean} assertServiceHeading - Should check service heading is for insurance or quote
- * @param {Object} lightHouseThresholds - Custom expected lighthouse thresholds
+ * @param {string} pageTitle - Expected page title
+ * @param {string} currentHref - Expected page HREF
+ * @param {string} backLink - Expected "back" HREF
+ * @param {boolean} hasAForm - Flag for if a page has a form, to check check form attributes and submit button (some paged do not have a form)
+ * @param {string} submitButtonCopy - Expected submit button copy
+ * @param {boolean} assertSaveAndBackButtonDoesNotExist - Flag for if we should check that a "save and back" button does not exist.
+ * @param {boolean} assertBackLink - Should check "back" link (some pages do not have a back link)
+ * @param {boolean} isInsurancePage - If page is an insurance page or otherwise
+ * @param {boolean} assertServiceHeading - Should check service heading is for insurance or quote
+ * @param {object} lightHouseThresholds - Custom expected lighthouse thresholds
  */
 const corePageChecks = ({
   pageTitle,

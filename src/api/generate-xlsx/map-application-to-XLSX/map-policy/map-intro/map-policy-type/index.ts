@@ -8,8 +8,8 @@ const {
 /**
  * mapPolicyType
  * Map a policy type into an abbreviated string, for XLSX generation
- * @param {String} policyType: Application "Policy type"
- * @returns {String} Abbreviated policy type
+ * @param {string} policyType: Application "Policy type"
+ * @returns {string} Abbreviated policy type
  */
 const mapPolicyType = (policyType: string) => {
   if (isSinglePolicyType(policyType)) {

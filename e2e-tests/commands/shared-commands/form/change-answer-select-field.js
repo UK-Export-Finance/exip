@@ -1,6 +1,6 @@
 /**
  * changes input for select inputs
- * @param {Object} fieldVariables
+ * @param {object} fieldVariables
  * @param {Function} input cypress input selector
  */
 const changeAnswerSelectField = (fieldVariables, input) => {

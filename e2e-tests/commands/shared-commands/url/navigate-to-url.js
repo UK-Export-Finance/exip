@@ -1,7 +1,7 @@
 /**
  * navigateToUrl
  * Navigate to a URL
- * @param {String} url
+ * @param {string} url
  * @returns {Window}
  */
 const navigateToUrl = (url) => cy.visit(url);

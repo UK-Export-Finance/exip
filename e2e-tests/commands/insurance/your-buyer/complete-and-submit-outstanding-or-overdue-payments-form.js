@@ -8,8 +8,8 @@ const { BUYER } = application;
 /**
  * completeAndSubmitOutstandingOrOverduePaymentsForm
  * Complete and submit the "outstanding or overdue payments" form
- * @param {String} amountOverDue: enter the amount overdue - defaults to BUYER[TOTAL_AMOUNT_OVERDUE]
- * @param {String} totalOutstanding: enter the total outstanding - defaults to BUYER[TOTAL_OUTSTANDING_PAYMENTS]
+ * @param {string} amountOverDue: enter the amount overdue - defaults to BUYER[TOTAL_AMOUNT_OVERDUE]
+ * @param {string} totalOutstanding: enter the total outstanding - defaults to BUYER[TOTAL_OUTSTANDING_PAYMENTS]
  */
 const completeAndSubmitOutstandingOrOverduePaymentsForm = ({
   amountOverDue = BUYER[TOTAL_AMOUNT_OVERDUE],

@@ -13,9 +13,9 @@ const {
 /**
  * assertLossPayeeFinancialUkFieldValues
  * Assert all field values in the "loss payee financial uk" form.
- * @param {String} expectedAccountNumber: Account number
- * @param {String} expectedSortCode: Sort code
- * @param {String} expectedFinancialAddress: Financial address
+ * @param {string} expectedAccountNumber: Account number
+ * @param {string} expectedSortCode: Sort code
+ * @param {string} expectedFinancialAddress: Financial address
  */
 const assertLossPayeeFinancialUkFieldValues = ({
   expectedAccountNumber = LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],

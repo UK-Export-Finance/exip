@@ -7,8 +7,8 @@ const {
 /**
  * countryRatingIsAorB
  * Check if a country's "country rating" is A or B.
- * @param {String} rating: Country rating
- * @returns {Boolean}
+ * @param {string} rating: Country rating
+ * @returns {boolean}
  */
 const countryRatingIsAorB = (rating: string): boolean => {
   if (COUNTRY_RATINGS.A.includes(rating)) {

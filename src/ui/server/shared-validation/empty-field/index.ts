@@ -7,9 +7,9 @@ import { RequestBody } from '../../../types';
  * Check if a field has been provided in form body
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {String} fieldId: Field ID
- * @param {String} errorMessage: Error message
- * @param {Object} errors: Errors object from previous validation errors
+ * @param {string} fieldId: Field ID
+ * @param {string} errorMessage: Error message
+ * @param {object} errors: Errors object from previous validation errors
  * @returns {ValidationErrors}
  */
 const emptyFieldValidation = (formBody: RequestBody, fieldId: string, errorMessage: string, errors: object) => {

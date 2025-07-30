@@ -9,9 +9,9 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * map company details data and calls save functions.
  * If DIFFERENT_TRADING_ADDRESS data should be nullified, nullify and save the data.
  * @param {RequestBody} formBody
- * @param {Object} application
- * @param {Object} validationErrors
- * @returns {Boolean}
+ * @param {object} application
+ * @param {object} validationErrors
+ * @returns {boolean}
  */
 const companyDetails = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

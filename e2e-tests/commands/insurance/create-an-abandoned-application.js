@@ -9,8 +9,8 @@ const { ELIGIBILITY: mockEligibilityAnswers, COMPANY: mockCompany } = mockApplic
  * 1) Create company from mock company
  * 2) Create section review
  * 3) Call API to create abandoned application
- * @param {String} Account ID for the application owner
- * @returns {Object} Created application
+ * @param {string} Account ID for the application owner
+ * @returns {object} Created application
  */
 const createAnAbandonedApplication = (accountId) => {
   if (accountId) {

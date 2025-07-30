@@ -16,7 +16,7 @@ const {
  * gets the earliest and latest time in a day (midnight to 23:59:59)
  * returns object with startTime and endTime
  * @param {Date} date
- * @returns {Object} start and end time
+ * @returns {object} start and end time
  */
 const getStartAndEndTimeOfDate = (date: Date) => {
   // sets earliest time in the day (midnight)

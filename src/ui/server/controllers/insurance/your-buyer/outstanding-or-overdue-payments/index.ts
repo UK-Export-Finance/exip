@@ -44,12 +44,12 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.OUTSTANDING_OR_OV
 
 /**
  * Page fields and "save and go back" URL
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
- * @param {String} currencyCode: Provided currency code
- * @param {Boolean} changeRoute: req.originalUrl is a change route
- * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
- * @returns {Object} pageVariables
+ * @param {string} currencyCode: Provided currency code
+ * @param {boolean} changeRoute: req.originalUrl is a change route
+ * @param {boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
+ * @returns {object} pageVariables
  */
 export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
   const currency = getCurrencyByCode(currencies, currencyCode);

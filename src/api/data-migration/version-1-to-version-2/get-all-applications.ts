@@ -5,7 +5,7 @@ import executeSqlQuery from '../execute-sql-query';
  * getAllApplications
  * Get all entries in the "Application" table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Object>} applications and application ID "connect" relationships
+ * @returns {Promise<object>} applications and application ID "connect" relationships
  */
 const getAllApplications = async (connection: Connection) => {
   const loggingMessage = 'Getting all applications';

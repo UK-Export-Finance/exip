@@ -18,8 +18,8 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [CONNECTION_WITH_BUYER_DESCRIPTION, P
  * saves to buyerRelationship table in database via API call
  * @param {Application} application
  * @param {RequestBody} formBody
- * @param {Object} errorList
- * @returns {Object} saveResponse from API
+ * @param {object} errorList
+ * @returns {object} saveResponse from API
  */
 const buyerRelationship = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save

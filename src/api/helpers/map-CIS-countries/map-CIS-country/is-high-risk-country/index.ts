@@ -12,7 +12,7 @@ const {
  * Note: For a very high risk country this will return false.
  *
  * @param esraClassification - The risk classification to evaluate.
- * @returns {Boolean} `true` if the classification is considered high risk, otherwise `false`.
+ * @returns {boolean} `true` if the classification is considered high risk, otherwise `false`.
  */
 const isHighRiskCountry = (riskClassification: RiskClassifications | null) => riskClassification === HIGH;
 

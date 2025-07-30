@@ -8,8 +8,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * Map and save any valid "export contract agent service charge" fields
  * @param {RequestBody} formBody: Form body
  * @param {Application} application
- * @param {Object} validationErrors: Validation errors
- * @returns {Promise<Boolean>}
+ * @param {object} validationErrors: Validation errors
+ * @returns {Promise<boolean>}
  */
 const exportContractAgentServiceCharge = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

@@ -16,7 +16,7 @@ const {
  * mapHowWasTheContractAwarded
  * Map an application's export contract - AWARD_METHOD answers into an object for XLSX generation
  * @param {ApplicationExportContract} application: Application export contract
- * @returns {Object} xlsxRow
+ * @returns {object} xlsxRow
  */
 const mapHowWasTheContractAwarded = (exportContract: ApplicationExportContract) => {
   const submittedMethodId = exportContract.awardMethodId;

@@ -3,7 +3,7 @@ import { isAfter } from 'date-fns';
 /**
  * get30minutesFromNow
  * Get 30 minutes from now and return the minute
- * @returns {Integer} 30 minutes from now
+ * @returns {number} 30 minutes from now
  */
 export const get30minutesFromNow = (): number => {
   const now = new Date();
@@ -22,7 +22,7 @@ export const get30minutesFromNow = (): number => {
 /**
  * getTomorrowDay
  * Get 1 day from now and return the day
- * @returns {Integer} 1 day from now
+ * @returns {number} 1 day from now
  */
 export const getTomorrowDay = (): number => {
   const now = new Date();
@@ -35,7 +35,7 @@ export const getTomorrowDay = (): number => {
 /**
  * getYesterdayDay
  * Get 1 day before now and return the day
- * @returns {Integer} 1 day before today
+ * @returns {number} 1 day before today
  */
 export const getYesterdayDay = (): number => {
   const now = new Date();
@@ -49,7 +49,7 @@ export const getYesterdayDay = (): number => {
  * dateIsInThePast
  * Is the time now after a specified date
  * @param {Date} targetDate
- * @returns {Boolean}
+ * @returns {boolean}
  */
 export const dateIsInThePast = (targetDate: Date) => {
   const now = new Date();

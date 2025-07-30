@@ -13,7 +13,7 @@ const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
  * percentageOfCoverRules
  * Returns the result of emptyFieldValidation
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const percentageOfCoverRules = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);

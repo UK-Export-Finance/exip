@@ -5,12 +5,12 @@ import { DateValidationFormatRulesParams, DateValidationFormatRules } from '../.
 /**
  * validDateFormatRules
  * Check the format of day/month/year strings.
- * @param {String} dayString: Day string
- * @param {String} monthString: Month string
- * @param {String} yearString: Year string
- * @param {Object} errors: Other validation errors for the same form
- * @param {Object} errorMessages: All possible error messages for the date field.
- * @param {String} fieldId: Date field ID
+ * @param {string} dayString: Day string
+ * @param {string} monthString: Month string
+ * @param {string} yearString: Year string
+ * @param {object} errors: Other validation errors for the same form
+ * @param {object} errorMessages: All possible error messages for the date field.
+ * @param {string} fieldId: Date field ID
  * @returns {ValidationErrors}
  */
 const validDateFormatRules = ({

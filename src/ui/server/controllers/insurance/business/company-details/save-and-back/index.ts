@@ -13,7 +13,7 @@ const { COMPANY_DETAILS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,

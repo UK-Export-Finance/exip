@@ -39,7 +39,7 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
 /**
  * completeAndSubmitTellUsAboutYourSinglePolicyForm
  * Complete and submit the "tell us about your single policy" form
- * @param {Integer} policyLength: Policy length
+ * @param {number} policyLength: Policy length
  */
 export const completeAndSubmitTellUsAboutYourSinglePolicyForm = ({ policyLength = 3 }) => {
   cy.keyboardInput(field(POLICY_LENGTH).input(), policyLength);

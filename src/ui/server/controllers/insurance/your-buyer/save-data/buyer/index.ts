@@ -8,8 +8,8 @@ import { Application, RequestBody } from '../../../../../../types';
  * saves to buyer table in database via API call
  * @param {Application} application
  * @param {RequestBody} formBody
- * @param {Object} errorList
- * @returns {Object} saveResponse from API
+ * @param {object} errorList
+ * @returns {object} saveResponse from API
  */
 const buyer = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save

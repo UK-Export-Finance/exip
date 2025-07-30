@@ -8,7 +8,7 @@ const { ONLINE_SUPPORT_1 } = COUNTRY_QUOTE_SUPPORT;
 /**
  * completeAndSubmitBuyerCountryForm
  * Complete and submit a buyer country form.
- * @param {String} countryName to input - defaults to ONLINE_SUPPORT_1 mock country
+ * @param {string} countryName to input - defaults to ONLINE_SUPPORT_1 mock country
  */
 export const completeAndSubmitBuyerCountryForm = ({ countryName = ONLINE_SUPPORT_1.NAME }) => {
   cy.keyboardInput(autoCompleteField(FIELD_ID).input(), countryName);

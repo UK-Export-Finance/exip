@@ -8,7 +8,7 @@ const { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_
  * createADeclarationVersion
  * Create an application declaration version with a declaration relationship and the latest version numbers.
  * @param {Context} context: KeystoneJS context API
- * @param {String} declarationId: Declaration ID
+ * @param {string} declarationId: Declaration ID
  * @returns {Promise<ApplicationDeclarationVersions>}  Created declaration version
  */
 const createADeclarationVersion = async (context: Context, declarationId: string) => {

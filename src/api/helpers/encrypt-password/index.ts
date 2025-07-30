@@ -15,8 +15,8 @@ const {
 /**
  * encryptPassword
  * Encrypt a password
- * @param {String} Password to encrypt
- * @param {Object} Password salt and hash
+ * @param {string} Password to encrypt
+ * @param {object} Password salt and hash
  */
 const encryptPassword = (password: string) => {
   const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);

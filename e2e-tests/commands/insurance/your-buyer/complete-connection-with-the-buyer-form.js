@@ -7,8 +7,8 @@ const { CONNECTION_WITH_BUYER_DESCRIPTION } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 /**
  * completeConnectionWithTheBuyerForm
  * Complete the "connection with the buyer" form.
- * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio. Defaults to false.
- * @param {String} description: "Connection with buyer" description.
+ * @param {boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio. Defaults to false.
+ * @param {string} description: "Connection with buyer" description.
  */
 const completeConnectionWithTheBuyerForm = ({ hasConnectionToBuyer = false, description = application.BUYER[CONNECTION_WITH_BUYER_DESCRIPTION] }) => {
   if (hasConnectionToBuyer) {

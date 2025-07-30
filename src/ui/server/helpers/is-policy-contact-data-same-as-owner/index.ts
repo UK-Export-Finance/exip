@@ -10,7 +10,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
  * returns true if all are the same
  * @param {ApplicationOwner} owner - application owner
  * @param {ApplicationPolicyContact} policyContact
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const isPolicyContactDataSameAsOwner = (owner: ApplicationOwner, policyContact: ApplicationPolicyContact) => {
   let sameFirstName = false;

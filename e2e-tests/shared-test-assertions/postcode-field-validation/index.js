@@ -17,11 +17,11 @@ const {
 /**
  * assertPostcodeFieldValidation
  * Assert postcode field validation
- * @param {String} fieldId: Postcode field ID
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Object} errorMessages: Postcode error messages
- * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithValidPostcode: Total expected errors in the form when a postcode is valid
+ * @param {string} fieldId: Postcode field ID
+ * @param {number} errorIndex: Index of the summary list error
+ * @param {object} errorMessages: Postcode error messages
+ * @param {number} totalExpectedErrors: Total expected errors in the form
+ * @param {number} totalExpectedOtherErrorsWithValidPostcode: Total expected errors in the form when a postcode is valid
  * @returns {Function} Mocha describe block with assertions.
  */
 export const assertPostcodeFieldValidation = ({

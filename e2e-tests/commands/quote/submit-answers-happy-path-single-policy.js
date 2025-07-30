@@ -9,8 +9,8 @@ import {
 /**
  * submitQuoteAnswersHappyPathSinglePolicy
  * Submit all quote answers - happy path - single policy
- * @param {Number} policyLength: Policy length
- * @param {String} countryName: Name of the country
+ * @param {number} policyLength: Policy length
+ * @param {string} countryName: Name of the country
  */
 const submitQuoteAnswersHappyPathSinglePolicy = ({ policyLength, countryName }) => {
   cy.completeAndSubmitBuyerCountryForm({ countryName });

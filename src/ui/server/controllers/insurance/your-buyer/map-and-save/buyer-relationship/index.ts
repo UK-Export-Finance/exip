@@ -7,9 +7,9 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * maps buyerRelationship request and calls save function
  * returns true or false based on response from save function
  * @param {RequestBody} formBody
- * @param {Object} application
- * @param {Object} validationErrors
- * @returns {Boolean}
+ * @param {object} application
+ * @param {object} validationErrors
+ * @returns {boolean}
  */
 const buyerRelationship = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

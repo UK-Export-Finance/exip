@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getEligibilityById
  * Get an eligibility by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Eligibility ID
+ * @param {string} id: Eligibility ID
  * @returns {Promise<ApplicationEligibility>}
  */
 const getEligibilityById = async (context: Context, id: string) => {

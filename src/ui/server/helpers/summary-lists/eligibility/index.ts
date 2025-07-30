@@ -6,7 +6,7 @@ import generateEligibilityFields from './eligibility-fields';
  * generateFields
  * Create all fields for the insurance - Eligibility govukSummaryList
  * @param {InsuranceEligibility} answersEligibility Application buyer object
- * @returns {Object} All your business values in an object structure for GOVUK summary list structure
+ * @returns {object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = (answersEligibility: InsuranceEligibility) => {
   const fields = [...generateEligibilityFields(answersEligibility)] as Array<SummaryListItemData>;
@@ -18,7 +18,7 @@ const generateFields = (answersEligibility: InsuranceEligibility) => {
  * eligibilitySummaryList
  * Create multiple groups with govukSummaryList data structure
  * @param {InsuranceEligibility} answersEligibility InsuranceEligibility object
- * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
+ * @returns {object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const eligibilitySummaryList = (answersEligibility: InsuranceEligibility) => {
   const fields = generateFields(answersEligibility);

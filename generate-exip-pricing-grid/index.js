@@ -8,7 +8,7 @@ const { spreadsheet, outputDirectory } = args;
 /**
  * getWorkSheets
  * Get Single and Multi policy sheets from spreadsheet (sheets 3 and 4).
- * @returns {Object} multiPolicy and singlePolicy from
+ * @returns {object} multiPolicy and singlePolicy from
  */
 const getWorkSheets = () => {
   console.info('📖 Reading spreadsheet');
@@ -26,7 +26,7 @@ const getWorkSheets = () => {
 /**
  * getPercentage
  * index 2 is "70%" in the spreadsheet. Index 3 is "75%" and so on.
- * @returns {Number} 70, 75, 80 etc.
+ * @returns {number} 70, 75, 80 etc.
  */
 const getPercentage = (index) => {
   if (index === 2) {
@@ -58,7 +58,7 @@ const getPercentage = (index) => {
 
 /**
  * createEmptyGrid
- * @returns {Object}
+ * @returns {object}
  */
 const createEmptyGrid = () => {
   console.info('🚀 Initalising grid');
@@ -137,7 +137,7 @@ const mapRowRates = (row) => {
 /**
  * mapEsraClassification
  * Map an ESRA classification in the spreadsheet to the ESRA classification in the grid.
- * @param {String} esraClassification: ESRA classification from spreadsheet, e.g "Standard Risk"
+ * @param {string} esraClassification: ESRA classification from spreadsheet, e.g "Standard Risk"
  * @returns {String | null} Risk category in the grid, e.g "STANDARD"
  */
 const mapEsraClassification = (esraClassification) => {
@@ -159,12 +159,12 @@ const mapEsraClassification = (esraClassification) => {
 /**
  * addRowToGrid
  * add a single row to the pricing grid.
- * @param {Object} grid: Pricing grid
- * @param {Number} months: Months of cover for the row
+ * @param {object} grid: Pricing grid
+ * @param {number} months: Months of cover for the row
  * @param {Array} rates: The rates to add
- * @param {String} policyType: Policy type
- * @param {String} esraClassification: ESRA classification from spreadsheet, e.g "Standard Risk"
- * @returns {Object} Updated pricing grid
+ * @param {string} policyType: Policy type
+ * @param {string} esraClassification: ESRA classification from spreadsheet, e.g "Standard Risk"
+ * @returns {object} Updated pricing grid
  */
 const addRowToGrid = (grid, months, rates, policyType, esraClassification) => {
   grid[policyType][esraClassification].push({
@@ -178,10 +178,10 @@ const addRowToGrid = (grid, months, rates, policyType, esraClassification) => {
 /**
  * addPolicyToGrid
  * Map over every row for a policy and add to the grid
- * @param {Object} grid: Pricing grid
- * @param {String} policyType: Policy type
- * @param {Array<String>} rows: All rows for the policy type (all risk categories and associated data)
- * @returns {Object} Updated pricing grid
+ * @param {object} grid: Pricing grid
+ * @param {string} policyType: Policy type
+ * @param {Array<string>} rows: All rows for the policy type (all risk categories and associated data)
+ * @returns {object} Updated pricing grid
  */
 const addPolicyToGrid = (grid, policyType, rows) => {
   console.info('➕ Adding %s to the grid', policyType);
@@ -205,7 +205,7 @@ const addPolicyToGrid = (grid, policyType, rows) => {
 /**
  * createJson
  * Create a JSON file from the provided data.
- * @param {Object} Pricing grid
+ * @param {object} Pricing grid
  */
 const createJson = (data) => {
   console.info('💾 Creating JSON');

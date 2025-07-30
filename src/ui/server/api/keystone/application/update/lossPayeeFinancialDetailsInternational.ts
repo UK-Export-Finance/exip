@@ -5,9 +5,9 @@ import { ApolloResponse } from '../../../../../types';
 /**
  * updateLossPayeeFinancialDetailsInternational
  * Update an application's "loss payee financial details international"
- * @param {String} loss payee financial details international ID
- * @param {Object} loss payee financial details international update
- * @returns {Promise<Object>} Updated loss payee financial details international
+ * @param {string} loss payee financial details international ID
+ * @param {object} loss payee financial details international update
+ * @returns {Promise<object>} Updated loss payee financial details international
  */
 const updateLossPayeeFinancialDetailsInternational = async (id: string, update: object) => {
   try {

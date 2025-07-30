@@ -5,7 +5,7 @@ import executeSqlQuery from '../execute-sql-query';
  * getAllCompanies
  * Get all entries in the "Company" table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Object>} Companies
+ * @returns {Promise<object>} Companies
  */
 const getAllCompanies = async (connection: Connection) => {
   const loggingMessage = 'Getting all companies';

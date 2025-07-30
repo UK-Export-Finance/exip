@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getCompanySicCodesByCompanyId
  * Get company SIC codes by company ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Company ID
+ * @param {string} id: Company ID
  * @returns {Promise<ApplicationCompanyAddress>}
  */
 const getCompanySicCodesByCompanyId = async (context: Context, id: string) => {

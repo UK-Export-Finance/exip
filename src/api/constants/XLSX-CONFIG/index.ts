@@ -1,7 +1,7 @@
 /**
  * XLSX_CONFIG
  * Generate XLSX config.
- * @returns {Object}
+ * @returns {object}
  */
 export const XLSX_CONFIG = {
   KEY: 'field',

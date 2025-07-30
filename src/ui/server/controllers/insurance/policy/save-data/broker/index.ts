@@ -8,8 +8,8 @@ import { Application, RequestBody } from '../../../../../../types';
  * saves to broker table in database via api call
  * @param {Application} application
  * @param {RequestBody} formBody
- * @param {Object} errorList
- * @returns {Promise<Object>} Saved data
+ * @param {object} errorList
+ * @returns {Promise<object>} Saved data
  */
 const broker = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = getDataToSave(formBody, errorList);

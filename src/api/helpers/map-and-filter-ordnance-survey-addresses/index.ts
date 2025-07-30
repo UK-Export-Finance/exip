@@ -7,7 +7,7 @@ import { OrdnanceSurveyAddress, Address } from '../../types';
  * - Filter addresses based on building name/number
  * - Map the filtered addresses
  * @param {Array<OrdnanceSurveyAddress>} ordnanceSurveyResponse
- * @param {String} houseNameOrNumber
+ * @param {string} houseNameOrNumber
  * @returns {Array<Address>} Mapped addresses
  */
 const mapAndFilterOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyAddress>, houseNameOrNumber: string): Array<Address> => {

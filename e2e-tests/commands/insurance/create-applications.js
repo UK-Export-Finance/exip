@@ -5,8 +5,8 @@ import api from '../api';
  * Create multiple applications directly via the API
  * Calls API with number of applications to create and accountId
  * API handles application creation and data
- * @param {String} Account ID for the application owner
- * @param {Number} Amount of applications to create
+ * @param {string} Account ID for the application owner
+ * @param {number} Amount of applications to create
  * @returns {Array} Created applications
  */
 const createApplications = (accountId, count) => {

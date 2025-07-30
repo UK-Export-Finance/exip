@@ -8,7 +8,7 @@ const { POLICY_LENGTH } = FIELD_IDS;
  * mapPolicyLength
  * Map policy length answer into an object for GOV summary list structure
  * @param {ObjectType} data - policy data
- * @returns {String} Answer in an object
+ * @returns {string} Answer in an object
  */
 const mapPolicyLength = (data: ObjectType) => {
   const mapped = {

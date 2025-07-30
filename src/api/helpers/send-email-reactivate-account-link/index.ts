@@ -21,7 +21,7 @@ const {
  * Generate a hash, update account and send a link to the account via email.
  * @param {AccountSendEmailReactivateLinkVariables} variables for the SendReactivateAccountEmail helper
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<Object>} Object with success flag
+ * @returns {Promise<object>} Object with success flag
  */
 const send = async (variables: AccountSendEmailReactivateLinkVariables, context: Context): Promise<AccountSendEmailReactivateLinkResponse> => {
   try {

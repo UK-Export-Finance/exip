@@ -15,7 +15,7 @@ const {
 /**
  * validate the FIXED_SUM_AMOUNT field via numberAboveMinimumValidation.
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors}
  */
 const fixedSumAmountRule = (formBody: RequestBody, errors: object) =>

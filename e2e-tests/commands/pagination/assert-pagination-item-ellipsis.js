@@ -4,7 +4,7 @@ import { pagination } from '../../partials';
 /**
  * assertPaginationItemEllipsis
  * Check a pagination item's text is an ellipsis
- * @param {Integer} Pagination item index
+ * @param {number} Pagination item index
  */
 const assertPaginationItemEllipsis = ({ index }) => {
   checkText(pagination.listItem(index), '…');

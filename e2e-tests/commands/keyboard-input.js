@@ -2,8 +2,8 @@
  * keyboardInput
  * Clear and type text into an input.
  * @param {Function} selector: Cypress selector
- * @param {String} text: Text to enter
- * @param {Boolean} viaValue: Flag for whether to input the text via the input's value attribute, instead of .type().
+ * @param {string} text: Text to enter
+ * @param {boolean} viaValue: Flag for whether to input the text via the input's value attribute, instead of .type().
  */
 const keyboardInput = (selector, text, viaValue = false) => {
   /**

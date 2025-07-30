@@ -11,7 +11,7 @@ export const getRoutesAsArray = (routes: object): Array<string> => Object.values
 /**
  * routeIsKnown
  * check if a route is a known route. If not, it's a 404 page.
- * @returns {Boolean}
+ * @returns {boolean}
  */
 export const routeIsKnown = (knownRoutes: Array<string>, route: string): boolean => {
   if (knownRoutes.includes(route)) {
@@ -25,10 +25,10 @@ export const routeIsKnown = (knownRoutes: Array<string>, route: string): boolean
  * hasRequiredData
  * Get a list of required data for a route,
  * Check if the total amount of submitted data matches the total amount of required fields.
- * @param {String} route
+ * @param {string} route
  * @param {ObjectType} required data for each route
  * @param {ObjectType} all submitted data
- * @returns {Boolean}
+ * @returns {boolean}
  */
 export const hasRequiredData = (route: string, requiredDataState: ObjectType, submittedData: ObjectType) => {
   const requiredData = requiredDataState[route];

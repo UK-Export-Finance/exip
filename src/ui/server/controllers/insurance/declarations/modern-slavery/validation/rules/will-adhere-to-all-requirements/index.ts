@@ -18,7 +18,7 @@ const {
  * Returns the result of emptyFieldValidation
  * else returns provided errors object
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const willAdhereToAllRequirementsRule = (formBody: RequestBody, errors: object) =>

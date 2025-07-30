@@ -41,12 +41,12 @@ const { TURNOVER: TURNOVER_FIELDS } = EXPORTER_BUSINESS_FIELDS;
  * When is changeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHANGE
  * when is checkAndChangeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
  * else should be ALTERNATIVE_CURRENCY
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
- * @param {String} currencyCode: Provided currency code
- * @param {Boolean} changeRoute: req.originalUrl is a change route
- * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
- * @returns {Object} pageVariables
+ * @param {string} currencyCode: Provided currency code
+ * @param {boolean} changeRoute: req.originalUrl is a change route
+ * @param {boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
+ * @returns {object} pageVariables
  */
 const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
   const currency = getCurrencyByCode(currencies, currencyCode);

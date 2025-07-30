@@ -12,7 +12,7 @@ const {
  * Map company SIC codes in an application.
  * This is used to render in an application's summary list.
  * @param {Array<SicCode>} sicCodes: SIC codes
- * @returns {String} Mapped SIC codes or default empty string
+ * @returns {string} Mapped SIC codes or default empty string
  */
 const mapApplicationSicCodeValues = (sicCodes: Array<SicCode>) => {
   if (isPopulatedArray(sicCodes)) {

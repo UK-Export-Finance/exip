@@ -9,9 +9,9 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
  * 2) Is not over a maximum length
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {String} fieldId: Field ID
- * @param {String} errorMessage: Error message message
- * @param {Object} errors: Other validation errors for the same form
+ * @param {string} fieldId: Field ID
+ * @param {string} errorMessage: Error message message
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
  */
 const fullAddress = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) =>

@@ -4,7 +4,7 @@ import { SelectOption } from '../../../types';
  * mapCreditPeriod
  * Map all credit periods and mark if it's selected
  * @param {Array} Array of credit period objects
- * @returns {String} Selected credit period value
+ * @returns {string} Selected credit period value
  * @returns {Array} Array of mapped credit periods
  */
 const mapCreditPeriod = (options: Array<SelectOption>, selectedValue?: string) => {

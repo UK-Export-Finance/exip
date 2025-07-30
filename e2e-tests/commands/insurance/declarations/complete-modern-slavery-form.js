@@ -1,9 +1,9 @@
 /**
  * completeModernSlaveryForm
  * complete the "modern slavery" form.
- * @param {Boolean} willAdhereToAllRequirements: radio answer
- * @param {Boolean} hasNoOffensesOrInvestigations: radio answer
- * @param {Boolean} isNotAwareOfExistingSlavery: radio answer
+ * @param {boolean} willAdhereToAllRequirements: radio answer
+ * @param {boolean} hasNoOffensesOrInvestigations: radio answer
+ * @param {boolean} isNotAwareOfExistingSlavery: radio answer
  */
 const completeModernSlaveryForm = ({ willAdhereToAllRequirements = true, hasNoOffensesOrInvestigations = true, isNotAwareOfExistingSlavery = true }) => {
   if (willAdhereToAllRequirements) {

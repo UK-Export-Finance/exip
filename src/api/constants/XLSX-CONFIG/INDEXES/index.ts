@@ -18,7 +18,7 @@ const { EXPORTER_BUSINESS, POLICY, BUYER, EXPORT_CONTRACT, DECLARATIONS } = SECT
  * because it does NOT require additional heights.
  * - The APPLICATION_INFORMATION indexes are consumed in another area for other, non-height styling purposes.
  * - The APPLICATION_INFORMATION has some unique requirements unlike all other sections.
- * @returns {Object}
+ * @returns {object}
  */
 const XLSX_ROW_INDEXES = {
   [EXPORTER_BUSINESS]: (application: Application) => EXPORTER_BUSINESS_INDEXES(application),

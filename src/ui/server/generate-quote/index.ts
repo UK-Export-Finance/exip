@@ -12,8 +12,8 @@ const {
 
 /**
  * getContractValue
- * @param {Object} Submitted data/answers
- * @returns {Number} Contract value or max amount owed, depending on policy type
+ * @param {object} Submitted data/answers
+ * @returns {number} Contract value or max amount owed, depending on policy type
  */
 const getContractValue = (submittedData: SubmittedDataQuoteEligibility) => {
   if (isSinglePolicyType(submittedData[POLICY_TYPE])) {
@@ -33,8 +33,8 @@ const getContractValue = (submittedData: SubmittedDataQuoteEligibility) => {
 
 /**
  * getInsuredFor
- * @param {Object} Submitted data/answers
- * @returns {Number} Percentage of cover % of Contract value or max amount owed
+ * @param {object} Submitted data/answers
+ * @returns {number} Percentage of cover % of Contract value or max amount owed
  */
 const getInsuredFor = (submittedData: SubmittedDataQuoteEligibility): number => {
   let contractValue;
@@ -62,10 +62,10 @@ const getInsuredFor = (submittedData: SubmittedDataQuoteEligibility): number => 
  *   - an additional month for business buffer
  *   - Note: the policy length is not used for a multiple policy
  *     - the multiple policy length default is 12 months. The grid only goes up to 3 months.
- * @param {String} Policy type
- * @param {Number} Policy length
- * @param {Number} Credit period
- * @returns {Number} Total months for the premium rate
+ * @param {string} Policy type
+ * @param {number} Policy length
+ * @param {number} Credit period
+ * @returns {number} Total months for the premium rate
  */
 const getTotalMonths = (policyType?: string, policyLength?: number, creditPeriod = 0) => {
   const BUSINESS_BUFFER_MONTHS = 1;
@@ -87,16 +87,16 @@ const getTotalMonths = (policyType?: string, policyLength?: number, creditPeriod
 
 /**
  * calculateEstimatedCost
- * @param {Number} Premium rate percentage
- * @param {Number} Contract value/Maximum amount owed
- * @returns {Number} Premium rate percentage of the contract value/maximum amount owed
+ * @param {number} Premium rate percentage
+ * @param {number} Contract value/Maximum amount owed
+ * @returns {number} Premium rate percentage of the contract value/maximum amount owed
  */
 const calculateEstimatedCost = (premiumRate: number, contractValue: number) => Number(getPercentageOfNumber(premiumRate, contractValue));
 
 /**
  * generateQuote
- * @param {Object} Submitted data/answers
- * @returns {Object} Quote with premium rate and estimated cost
+ * @param {object} Submitted data/answers
+ * @returns {object} Quote with premium rate and estimated cost
  */
 const generateQuote = (submittedData: SubmittedData): Quote => {
   try {

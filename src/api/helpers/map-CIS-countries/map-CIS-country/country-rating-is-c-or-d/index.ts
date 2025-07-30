@@ -7,8 +7,8 @@ const {
 /**
  * countryRatingIsCorD
  * Check if a country's "country rating" is C or D.
- * @param {String} rating: Country rating
- * @returns {Boolean}
+ * @param {string} rating: Country rating
+ * @returns {boolean}
  */
 const countryRatingIsCorD = (rating: string): boolean => {
   if (COUNTRY_RATINGS.C.includes(rating)) {

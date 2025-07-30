@@ -4,7 +4,7 @@ import { ApplicationLossPayeeFinancialUkVector } from '../../types';
 /**
  * updateLossPayeeFinancialUkVector
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Loss payee financial uk vector ID
+ * @param {string} id: Loss payee financial uk vector ID
  * @param {LossPayeeFinancialUkVectorUpdateInput} data
  * @returns {Promise<ApplicationLossPayeeFinancialUkVector>}
  */

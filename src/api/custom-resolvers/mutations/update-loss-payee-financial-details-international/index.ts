@@ -8,10 +8,10 @@ import { ApplicationLossPayeeFinancialInternational, SuccessResponse } from '../
  * updateLossPayeeFinancialDetailsInternational
  * encrypts iban and bicSwiftCode
  * saves iban, ibanVector, bicSwiftCode, bicSwiftCodeVector, bankAddress to db
- * @param {Object} root: GraphQL root variables
+ * @param {object} root: GraphQL root variables
  * @param {ApplicationLossPayeeFinancialInternational} GraphQL variables for the ApplicationLossPayeeFinancialInternational mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @returns {object} Object with success flag
  */
 const updateLossPayeeFinancialDetailsInternational = async (
   root: any,

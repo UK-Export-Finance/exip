@@ -57,10 +57,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
- * @param {String} currencyCode: Provided currency code
- * @returns {Object} Page variables
+ * @param {string} currencyCode: Provided currency code
+ * @returns {object} Page variables
  */
 export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
   const currency = getCurrencyByCode(currencies, currencyCode);

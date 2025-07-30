@@ -8,8 +8,8 @@ const {
 /**
  * getApplicationByReferenceNumberVariables
  * generates variables for getApplicationByReferenceNumber
- * @param {String} referenceNumber: Application reference number
- * @param {String} url: Page URL
+ * @param {string} referenceNumber: Application reference number
+ * @param {string} url: Page URL
  * @returns {ApplicationByReferenceNumberVariables} variables in correct format
  */
 const getApplicationByReferenceNumberVariables = (referenceNumber: string, url: string) => {

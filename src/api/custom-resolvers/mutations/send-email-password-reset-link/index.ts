@@ -26,8 +26,8 @@ const {
  * Generate a password reset hash, update account and send a link to the account via email.
  * Otherwise, block the account
  * Or return success=false if the account is not found.
- * @param {Object} root: GraphQL root variables
- * @param {Object} variables: GraphQL variables for the SendEmailPasswordResetLink mutation
+ * @param {object} root: GraphQL root variables
+ * @param {object} variables: GraphQL variables for the SendEmailPasswordResetLink mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<AccountSendEmailPasswordResetLinkResponse>} Object with success flag
  */

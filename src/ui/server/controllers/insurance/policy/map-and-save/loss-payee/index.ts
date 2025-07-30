@@ -17,8 +17,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * and if LOSS_PAYEE_FINANCIAL_INTERNATIONAL data exists in the application, nullify all LOSS_PAYEE_FINANCIAL_INTERNATIONAL data.
  * @param {RequestBody} formBody: Form body
  * @param {Application} application
- * @param {Object} validationErrors: Validation errors
- * @returns {Boolean}
+ * @param {object} validationErrors: Validation errors
+ * @returns {boolean}
  */
 const lossPayee = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

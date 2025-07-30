@@ -1,7 +1,7 @@
 /**
  * assertUrl
  * Assert a URL.
- * @param {String} Expected URL
+ * @param {string} Expected URL
  */
 const assertUrl = (url) => {
   cy.url().should('eq', url);

@@ -9,9 +9,9 @@ const {
 /**
  * completeAgentDetailsForm
  * Complete the "Agent details" form
- * @param {String} name: Agent's name
- * @param {String} fullAddress: Agent's address
- * @param {String} countryCode: Agent's country code
+ * @param {string} name: Agent's name
+ * @param {string} fullAddress: Agent's address
+ * @param {string} countryCode: Agent's country code
  */
 const completeAgentDetailsForm = ({
   name = application.EXPORT_CONTRACT.AGENT_DETAILS[NAME],

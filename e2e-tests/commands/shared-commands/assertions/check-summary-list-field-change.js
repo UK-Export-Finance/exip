@@ -1,7 +1,7 @@
 /**
  * clicks change link and checks that page goes to correct route
- * @param {Object} fieldVariables
- * @param {String} referenceNumber: Application reference number
+ * @param {object} fieldVariables
+ * @param {string} referenceNumber: Application reference number
  */
 export const checkChangeLinkUrl = (fieldVariables, referenceNumber) => {
   const { route, fieldId, summaryList } = fieldVariables;
@@ -13,8 +13,8 @@ export const checkChangeLinkUrl = (fieldVariables, referenceNumber) => {
 
 /**
  * checks if value is set in summary list
- * @param {Object} fieldVariables
- * @param {Number} index eg index of identical summary list rows
+ * @param {object} fieldVariables
+ * @param {number} index eg index of identical summary list rows
  */
 export const checkChangeAnswerRendered = ({ fieldVariables, index }) => {
   const { newValue, fieldId, summaryList } = fieldVariables;

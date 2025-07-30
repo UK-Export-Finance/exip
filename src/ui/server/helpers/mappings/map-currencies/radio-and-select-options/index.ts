@@ -14,8 +14,8 @@ const {
  * This is used for forms that have both currency radio inputs, and an alternative currency select component
  * @param {Array} alternativeCurrencies: Array of alternative currencies
  * @param {Array<Currency>} currencies: Array of supported currencies
- * @param {String} selectedValue: Selected currency
- * @returns {Object} Mapped currencies and submittedValue
+ * @param {string} selectedValue: Selected currency
+ * @returns {object} Mapped currencies and submittedValue
  */
 const mapRadioAndSelectOptions = (alternativeCurrencies: Array<Currency>, supportedCurrencies: Array<Currency>, selectedValue?: string) => {
   const mapped = {

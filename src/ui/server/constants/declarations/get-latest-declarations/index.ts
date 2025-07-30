@@ -16,8 +16,8 @@ const { MODERN_SLAVERY } = DECLARATIONS_FIELDS;
  * getDeclarationContentStringsByVersionId
  * Finds the latest content strings for a specified declaration section
  * @param {ObjectType} declarationContentStrings: Content strings for specified declaration
- * @param {String} latestVersionNumber: latest version for specified section
- * @returns {Object} contentStrings: Content strings for specified version of declaration
+ * @param {string} latestVersionNumber: latest version for specified section
+ * @returns {object} contentStrings: Content strings for specified version of declaration
  */
 export const getDeclarationContentStringsByVersionId = (contentStrings: ObjectType, versionNumber: string) =>
   contentStrings.VERSIONS.find((strings: ObjectType) => strings.VERSION === versionNumber);
@@ -26,7 +26,7 @@ export const getDeclarationContentStringsByVersionId = (contentStrings: ObjectTy
  * getLatestDeclarationsVersion
  * gets the latest declaration versions for each declaration section
  * populates an object with the content strings for that version
- * @returns {Object} contentStrings for the latest version of declarations
+ * @returns {object} contentStrings for the latest version of declarations
  */
 const getLatestDeclarationsVersion = () => {
   const latestDeclarationVersions = VERSIONS[VERSIONS.length - 1];

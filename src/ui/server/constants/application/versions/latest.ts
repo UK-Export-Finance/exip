@@ -12,7 +12,7 @@ import VERSIONS from '.';
  * - Version number 4: File uploads
  * - Version number 5: Address lookup
  * - Version number 6: Payments integration
- * @returns {String} Latest application version number
+ * @returns {string} Latest application version number
  */
 const LATEST_VERSION_NUMBER = VERSIONS[VERSIONS.length - 1].VERSION_NUMBER;
 

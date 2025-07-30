@@ -7,7 +7,7 @@ import getExportContractAgentServiceChargeById from '../../get-export-contract-a
  * getPopulatedAgent
  * Get a populated export contract agent
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: agent ID
+ * @param {string} id: agent ID
  * @returns {Promise<ApplicationExportContractAgent>}
  */
 const getPopulatedAgent = async (context: Context, id: string) => {

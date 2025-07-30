@@ -11,7 +11,7 @@ const {
 /**
  * completeBrokerAddressesForm
  * Complete "broker addresses" form
- * @param {String} optionValue: Address option value
+ * @param {string} optionValue: Address option value
  */
 const completeBrokerAddressesForm = ({ optionValue = `${TREASURY.ADDRESS_LINE_1} ${TREASURY.ADDRESS_LINE_2}` }) => {
   const optionDataCy = `${FIELD_ID}-${optionValue}`;

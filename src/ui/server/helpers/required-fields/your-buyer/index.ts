@@ -20,7 +20,7 @@ const {
  * if connectionWithBuyer is true,
  * then returns CONNECTION_WITH_BUYER_DESCRIPTION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER (yes no radios and description field)
  * else returns CONNECTION_WITH_BUYER, TRADED_WITH_BUYER (yes no radios)
- * @param {Boolean} connectionWithBuyer
+ * @param {boolean} connectionWithBuyer
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const workingWithBuyerTasks = ({ connectionWithBuyer }: { connectionWithBuyer?: boolean }): Array<string> => {
@@ -39,8 +39,8 @@ export const workingWithBuyerTasks = ({ connectionWithBuyer }: { connectionWithB
  * if tradedWithBuyer is true but outstandingPayments is false,
  * then returns OUTSTANDING_PAYMENTS and FAILED_PAYMENTS (yes no radios)
  * if none are true, then returns an empty array as page will not be rendered
- * @param {Boolean} tradedWithBuyer
- * @param {Boolean} outstandingPayments
+ * @param {boolean} tradedWithBuyer
+ * @param {boolean} outstandingPayments
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const tradingHistoryTasks = ({ tradedWithBuyer, outstandingPayments }: { tradedWithBuyer?: boolean; outstandingPayments?: boolean }): Array<string> => {
@@ -63,8 +63,8 @@ export const tradingHistoryTasks = ({ tradedWithBuyer, outstandingPayments }: { 
  * if totalContractValueOverThreshold is true but hasPreviousCreditInsuranceWithBuyer is false,
  * then returns HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER (yes no radio)
  * if none are true, then returns an empty array
- * @param {Boolean} totalContractValueOverThreshold
- * @param {Boolean} hasPreviousCreditInsuranceWithBuyer
+ * @param {boolean} totalContractValueOverThreshold
+ * @param {boolean} hasPreviousCreditInsuranceWithBuyer
  * @returns {Array<string>} Array of tasks/field IDs
  */
 export const creditInsuranceCoverTasks = ({
@@ -88,11 +88,11 @@ export const creditInsuranceCoverTasks = ({
 /**
  * requiredFields
  * Required fields for the insurance - your buyer section
- * @param {Boolean} connectionWithBuyer
- * @param {Boolean} tradedWithBuyer
- * @param {Boolean} outstandingPayments
- * @param {Boolean} hasPreviousCreditInsuranceWithBuyer
- * @param {Boolean} totalContractValueOverThreshold
+ * @param {boolean} connectionWithBuyer
+ * @param {boolean} tradedWithBuyer
+ * @param {boolean} outstandingPayments
+ * @param {boolean} hasPreviousCreditInsuranceWithBuyer
+ * @param {boolean} totalContractValueOverThreshold
  * @returns {Array<string>} Array of tasks/field IDs
  */
 const requiredFields = ({

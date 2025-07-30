@@ -5,7 +5,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * Create a buyer relationship
  * @param {Context} context: KeystoneJS context API
  * @param {ApplicationBuyerRelationship} data
- * @returns {Object} Created buyer relationship
+ * @returns {object} Created buyer relationship
  */
 const create = async (context: Context, data = {}) => {
   try {

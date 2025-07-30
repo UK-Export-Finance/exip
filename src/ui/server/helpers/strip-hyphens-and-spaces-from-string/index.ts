@@ -3,8 +3,8 @@ import { REGEX } from '../../constants';
 /**
  * stripHyphensAndSpacesFromString
  * removes hyphens and spaces from a string
- * @param {String} string
- * @returns {String}
+ * @param {string} string
+ * @returns {string}
  */
 const stripHyphensAndSpacesFromString = (string: string) => string.replaceAll(REGEX.SPACE_AND_HYPHEN, '');
 

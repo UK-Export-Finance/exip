@@ -8,15 +8,15 @@ const { ALL_SECTIONS } = INSURANCE_ROUTES;
 /**
  * formSubmissionAssertions
  * Form submission assertions for currency form fields.
- * @param {Number} errorIndex: Index of the currency field error.
- * @param {String} expectedRedirectUrl: Page URL to assert after successful form submission
+ * @param {number} errorIndex: Index of the currency field error.
+ * @param {string} expectedRedirectUrl: Page URL to assert after successful form submission
  * @param {Function} rendersAlternativeCurrencyValidationError: Assert alternative currency input validation error.
  * @param {Function} submitAndAssertRadioIsChecked: Submit a radio option and assert the radio is checked.
  * @param {Function} submitRadioAndAssertUrl: Submit a radio option and assert the URL.
  * @param {Function} submitAlternativeCurrencyAndAssertUrl: Submit an alternative currency and assert the URL.
  * @param {Function} submitAlternativeCurrencyAndAssertInput: Submit an alternative currency and assert the input.
  * @param {Function} completeNonCurrencyFieldsFunction: Optional function to complete non-currency form fields.
- * @returns {Object} Object with Mocha describe blocks and assertions for particular scenarios.
+ * @returns {object} Object with Mocha describe blocks and assertions for particular scenarios.
  */
 const formSubmissionAssertions = ({
   errorIndex,

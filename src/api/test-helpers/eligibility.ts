@@ -29,7 +29,7 @@ const create = async (context: Context, data = {}) => {
  * get eligibility test helper
  * Get an eligibility by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} eligibilityId: Eligibility ID
+ * @param {string} eligibilityId: Eligibility ID
  * @returns {Promise<ApplicationEligibility>} Eligibility
  */
 const get = async (context: Context, eligibilityId: string): Promise<ApplicationEligibility> => {

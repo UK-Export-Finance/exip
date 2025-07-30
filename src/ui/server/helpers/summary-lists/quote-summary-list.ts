@@ -19,8 +19,8 @@ const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } =
  * Create all fields for govukSummaryList
  * Add additional fields depending on the submitted answers:
  * - Policy length depending on the Policy type (single/multi)
- * @param {Object} All quote content
- * @returns {Object} All quote values in an object structure for GOVUK summary list structure
+ * @param {object} All quote content
+ * @returns {object} All quote values in an object structure for GOVUK summary list structure
  */
 const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
   let fields = [] as Array<SummaryListItemData>;
@@ -120,8 +120,8 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
 /**
  * quoteSummaryList
  * Create a group with govukSummaryList data structure
- * @param {Object} All quote content in a simple object.text structure
- * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
+ * @param {object} All quote content in a simple object.text structure
+ * @returns {object} A group with multiple fields/answers in govukSummaryList data structure
  */
 const quoteSummaryList = (quoteContent: QuoteContent) => {
   const fields = generateFields(quoteContent);

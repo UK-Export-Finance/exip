@@ -14,7 +14,7 @@ const {
  * validates first name field
  * checks if response has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} alphaCharactersAndMaxLengthValidation
  */
 const firstName = (formBody: RequestBody, errors: object) =>

@@ -7,7 +7,7 @@ import { TOTAL_CONTRACT_VALUE } from '../../constants';
  * if below, set application totalContractValueOverThreshold to false
  * if above, set application totalContractValueOverThreshold to true
  * @param {ApplicationEligibility} eligibility
- * @returns {Boolean} modified application
+ * @returns {boolean} modified application
  */
 const mapTotalContractValueOverThreshold = (eligibility: ApplicationEligibility) =>
   eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;

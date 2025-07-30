@@ -27,9 +27,9 @@ const {
 /**
  * generateSingleContractPolicyFields
  * Create all fields and values for the Insurance - Type of policy - single contract policy govukSummaryList
- * @param {Object} All submitted policy data
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
+ * @param {object} All submitted policy data
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
  */
 const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [

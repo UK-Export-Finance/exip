@@ -4,8 +4,8 @@ import { Context } from '../../types';
  * createAuthenticationEntry
  * Create an entry in the Authentication table
  * @param {Context} context: KeystoneJS context API
- * @param {String} Account ID
- * @returns {Promise<Boolean>}
+ * @param {string} Account ID
+ * @returns {Promise<boolean>}
  */
 const createAuthenticationEntry = async (context: Context, entry: object) => {
   console.info('Creating authentication entry');

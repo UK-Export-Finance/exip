@@ -35,7 +35,7 @@ const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = EXPORTER_BUS
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 const pageVariables = (referenceNumber: number) => ({
   FIELDS: {

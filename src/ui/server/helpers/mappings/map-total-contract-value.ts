@@ -10,8 +10,8 @@ const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[FIELD_ID].SUMMARY;
 /**
  * mapTotalContractValueField
  * maps total contract value based on database id
- * @param {Number} answer
- * @returns {String} Above or below max amount
+ * @param {number} answer
+ * @returns {string} Above or below max amount
  */
 const mapTotalContractValueField = (answer?: number) => {
   if (answer === MORE_THAN_250K.DB_ID) {

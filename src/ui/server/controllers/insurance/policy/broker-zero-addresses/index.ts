@@ -18,8 +18,8 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_ZERO_ADDRESSES;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} referenceNumber: Application reference number
- * @returns {Object} Page variables
+ * @param {number} referenceNumber: Application reference number
+ * @returns {object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
   SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,

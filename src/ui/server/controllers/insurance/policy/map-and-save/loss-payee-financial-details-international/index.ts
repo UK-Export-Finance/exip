@@ -9,8 +9,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * Map and save any valid nominatedLossPayee fields
  * @param {Express.Request.body} formBody
  * @param {Application} application
- * @param {Object} validationErrors: Validation errors
- * @returns {Boolean}
+ * @param {object} validationErrors: Validation errors
+ * @returns {boolean}
  */
 const lossPayeeFinancialDetailsInternational = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

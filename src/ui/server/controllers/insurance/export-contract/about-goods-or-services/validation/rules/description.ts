@@ -26,7 +26,7 @@ const MAXIMUM = MAXIMUM_CHARACTERS.ABOUT_GOODS_OR_SERVICES_DESCRIPTION;
  * Check submitted form data for errors with the description field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const descriptionRules = (formBody: RequestBody, errors: object) => {

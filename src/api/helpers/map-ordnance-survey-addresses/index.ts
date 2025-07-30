@@ -5,7 +5,7 @@ import { Address, OrdnanceSurveyAddress } from '../../types';
  * mapOrdnanceSurveyAddresses
  * Map Ordnance Survey addresses
  * @param {Array<OrdnanceSurveyAddress>} addresses
- * @param {String} houseNameOrNumber
+ * @param {string} houseNameOrNumber
  * @returns {Array<Address>} Filtered addresses
  */
 const mapOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyAddress>): Array<Address> => {

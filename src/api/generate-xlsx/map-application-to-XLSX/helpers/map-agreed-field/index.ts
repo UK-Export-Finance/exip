@@ -3,8 +3,8 @@ import { DEFAULT, XLSX } from '../../../../content-strings';
 /**
  * mapAgreedField
  * Map a "true" field to "Agreed"
- * @param {Boolean} answer
- * @returns {String} "Agreed" or DEFAULT.EMPTY
+ * @param {boolean} answer
+ * @returns {string} "Agreed" or DEFAULT.EMPTY
  */
 const mapAgreedField = (answer?: boolean) => {
   if (answer === true) {

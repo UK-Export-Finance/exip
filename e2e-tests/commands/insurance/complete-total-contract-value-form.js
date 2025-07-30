@@ -11,9 +11,9 @@ const {
 /**
  * completeTotalContractValueForm
  * Complete the "Total contract value" form
- * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with a value over the MVP maximum amount
- * @param {String} totalContractValue: Total contract value
- * @param {String} requestedCreditLimit: Requested credit limit
+ * @param {boolean} policyValueOverMvpMaximum: Should submit an application with a value over the MVP maximum amount
+ * @param {string} totalContractValue: Total contract value
+ * @param {string} requestedCreditLimit: Requested credit limit
  */
 const completeTotalContractValueForm = ({
   policyValueOverMvpMaximum = false,

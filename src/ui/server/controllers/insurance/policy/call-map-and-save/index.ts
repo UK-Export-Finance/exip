@@ -6,8 +6,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
  * Call the "map and save" function with or without validation errors
  * @param {RequestBody} Form body
  * @param {Application} application
- * @param {Object} Form Validation errors
- * @returns {Boolean}
+ * @param {object} Form Validation errors
+ * @returns {boolean}
  */
 const callMapAndSave = async (formData: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

@@ -4,9 +4,9 @@ import { AccountStatusCore, Context } from '../../types';
  * account
  * Update an account
  * @param {Context} context: KeystoneJS context API
- * @param {String} Account ID
+ * @param {string} Account ID
  * @param {Account} Account update data
- * @returns {Promise<Object>} Updated account
+ * @returns {Promise<object>} Updated account
  */
 const account = async (context: Context, accountId: string, updateData: object) => {
   try {
@@ -31,9 +31,9 @@ const account = async (context: Context, accountId: string, updateData: object) 
  * accountStatus
  * Update an accountStatus
  * @param {Context} context: KeystoneJS context API
- * @param {String} accountStatusId: Account status ID
- * @param {Object} updateData: Update data
- * @returns {Promise<Object>} Updated account
+ * @param {string} accountStatusId: Account status ID
+ * @param {object} updateData: Update data
+ * @returns {Promise<object>} Updated account
  */
 const accountStatus = async (context: Context, accountStatusId: string, updateData: AccountStatusCore) => {
   try {

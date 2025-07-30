@@ -16,7 +16,7 @@ const {
 /**
  * validate the "agent is charging" field
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} emptyFieldValidation
  */
 const isCharging = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);

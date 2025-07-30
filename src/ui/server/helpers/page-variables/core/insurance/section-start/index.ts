@@ -6,11 +6,11 @@ const { INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
 
 /**
  * sectionStartPageVariables
- * @param {Number} REFERENCE_NUMBER: Application reference number
- * @param {String} START_NOW_ROUTE: Link to the "start now" page
- * @param {String} PAGE_CONTENT_STRINGS: Page content strings bespoke to the page
- * @param {String} BACK_LINK: Link to the previous page
- * @returns {Object} Page variables
+ * @param {number} REFERENCE_NUMBER: Application reference number
+ * @param {string} START_NOW_ROUTE: Link to the "start now" page
+ * @param {string} PAGE_CONTENT_STRINGS: Page content strings bespoke to the page
+ * @param {string} BACK_LINK: Link to the previous page
+ * @returns {object} Page variables
  */
 const sectionStartPageVariables = ({
   REFERENCE_NUMBER,

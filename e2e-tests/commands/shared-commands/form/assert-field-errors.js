@@ -3,11 +3,11 @@ import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../parti
 /**
  * assertFieldErrors
  * Assert errors for a field
- * @param {String} field: Field selector
- * @param {Number} errorIndex: Index of summary list error
- * @param {Number} errorSummaryLength: The number of expected errors in the summary list
- * @param {String} errorMessage: Expected error message
- * @param {Boolean} fieldShouldGainFocus: Input should gain focus after clicking the summary list error. Defaults to true
+ * @param {string} field: Field selector
+ * @param {number} errorIndex: Index of summary list error
+ * @param {number} errorSummaryLength: The number of expected errors in the summary list
+ * @param {string} errorMessage: Expected error message
+ * @param {boolean} fieldShouldGainFocus: Input should gain focus after clicking the summary list error. Defaults to true
  */
 const assertFieldErrors = ({ field, errorIndex, errorSummaryLength, errorMessage, fieldShouldGainFocus = true }) => {
   cy.checkErrorSummaryListHeading();

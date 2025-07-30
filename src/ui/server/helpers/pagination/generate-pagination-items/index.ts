@@ -5,7 +5,7 @@ const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 /**
  * generatePaginationItems
  * Generate an array of objects for GOV pagination component
- * @param {Number} Total amount of pages to create
+ * @param {number} Total amount of pages to create
  * @returns {Array} Array of pagination items/pages
  */
 export const generatePaginationItems = (pagesToCreate: number) => {

@@ -3,12 +3,12 @@ import { EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_C
 /**
  * submitASupportedCurrency
  * Form submission assertions for submitting a supported currency form field.
- * @param {String} expectedRedirectUrl: Page URL to assert after successful form submission
+ * @param {string} expectedRedirectUrl: Page URL to assert after successful form submission
  * @param {Function} completeNonCurrencyFieldsFunction: Optional function to complete non-currency form fields.
  * @param {Function} submitRadioAndAssertUrl: Submit a radio option and assert the URL.
  * @param {Function} submitAndAssertRadioIsChecked: Submit a radio option and assert the radio is checked.
- * @param {Boolean} viaSaveAndBack: Flag whether to submit the form via the "save and back" button.
- * @returns {Object} Object with Mocha describe blocks and assertions for particular scenarios.
+ * @param {boolean} viaSaveAndBack: Flag whether to submit the form via the "save and back" button.
+ * @returns {object} Object with Mocha describe blocks and assertions for particular scenarios.
  */
 const submitASupportedCurrency = ({
   expectedRedirectUrl,

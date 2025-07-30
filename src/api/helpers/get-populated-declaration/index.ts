@@ -6,7 +6,7 @@ import getDeclarationModernSlaveryById from '../get-declaration-modern-slavery-b
  * getPopulatedDeclaration
  * Get a populated declaration
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Declaration ID
+ * @param {string} id: Declaration ID
  * @returns {Promise<ApplicationDeclaration>}
  */
 const getPopulatedDeclaration = async (context: Context, id: string) => {

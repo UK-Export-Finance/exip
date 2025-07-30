@@ -13,7 +13,7 @@ const {
 /**
  * maps companyDetails formBody and returns fields in correct format
  * @param {CompaniesHouseResponse} Companies House response
- * @returns {Object} populatedData
+ * @returns {object} populatedData
  */
 const mapCompaniesHouseData = (apiResponse: CompaniesHouseResponse): Company => {
   const { __typename, success, isActive, apiError, notFound, registeredOfficeAddress, ...data } = apiResponse;

@@ -2,15 +2,15 @@
  * completeAndSubmitExportContractForms
  * completes export contract forms up to the specified form to stop at
  * eg, when 'aboutGoodsOrServices' is passed, it will complete all forms up to and including 'aboutGoodsOrServices'
- * @param {String} stopSubmittingAfter: The final form to submit
- * @param {Boolean} viaTaskList: Start the "export contract" section from the task list.
- * @param {Boolean} finalDestinationKnown: whether the final destination is known
- * @param {Boolean} totalContractValueOverThreshold: whether total contract value is over threshold
- * @param {Boolean} attemptedPrivateMarketCover: if attempted private market cover
- * @param {Boolean} isUsingAgent: if the exporter is using an agent
- * @param {Boolean} agentIsCharging: if the agent is charging
- * @param {Boolean} fixedSumMethod: if the agent is charging using fixed sum method
- * @param {String} fixedSumAmount: Fixed sum amount
+ * @param {string} stopSubmittingAfter: The final form to submit
+ * @param {boolean} viaTaskList: Start the "export contract" section from the task list.
+ * @param {boolean} finalDestinationKnown: whether the final destination is known
+ * @param {boolean} totalContractValueOverThreshold: whether total contract value is over threshold
+ * @param {boolean} attemptedPrivateMarketCover: if attempted private market cover
+ * @param {boolean} isUsingAgent: if the exporter is using an agent
+ * @param {boolean} agentIsCharging: if the agent is charging
+ * @param {boolean} fixedSumMethod: if the agent is charging using fixed sum method
+ * @param {string} fixedSumAmount: Fixed sum amount
  */
 const completeAndSubmitExportContractForms = ({
   stopSubmittingAfter,

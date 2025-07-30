@@ -23,7 +23,7 @@ const {
  * 3) Check if an email is below the minimum length via maxLengthValidation.
  * If all of the conditions are met, empty errors are returned (via maxLengthValidation).
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Errors from previous validation errors
+ * @param {object} errors: Errors from previous validation errors
  * @returns {ValidationErrors} emailAndPasswordValidation | maxLengthValidation
  */
 const emailRules = (formBody: RequestBody, errors: object) => {

@@ -85,8 +85,8 @@ export const STRING_NUMBER_FIELDS: string[] = [
 /**
  * replaceCharactersWithCharacterCode
  * Replace certain characters with character codes
- * @param {String} Field value
- * @returns {String}
+ * @param {string} Field value
+ * @returns {string}
  */
 export const replaceCharactersWithCharacterCode = (str: string) =>
   str
@@ -101,8 +101,8 @@ export const replaceCharactersWithCharacterCode = (str: string) =>
 /**
  * shouldChangeToNumber
  * Check if a form field value should change from a string to a number
- * @param {Object} Field key and value
- * @returns {Boolean}
+ * @param {object} Field key and value
+ * @returns {boolean}
  */
 export const shouldChangeToNumber = ({ key, value }: SanitiseValueObjParams) => {
   if (key) {
@@ -125,8 +125,8 @@ export const shouldChangeToNumber = ({ key, value }: SanitiseValueObjParams) => 
 /**
  * sanitiseValue
  * Sanitise a form field value
- * @param {Object} Field key and value
- * @returns {Boolean}
+ * @param {object} Field key and value
+ * @returns {boolean}
  */
 export const sanitiseValue = ({ key, value }: SanitiseValueObjParams) => {
   if (value === 'true' || value === true) {

@@ -1,8 +1,8 @@
 /**
  * replaceCharacterCodesWithCharacters
  * Replace certain character codes with characters
- * @param {String}
- * @returns {String}
+ * @param {string}
+ * @returns {string}
  */
 const replaceCharacterCodesWithCharacters = (str: string): string =>
   str

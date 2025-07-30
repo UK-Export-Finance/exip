@@ -4,11 +4,11 @@ import generateValidationErrors from '../../helpers/validation';
 /**
  * regexValidation
  * Check that a string matches a regex pattern
- * @param {String} fieldValue: Field value to assert
- * @param {String} fieldId: Field ID
+ * @param {string} fieldValue: Field value to assert
+ * @param {string} fieldId: Field ID
  * @param {RegExp} regex: regex expression to match
- * @param {String} errorMessage: Error message to use if invalid
- * @param {Object} errors: Validation errors
+ * @param {string} errorMessage: Error message to use if invalid
+ * @param {object} errors: Validation errors
  * @returns {Object | Boolean} Validation errors
  */
 const regexValidation = (fieldValue: string, fieldId: string, regex: RegExp, errorMessage: string, errors: object) => {

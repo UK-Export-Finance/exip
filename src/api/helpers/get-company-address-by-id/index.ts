@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getCompanyAddressById
  * Get a company address by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Company address ID
+ * @param {string} id: Company address ID
  * @returns {Promise<ApplicationCompanyAddress>}
  */
 const getCompanyAddressById = async (context: Context, id: string) => {

@@ -1,15 +1,15 @@
 /**
  * submitAndAssertFieldErrors
  * Submit and assert errors for a field
- * @param {Object} field: Cypress selector.
- * @param {String} value: The value to input - can be null.
- * @param {Number} errorIndex: Index of error. Defaults to 0.
- * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
- * @param {Number} expectedErrorMessage: Expected error message.
- * @param {Number} expectedValue: Expected value after submission.
- * @param {Boolean} assertExpectedValue: Assert an expected value. Defaults to true.
- * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true.
- * @param {Boolean} keyboardInputViaValueAttribute: Flag for whether to input the text via the input's value attribute, instead of .type().
+ * @param {object} field: Cypress selector.
+ * @param {string} value: The value to input - can be null.
+ * @param {number} errorIndex: Index of error. Defaults to 0.
+ * @param {number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
+ * @param {number} expectedErrorMessage: Expected error message.
+ * @param {number} expectedValue: Expected value after submission.
+ * @param {boolean} assertExpectedValue: Assert an expected value. Defaults to true.
+ * @param {boolean} clearInput: Clear the input before text entry. Defaults to true.
+ * @param {boolean} keyboardInputViaValueAttribute: Flag for whether to input the text via the input's value attribute, instead of .type().
  */
 const submitAndAssertFieldErrors = ({
   field,

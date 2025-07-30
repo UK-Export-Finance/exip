@@ -19,7 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 /**
  * completeAndSubmitSignInAccountForm
  * Complete and submit the "sign in" form
- * @param {Object} Object with custom values to submit and flag for asserting success URL.
+ * @param {object} Object with custom values to submit and flag for asserting success URL.
  * - emailAddress
  * - password
  * - assertSuccessUrl

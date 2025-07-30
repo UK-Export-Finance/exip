@@ -5,9 +5,9 @@ import { ApimSendEmailHelperResponse } from '../../types';
 /**
  * accessCodeEmail
  * Send the access code email to an account
- * @param {String} Email address
- * @param {String} Name
- * @param {String} Security code
+ * @param {string} Email address
+ * @param {string} Name
+ * @param {string} Security code
  * @returns {Promise<ApimSendEmailHelperResponse>}
  */
 export const accessCodeEmail = async (emailAddress: string, name: string, securityCode: string): Promise<ApimSendEmailHelperResponse> => {

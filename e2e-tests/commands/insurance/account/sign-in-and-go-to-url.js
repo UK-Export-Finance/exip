@@ -25,7 +25,7 @@ const baseUrl = Cypress.config('baseUrl');
  * 4) Complete and submit the "enter access code" form
  * 5) Go to the test page/URL (provided via param)
  * 6) Assert we are on the provided page/URL
- * @param {String} Page URL to go to after account sign in
+ * @param {string} Page URL to go to after account sign in
  */
 const signInAndGoToUrl = (url) => {
   cy.navigateToUrl(`${baseUrl}${SIGN_IN_ROOT}`);

@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getPolicyById
  * Get a policy by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Policy ID
+ * @param {string} id: Policy ID
  * @returns {Promise<ApplicationPolicy>}
  */
 const getPolicyById = async (context: Context, id: string) => {

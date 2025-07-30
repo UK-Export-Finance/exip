@@ -17,7 +17,7 @@ const {
  * Check submitted form data for errors with the total outstanding field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * @param {object} Errors object from previous validation errors
  * @returns {ValidationErrors}
  */
 const totalOutstandingRules = (formBody: RequestBody, errors: object) =>

@@ -27,9 +27,9 @@ const { NATURE_OF_YOUR_BUSINESS } = EXPORTER_BUSINESS_FIELDS;
  * generateNatureOfYourBusinessFields
  * Create all Nature of your business fields and values for the Insurance - Nature of your business govukSummaryList
  * @param {ApplicationBusiness} answers:  Nature of your business answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All Nature of your business fields and values in an object structure for GOVUK summary list structure
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All Nature of your business fields and values in an object structure for GOVUK summary list structure
  */
 const generateNatureOfYourBusinessFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [

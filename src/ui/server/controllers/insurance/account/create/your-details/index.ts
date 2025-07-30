@@ -31,7 +31,7 @@ export const FIELD_IDS = [FIRST_NAME, LAST_NAME, EMAIL, PASSWORD];
 /**
  * PAGE_VARIABLES
  * Page fields
- * @returns {Object} Page variables
+ * @returns {object} Page variables
  */
 export const PAGE_VARIABLES = {
   FIELDS: {

@@ -18,8 +18,8 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [FAILED_PAYMENTS, OUTSTANDING_PAYMENT
  * saves to buyerTradingHistory table in database via API call
  * @param {Application} application
  * @param {RequestBody} formBody
- * @param {Object} errorList
- * @returns {Object} saveResponse from API
+ * @param {object} errorList
+ * @returns {object} saveResponse from API
  */
 const buyerTradingHistory = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save

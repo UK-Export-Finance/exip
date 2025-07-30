@@ -19,7 +19,7 @@ const {
 
 /**
  * createSubmitApplicationTasks
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {TaskListData} otherGroups: Task list groups
  * @param {ApplicationDeclaration} declaration: Application declaration answers
  * @returns {Array} Submit application tasks

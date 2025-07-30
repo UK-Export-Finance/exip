@@ -23,8 +23,8 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [IBAN, BIC_SWIFT_CODE, FINANCIAL_ADDR
  * This is used for any save functionality in the Policy - Loss payee financial details international part of the application.
  * @param {Application} Application
  * @param {RequestBody} Form data
- * @param {Object} errorList: Field error list
- * @returns {Promise<Object>} Saved data
+ * @param {object} errorList: Field error list
+ * @returns {Promise<object>} Saved data
  */
 const lossPayeeFinancialDetailsInternational = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);

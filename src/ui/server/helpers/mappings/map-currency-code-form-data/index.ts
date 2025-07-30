@@ -14,8 +14,8 @@ const {
  * - Currency code is submitted as CURRENCY_CODE, but the populated data should have a bespoke field ID.
  * - In any instance, delete the "alternative currency code" field.
  * @param {RequestBody} formBody: Form data
- * @param {String} fieldId: Currency code field ID
- * @returns {Object} Mapped object with currency field.
+ * @param {string} fieldId: Currency code field ID
+ * @returns {object} Mapped object with currency field.
  */
 const mapCurrencyCodeFormData = (formBody: RequestBody, fieldId: string = CURRENCY_CODE) => {
   const populatedData = formBody;

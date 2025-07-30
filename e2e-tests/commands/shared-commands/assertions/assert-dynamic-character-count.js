@@ -5,8 +5,8 @@ import { CHARACTER_COUNT } from '../../../content-strings';
  * Assert a dynamic character count.
  * Note: this functionality comes from a GOV component. Therefore, this test can be simple.
  * Therefore, we can simply check that the character count is present and changes after entering a character.
- * @param {String} field: Field selector
- * @param {Integer} maximum: Maximum characters allowed
+ * @param {string} field: Field selector
+ * @param {number} maximum: Maximum characters allowed
  */
 const assertDynamicCharacterCount = ({ field, maximum }) => {
   const expectedMaximum = maximum.toLocaleString();

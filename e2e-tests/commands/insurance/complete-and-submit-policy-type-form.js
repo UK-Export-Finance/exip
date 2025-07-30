@@ -14,7 +14,7 @@ const {
 /**
  * completeAndSubmitPolicyTypeForm
  * Complete and submit the "policy type" form.
- * @param {String} policyType: Single or multiple. Defaults to single.
+ * @param {string} policyType: Single or multiple. Defaults to single.
  */
 const completeAndSubmitPolicyTypeForm = ({ policyType = SINGLE }) => {
   const fieldId = POLICY_TYPE;

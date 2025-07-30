@@ -25,12 +25,12 @@ const defaultDashboardUrl = `${baseUrl}${DASHBOARD_PAGE}`;
  * 2) Active item/link should match the provided page number.
  * 3) Next link should match the provided page number + 1.
  * 3) Previous link should match the provided page number - 1.
- * @param {String} Expected page URL
- * @param {Integer} Total number of pages
- * @param {Integer} Cypress selection index
- * @param {Integer} Expected current page number
- * @param {Boolean} Next link should exist (defaults to true)
- * @param {Boolean} Previous link should exist (defaults to true)
+ * @param {string} Expected page URL
+ * @param {number} Total number of pages
+ * @param {number} Cypress selection index
+ * @param {number} Expected current page number
+ * @param {boolean} Next link should exist (defaults to true)
+ * @param {boolean} Previous link should exist (defaults to true)
  */
 const assertPaginationState = ({ expectedUrl, totalPages, index, expectedPageNumber, nextLinkShouldExist = true, previousLinkShouldExist = true }) => {
   if (expectedUrl) {

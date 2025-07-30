@@ -7,7 +7,7 @@ const { IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_FIELD_IDS.LOSS_P
  * mapNominatedLossPayeeLocation
  * maps location of nominatedLossPayee and returns string of IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK or undefined
  * @param {ApplicationNominatedLossPayee} Application nominatedLossPayee
- * @returns {String} IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK or undefined
+ * @returns {string} IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK or undefined
  */
 const mapNominatedLossPayeeLocation = (nominatedLossPayee: ApplicationNominatedLossPayee) => {
   let location;

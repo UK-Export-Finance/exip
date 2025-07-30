@@ -7,7 +7,7 @@ import update from './update';
 /**
  * application
  * Various API calls for an application
- * @returns {Object} API calls
+ * @returns {object} API calls
  */
 const application = {
   create,

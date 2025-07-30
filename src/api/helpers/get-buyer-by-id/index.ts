@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getBuyerById
  * Get a buyer by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: Buyer ID
+ * @param {string} id: Buyer ID
  * @returns {Promise<ApplicationBuyer>}
  */
 const getBuyerById = async (context: Context, id: string) => {

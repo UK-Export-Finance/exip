@@ -11,9 +11,9 @@ const {
 /**
  * assertOtherCompanyDetailsFieldValues
  * Assert all field values in the "other company details" form.
- * @param {String} expectedCompanyName: Company name
- * @param {String} expectedCountry: Country
- * @param {String} expectedCompanyNumber: Company number
+ * @param {string} expectedCompanyName: Company name
+ * @param {string} expectedCountry: Country
+ * @param {string} expectedCompanyNumber: Company number
  */
 const assertOtherCompanyDetailsFieldValues = ({
   expectedCompanyName = REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME],

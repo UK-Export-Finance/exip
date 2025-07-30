@@ -4,7 +4,7 @@ import { Country } from '../../../types';
  * getCountryByIsoCode
  * Get a country by ISO code
  * @param {Array<Country>} countries
- * @param {String} isoCode: Country ISO code
+ * @param {string} isoCode: Country ISO code
  * @returns {Country}
  */
 const getCountryByIsoCode = (countries: Array<Country>, isoCode: string): Country => {

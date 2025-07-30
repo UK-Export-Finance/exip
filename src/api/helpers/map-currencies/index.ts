@@ -37,7 +37,7 @@ export const getAlternativeCurrencies = (currencies: Array<Currency>): Array<Cur
  * 3) if alternativeCurrencies flag not set, then will filter supported currencies.
  * 4) Sort the currencies alphabetically.
  * @param {Array} Array of currency objects
- * @param {Boolean} alternativeCurrencies if alternate currencies should be returned
+ * @param {boolean} alternativeCurrencies if alternate currencies should be returned
  * @returns {Array} Array supported currencies
  */
 const mapCurrencies = (currencies: Array<Currency>, alternativeCurrencies: boolean): Array<Currency> => {

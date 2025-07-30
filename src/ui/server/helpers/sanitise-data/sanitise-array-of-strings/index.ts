@@ -3,7 +3,7 @@ import { sanitiseValue } from '../sanitise-value';
 /**
  * sanitiseArrayOfStrings
  * Sanitise an array of strings
- * @param {String} Field key
+ * @param {string} Field key
  * @param {Array} Array of strings
  * @returns {Array} Sanitised array
  */

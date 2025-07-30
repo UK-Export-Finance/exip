@@ -11,7 +11,7 @@ const {
 /**
  * completeBrokerManualAddressForm
  * Complete and submit "broker manual address" form
- * @param {String} fullAddress: Broker's full address
+ * @param {string} fullAddress: Broker's full address
  */
 const completeBrokerManualAddressForm = ({ fullAddress = BROKER[FULL_ADDRESS] }) => {
   cy.keyboardInput(field(FULL_ADDRESS).textarea(), fullAddress);

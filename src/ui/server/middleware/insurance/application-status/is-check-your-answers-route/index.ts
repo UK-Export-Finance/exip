@@ -5,7 +5,7 @@ const { CHECK_YOUR_ANSWERS, INSURANCE_ROOT } = INSURANCE_ROUTES;
 /**
  * mapCheckYourAnswersRoutes
  * Add "insurance/{referenceNumber}" to each route
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @returns {Array} Check your answers routes with insurance/{referenceNumber} prefix
  */
 export const mapCheckYourAnswersRoutes = (referenceNumber: number) => {
@@ -19,9 +19,9 @@ export const mapCheckYourAnswersRoutes = (referenceNumber: number) => {
 /**
  * isCheckYourAnswersRoute
  * Check if a given URL is a "check your answers" route
- * @param {String} URL
- * @param {Number} referenceNumber: Application reference number
- * @returns {Boolean}
+ * @param {string} URL
+ * @param {number} referenceNumber: Application reference number
+ * @returns {boolean}
  */
 const isCheckYourAnswersRoute = (url: string, referenceNumber: number) => {
   const CHECK_YOUR_ANSWERS_ROUTES = mapCheckYourAnswersRoutes(referenceNumber);

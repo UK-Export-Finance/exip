@@ -7,9 +7,9 @@ import mapSubmittedData from '../../map-submitted-data/buyer';
  * maps buyer request and calls save function
  * returns true or false based on response from save function
  * @param {RequestBody} formBody
- * @param {Object} application
- * @param {Object} validationErrors
- * @returns {Boolean}
+ * @param {object} application
+ * @param {object} validationErrors
+ * @returns {boolean}
  */
 const yourBuyer = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

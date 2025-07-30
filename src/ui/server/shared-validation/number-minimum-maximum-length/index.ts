@@ -9,12 +9,12 @@ import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number
  * numberMinimumMaximumLength
  * Check if a number is provided and its length is within the minimum and maximum length
  * @param {RequestBody} formBody
- * @param {String} fieldId
- * @param {String} errorMessage
- * @param {Object} errors: Other validation errors for the same form
- * @param {Number} minimum minimum length to check against
- * @param {Number} maximum maximum length to check against
- * @param {Boolean} allowDecimalPlaces false as default, if true then allows for decimal places.
+ * @param {string} fieldId
+ * @param {string} errorMessage
+ * @param {object} errors: Other validation errors for the same form
+ * @param {number} minimum minimum length to check against
+ * @param {number} maximum maximum length to check against
+ * @param {boolean} allowDecimalPlaces false as default, if true then allows for decimal places.
  * @returns {ValidationErrors} or null
  */
 const numberMinimumMaximumLength = ({

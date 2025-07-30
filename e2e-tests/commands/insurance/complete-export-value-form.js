@@ -12,8 +12,8 @@ const {
 /**
  * completeExportValueForm
  * Complete the "Export value" form
- * @param {String} totalSalesToBuyer: Total sales to the buyer
- * @param {String} maximumBuyerWillOwe: Maximum buyer will owe
+ * @param {string} totalSalesToBuyer: Total sales to the buyer
+ * @param {string} maximumBuyerWillOwe: Maximum buyer will owe
  */
 const completeExportValueForm = ({
   totalSalesToBuyer = application.POLICY[TOTAL_SALES_TO_BUYER],

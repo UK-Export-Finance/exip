@@ -29,8 +29,8 @@ const {
  * optionalBrokerFields
  * If USING_BROKER is true, populate and return optional fields.
  * @param {ApplicationBroker} answers: Broker answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Optional broker fields if USING_BROKER is true
  */
 export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange?: boolean) => {
@@ -65,9 +65,9 @@ export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber
  * generateBrokerFields
  * Create all your broker fields and values for the Insurance - Broker govukSummaryList
  * @param {ApplicationBroker} answers
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} All broker fields and values in an object structure for GOVUK summary list structure
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} All broker fields and values in an object structure for GOVUK summary list structure
  */
 export const generateBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [

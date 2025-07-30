@@ -9,11 +9,11 @@ const {
 /**
  * assertBrokerDetailsFieldValues
  * Assert all field values in the "broker details" form.
- * @param {String} expectedName: Name
- * @param {String} expectedEmail: Email
- * @param {Boolean} isBasedInUk: Broker is based in the UK
- * @param {String} expectedPostcode: Broker's postcode
- * @param {String} expectedBuildingNumberOrName: Broker's building name or number
+ * @param {string} expectedName: Name
+ * @param {string} expectedEmail: Email
+ * @param {boolean} isBasedInUk: Broker is based in the UK
+ * @param {string} expectedPostcode: Broker's postcode
+ * @param {string} expectedBuildingNumberOrName: Broker's building name or number
  */
 const assertBrokerDetailsFieldValues = ({
   expectedName = mockApplication.BROKER[NAME],

@@ -10,8 +10,8 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
 /**
  * financialAddressFieldValidation
  * Assert financial address validation
- * @param {Integer} errorIndex: Index of the summary list error. Defaults to 2
- * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 3.
+ * @param {number} errorIndex: Index of the summary list error. Defaults to 2
+ * @param {number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 3.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const financialAddressFieldValidation = ({ errorIndex = 2, expectedErrorsCount = 3 }) => {

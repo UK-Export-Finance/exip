@@ -5,7 +5,7 @@ import { ACCEPTED_FILE_TYPES } from '../constants';
 /**
  * fileExists
  * Check if a file exists
- * @param {String} file path
+ * @param {string} file path
  * @returns {Promise<Buffer> | Boolean} File buffer
  */
 const fileExists = (filePath: Buffer | string) => {
@@ -21,8 +21,8 @@ const fileExists = (filePath: Buffer | string) => {
 /**
  * isAcceptedFileType
  * Check if a file is an accepted file type.
- * @param {String} file path
- * @returns {Boolean}
+ * @param {string} file path
+ * @returns {boolean}
  */
 const isAcceptedFileType = (filePath: string) => {
   const fileType = path.extname(filePath);
@@ -37,7 +37,7 @@ const isAcceptedFileType = (filePath: string) => {
 /**
  * readFile
  * Read a file and check if the file type is accepted
- * @param {String} file path
+ * @param {string} file path
  * @returns {Promise<Buffer> | Boolean} File buffer
  */
 const readFile = async (filePath: string): Promise<Buffer> => {
@@ -61,7 +61,7 @@ const readFile = async (filePath: string): Promise<Buffer> => {
 /**
  * unlink
  * Delete a file
- * @param {String} file path
+ * @param {string} file path
  * @returns {Promise<void> | Boolean} File buffer
  */
 const unlink = async (filePath: string) => {

@@ -4,7 +4,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * getTotalContractValueById
  * Get a total contract value by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} id: TotalContractValue ID
+ * @param {string} id: TotalContractValue ID
  * @returns {Promise<TotalContractValue>}
  */
 const getTotalContractValueById = async (context: Context, id: string) => {

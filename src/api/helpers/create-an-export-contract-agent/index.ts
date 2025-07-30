@@ -6,8 +6,8 @@ import { Context, CreateExportContractAgentResponse } from '../../types';
  * createAnExportContractAgent
  * Create an gent with an export contract relationship.
  * @param {Context} context: KeystoneJS context API
- * @param {String} exportContractId: Export contract ID
- * @returns {Promise<Object>} Created export contract agent
+ * @param {string} exportContractId: Export contract ID
+ * @returns {Promise<object>} Created export contract agent
  */
 const createAnExportContractAgent = async (context: Context, exportContractId: string): Promise<CreateExportContractAgentResponse> => {
   console.info('Creating an export contract agent for %s', exportContractId);

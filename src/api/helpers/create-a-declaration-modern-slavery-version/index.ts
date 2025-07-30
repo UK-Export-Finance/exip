@@ -8,7 +8,7 @@ const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_N
  * createADeclarationModernSlaveryVersion
  * Create an application "modern slavery declaration" version with a relationship and the latest version numbers.
  * @param {Context} context: KeystoneJS context API
- * @param {String} declarationModernSlaveryId: Declaration modern slavery ID
+ * @param {string} declarationModernSlaveryId: Declaration modern slavery ID
  * @returns {Promise<ApplicationDeclarationModernSlaveryVersions>}  Created modern slavery declaration version
  */
 const createADeclarationModernSlaveryVersion = async (context: Context, declarationModernSlaveryId: string) => {

@@ -8,11 +8,11 @@ import numberValidation from '../../helpers/number-validation';
  * numberAboveMinimumValidation
  * Check if a number is provided and below a minimum.
  * @param {RequestBody} formBody
- * @param {String} fieldId
- * @param {String} errorMessage
- * @param {Object} errors: Other validation errors for the same form
- * @param {Number} minimum minimum value to check against
- * @param {Boolean} allowDecimalPlaces false as default, if true then allows for decimal places.
+ * @param {string} fieldId
+ * @param {string} errorMessage
+ * @param {object} errors: Other validation errors for the same form
+ * @param {number} minimum minimum value to check against
+ * @param {boolean} allowDecimalPlaces false as default, if true then allows for decimal places.
  * @returns {ValidationErrors} or null
  */
 const numberAboveMinimumValidation = ({

@@ -2,8 +2,8 @@
  * getDomScriptSrc
  * Get a particular script's SRC attribute from the DOM.
  * @param {Array}: Script SRCs
- * @param {String}: SRC name
- * @returns {String} Script SRC
+ * @param {string}: SRC name
+ * @returns {string} Script SRC
  */
 const getDomScriptSrc = (srcs, name) => {
   const scriptSrc = srcs.filter((src) => src.includes(name));
@@ -15,7 +15,7 @@ const getDomScriptSrc = (srcs, name) => {
  * getDomScriptAttribute
  * Get a particular script attribute from the DOM.
  * @param {Array}: domElements
- * @param {String}: attribute
+ * @param {string}: attribute
  * @returns {Array} DOM elemnets that have the provided attribute.
  */
 const getDomScriptAttribute = (domElements, attribute) =>

@@ -14,7 +14,7 @@ const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
  * - FINAL_DESTINATION_KNOWN
  * - DEFAULT_FINAL_DESTINATION_KNOWN
  * - DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
- * @returns {Object} Application constants
+ * @returns {object} Application constants
  */
 export const APPLICATION = {
   LATEST_VERSION,

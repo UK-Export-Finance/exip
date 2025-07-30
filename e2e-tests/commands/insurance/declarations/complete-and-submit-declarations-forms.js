@@ -2,15 +2,15 @@
  * completeAndDeclarationsForms
  * completes declarations forms up to the specified form to stop at
  * eg, when 'antiBribery' is passed, it will complete all forms before 'antiBribery'
- * @param {String} stopSubmittingAfter: The final form to submit
- * @param {Boolean} hasAntiBriberyCodeOfConduct: has "anti-bribery - code of conduct"
- * @param {Boolean} exportingWithCodeOfConduct: will export with "anti-bribery - exporting with code of conduct"
- * @param {Boolean} willAdhereToAllRequirements: "Modern slavery - will adhere to all requirements" answer
- * @param {Boolean} hasNoOffensesOrInvestigations: "Modern slavery - has no offenses or investigations" answer
- * @param {Boolean} isNotAwareOfExistingSlavery: "Modern slavery - is not aware of existing slavery" answer
- * @param {String} awareOfExistingSlavery: "Modern slavery - aware of existing slavery" textarea answer
- * @param {String} cannotAdhereToAllRequirements: "Modern slavery - cannot adhere to all requirements" textarea answer
- * @param {String} offensesOrInvestigations: "Modern slavery - offenses or investigations" textarea answer
+ * @param {string} stopSubmittingAfter: The final form to submit
+ * @param {boolean} hasAntiBriberyCodeOfConduct: has "anti-bribery - code of conduct"
+ * @param {boolean} exportingWithCodeOfConduct: will export with "anti-bribery - exporting with code of conduct"
+ * @param {boolean} willAdhereToAllRequirements: "Modern slavery - will adhere to all requirements" answer
+ * @param {boolean} hasNoOffensesOrInvestigations: "Modern slavery - has no offenses or investigations" answer
+ * @param {boolean} isNotAwareOfExistingSlavery: "Modern slavery - is not aware of existing slavery" answer
+ * @param {string} awareOfExistingSlavery: "Modern slavery - aware of existing slavery" textarea answer
+ * @param {string} cannotAdhereToAllRequirements: "Modern slavery - cannot adhere to all requirements" textarea answer
+ * @param {string} offensesOrInvestigations: "Modern slavery - offenses or investigations" textarea answer
  */
 const completeAndSubmitDeclarationsForms = ({
   stopSubmittingAfter,

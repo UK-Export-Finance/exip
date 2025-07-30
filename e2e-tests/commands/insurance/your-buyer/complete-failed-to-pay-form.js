@@ -1,7 +1,7 @@
 /**
  * completeFailedToPayForm
  * Complete the "failed to pay" form
- * @param {Boolean} failedToPay: Buyer has failed to pay the exporter on the time - defaults to false
+ * @param {boolean} failedToPay: Buyer has failed to pay the exporter on the time - defaults to false
  */
 const completeFailedToPayForm = ({ failedToPay = false }) => {
   if (failedToPay) {

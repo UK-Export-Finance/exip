@@ -4,12 +4,12 @@ import { field as fieldSelector } from '../../pages/shared';
 /**
  * percentageFieldValidation
  * Assert percentage field validation
- * @param {String} fieldId: Percentage field ID
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Object} errorMessages: Percentage error messages
- * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithValidPercentage: Total expected errors in the form when the percentage field is valid.
- * @param {Boolean} minimum: Minimum allowed percentage.
+ * @param {string} fieldId: Percentage field ID
+ * @param {number} errorIndex: Index of the summary list error
+ * @param {object} errorMessages: Percentage error messages
+ * @param {number} totalExpectedErrors: Total expected errors in the form
+ * @param {number} totalExpectedOtherErrorsWithValidPercentage: Total expected errors in the form when the percentage field is valid.
+ * @param {boolean} minimum: Minimum allowed percentage.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const percentageFieldValidation = ({

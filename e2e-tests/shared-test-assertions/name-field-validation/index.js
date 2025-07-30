@@ -4,13 +4,13 @@ import { field as fieldSelector } from '../../pages/shared';
 /**
  * assertNameFieldValidation
  * Assert name field validation
- * @param {String} fieldId: Name field ID
- * @param {String} maximum: name with over maximum number of characters
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Object} errorMessages: Email error messages
- * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithValidName: Total expected errors in the form when name is valid.
- * @param {Boolean} shouldHaveOtherErrors: If other error messages should be present on the page if fieldId is valid.
+ * @param {string} fieldId: Name field ID
+ * @param {string} maximum: name with over maximum number of characters
+ * @param {number} errorIndex: Index of the summary list error
+ * @param {object} errorMessages: Email error messages
+ * @param {number} totalExpectedErrors: Total expected errors in the form
+ * @param {number} totalExpectedOtherErrorsWithValidName: Total expected errors in the form when name is valid.
+ * @param {boolean} shouldHaveOtherErrors: If other error messages should be present on the page if fieldId is valid.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const assertNameFieldValidation = ({

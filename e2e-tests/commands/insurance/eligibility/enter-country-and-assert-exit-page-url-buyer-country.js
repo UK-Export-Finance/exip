@@ -7,8 +7,8 @@ const baseUrl = Cypress.config('baseUrl');
 /**
  * enterCountryAndAssertExitPageUrlBuyerCountry
  * can assert if url is correct after entering country that leads to exit page
- * @param {String} country to input
- * @param {String} url to check for exit page
+ * @param {string} country to input
+ * @param {string} url to check for exit page
  */
 const enterCountryAndAssertExitPageUrlBuyerCountry = (country, url) => {
   cy.autocompleteKeyboardInput(FIELD_ID, country);

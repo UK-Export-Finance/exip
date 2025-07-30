@@ -9,8 +9,8 @@ import { Currency, ObjectType } from '../../../../../../types';
  * The currencies need to be specifically ordered - not alphabetically.
  * if all currencies, then map all currencies into required structure
  * @param {Array<Currency>} currencies: Array of currency objects
- * @param {String} selectedValue: Selected currency
- * @param {Boolean} alternativeCurrencies: if all currencies need to be mapped
+ * @param {string} selectedValue: Selected currency
+ * @param {boolean} alternativeCurrencies: if all currencies need to be mapped
  * @returns {Array} Mapped and sorted currencies
  */
 const mapAndSortCurrencies = (currencies: Array<Currency>, selectedValue?: string, alternativeCurrencies?: boolean) => {

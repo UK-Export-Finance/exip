@@ -5,7 +5,7 @@ import { TaskListData, TaskListDataTask, TaskListGroup, ApplicationFlat } from '
  * mapTask
  * @param {TaskListDataTask} Task list groups and tasks
  * @param {ApplicationFlat} Submitted application data
- * @returns {Object} Tasks with status and optional href
+ * @returns {object} Tasks with status and optional href
  */
 export const mapTask = (task: TaskListDataTask, submittedData: ApplicationFlat) => {
   const mapped = {
@@ -23,8 +23,8 @@ export const mapTask = (task: TaskListDataTask, submittedData: ApplicationFlat) 
 /**
  * generateTaskStatusesAndLinks
  * @param {Array} taskListData Task list groups and tasks
- * @param {Object} submittedData Submitted application data
- * @returns {Object} Task list groups and tasks with added statuses and links.
+ * @param {object} submittedData Submitted application data
+ * @returns {object} Task list groups and tasks with added statuses and links.
  */
 export const generateTaskStatusesAndLinks = (taskListData: TaskListData, submittedData: ApplicationFlat): TaskListData => {
   const tasksList = taskListData.map((group) => ({
@@ -58,7 +58,7 @@ export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskLi
 /**
  * generateTaskList
  * @param {Array} groupsAndTasks Initial groups with tasks
- * @param {Object} submittedData Submitted application data
+ * @param {object} submittedData Submitted application data
  * @returns {Array} generateSimplifiedTaskList- Array of groups and tasks with only the data required for UI consumption.
  */
 const generateTaskList = (groupsAndTasks: TaskListData, submittedData: ApplicationFlat): Array<TaskListGroup> => {

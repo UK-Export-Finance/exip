@@ -21,8 +21,8 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * createFullApplication
  * Create a full application for unit testing
  * @param {Context} KeystoneJS context API
- * @param {String} Policy type flag - different data is created if multiple is passed. Defaults to single.
- * @returns {Object} Application
+ * @param {string} Policy type flag - different data is created if multiple is passed. Defaults to single.
+ * @returns {object} Application
  */
 export const createFullApplication = async (context: Context, policyType?: string): Promise<Application> => {
   try {

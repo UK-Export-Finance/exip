@@ -11,7 +11,7 @@ import { Account, AccountPasswordResetVariables, Context } from '../../../types'
 
 /**
  * accountPasswordReset
- * @param {Object} root: GraphQL root variables
+ * @param {object} root: GraphQL root variables
  * @param {AccountPasswordResetVariables} variables: GraphQL variables for the accountPasswordReset mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<SuccessResponse>} Object with success flag

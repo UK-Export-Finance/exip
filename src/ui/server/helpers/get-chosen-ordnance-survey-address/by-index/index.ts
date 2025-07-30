@@ -4,7 +4,7 @@ import { GetChosenOrdnanceSurveyAddressByIndexParams, MappedOrdnanceSurveyAddres
  * getChosenOrdnanceSurveyAddressByIndex
  * Get a chosen Ordnance Survey address by index
  * @param {Array<MappedOrdnanceSurveyAddress>} addresses: Mapped Ordnance Survey addressess
- * @param {Integer} index
+ * @param {number} index
  * @returns {MappedOrdnanceSurveyAddress}
  */
 const getChosenOrdnanceSurveyAddressByIndex = ({ addresses, index = 0 }: GetChosenOrdnanceSurveyAddressByIndexParams): MappedOrdnanceSurveyAddress => {

@@ -6,7 +6,7 @@ import { COOKIES_CONSENT } from '../../content-strings';
 /**
  * checkCookiesConsentBannerIsVisible
  * Check that the "cookies consent" banner is visible, and has the correct elements.
- * @param {Boolean} isInsurancePage: Current page is an "insurance" page.
+ * @param {boolean} isInsurancePage: Current page is an "insurance" page.
  */
 const checkCookiesConsentBannerIsVisible = ({ isInsurancePage }) => {
   cookieBanner.heading().should('exist');

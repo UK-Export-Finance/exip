@@ -6,7 +6,7 @@ const { ALGORITHM, SIGNATURE, SUBSTRING_INDEX_START, SUBSTRING_INDEX_END } = FIN
 /**
  * generateKey
  * generates key for encryption
- * @returns {String} key
+ * @returns {string} key
  */
 const generateKey = () => crypto.createHash(ALGORITHM).update(SIGNATURE).digest('hex').substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END);
 

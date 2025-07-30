@@ -3,10 +3,10 @@ import getPasswordHash from '../get-password-hash';
 /**
  * isValidAccountPassword
  * Check if the provided password is valid.
- * @param {String} Password
- * @param {String} Salt
- * @param {String} Hash
- * @returns {Boolean}
+ * @param {string} Password
+ * @param {string} Salt
+ * @param {string} Hash
+ * @returns {boolean}
  */
 const isValidAccountPassword = (password: string, salt: string, hash: string) => {
   console.info('Validating account password');

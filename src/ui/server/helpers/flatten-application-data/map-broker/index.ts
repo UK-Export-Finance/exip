@@ -26,7 +26,7 @@ const {
  * Map the broker to avoid clashes with other fields with the same name
  * e.g name, email, address fields.
  * @param {ApplicationBroker} broker
- * @returns {Object} ApplicationBroker with slightly different field IDs
+ * @returns {object} ApplicationBroker with slightly different field IDs
  */
 const mapBroker = (broker: ApplicationBroker) => {
   const { isUsingBroker, isBasedInUk, fullAddress } = broker;

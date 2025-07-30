@@ -10,7 +10,7 @@ const companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 /**
  * companiesHouse
  * makes companies house API call and returns company
- * @param {String} companyNumber
+ * @param {string} companyNumber
  * @returns {CompaniesHouseAPIResponse} CompaniesHouseAPIResponse object
  */
 const companiesHouse = {

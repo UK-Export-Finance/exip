@@ -16,7 +16,7 @@ const {
 /**
  * validate the "country" in other company details response body
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Other validation errors for the same form
+ * @param {object} errors: Other validation errors for the same form
  * @returns {ValidationErrors}
  */
 const countryCode = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);

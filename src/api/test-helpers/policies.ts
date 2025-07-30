@@ -4,8 +4,8 @@ import { ApplicationPolicy, TestHelperPolicyCreate, TestHelperPolicyUpdate } fro
  * Update policy test helper
  * Update a policy with provied custom policy data.
  * @param {Context} context: KeystoneJS context API, policy data
- * @param {Object} data: Policy data
- * @param {String} policyId: Policy ID
+ * @param {object} data: Policy data
+ * @param {string} policyId: Policy ID
  * @returns {ApplicationPolicy} Created policy
  */
 const update = async ({ context, data, policyId }: TestHelperPolicyUpdate) => {
@@ -29,7 +29,7 @@ const update = async ({ context, data, policyId }: TestHelperPolicyUpdate) => {
  * Create policy test helper
  * Create a policy with or without any provied custom policy data.
  * @param {Context} context: KeystoneJS context API, policy data
- * @param {Object} data: Policy data
+ * @param {object} data: Policy data
  * @returns {ApplicationPolicy} Created policy
  */
 const create = async ({ context, data = {} }: TestHelperPolicyCreate) => {

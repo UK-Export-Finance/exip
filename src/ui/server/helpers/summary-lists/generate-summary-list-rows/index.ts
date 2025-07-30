@@ -5,8 +5,8 @@ import { SummaryListItemData, SummaryListItem } from '../../../../types';
 /**
  * generateItemText
  * Return "add" or "change" text depending on the passed boolean, for govukSummaryList row
- * @param {Boolean} Should render change link flag
- * @returns {String} "Add" or "change" text
+ * @param {boolean} Should render change link flag
+ * @returns {string} "Add" or "change" text
  */
 export const generateItemText = (renderChangeLink?: boolean) => {
   if (renderChangeLink) {
@@ -20,7 +20,7 @@ export const generateItemText = (renderChangeLink?: boolean) => {
  * generateSummaryListRows
  * Map an array of fields with values for govukSummaryList component
  * @param {Array} Array of fields and answers
- * @param {Boolean} Add white text classes
+ * @param {boolean} Add white text classes
  * @returns {Array} Array of fields/answers in data structure for govukSummaryList
  */
 const generateSummaryListRows = (fields: Array<SummaryListItemData>, whiteText?: boolean): Array<SummaryListItem> => {

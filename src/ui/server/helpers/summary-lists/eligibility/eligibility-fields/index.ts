@@ -49,7 +49,7 @@ const isInsuranceEligibility = true;
  * generateEligibilityFields
  * Create all your eligibility fields and values for the Insurance - Eligibility govukSummaryList
  * @param {InsuranceEligibility} answers exporter nature of your business
- * @returns {Object} All eligibility fields and values in an object structure for GOVUK summary list structure
+ * @returns {object} All eligibility fields and values in an object structure for GOVUK summary list structure
  */
 const generateEligibilityFields = (answers: InsuranceEligibility) => {
   let company = {} as Company;

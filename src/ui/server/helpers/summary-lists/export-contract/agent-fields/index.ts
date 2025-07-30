@@ -29,9 +29,9 @@ const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT
  * agentDetailsFields
  * Create all fields and values for the Insurance - "Export contract - agent details" govukSummaryList
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent details fields
  */
 export const agentDetailsFields = (answers: ApplicationExportContractAgent, referenceNumber: number, countries: Array<Country>, checkAndChange?: boolean) => {
@@ -69,8 +69,8 @@ export const agentDetailsFields = (answers: ApplicationExportContractAgent, refe
  * agentServiceFields
  * Create all fields and values for the Insurance - "Export contract - agent service" govukSummaryList
  * @param {ApplicationExportContractAgentService} answers: All submitted agent data
- * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @param {number} referenceNumber: Application reference number
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent service fields
  */
 export const agentServiceFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, checkAndChange?: boolean) => {
@@ -93,11 +93,11 @@ export const agentServiceFields = (answers: ApplicationExportContractAgentServic
  * agentFields
  * Create all fields and values for the Insurance - "Export contract - agent" govukSummaryList
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
- * @param {Number} referenceNumber: Application reference number
+ * @param {number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Array<Currency>} currencies: Currencies
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
+ * @param {boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {object} Fields and values in an object structure for GOVUK summary list structure
  */
 const agentFields = (
   answers: ApplicationExportContractAgent,

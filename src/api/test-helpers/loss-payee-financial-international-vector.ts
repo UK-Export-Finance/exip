@@ -5,7 +5,7 @@ import { ApplicationLossPayeeFinancialInternationalVector, TestHelperLossPayeeFi
  * create a nominated loss payee financial international helper
  * Create an empty ApplicationLossPayeeFinancialInternationalVector.
  * @param {Context} context: KeystoneJS context API
- * @param {Object} data: Update object
+ * @param {object} data: Update object
  * @returns {ApplicationLossPayeeFinancialInternationalVector} Created ApplicationLossPayeeFinancialInternationalVector
  */
 const createLossPayeeFinancialDetailsInternationalVector = async ({ context, data = {} }: TestHelperLossPayeeFinancialInternationalVectorCreate) => {

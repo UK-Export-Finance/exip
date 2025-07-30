@@ -9,7 +9,7 @@ const { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
  * completes credit insurance cover form
  * if hasHadCreditInsuranceCoverWithBuyer, then selects yes radio and fills in conditional textarea
  * if not hasHadCreditInsuranceCoverWithBuyer then selects no radio
- * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer - should select yes or no radio
+ * @param {boolean} hasHadCreditInsuranceCoverWithBuyer - should select yes or no radio
  */
 const completeCreditInsuranceCoverForm = ({
   hasHadCreditInsuranceCoverWithBuyer = false,

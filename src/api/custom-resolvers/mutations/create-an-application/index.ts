@@ -6,7 +6,7 @@ import { CreateAnApplicationVariables, Context } from '../../../types';
  * Create an application.
  * 1) Create a new application with createAnApplicationHelper.
  * 2) Returns success flag and application
- * @param {Object} root: GraphQL root variables
+ * @param {object} root: GraphQL root variables
  * @param {CreateAnApplicationVariables} GraphQL variables for the createAnApplication mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<SuccessResponse>} Object with success flag and application

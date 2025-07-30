@@ -14,7 +14,7 @@ const { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_IN
  * Add custom heights to certain worksheet rows
  * @param {Array<number>} rowIndexes: Row indexes
  * @param {ExcelJS.Worksheet} worksheet: ExcelJS worksheet
- * @param {String} ExcelJS sheetName: worksheet name
+ * @param {string} ExcelJS sheetName: worksheet name
  * @returns {ExcelJS.Worksheet} Modified ExcelJS worksheet
  */
 const modifyRowHeights = (rowIndexes: Array<number>, worksheet: Worksheet, sheetName: string) => {

@@ -26,7 +26,7 @@ const create = async (context: Context, data = {}) => {
  * Get declaration test helper
  * Get an declaration by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} declarationId: Declaration ID
+ * @param {string} declarationId: Declaration ID
  * @returns {Promise<ApplicationDeclaration>} Declaration
  */
 const get = async (context: Context, declarationId: string) => {
@@ -49,7 +49,7 @@ const get = async (context: Context, declarationId: string) => {
  * Update declaration test helper
  * Update a declaration by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} declarationId: Declaration ID
+ * @param {string} declarationId: Declaration ID
  * @param {ApplicationDeclaration} data: Declaration data
  * @returns {Promise<ApplicationDeclaration>} Declaration
  */

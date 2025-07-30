@@ -6,7 +6,7 @@ import combineValidationRules from '../../../../../helpers/combine-validation-ru
  * validates company details page response
  * throws validation errors if any fields are not completed or incorrectly completed
  * @param {RequestBody} formBody: Form body
- * @returns {Object} Errors or empty object
+ * @returns {object} Errors or empty object
  */
 const validation = (formBody: RequestBody): ValidationErrors => combineValidationRules(validationRules, formBody) as ValidationErrors;
 

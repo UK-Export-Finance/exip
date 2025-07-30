@@ -9,8 +9,8 @@ const {
  * submittedAnswer
  * if currency is supported, then should return the currency to prepopulate the radio
  * if currency is an alternative currency, then returns ALTERNATIVE_CURRENCY_CODE for radio to be selected
- * @param {String} currency
- * @returns {String} currency - empty string, currencyCode for supported currency or ALTERNATIVE_CURRENCY_CODE
+ * @param {string} currency
+ * @returns {string} currency - empty string, currencyCode for supported currency or ALTERNATIVE_CURRENCY_CODE
  */
 const submittedAnswer = (currency?: string) => {
   if (!currency) {

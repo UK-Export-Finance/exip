@@ -31,7 +31,7 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
  * Otherwise:
  * - if user has come from Check Answers or Quote page page, return the same URL.
  * - if it's Buyer country route, user has submitted the form and has validation errors.
- * @param {String} referer - Previous URL
+ * @param {string} referer - Previous URL
  * @returns {string}
  */
 export const getBackLink = (referer?: string): string => {

@@ -12,7 +12,7 @@ const CONTENT_STRINGS = POLICY_FIELDS.LOSS_PAYEE_DETAILS[LOCATION].OPTIONS;
  * mapLossPayeeLocation
  * Map an application's loss payee location
  * @param {ApplicationNominatedLossPayee} lossPayee
- * @returns {String}
+ * @returns {string}
  */
 const mapLossPayeeLocation = (lossPayee: ApplicationNominatedLossPayee) => {
   if (lossPayee[IS_LOCATED_INTERNATIONALLY]) {

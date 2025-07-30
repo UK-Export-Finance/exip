@@ -14,16 +14,16 @@ const {
 /**
  * mapPercentageOfCover
  * Map percentage of cover answer to a string with percentage symbol for GOVUK summary list structure
- * @param {Number} Percentage of cover answer
- * @returns {String} Percentage of cover with percentage symbol
+ * @param {number} Percentage of cover answer
+ * @returns {string} Percentage of cover with percentage symbol
  */
 const mapPercentageOfCover = (answer: number) => `${answer}%`;
 
 /**
  * mapAnswersToContent
  * Map all answers/submitted data into an object structure for GOVUK summary list structure
- * @param {Object} All submitted data
- * @returns {Object} All answers in an object structure with 'text' field
+ * @param {object} All submitted data
+ * @returns {object} All answers in an object structure with 'text' field
  */
 const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility) => {
   const mapped = {

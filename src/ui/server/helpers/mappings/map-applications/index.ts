@@ -9,7 +9,7 @@ import { Application } from '../../../../types';
  * mapApplication
  * Map an application for display in the dashboard
  * @param {Application} application
- * @returns {Object} Mapped application
+ * @returns {object} Mapped application
  */
 export const mapApplication = (application: Application) => {
   const { id, status, submissionDate, referenceNumber, buyer } = application;

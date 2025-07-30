@@ -12,7 +12,7 @@ const {
  * maps answers for eligibility into the correct format to send to the API
  * Adds sectionReview object with eligibility
  * @param {SubmittedDataInsuranceEligibility} answers - eligibility answers
- * @returns {Object} answers object
+ * @returns {object} answers object
  */
 const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
   console.info('Mapping eligibility session data');

@@ -8,7 +8,7 @@ const { FONT_SIZE } = XLSX_CONFIG;
  * modifyRowStyles
  * Add row styles to certain worksheet rows
  * @param {ExcelJS.Worksheet} worksheet: ExcelJS worksheet
- * @param {String} ExcelJS sheetName: worksheet name
+ * @param {string} ExcelJS sheetName: worksheet name
  * @returns {ExcelJS.Worksheet} Modified ExcelJS worksheet
  */
 const modifyRowStyles = (worksheet: Worksheet, sheetName: string) => {

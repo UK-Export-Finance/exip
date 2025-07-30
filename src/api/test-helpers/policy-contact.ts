@@ -25,7 +25,7 @@ const create = async (context: Context) => {
  * get policy contact test helper
  * Get an policy contact by ID
  * @param {Context} context: KeystoneJS context API
- * @param {String} policyContactId: Policy contact ID
+ * @param {string} policyContactId: Policy contact ID
  * @returns {Promise<ApplicationPolicyContact>} Policy contact
  */
 const get = async (context: Context, policyContactId: string): Promise<ApplicationPolicyContact> => {

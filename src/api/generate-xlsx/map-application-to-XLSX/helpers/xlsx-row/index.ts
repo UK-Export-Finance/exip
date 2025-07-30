@@ -6,7 +6,7 @@ const { KEY, VALUE } = XLSX_CONFIG;
 /**
  * xlsxRow
  * Generate a row for an exceljs XLSX
- * @returns {Object}
+ * @returns {object}
  */
 const xlsxRow = (fieldName: string, answer?: string | number) => {
   if (fieldName) {

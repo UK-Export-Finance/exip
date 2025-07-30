@@ -9,8 +9,8 @@ import { Application, RequestBody } from '../../../../../../types';
  * This is used for any save functionality in the Export contract section of the application.
  * @param {Application} application
  * @param {Express.Request.body} formBody
- * @param {Object} errorList: Field error list
- * @returns {Promise<Object>} Saved data
+ * @param {object} errorList: Field error list
+ * @returns {Promise<object>} Saved data
  */
 const exportContract = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = getDataToSave(formBody, errorList);

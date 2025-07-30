@@ -8,10 +8,10 @@ import { AccountSignInSendNewCodeVariables, AccountSignInResponse, Context } fro
  * accountSignInSendNewCode
  * - Generate a new OTP, save in the database
  * - Send the user an email with security code
- * @param {Object} root: GraphQL root variables
- * @param {Object} variables: GraphQL variables for the AccountSignInNewCode mutation
+ * @param {object} root: GraphQL root variables
+ * @param {object} variables: GraphQL variables for the AccountSignInNewCode mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<Object>} Object with success flag
+ * @returns {Promise<object>} Object with success flag
  */
 const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendNewCodeVariables, context: Context): Promise<AccountSignInResponse> => {
   try {

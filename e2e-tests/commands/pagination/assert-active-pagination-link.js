@@ -4,9 +4,9 @@ import checkAriaLabel from '../shared-commands/assertions/check-aria-label';
 /**
  * assertActivePaginationLink
  * Check that a pagination link is active
- * @param {Integer} Index
- * @param {Integer} Expected page number
- * @param {Integer} Total pages
+ * @param {number} Index
+ * @param {number} Expected page number
+ * @param {number} Total pages
  */
 const assertActivePaginationLink = ({ index, pageNumber, totalPages }) => {
   const link = pagination.listItemLink(index);
