@@ -72,7 +72,7 @@
     "jest": "^30.0.5",
     "prettier": "^2.8.8",
     "spectaql": "^3.0.4",
-    "ts-jest": "^29.4.0"
+    "ts-jest": "^29.4.1"
   },
   "engines": {
     "node": ">=21",
