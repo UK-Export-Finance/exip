@@ -87,7 +87,7 @@
     "markdownlint-cli": "^0.45.0",
     "prettier": "^2.8.8",
     "sort-package-json": "^2.15.1",
-    "ts-jest": "^29.4.0",
+    "ts-jest": "^29.4.1",
     "typescript": "5.7.2",
     "yaml-lint": "^1.7.0"
   },
