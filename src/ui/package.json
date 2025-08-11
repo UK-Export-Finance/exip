@@ -65,7 +65,7 @@
     "nunjucks": "3.2.4",
     "path": "0.12.7",
     "postcode-validator": "^3.10.5",
-    "sass": "^1.90.0",
+    "sass": "^1.89.2",
     "sass-loader": "^16.0.5",
     "terser-webpack-plugin": "^5.3.14",
     "ts-node": "^10.9.2",
