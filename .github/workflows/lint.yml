@@ -89,7 +89,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node
         uses: actions/setup-node@v4
@@ -117,7 +117,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node
         uses: actions/setup-node@v4
@@ -146,7 +146,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node
         uses: actions/setup-node@v4
@@ -175,7 +175,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node
         uses: actions/setup-node@v4
@@ -203,7 +203,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node
         uses: actions/setup-node@v4
@@ -212,7 +212,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci
+        run: npm run ci:all
 
       - name: Validate
         working-directory: ./

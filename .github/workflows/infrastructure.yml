@@ -715,7 +715,7 @@ jobs:
             az config set extension.use_dynamic_install=yes_without_prompt
 
       - name: Repository 🗃️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Database 💾
         uses: azure/cli@v2
