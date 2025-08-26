@@ -25,7 +25,7 @@
     "spellcheck": "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color '**/*'",
     "type-check:all": "cd src/ui && tsc --noEmit --pretty && cd ../api && tsc --noEmit --pretty && cd ../../e2e-tests && tsc --noEmit --pretty",
     "update:all": "npm update --save && cd src/ui && npm update --save && cd ../api && npm update --save && cd ../../generate-exip-pricing-grid && npm update --save",
-    "validate:md": "npx markdownlint-cli --config .markdownlint.json '**/*.md'",
+    "validate:md": "npx markdownlint-cli --config .markdownlint.json \"**/*.md\"",
     "validate:yml": "npx yaml-lint **/*.yml --ignore=**/node_modules"
   },
   "lint-staged": {
@@ -36,10 +36,10 @@
     ],
     "**/*.md": [
       "prettier --write",
-      "npm run validate:md"
+      "npx markdownlint-cli --config .markdownlint.json"
     ],
     "**/*.yml": [
-      "npm run validate:yml"
+      "npx yaml-lint --ignore=**/node_modules"
     ],
     "**/*": [
       "cspell lint --gitignore --no-must-find-files --unique --no-progress --show-suggestions --color"
