@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.45.1](https://github.com/UK-Export-Finance/exip/compare/v2.45.0...v2.45.1) (2025-08-29)
+
+
+### Bug Fixes
+
+* **DTFS2-8080:** reverted Serbia country code ([#3594](https://github.com/UK-Export-Finance/exip/issues/3594)) ([e408837](https://github.com/UK-Export-Finance/exip/commit/e4088371217316ebc5dfa12fdb19a25e80ae00cd))
+
 ## [2.45.0](https://github.com/UK-Export-Finance/exip/compare/v2.44.0...v2.45.0) (2025-07-30)
 
 
