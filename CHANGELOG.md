@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.45.2](https://github.com/UK-Export-Finance/exip/compare/v2.45.1...v2.45.2) (2025-10-07)
+
+
+### Bug Fixes
+
+* **prsima:** re-genreated prisma ([#3609](https://github.com/UK-Export-Finance/exip/issues/3609)) ([bc2a689](https://github.com/UK-Export-Finance/exip/commit/bc2a689a0f1af9e85fa81ffc04b721add7007ac4))
+
 ## [2.45.1](https://github.com/UK-Export-Finance/exip/compare/v2.45.0...v2.45.1) (2025-08-29)
 
 
