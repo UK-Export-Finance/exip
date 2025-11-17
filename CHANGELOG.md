@@ -2,130 +2,118 @@
 
 ## [2.45.2](https://github.com/UK-Export-Finance/exip/compare/v2.45.1...v2.45.2) (2025-10-07)
 
-
 ### Bug Fixes
 
-* **prsima:** re-genreated prisma ([#3609](https://github.com/UK-Export-Finance/exip/issues/3609)) ([bc2a689](https://github.com/UK-Export-Finance/exip/commit/bc2a689a0f1af9e85fa81ffc04b721add7007ac4))
+- **prisma:** re-genreated prisma ([#3609](https://github.com/UK-Export-Finance/exip/issues/3609)) ([bc2a689](https://github.com/UK-Export-Finance/exip/commit/bc2a689a0f1af9e85fa81ffc04b721add7007ac4))
 
 ## [2.45.1](https://github.com/UK-Export-Finance/exip/compare/v2.45.0...v2.45.1) (2025-08-29)
 
-
 ### Bug Fixes
 
-* **DTFS2-8080:** reverted Serbia country code ([#3594](https://github.com/UK-Export-Finance/exip/issues/3594)) ([e408837](https://github.com/UK-Export-Finance/exip/commit/e4088371217316ebc5dfa12fdb19a25e80ae00cd))
+- **DTFS2-8080:** reverted Serbia country code ([#3594](https://github.com/UK-Export-Finance/exip/issues/3594)) ([e408837](https://github.com/UK-Export-Finance/exip/commit/e4088371217316ebc5dfa12fdb19a25e80ae00cd))
 
 ## [2.45.0](https://github.com/UK-Export-Finance/exip/compare/v2.44.0...v2.45.0) (2025-07-30)
 
-
 ### Features
 
-* **EMS-4227:** cypress test added assertion ([4e76655](https://github.com/UK-Export-Finance/exip/commit/4e7665515892f33a258c1e8067fbb0ce92b49ed1))
-* **EMS-4227:** moved cypress test ([4a6bbfd](https://github.com/UK-Export-Finance/exip/commit/4a6bbfde9719e681ea6138d518ca684ad83fc61c))
-* **EMS-4227:** renamed assertions tests ([63c7c66](https://github.com/UK-Export-Finance/exip/commit/63c7c6603024db647569e582fc781dd56b983a00))
-* **EMS-4227:** renamed assertions tests ([91f3c27](https://github.com/UK-Export-Finance/exip/commit/91f3c270993427dbffdaeb166389af3441c4aaca))
-* **EMS-4227:** restrict quote generation for high risk country and high risk cover percentage ([ebf7312](https://github.com/UK-Export-Finance/exip/commit/ebf7312cbdddf0b7391cdec4fe97c8622261a554))
-* **EMS-4227:** updated the external link and dependencies updates ([1bd55de](https://github.com/UK-Export-Finance/exip/commit/1bd55de46c4eec2da2f827a2be1a3e239ea909e1))
-* **EMS-4227:** updated the external link and dependencies updates ([7022a13](https://github.com/UK-Export-Finance/exip/commit/7022a134d27b6c74fd0c0b8baf32943ada282c48))
-* **EMS-4231:** fixed js/ts docs types ([abfa908](https://github.com/UK-Export-Finance/exip/commit/abfa908c4464615b6f41b140f34a4c22e7b89cfc))
-* **EMS-4231:** fixed js/ts docs types ([ee23646](https://github.com/UK-Export-Finance/exip/commit/ee23646afeb01976741848f1c038a01b8847852f))
+- **EMS-4227:** cypress test added assertion ([4e76655](https://github.com/UK-Export-Finance/exip/commit/4e7665515892f33a258c1e8067fbb0ce92b49ed1))
+- **EMS-4227:** moved cypress test ([4a6bbfd](https://github.com/UK-Export-Finance/exip/commit/4a6bbfde9719e681ea6138d518ca684ad83fc61c))
+- **EMS-4227:** renamed assertions tests ([63c7c66](https://github.com/UK-Export-Finance/exip/commit/63c7c6603024db647569e582fc781dd56b983a00))
+- **EMS-4227:** renamed assertions tests ([91f3c27](https://github.com/UK-Export-Finance/exip/commit/91f3c270993427dbffdaeb166389af3441c4aaca))
+- **EMS-4227:** restrict quote generation for high risk country and high risk cover percentage ([ebf7312](https://github.com/UK-Export-Finance/exip/commit/ebf7312cbdddf0b7391cdec4fe97c8622261a554))
+- **EMS-4227:** updated the external link and dependencies updates ([1bd55de](https://github.com/UK-Export-Finance/exip/commit/1bd55de46c4eec2da2f827a2be1a3e239ea909e1))
+- **EMS-4227:** updated the external link and dependencies updates ([7022a13](https://github.com/UK-Export-Finance/exip/commit/7022a134d27b6c74fd0c0b8baf32943ada282c48))
+- **EMS-4231:** fixed js/ts docs types ([abfa908](https://github.com/UK-Export-Finance/exip/commit/abfa908c4464615b6f41b140f34a4c22e7b89cfc))
+- **EMS-4231:** fixed js/ts docs types ([ee23646](https://github.com/UK-Export-Finance/exip/commit/ee23646afeb01976741848f1c038a01b8847852f))
 
 ## [2.44.0](https://github.com/UK-Export-Finance/exip/compare/v2.43.2...v2.44.0) (2025-07-16)
 
-
 ### Features
 
-* **EMS-4227:** add screenshot to github actions upon failure ([2a63b03](https://github.com/UK-Export-Finance/exip/commit/2a63b0367e6dfad59d38d1957dd7227374bcb20a))
-* **EMS-4227:** added screenshot to e2e upon failure to GHA ([1d7a8ea](https://github.com/UK-Export-Finance/exip/commit/1d7a8eae8f99015795c768e3140fa138d295cbf0))
-* **EMS-4230:** added markdown validation and linting ([3df5b80](https://github.com/UK-Export-Finance/exip/commit/3df5b805a8725be1d022d7b59d48a4edff7ccbd7))
-* **EMS-4230:** added markdown validation and linting ([4f46f5a](https://github.com/UK-Export-Finance/exip/commit/4f46f5aff5e2b572f1713723f494a8a46af74ec3))
-* **EMS-4230:** added markdown validation and linting ([2471b26](https://github.com/UK-Export-Finance/exip/commit/2471b262024f41a59aae51b62120973f6387cc9a))
+- **EMS-4227:** add screenshot to github actions upon failure ([2a63b03](https://github.com/UK-Export-Finance/exip/commit/2a63b0367e6dfad59d38d1957dd7227374bcb20a))
+- **EMS-4227:** added screenshot to e2e upon failure to GHA ([1d7a8ea](https://github.com/UK-Export-Finance/exip/commit/1d7a8eae8f99015795c768e3140fa138d295cbf0))
+- **EMS-4230:** added markdown validation and linting ([3df5b80](https://github.com/UK-Export-Finance/exip/commit/3df5b805a8725be1d022d7b59d48a4edff7ccbd7))
+- **EMS-4230:** added markdown validation and linting ([4f46f5a](https://github.com/UK-Export-Finance/exip/commit/4f46f5aff5e2b572f1713723f494a8a46af74ec3))
+- **EMS-4230:** added markdown validation and linting ([2471b26](https://github.com/UK-Export-Finance/exip/commit/2471b262024f41a59aae51b62120973f6387cc9a))
 
 ## [2.43.2](https://github.com/UK-Export-Finance/exip/compare/v2.43.1...v2.43.2) (2025-07-05)
 
-
 ### Bug Fixes
 
-* **EMS-4229:** fixed NBI form URL ([2ca4e40](https://github.com/UK-Export-Finance/exip/commit/2ca4e40077f69e20c8e09953e85f0ae02f284c12))
-* **EMS-4229:** fixed NBI form URL ([6522127](https://github.com/UK-Export-Finance/exip/commit/6522127191abf97d63c39fb71055e4203fa86017))
-* **EMS-4229:** typo fix ([9ed794a](https://github.com/UK-Export-Finance/exip/commit/9ed794af8ffbb17a2be2ad712bf1c16e7f87304e))
-* **EMS-4229:** updated dockerfile base image ([f3ba4ba](https://github.com/UK-Export-Finance/exip/commit/f3ba4ba867a65edd386afe7ac5dc926052a07a49))
-* **EMS-4229:** updated dockerfile base image ([9fe5c9b](https://github.com/UK-Export-Finance/exip/commit/9fe5c9b31500ee81a598c45e4bc8c5eee79a2efc))
-* **EMS-4229:** updated SRI ([c238e79](https://github.com/UK-Export-Finance/exip/commit/c238e793e21643d27326c882af6ea63e9de1defd))
-* **EMS-4229:** updated SRI ([ce74240](https://github.com/UK-Export-Finance/exip/commit/ce742405e8bc74f15991ed75f405d7e01a447266))
+- **EMS-4229:** fixed NBI form URL ([2ca4e40](https://github.com/UK-Export-Finance/exip/commit/2ca4e40077f69e20c8e09953e85f0ae02f284c12))
+- **EMS-4229:** fixed NBI form URL ([6522127](https://github.com/UK-Export-Finance/exip/commit/6522127191abf97d63c39fb71055e4203fa86017))
+- **EMS-4229:** typo fix ([9ed794a](https://github.com/UK-Export-Finance/exip/commit/9ed794af8ffbb17a2be2ad712bf1c16e7f87304e))
+- **EMS-4229:** updated dockerfile base image ([f3ba4ba](https://github.com/UK-Export-Finance/exip/commit/f3ba4ba867a65edd386afe7ac5dc926052a07a49))
+- **EMS-4229:** updated dockerfile base image ([9fe5c9b](https://github.com/UK-Export-Finance/exip/commit/9fe5c9b31500ee81a598c45e4bc8c5eee79a2efc))
+- **EMS-4229:** updated SRI ([c238e79](https://github.com/UK-Export-Finance/exip/commit/c238e793e21643d27326c882af6ea63e9de1defd))
+- **EMS-4229:** updated SRI ([ce74240](https://github.com/UK-Export-Finance/exip/commit/ce742405e8bc74f15991ed75f405d7e01a447266))
 
 ## [2.43.1](https://github.com/UK-Export-Finance/exip/compare/v2.43.0...v2.43.1) (2025-06-03)
 
-
 ### Bug Fixes
 
-* **EMS-4224:** fixed E2E tests ([1753a64](https://github.com/UK-Export-Finance/exip/commit/1753a649c2b97e98ec137233fbecca5756f6fed7))
-* **EMS-4224:** fixed E2E tests ([00d029e](https://github.com/UK-Export-Finance/exip/commit/00d029e990dd4dd1a2de840de6f65b2587298341))
-* **EMS-4224:** fixed SRI and UI build assets ([19db83f](https://github.com/UK-Export-Finance/exip/commit/19db83f5e18d0643c08ab8127c75957f6434b163))
-* **EMS-4224:** fixed SRI and UI build assets ([51bd13b](https://github.com/UK-Export-Finance/exip/commit/51bd13bdafda7e28a89275ee301379977333f5e0))
-* **EMS-4224:** updated pricing grid ([c4149c4](https://github.com/UK-Export-Finance/exip/commit/c4149c437044e03fa1cfb40c51fb87737bc957e0))
-* **EMS-4224:** updated pricing grid ([8986da4](https://github.com/UK-Export-Finance/exip/commit/8986da4a0eaf6238915e3a5f4467d3145a22d911))
-* **EMS-4224:** updated pricing grid ([f06b7c4](https://github.com/UK-Export-Finance/exip/commit/f06b7c4e5b0b0bc797f58ebae80e6a4fc8414829))
-* **EMS-4224:** updated pricing grid ([04041e4](https://github.com/UK-Export-Finance/exip/commit/04041e4a39968669ba3386d6e9b9036a4ced2ad9))
+- **EMS-4224:** fixed E2E tests ([1753a64](https://github.com/UK-Export-Finance/exip/commit/1753a649c2b97e98ec137233fbecca5756f6fed7))
+- **EMS-4224:** fixed E2E tests ([00d029e](https://github.com/UK-Export-Finance/exip/commit/00d029e990dd4dd1a2de840de6f65b2587298341))
+- **EMS-4224:** fixed SRI and UI build assets ([19db83f](https://github.com/UK-Export-Finance/exip/commit/19db83f5e18d0643c08ab8127c75957f6434b163))
+- **EMS-4224:** fixed SRI and UI build assets ([51bd13b](https://github.com/UK-Export-Finance/exip/commit/51bd13bdafda7e28a89275ee301379977333f5e0))
+- **EMS-4224:** updated pricing grid ([c4149c4](https://github.com/UK-Export-Finance/exip/commit/c4149c437044e03fa1cfb40c51fb87737bc957e0))
+- **EMS-4224:** updated pricing grid ([8986da4](https://github.com/UK-Export-Finance/exip/commit/8986da4a0eaf6238915e3a5f4467d3145a22d911))
+- **EMS-4224:** updated pricing grid ([f06b7c4](https://github.com/UK-Export-Finance/exip/commit/f06b7c4e5b0b0bc797f58ebae80e6a4fc8414829))
+- **EMS-4224:** updated pricing grid ([04041e4](https://github.com/UK-Export-Finance/exip/commit/04041e4a39968669ba3386d6e9b9036a4ced2ad9))
 
 ## [2.43.0](https://github.com/UK-Export-Finance/exip/compare/v2.42.0...v2.43.0) (2025-05-23)
 
-
 ### Features
 
-* **EMS-4224:** syntax fix for README.md ([71ee5d6](https://github.com/UK-Export-Finance/exip/commit/71ee5d67bef5236bc433064b53be6912345a9242))
-* **EMS-4224:** updated pricing grid ([6ab54af](https://github.com/UK-Export-Finance/exip/commit/6ab54af2f69800f8487c13ce89b34785c0dc5be8))
-* **EMS-4224:** updated pricing grid ([d7d1f92](https://github.com/UK-Export-Finance/exip/commit/d7d1f92f735bfcdf805995f019b23b5ce0593321))
-* **EMS-4224:** updated pricing grid ([095a8f5](https://github.com/UK-Export-Finance/exip/commit/095a8f58b7be62fd68d0f26d5b0f94803a298ed9))
-
+- **EMS-4224:** syntax fix for README.md ([71ee5d6](https://github.com/UK-Export-Finance/exip/commit/71ee5d67bef5236bc433064b53be6912345a9242))
+- **EMS-4224:** updated pricing grid ([6ab54af](https://github.com/UK-Export-Finance/exip/commit/6ab54af2f69800f8487c13ce89b34785c0dc5be8))
+- **EMS-4224:** updated pricing grid ([d7d1f92](https://github.com/UK-Export-Finance/exip/commit/d7d1f92f735bfcdf805995f019b23b5ce0593321))
+- **EMS-4224:** updated pricing grid ([095a8f5](https://github.com/UK-Export-Finance/exip/commit/095a8f58b7be62fd68d0f26d5b0f94803a298ed9))
 
 ### Bug Fixes
 
-* **EMS-4224:** fixed cypress test assertions ([59d1ade](https://github.com/UK-Export-Finance/exip/commit/59d1ade5574f9fbdafb6d61e29420eee275dbe77))
-* **EMS-4224:** fixed cypress tests ([e05fb81](https://github.com/UK-Export-Finance/exip/commit/e05fb817c539576c7daf06bbd5025b11dad8f46c))
+- **EMS-4224:** fixed cypress test assertions ([59d1ade](https://github.com/UK-Export-Finance/exip/commit/59d1ade5574f9fbdafb6d61e29420eee275dbe77))
+- **EMS-4224:** fixed cypress tests ([e05fb81](https://github.com/UK-Export-Finance/exip/commit/e05fb817c539576c7daf06bbd5025b11dad8f46c))
 
 ## [2.42.0](https://github.com/UK-Export-Finance/exip/compare/v2.41.0...v2.42.0) (2025-05-09)
 
-
 ### Features
 
-* **EMS-4033:** added small exporter build link ([5e4fd4c](https://github.com/UK-Export-Finance/exip/commit/5e4fd4c2788e26c93325a6ef85c0330ee4f4dea1))
-* **EMS-4033:** added small exporter build link ([649d527](https://github.com/UK-Export-Finance/exip/commit/649d527ea69a0eb26699312f36d2c5862e8eb8e9))
-* **EMS-4033:** updated GitHub PR template ([99ad658](https://github.com/UK-Export-Finance/exip/commit/99ad65865328ebea79714e8876dcd5ec17e2c88c))
-* **EMS-4156:** acr purge test execution ([f9e76ff](https://github.com/UK-Export-Finance/exip/commit/f9e76ff552fd72e4febe55507c208fe55a40caf6))
-* **EMS-4156:** acr purge workflow ([856ee7e](https://github.com/UK-Export-Finance/exip/commit/856ee7e08e3b779305f21254355a3525979bbeae))
-* **EMS-4156:** acr purge workflow ([cb0a9cf](https://github.com/UK-Export-Finance/exip/commit/cb0a9cf7963f7b1ac5034cfc662c93ddb8ea0c6a))
-* **EMS-4156:** acr purge workflow ([6bdd989](https://github.com/UK-Export-Finance/exip/commit/6bdd9894a7c923c6fa18d64b5a6415619f11a2aa))
-* **EMS-4156:** indentation and typo fixes ([0f87885](https://github.com/UK-Export-Finance/exip/commit/0f87885f1a9970a8beafac80c507d980d241c2f0))
-* **EMS-4156:** removed branch names for test execution ([e772a87](https://github.com/UK-Export-Finance/exip/commit/e772a875de3e2a24e24ed6f8aebab1f9e45c8a9d))
-* **EMS-4222:** updated GTM SRI ([69583ab](https://github.com/UK-Export-Finance/exip/commit/69583abe5bdf8bd1f7faf24dbc6770697bfd61f0))
-* **EMS-4222:** upgraded GovUK package to 5.10.0 ([77d42e8](https://github.com/UK-Export-Finance/exip/commit/77d42e82d140fbb19a3328dae3694e7e0e274036))
-* **EMS-4222:** upgraded GovUK package to 5.10.0 ([7eef73e](https://github.com/UK-Export-Finance/exip/commit/7eef73ec5d9a2b3593f9ea7e9b6d7e0fe494b870))
-
+- **EMS-4033:** added small exporter build link ([5e4fd4c](https://github.com/UK-Export-Finance/exip/commit/5e4fd4c2788e26c93325a6ef85c0330ee4f4dea1))
+- **EMS-4033:** added small exporter build link ([649d527](https://github.com/UK-Export-Finance/exip/commit/649d527ea69a0eb26699312f36d2c5862e8eb8e9))
+- **EMS-4033:** updated GitHub PR template ([99ad658](https://github.com/UK-Export-Finance/exip/commit/99ad65865328ebea79714e8876dcd5ec17e2c88c))
+- **EMS-4156:** acr purge test execution ([f9e76ff](https://github.com/UK-Export-Finance/exip/commit/f9e76ff552fd72e4febe55507c208fe55a40caf6))
+- **EMS-4156:** acr purge workflow ([856ee7e](https://github.com/UK-Export-Finance/exip/commit/856ee7e08e3b779305f21254355a3525979bbeae))
+- **EMS-4156:** acr purge workflow ([cb0a9cf](https://github.com/UK-Export-Finance/exip/commit/cb0a9cf7963f7b1ac5034cfc662c93ddb8ea0c6a))
+- **EMS-4156:** acr purge workflow ([6bdd989](https://github.com/UK-Export-Finance/exip/commit/6bdd9894a7c923c6fa18d64b5a6415619f11a2aa))
+- **EMS-4156:** indentation and typo fixes ([0f87885](https://github.com/UK-Export-Finance/exip/commit/0f87885f1a9970a8beafac80c507d980d241c2f0))
+- **EMS-4156:** removed branch names for test execution ([e772a87](https://github.com/UK-Export-Finance/exip/commit/e772a875de3e2a24e24ed6f8aebab1f9e45c8a9d))
+- **EMS-4222:** updated GTM SRI ([69583ab](https://github.com/UK-Export-Finance/exip/commit/69583abe5bdf8bd1f7faf24dbc6770697bfd61f0))
+- **EMS-4222:** upgraded GovUK package to 5.10.0 ([77d42e8](https://github.com/UK-Export-Finance/exip/commit/77d42e82d140fbb19a3328dae3694e7e0e274036))
+- **EMS-4222:** upgraded GovUK package to 5.10.0 ([7eef73e](https://github.com/UK-Export-Finance/exip/commit/7eef73ec5d9a2b3593f9ea7e9b6d7e0fe494b870))
 
 ### Bug Fixes
 
-* **EMS-4033:** prisma generate ([85201f8](https://github.com/UK-Export-Finance/exip/commit/85201f8ab7c5f0602d969083fdd5f3e555863187))
-* **EMS-4033:** prisma generate ([fd7a990](https://github.com/UK-Export-Finance/exip/commit/fd7a990dad989b4f1b8c9c0d46ad6b077fd7ef65))
+- **EMS-4033:** prisma generate ([85201f8](https://github.com/UK-Export-Finance/exip/commit/85201f8ab7c5f0602d969083fdd5f3e555863187))
+- **EMS-4033:** prisma generate ([fd7a990](https://github.com/UK-Export-Finance/exip/commit/fd7a990dad989b4f1b8c9c0d46ad6b077fd7ef65))
 
 ## [2.41.0](https://github.com/UK-Export-Finance/exip/compare/v2.40.2...v2.41.0) (2025-03-05)
 
-
 ### Features
 
-* **EMS-4028-4029:** check/change your answers - broker address ([#3497](https://github.com/UK-Export-Finance/exip/issues/3497)) ([8e1bfac](https://github.com/UK-Export-Finance/exip/commit/8e1bfac26f3eb5d17f669c9228c5aa110dabe0a6))
-
+- **EMS-4028-4029:** check/change your answers - broker address ([#3497](https://github.com/UK-Export-Finance/exip/issues/3497)) ([8e1bfac](https://github.com/UK-Export-Finance/exip/commit/8e1bfac26f3eb5d17f669c9228c5aa110dabe0a6))
 
 ### Bug Fixes
 
-* **EMS-4197:** broker address lookup - line 1 data saving ([#3513](https://github.com/UK-Export-Finance/exip/issues/3513)) ([1c2dc87](https://github.com/UK-Export-Finance/exip/commit/1c2dc870ec254fa907d40a236ebc5b2a4e1559a9))
-* **EMS-4204:** fix file being sent to mdm for emails ([#3524](https://github.com/UK-Export-Finance/exip/issues/3524)) ([75e458a](https://github.com/UK-Export-Finance/exip/commit/75e458ad124c826831c444d1a7242031b30e1786))
-* **EMS-4205:** added use this address button text to view controller ([#3514](https://github.com/UK-Export-Finance/exip/issues/3514)) ([ea5f48c](https://github.com/UK-Export-Finance/exip/commit/ea5f48c0936eb61022d407d1c3d5fbb3b0e8dc29))
-* **EMS-4206-4207:** fix incorrect problem-with-service when no addresses found ([#3517](https://github.com/UK-Export-Finance/exip/issues/3517)) ([4e38d31](https://github.com/UK-Export-Finance/exip/commit/4e38d3146c678f025331b2e0aa99a9ae46d7d248))
-* **EMS-4206:** fixed certain postcode searches going to problem with service ([#3519](https://github.com/UK-Export-Finance/exip/issues/3519)) ([2978adb](https://github.com/UK-Export-Finance/exip/commit/2978adb019740db2daf7f09d458eb141946fb68c))
-* **EMS-4209:** fixed incorrect policy check-your-answers page status ([#3518](https://github.com/UK-Export-Finance/exip/issues/3518)) ([3649b7d](https://github.com/UK-Export-Finance/exip/commit/3649b7d35f068ea3b83a74513b6a989adda6845a))
-* **EMS-4214:** fix failing getISO8601 test ([#3523](https://github.com/UK-Export-Finance/exip/issues/3523)) ([3bb398f](https://github.com/UK-Export-Finance/exip/commit/3bb398fd5e5b2bcb16b3292d2737ed83f833e280))
-* **EMS-4216:** remove buildingNameOrNumber from xlsx generation ([#3528](https://github.com/UK-Export-Finance/exip/issues/3528)) ([7958ca2](https://github.com/UK-Export-Finance/exip/commit/7958ca2d01e39c98d116d00b02e2a9e248f90c5e))
-* **keystone:** updated keystone configuration ([#3516](https://github.com/UK-Export-Finance/exip/issues/3516)) ([fff25f9](https://github.com/UK-Export-Finance/exip/commit/fff25f970d3b5ed6f88048a6c9ab22ac48207564))
+- **EMS-4197:** broker address lookup - line 1 data saving ([#3513](https://github.com/UK-Export-Finance/exip/issues/3513)) ([1c2dc87](https://github.com/UK-Export-Finance/exip/commit/1c2dc870ec254fa907d40a236ebc5b2a4e1559a9))
+- **EMS-4204:** fix file being sent to mdm for emails ([#3524](https://github.com/UK-Export-Finance/exip/issues/3524)) ([75e458a](https://github.com/UK-Export-Finance/exip/commit/75e458ad124c826831c444d1a7242031b30e1786))
+- **EMS-4205:** added use this address button text to view controller ([#3514](https://github.com/UK-Export-Finance/exip/issues/3514)) ([ea5f48c](https://github.com/UK-Export-Finance/exip/commit/ea5f48c0936eb61022d407d1c3d5fbb3b0e8dc29))
+- **EMS-4206-4207:** fix incorrect problem-with-service when no addresses found ([#3517](https://github.com/UK-Export-Finance/exip/issues/3517)) ([4e38d31](https://github.com/UK-Export-Finance/exip/commit/4e38d3146c678f025331b2e0aa99a9ae46d7d248))
+- **EMS-4206:** fixed certain postcode searches going to problem with service ([#3519](https://github.com/UK-Export-Finance/exip/issues/3519)) ([2978adb](https://github.com/UK-Export-Finance/exip/commit/2978adb019740db2daf7f09d458eb141946fb68c))
+- **EMS-4209:** fixed incorrect policy check-your-answers page status ([#3518](https://github.com/UK-Export-Finance/exip/issues/3518)) ([3649b7d](https://github.com/UK-Export-Finance/exip/commit/3649b7d35f068ea3b83a74513b6a989adda6845a))
+- **EMS-4214:** fix failing getISO8601 test ([#3523](https://github.com/UK-Export-Finance/exip/issues/3523)) ([3bb398f](https://github.com/UK-Export-Finance/exip/commit/3bb398fd5e5b2bcb16b3292d2737ed83f833e280))
+- **EMS-4216:** remove buildingNameOrNumber from xlsx generation ([#3528](https://github.com/UK-Export-Finance/exip/issues/3528)) ([7958ca2](https://github.com/UK-Export-Finance/exip/commit/7958ca2d01e39c98d116d00b02e2a9e248f90c5e))
+- **keystone:** updated keystone configuration ([#3516](https://github.com/UK-Export-Finance/exip/issues/3516)) ([fff25f9](https://github.com/UK-Export-Finance/exip/commit/fff25f970d3b5ed6f88048a6c9ab22ac48207564))
 
 ## [2.40.2](https://github.com/UK-Export-Finance/exip/compare/v2.40.1...v2.40.2) (2025-01-27)
 
