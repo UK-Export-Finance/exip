@@ -79,7 +79,7 @@ jobs:
 
     steps:
       - name: Repository 🗂️
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Deploy ⚡
         uses: ./.github/actions/mysql
@@ -115,7 +115,7 @@ jobs:
 
     steps:
       - name: Repository 🗂️🌎
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Port ⭕️
         run: |
