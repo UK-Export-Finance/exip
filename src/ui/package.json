@@ -48,7 +48,7 @@
     "css-minimizer-webpack-plugin": "^7.0.4",
     "csurf": "^1.11.0",
     "date-fns": "^4.1.0",
-    "dotenv": "^17.2.3",
+    "dotenv": "^16.6.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
     "express-session": "^1.18.2",
