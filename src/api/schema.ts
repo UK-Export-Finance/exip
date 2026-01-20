@@ -799,7 +799,7 @@ export const lists = {
           { label: FEEDBACK.SATISFIED, value: FEEDBACK.SATISFIED },
           { label: FEEDBACK.NEITHER, value: FEEDBACK.NEITHER },
           { label: FEEDBACK.DISSATISFIED, value: FEEDBACK.DISSATISFIED },
-          { label: FEEDBACK.VERY_DISSATISIFED, value: FEEDBACK.VERY_DISSATISIFED },
+          { label: FEEDBACK.VERY_DISSATISFIED, value: FEEDBACK.VERY_DISSATISFIED },
           { label: '', value: '' },
         ],
         db: { isNullable: true },

@@ -29,8 +29,8 @@ The repository is based on the [template-typescript-package](https://github.com/
 
 **CD** 🚀
 
-| Status | Environment|
-| - | -|
+| Status                                                                                                             | Environment  |
+| ------------------------------------------------------------------------------------------------------------------ | ------------ |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev)        | `dev`        |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=feature)    | `feature`    |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging)    | `staging`    |
@@ -91,10 +91,10 @@ Alternatively, you can run each microservice via npm:
   3. For hot reloading: `npm run dev`
 
 To run the full application flow without Docker, set up a MySQL
-  database, update the `DATABASE_URL`, `MYSQL_DATABASE`, and
-  `MYSQL_ROOT_PASSWORD` environment variables, and import the
-  [MySQL dump](https://github.com/UK-Export-Finance/exip/blob/main-application/database/exip.sql)
-  to populate the database.
+database, update the `DATABASE_URL`, `MYSQL_DATABASE`, and
+`MYSQL_ROOT_PASSWORD` environment variables, and import the
+[MySQL dump](https://github.com/UK-Export-Finance/exip/blob/main-application/database/exip.sql)
+to populate the database.
 
 ## Testing :microscope:
 
@@ -345,20 +345,25 @@ can be found](https://github.com/UK-Export-Finance/exip/blob/main-application/sr
 
 ### Quote tool controllers
 
-Use [quoteCorePageVariables](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/quote/index.ts).
+Use `quoteCorePageVariables`.
+<https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/quote/index.ts>
 Example usage:
 
 ```js
 const get = (req: Request, res: Response) =>
   res.render('template.njk', {
-    ...quoteCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.EXAMPLE, BACK_LINK: req.headers.referer }),
+    ...quoteCorePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.EXAMPLE,
+      BACK_LINK: req.headers.referer,
+    }),
     EXIT_REASON,
   });
 ```
 
 ### Insurance controllers
 
-Use [insuranceCorePageVariables](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/insurance/index.ts).
+Use `insuranceCorePageVariables`.
+<https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/insurance/index.ts>
 Example usage:
 
 ```js
@@ -366,7 +371,8 @@ const get = (req: Request, res: Response) =>
   res.render('template.njk', {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.EXAMPLE,
-    BACK_LINK: req.headers.referer }),
+      BACK_LINK: req.headers.referer,
+    }),
     EXIT_REASON,
   });
 ```

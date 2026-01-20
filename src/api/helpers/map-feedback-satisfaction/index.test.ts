@@ -1,7 +1,7 @@
 import mapFeedbackSatisfaction from '.';
 import { FEEDBACK } from '../../constants';
 
-const { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED, EMAIL_TEXT } = FEEDBACK;
+const { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISFIED, EMAIL_TEXT } = FEEDBACK;
 
 describe('api/helpers/map-feedback-satisfaction', () => {
   describe(VERY_SATISFIED, () => {
@@ -40,9 +40,9 @@ describe('api/helpers/map-feedback-satisfaction', () => {
     });
   });
 
-  describe(VERY_DISSATISIFED, () => {
+  describe(VERY_DISSATISFIED, () => {
     it(`should return ${EMAIL_TEXT.veryDissatisfied}`, () => {
-      const response = mapFeedbackSatisfaction(VERY_DISSATISIFED);
+      const response = mapFeedbackSatisfaction(VERY_DISSATISFIED);
       const expected = EMAIL_TEXT.veryDissatisfied;
 
       expect(response).toEqual(expected);

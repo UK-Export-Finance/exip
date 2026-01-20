@@ -242,7 +242,7 @@ export const FEEDBACK = {
   SATISFIED: 'satisfied',
   NEITHER: 'neither',
   DISSATISFIED: 'dissatisfied',
-  VERY_DISSATISIFED: 'veryDissatisfied',
+  VERY_DISSATISFIED: 'veryDissatisfied',
   EMAIL_TEXT: {
     verySatisfied: 'Very satisfied',
     satisfied: 'Satisfied',

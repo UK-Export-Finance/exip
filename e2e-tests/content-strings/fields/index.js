@@ -187,7 +187,7 @@ export const FIELDS = {
     SATISFIED: 'Satisfied',
     NEITHER: 'Neither satisfied or dissatisfied',
     DISSATISFIED: 'Dissatisfied',
-    VERY_DISSATISIFED: 'Very dissatisfied',
+    VERY_DISSATISFIED: 'Very dissatisfied',
   },
   [FIELD_IDS.FEEDBACK.IMPROVEMENT]: {
     LABEL: 'How could we improve this service?',
