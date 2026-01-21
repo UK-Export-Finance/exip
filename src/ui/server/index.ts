@@ -122,9 +122,9 @@ ui.use('/', redirectRoutes);
 ui.use(ROUTES.QUOTE.ROOT, requiredQuoteEligibilityDataProvided);
 ui.use(ROUTES.QUOTE.ROOT, isHighRiskCountryWithHighCover);
 ui.use('/apply/eligibility', requiredInsuranceEligibilityDataProvided);
-ui.use('/apply/:referenceNumber/*', getApplicationByReferenceNumber);
-ui.use('/apply/:referenceNumber/*', applicationAccess);
-ui.use('/apply/:referenceNumber/*', applicationStatus);
+ui.use('/apply/:referenceNumber/{*splat}', getApplicationByReferenceNumber);
+ui.use('/apply/:referenceNumber/{*splat}', applicationAccess);
+ui.use('/apply/:referenceNumber/{*splat}', applicationStatus);
 ui.use('/', userSession);
 
 ui.use('/', rootRoute);
@@ -154,7 +154,7 @@ ui.use(errorHandler);
 const INSURANCE_PAGE_NOT_FOUND_TEMPLATE = 'insurance/page-not-found.njk';
 const PAGE_NOT_FOUND_TEMPLATE = 'page-not-found.njk';
 
-ui.get('*', (req: Request, res: Response) => {
+ui.get('{*splat}', (req: Request, res: Response) => {
   /**
    * if route contains "insurance" eg /insurance/dashboard
    * insurance page-not-found should be rendered

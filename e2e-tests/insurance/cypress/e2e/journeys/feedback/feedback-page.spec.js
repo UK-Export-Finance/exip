@@ -6,7 +6,7 @@ import { FIELD_IDS } from '../../../../../constants/field-ids';
 const CONTENT_STRINGS = PAGES.FEEDBACK_PAGE;
 
 const {
-  FEEDBACK: { SATISFACTION, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED, IMPROVEMENT, OTHER_COMMENTS },
+  FEEDBACK: { SATISFACTION, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISFIED, IMPROVEMENT, OTHER_COMMENTS },
 } = FIELD_IDS;
 
 const {
@@ -55,13 +55,13 @@ context(
         cy.checkText(fieldSelector(SATISFIED).label(), FIELD_STRINGS[SATISFACTION].SATISFIED);
         cy.checkText(fieldSelector(NEITHER).label(), FIELD_STRINGS[SATISFACTION].NEITHER);
         cy.checkText(fieldSelector(DISSATISFIED).label(), FIELD_STRINGS[SATISFACTION].DISSATISFIED);
-        cy.checkText(fieldSelector(VERY_DISSATISIFED).label(), FIELD_STRINGS[SATISFACTION].VERY_DISSATISIFED);
+        cy.checkText(fieldSelector(VERY_DISSATISFIED).label(), FIELD_STRINGS[SATISFACTION].VERY_DISSATISFIED);
 
         fieldSelector(VERY_SATISFIED).input().should('exist');
         fieldSelector(SATISFIED).input().should('exist');
         fieldSelector(NEITHER).input().should('exist');
         fieldSelector(DISSATISFIED).input().should('exist');
-        fieldSelector(VERY_DISSATISIFED).input().should('exist');
+        fieldSelector(VERY_DISSATISFIED).input().should('exist');
       });
 
       it(`should render the ${IMPROVEMENT} textarea`, () => {

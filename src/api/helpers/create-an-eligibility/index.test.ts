@@ -1,4 +1,4 @@
-import creatAnEligibility from '.';
+import createAnEligibility from '.';
 import { mockCountries, mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import getCountryByField from '../get-country-by-field';
@@ -35,7 +35,7 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   it('should return a eligibility with ID', async () => {
-    const result = await creatAnEligibility(context, country.id, application.id, coverPeriod.id, totalContractValue.id);
+    const result = await createAnEligibility(context, country.id, application.id, coverPeriod.id, totalContractValue.id);
 
     expect(result.id).toBeDefined();
     expect(typeof result.id).toEqual('string');
@@ -43,7 +43,7 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   it('should return empty eligibility fields', async () => {
-    const result = await creatAnEligibility(context, country.id, application.id, coverPeriod.id, totalContractValue.id);
+    const result = await createAnEligibility(context, country.id, application.id, coverPeriod.id, totalContractValue.id);
 
     expect(result.applicationId).toEqual(application.id);
     expect(result.buyerCountryId).toEqual(country.id);
@@ -60,7 +60,7 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid country ID is passed', () => {
     it('should throw an error', async () => {
       try {
-        await creatAnEligibility(context, mockInvalidId, application.id, coverPeriod.id, totalContractValue.id);
+        await createAnEligibility(context, mockInvalidId, application.id, coverPeriod.id, totalContractValue.id);
       } catch (error) {
         assertError(error);
       }
@@ -70,7 +70,7 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid application ID is passed', () => {
     it('should throw an error', async () => {
       try {
-        await creatAnEligibility(context, country.id, mockInvalidId, coverPeriod.id, totalContractValue.id);
+        await createAnEligibility(context, country.id, mockInvalidId, coverPeriod.id, totalContractValue.id);
       } catch (error) {
         assertError(error);
       }
@@ -80,7 +80,7 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid coverPeriod ID is passed', () => {
     it('should throw an error', async () => {
       try {
-        await creatAnEligibility(context, country.id, application.id, mockInvalidId, totalContractValue.id);
+        await createAnEligibility(context, country.id, application.id, mockInvalidId, totalContractValue.id);
       } catch (error) {
         assertError(error);
       }
@@ -90,7 +90,7 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid totalContractValue ID is passed', () => {
     it('should throw an error', async () => {
       try {
-        await creatAnEligibility(context, country.id, application.id, coverPeriod.id, mockInvalidId);
+        await createAnEligibility(context, country.id, application.id, coverPeriod.id, mockInvalidId);
       } catch (error) {
         assertError(error);
       }
@@ -101,7 +101,7 @@ describe('helpers/create-an-eligibility', () => {
     it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await creatAnEligibility({}, country.id, application.id, coverPeriod.id, totalContractValue.id);
+        await createAnEligibility({}, country.id, application.id, coverPeriod.id, totalContractValue.id);
       } catch (error) {
         assertError(error);
       }

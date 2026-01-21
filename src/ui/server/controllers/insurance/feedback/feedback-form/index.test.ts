@@ -10,7 +10,7 @@ import generateValidationErrors from './validation';
 import { Request, ResponseInsurance, ObjectType } from '../../../../../types';
 import { mockReq, mockResInsurance, mockInsuranceFeedback } from '../../../../test-mocks';
 
-const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FEEDBACK_FIELD_IDS;
+const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISFIED } = FEEDBACK_FIELD_IDS;
 
 const { REFERRAL_URL, SERVICE, PRODUCT } = FEEDBACK_FIELD_IDS;
 
@@ -54,7 +54,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
         FIELDS: {
           SATISFACTION: {
             ID: SATISFACTION,
-            OPTIONS: { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED },
+            OPTIONS: { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISFIED },
             ...FIELDS[SATISFACTION],
           },
           IMPROVEMENT: {

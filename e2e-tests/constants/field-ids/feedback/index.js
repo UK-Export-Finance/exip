@@ -4,7 +4,7 @@ export const FEEDBACK_FIELD_IDS = {
   SATISFIED: 'satisfied',
   NEITHER: 'neither',
   DISSATISFIED: 'dissatisfied',
-  VERY_DISSATISIFED: 'veryDissatisfied',
+  VERY_DISSATISFIED: 'veryDissatisfied',
   IMPROVEMENT: 'improvement',
   OTHER_COMMENTS: 'otherComments',
   SERVICE: 'service',
