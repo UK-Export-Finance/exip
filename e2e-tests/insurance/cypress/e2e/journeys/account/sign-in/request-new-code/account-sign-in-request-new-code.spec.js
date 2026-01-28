@@ -85,6 +85,15 @@ context(
 
             cy.checkText(doNotHaveAccessToEmail.outro(), DO_NOT_HAVE_EMAIL_ACCESS.OUTRO);
           });
+
+          it('should navigate to contact us page when clicking the contact us link', () => {
+            doNotHaveAccessToEmail.summary().click();
+
+            doNotHaveAccessToEmail.contactUsLink().click();
+
+            const expected = `${baseUrl}${DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF}`;
+            cy.assertUrl(expected);
+          });
         });
       });
     });

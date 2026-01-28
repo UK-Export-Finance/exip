@@ -96,7 +96,7 @@ const ACCOUNT = {
         CANNOT_ACCESS: 'If you cannot access your email',
         CONTACT_US: {
           TEXT: 'contact us',
-          HREF: '#',
+          HREF: INSURANCE_ROUTES.CONTACT_US,
         },
         OUTRO: 'for help signing in.',
       },
