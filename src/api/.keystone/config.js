@@ -10477,10 +10477,10 @@ var keystone_default = withAuth(
         plugins: apolloPlugins2,
         formatError: formatGraphQlError2,
       },
+      extendGraphqlSchema,
     },
     lists,
     session,
-    extendGraphqlSchema,
     telemetry: false,
   }),
 );

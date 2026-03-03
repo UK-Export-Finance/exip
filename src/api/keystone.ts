@@ -75,10 +75,10 @@ export default withAuth(
         plugins: apolloPlugins,
         formatError: formatGraphQlError,
       },
+      extendGraphqlSchema,
     },
     lists,
     session,
-    extendGraphqlSchema,
     telemetry: false,
   }),
 );
