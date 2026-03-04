@@ -501,6 +501,8 @@ type LossPayeeFinancialInternational {
 
 input LossPayeeFinancialInternationalWhereUniqueInput {
   id: ID
+  lossPayee: NominatedLossPayeeWhereUniqueInput
+  vector: LossPayeeFinancialInternationalVectorWhereUniqueInput
 }
 
 input LossPayeeFinancialInternationalWhereInput {
@@ -563,6 +565,7 @@ type LossPayeeFinancialInternationalVector {
 
 input LossPayeeFinancialInternationalVectorWhereUniqueInput {
   id: ID
+  financialInternational: LossPayeeFinancialInternationalWhereUniqueInput
 }
 
 input LossPayeeFinancialInternationalVectorWhereInput {
@@ -620,6 +623,8 @@ type LossPayeeFinancialUk {
 
 input LossPayeeFinancialUkWhereUniqueInput {
   id: ID
+  lossPayee: NominatedLossPayeeWhereUniqueInput
+  vector: LossPayeeFinancialUkVectorWhereUniqueInput
 }
 
 input LossPayeeFinancialUkWhereInput {
@@ -682,6 +687,7 @@ type LossPayeeFinancialUkVector {
 
 input LossPayeeFinancialUkVectorWhereUniqueInput {
   id: ID
+  financialUk: LossPayeeFinancialUkWhereUniqueInput
 }
 
 input LossPayeeFinancialUkVectorWhereInput {
@@ -741,6 +747,8 @@ type NominatedLossPayee {
 
 input NominatedLossPayeeWhereUniqueInput {
   id: ID
+  financialUk: LossPayeeFinancialUkWhereUniqueInput
+  financialInternational: LossPayeeFinancialInternationalWhereUniqueInput
 }
 
 input NominatedLossPayeeWhereInput {
@@ -803,6 +811,7 @@ type Policy {
 
 input PolicyWhereUniqueInput {
   id: ID
+  jointlyInsuredParty: JointlyInsuredPartyWhereUniqueInput
 }
 
 input PolicyWhereInput {
@@ -954,6 +963,7 @@ type JointlyInsuredParty {
 
 input JointlyInsuredPartyWhereUniqueInput {
   id: ID
+  policy: PolicyWhereUniqueInput
 }
 
 input JointlyInsuredPartyWhereInput {
@@ -1010,6 +1020,8 @@ type ExportContract {
 
 input ExportContractWhereUniqueInput {
   id: ID
+  agent: ExportContractAgentWhereUniqueInput
+  privateMarket: PrivateMarketWhereUniqueInput
 }
 
 input ExportContractWhereInput {
@@ -1109,6 +1121,8 @@ type ExportContractAgent {
 
 input ExportContractAgentWhereUniqueInput {
   id: ID
+  exportContract: ExportContractWhereUniqueInput
+  service: ExportContractAgentServiceWhereUniqueInput
 }
 
 input ExportContractAgentWhereInput {
@@ -1174,6 +1188,8 @@ type ExportContractAgentService {
 
 input ExportContractAgentServiceWhereUniqueInput {
   id: ID
+  agent: ExportContractAgentWhereUniqueInput
+  charge: ExportContractAgentServiceChargeWhereUniqueInput
 }
 
 input ExportContractAgentServiceWhereInput {
@@ -1235,6 +1251,7 @@ scalar Decimal
 
 input ExportContractAgentServiceChargeWhereUniqueInput {
   id: ID
+  service: ExportContractAgentServiceWhereUniqueInput
 }
 
 input ExportContractAgentServiceChargeWhereInput {
@@ -1337,6 +1354,7 @@ type PrivateMarket {
 
 input PrivateMarketWhereUniqueInput {
   id: ID
+  exportContract: ExportContractWhereUniqueInput
 }
 
 input PrivateMarketWhereInput {
@@ -1399,6 +1417,7 @@ type Account {
 
 input AccountWhereUniqueInput {
   id: ID
+  status: AccountStatusWhereUniqueInput
 }
 
 input AccountWhereInput {
@@ -1569,6 +1588,7 @@ type AccountStatus {
 
 input AccountStatusWhereUniqueInput {
   id: ID
+  account: AccountWhereUniqueInput
 }
 
 input AccountStatusWhereInput {
@@ -1908,6 +1928,7 @@ type CompanyAddress {
 
 input CompanyAddressWhereUniqueInput {
   id: ID
+  company: CompanyWhereUniqueInput
 }
 
 input CompanyAddressWhereInput {
@@ -1987,6 +2008,8 @@ type Company {
 
 input CompanyWhereUniqueInput {
   id: ID
+  registeredOfficeAddress: CompanyAddressWhereUniqueInput
+  differentTradingAddress: CompanyDifferentTradingAddressWhereUniqueInput
 }
 
 input CompanyWhereInput {
@@ -2103,6 +2126,7 @@ type CompanyDifferentTradingAddress {
 
 input CompanyDifferentTradingAddressWhereUniqueInput {
   id: ID
+  company: CompanyWhereUniqueInput
 }
 
 input CompanyDifferentTradingAddressWhereInput {
@@ -2193,6 +2217,9 @@ type Buyer {
 
 input BuyerWhereUniqueInput {
   id: ID
+  buyerTradingHistory: BuyerTradingHistoryWhereUniqueInput
+  contact: BuyerContactWhereUniqueInput
+  relationship: BuyerRelationshipWhereUniqueInput
 }
 
 input BuyerWhereInput {
@@ -2305,6 +2332,7 @@ type BuyerContact {
 
 input BuyerContactWhereUniqueInput {
   id: ID
+  buyer: BuyerWhereUniqueInput
 }
 
 input BuyerContactWhereInput {
@@ -2366,6 +2394,7 @@ type BuyerRelationship {
 
 input BuyerRelationshipWhereUniqueInput {
   id: ID
+  buyer: BuyerWhereUniqueInput
 }
 
 input BuyerRelationshipWhereInput {
@@ -2424,6 +2453,7 @@ type BuyerTradingHistory {
 
 input BuyerTradingHistoryWhereUniqueInput {
   id: ID
+  buyer: BuyerWhereUniqueInput
 }
 
 input BuyerTradingHistoryWhereInput {
@@ -2684,6 +2714,7 @@ type Declaration {
 
 input DeclarationWhereUniqueInput {
   id: ID
+  modernSlavery: DeclarationModernSlaveryWhereUniqueInput
 }
 
 input DeclarationWhereInput {
@@ -2829,6 +2860,7 @@ type DeclarationModernSlavery {
 
 input DeclarationModernSlaveryWhereUniqueInput {
   id: ID
+  declaration: DeclarationWhereUniqueInput
 }
 
 input DeclarationModernSlaveryWhereInput {
@@ -3438,131 +3470,131 @@ input CreateInitialUserInput {
 }
 
 type Query {
-  referenceNumbers(where: ReferenceNumberWhereInput! = {}, orderBy: [ReferenceNumberOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ReferenceNumberWhereUniqueInput): [ReferenceNumber!]
   referenceNumber(where: ReferenceNumberWhereUniqueInput!): ReferenceNumber
+  referenceNumbers(where: ReferenceNumberWhereInput! = {}, orderBy: [ReferenceNumberOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ReferenceNumberWhereUniqueInput): [ReferenceNumber!]
   referenceNumbersCount(where: ReferenceNumberWhereInput! = {}): Int
-  applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   application(where: ApplicationWhereUniqueInput!): Application
+  applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   applicationsCount(where: ApplicationWhereInput! = {}): Int
-  totalContractValues(where: TotalContractValueWhereInput! = {}, orderBy: [TotalContractValueOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TotalContractValueWhereUniqueInput): [TotalContractValue!]
   totalContractValue(where: TotalContractValueWhereUniqueInput!): TotalContractValue
+  totalContractValues(where: TotalContractValueWhereInput! = {}, orderBy: [TotalContractValueOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TotalContractValueWhereUniqueInput): [TotalContractValue!]
   totalContractValuesCount(where: TotalContractValueWhereInput! = {}): Int
-  coverPeriods(where: CoverPeriodWhereInput! = {}, orderBy: [CoverPeriodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CoverPeriodWhereUniqueInput): [CoverPeriod!]
   coverPeriod(where: CoverPeriodWhereUniqueInput!): CoverPeriod
+  coverPeriods(where: CoverPeriodWhereInput! = {}, orderBy: [CoverPeriodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CoverPeriodWhereUniqueInput): [CoverPeriod!]
   coverPeriodsCount(where: CoverPeriodWhereInput! = {}): Int
-  lossPayeeFinancialInternationals(where: LossPayeeFinancialInternationalWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalWhereUniqueInput): [LossPayeeFinancialInternational!]
   lossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!): LossPayeeFinancialInternational
+  lossPayeeFinancialInternationals(where: LossPayeeFinancialInternationalWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalWhereUniqueInput): [LossPayeeFinancialInternational!]
   lossPayeeFinancialInternationalsCount(where: LossPayeeFinancialInternationalWhereInput! = {}): Int
-  lossPayeeFinancialInternationalVectors(where: LossPayeeFinancialInternationalVectorWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalVectorWhereUniqueInput): [LossPayeeFinancialInternationalVector!]
   lossPayeeFinancialInternationalVector(where: LossPayeeFinancialInternationalVectorWhereUniqueInput!): LossPayeeFinancialInternationalVector
+  lossPayeeFinancialInternationalVectors(where: LossPayeeFinancialInternationalVectorWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalVectorWhereUniqueInput): [LossPayeeFinancialInternationalVector!]
   lossPayeeFinancialInternationalVectorsCount(where: LossPayeeFinancialInternationalVectorWhereInput! = {}): Int
-  lossPayeeFinancialUks(where: LossPayeeFinancialUkWhereInput! = {}, orderBy: [LossPayeeFinancialUkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkWhereUniqueInput): [LossPayeeFinancialUk!]
   lossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!): LossPayeeFinancialUk
+  lossPayeeFinancialUks(where: LossPayeeFinancialUkWhereInput! = {}, orderBy: [LossPayeeFinancialUkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkWhereUniqueInput): [LossPayeeFinancialUk!]
   lossPayeeFinancialUksCount(where: LossPayeeFinancialUkWhereInput! = {}): Int
-  lossPayeeFinancialUkVectors(where: LossPayeeFinancialUkVectorWhereInput! = {}, orderBy: [LossPayeeFinancialUkVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkVectorWhereUniqueInput): [LossPayeeFinancialUkVector!]
   lossPayeeFinancialUkVector(where: LossPayeeFinancialUkVectorWhereUniqueInput!): LossPayeeFinancialUkVector
+  lossPayeeFinancialUkVectors(where: LossPayeeFinancialUkVectorWhereInput! = {}, orderBy: [LossPayeeFinancialUkVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkVectorWhereUniqueInput): [LossPayeeFinancialUkVector!]
   lossPayeeFinancialUkVectorsCount(where: LossPayeeFinancialUkVectorWhereInput! = {}): Int
-  nominatedLossPayees(where: NominatedLossPayeeWhereInput! = {}, orderBy: [NominatedLossPayeeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NominatedLossPayeeWhereUniqueInput): [NominatedLossPayee!]
   nominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!): NominatedLossPayee
+  nominatedLossPayees(where: NominatedLossPayeeWhereInput! = {}, orderBy: [NominatedLossPayeeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NominatedLossPayeeWhereUniqueInput): [NominatedLossPayee!]
   nominatedLossPayeesCount(where: NominatedLossPayeeWhereInput! = {}): Int
-  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policy(where: PolicyWhereUniqueInput!): Policy
+  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policiesCount(where: PolicyWhereInput! = {}): Int
-  policyContacts(where: PolicyContactWhereInput! = {}, orderBy: [PolicyContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyContactWhereUniqueInput): [PolicyContact!]
   policyContact(where: PolicyContactWhereUniqueInput!): PolicyContact
+  policyContacts(where: PolicyContactWhereInput! = {}, orderBy: [PolicyContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyContactWhereUniqueInput): [PolicyContact!]
   policyContactsCount(where: PolicyContactWhereInput! = {}): Int
-  jointlyInsuredParties(where: JointlyInsuredPartyWhereInput! = {}, orderBy: [JointlyInsuredPartyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JointlyInsuredPartyWhereUniqueInput): [JointlyInsuredParty!]
   jointlyInsuredParty(where: JointlyInsuredPartyWhereUniqueInput!): JointlyInsuredParty
+  jointlyInsuredParties(where: JointlyInsuredPartyWhereInput! = {}, orderBy: [JointlyInsuredPartyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JointlyInsuredPartyWhereUniqueInput): [JointlyInsuredParty!]
   jointlyInsuredPartiesCount(where: JointlyInsuredPartyWhereInput! = {}): Int
-  exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
   exportContract(where: ExportContractWhereUniqueInput!): ExportContract
+  exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
   exportContractsCount(where: ExportContractWhereInput! = {}): Int
-  exportContractAgents(where: ExportContractAgentWhereInput! = {}, orderBy: [ExportContractAgentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentWhereUniqueInput): [ExportContractAgent!]
   exportContractAgent(where: ExportContractAgentWhereUniqueInput!): ExportContractAgent
+  exportContractAgents(where: ExportContractAgentWhereInput! = {}, orderBy: [ExportContractAgentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentWhereUniqueInput): [ExportContractAgent!]
   exportContractAgentsCount(where: ExportContractAgentWhereInput! = {}): Int
-  exportContractAgentServices(where: ExportContractAgentServiceWhereInput! = {}, orderBy: [ExportContractAgentServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceWhereUniqueInput): [ExportContractAgentService!]
   exportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!): ExportContractAgentService
+  exportContractAgentServices(where: ExportContractAgentServiceWhereInput! = {}, orderBy: [ExportContractAgentServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceWhereUniqueInput): [ExportContractAgentService!]
   exportContractAgentServicesCount(where: ExportContractAgentServiceWhereInput! = {}): Int
-  exportContractAgentServiceCharges(where: ExportContractAgentServiceChargeWhereInput! = {}, orderBy: [ExportContractAgentServiceChargeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceChargeWhereUniqueInput): [ExportContractAgentServiceCharge!]
   exportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
+  exportContractAgentServiceCharges(where: ExportContractAgentServiceChargeWhereInput! = {}, orderBy: [ExportContractAgentServiceChargeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceChargeWhereUniqueInput): [ExportContractAgentServiceCharge!]
   exportContractAgentServiceChargesCount(where: ExportContractAgentServiceChargeWhereInput! = {}): Int
-  exportContractAwardMethods(where: ExportContractAwardMethodWhereInput! = {}, orderBy: [ExportContractAwardMethodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAwardMethodWhereUniqueInput): [ExportContractAwardMethod!]
   exportContractAwardMethod(where: ExportContractAwardMethodWhereUniqueInput!): ExportContractAwardMethod
+  exportContractAwardMethods(where: ExportContractAwardMethodWhereInput! = {}, orderBy: [ExportContractAwardMethodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAwardMethodWhereUniqueInput): [ExportContractAwardMethod!]
   exportContractAwardMethodsCount(where: ExportContractAwardMethodWhereInput! = {}): Int
-  privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
   privateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
+  privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
   privateMarketsCount(where: PrivateMarketWhereInput! = {}): Int
-  accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
+  accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   accountsCount(where: AccountWhereInput! = {}): Int
-  accountStatuses(where: AccountStatusWhereInput! = {}, orderBy: [AccountStatusOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountStatusWhereUniqueInput): [AccountStatus!]
   accountStatus(where: AccountStatusWhereUniqueInput!): AccountStatus
+  accountStatuses(where: AccountStatusWhereInput! = {}, orderBy: [AccountStatusOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountStatusWhereUniqueInput): [AccountStatus!]
   accountStatusesCount(where: AccountStatusWhereInput! = {}): Int
-  authenticationRetries(where: AuthenticationRetryWhereInput! = {}, orderBy: [AuthenticationRetryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationRetryWhereUniqueInput): [AuthenticationRetry!]
   authenticationRetry(where: AuthenticationRetryWhereUniqueInput!): AuthenticationRetry
+  authenticationRetries(where: AuthenticationRetryWhereInput! = {}, orderBy: [AuthenticationRetryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationRetryWhereUniqueInput): [AuthenticationRetry!]
   authenticationRetriesCount(where: AuthenticationRetryWhereInput! = {}): Int
-  authentications(where: AuthenticationWhereInput! = {}, orderBy: [AuthenticationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationWhereUniqueInput): [Authentication!]
   authentication(where: AuthenticationWhereUniqueInput!): Authentication
+  authentications(where: AuthenticationWhereInput! = {}, orderBy: [AuthenticationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationWhereUniqueInput): [Authentication!]
   authenticationsCount(where: AuthenticationWhereInput! = {}): Int
-  businesses(where: BusinessWhereInput! = {}, orderBy: [BusinessOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessWhereUniqueInput): [Business!]
   business(where: BusinessWhereUniqueInput!): Business
+  businesses(where: BusinessWhereInput! = {}, orderBy: [BusinessOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessWhereUniqueInput): [Business!]
   businessesCount(where: BusinessWhereInput! = {}): Int
-  brokers(where: BrokerWhereInput! = {}, orderBy: [BrokerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BrokerWhereUniqueInput): [Broker!]
   broker(where: BrokerWhereUniqueInput!): Broker
+  brokers(where: BrokerWhereInput! = {}, orderBy: [BrokerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BrokerWhereUniqueInput): [Broker!]
   brokersCount(where: BrokerWhereInput! = {}): Int
-  companyAddresses(where: CompanyAddressWhereInput! = {}, orderBy: [CompanyAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyAddressWhereUniqueInput): [CompanyAddress!]
   companyAddress(where: CompanyAddressWhereUniqueInput!): CompanyAddress
+  companyAddresses(where: CompanyAddressWhereInput! = {}, orderBy: [CompanyAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyAddressWhereUniqueInput): [CompanyAddress!]
   companyAddressesCount(where: CompanyAddressWhereInput! = {}): Int
-  companies(where: CompanyWhereInput! = {}, orderBy: [CompanyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyWhereUniqueInput): [Company!]
   company(where: CompanyWhereUniqueInput!): Company
+  companies(where: CompanyWhereInput! = {}, orderBy: [CompanyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyWhereUniqueInput): [Company!]
   companiesCount(where: CompanyWhereInput! = {}): Int
-  companyDifferentTradingAddresses(where: CompanyDifferentTradingAddressWhereInput! = {}, orderBy: [CompanyDifferentTradingAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyDifferentTradingAddressWhereUniqueInput): [CompanyDifferentTradingAddress!]
   companyDifferentTradingAddress(where: CompanyDifferentTradingAddressWhereUniqueInput!): CompanyDifferentTradingAddress
+  companyDifferentTradingAddresses(where: CompanyDifferentTradingAddressWhereInput! = {}, orderBy: [CompanyDifferentTradingAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyDifferentTradingAddressWhereUniqueInput): [CompanyDifferentTradingAddress!]
   companyDifferentTradingAddressesCount(where: CompanyDifferentTradingAddressWhereInput! = {}): Int
-  companySicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanySicCodeWhereUniqueInput): [CompanySicCode!]
   companySicCode(where: CompanySicCodeWhereUniqueInput!): CompanySicCode
+  companySicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanySicCodeWhereUniqueInput): [CompanySicCode!]
   companySicCodesCount(where: CompanySicCodeWhereInput! = {}): Int
-  buyers(where: BuyerWhereInput! = {}, orderBy: [BuyerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerWhereUniqueInput): [Buyer!]
   buyer(where: BuyerWhereUniqueInput!): Buyer
+  buyers(where: BuyerWhereInput! = {}, orderBy: [BuyerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerWhereUniqueInput): [Buyer!]
   buyersCount(where: BuyerWhereInput! = {}): Int
-  buyerContacts(where: BuyerContactWhereInput! = {}, orderBy: [BuyerContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerContactWhereUniqueInput): [BuyerContact!]
   buyerContact(where: BuyerContactWhereUniqueInput!): BuyerContact
+  buyerContacts(where: BuyerContactWhereInput! = {}, orderBy: [BuyerContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerContactWhereUniqueInput): [BuyerContact!]
   buyerContactsCount(where: BuyerContactWhereInput! = {}): Int
-  buyerRelationships(where: BuyerRelationshipWhereInput! = {}, orderBy: [BuyerRelationshipOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerRelationshipWhereUniqueInput): [BuyerRelationship!]
   buyerRelationship(where: BuyerRelationshipWhereUniqueInput!): BuyerRelationship
+  buyerRelationships(where: BuyerRelationshipWhereInput! = {}, orderBy: [BuyerRelationshipOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerRelationshipWhereUniqueInput): [BuyerRelationship!]
   buyerRelationshipsCount(where: BuyerRelationshipWhereInput! = {}): Int
-  buyerTradingHistories(where: BuyerTradingHistoryWhereInput! = {}, orderBy: [BuyerTradingHistoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerTradingHistoryWhereUniqueInput): [BuyerTradingHistory!]
   buyerTradingHistory(where: BuyerTradingHistoryWhereUniqueInput!): BuyerTradingHistory
+  buyerTradingHistories(where: BuyerTradingHistoryWhereInput! = {}, orderBy: [BuyerTradingHistoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerTradingHistoryWhereUniqueInput): [BuyerTradingHistory!]
   buyerTradingHistoriesCount(where: BuyerTradingHistoryWhereInput! = {}): Int
-  countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CountryWhereUniqueInput): [Country!]
   country(where: CountryWhereUniqueInput!): Country
+  countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CountryWhereUniqueInput): [Country!]
   countriesCount(where: CountryWhereInput! = {}): Int
-  eligibilities(where: EligibilityWhereInput! = {}, orderBy: [EligibilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EligibilityWhereUniqueInput): [Eligibility!]
   eligibility(where: EligibilityWhereUniqueInput!): Eligibility
+  eligibilities(where: EligibilityWhereInput! = {}, orderBy: [EligibilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EligibilityWhereUniqueInput): [Eligibility!]
   eligibilitiesCount(where: EligibilityWhereInput! = {}): Int
-  sectionReviews(where: SectionReviewWhereInput! = {}, orderBy: [SectionReviewOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SectionReviewWhereUniqueInput): [SectionReview!]
   sectionReview(where: SectionReviewWhereUniqueInput!): SectionReview
+  sectionReviews(where: SectionReviewWhereInput! = {}, orderBy: [SectionReviewOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SectionReviewWhereUniqueInput): [SectionReview!]
   sectionReviewsCount(where: SectionReviewWhereInput! = {}): Int
-  declarations(where: DeclarationWhereInput! = {}, orderBy: [DeclarationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationWhereUniqueInput): [Declaration!]
   declaration(where: DeclarationWhereUniqueInput!): Declaration
+  declarations(where: DeclarationWhereInput! = {}, orderBy: [DeclarationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationWhereUniqueInput): [Declaration!]
   declarationsCount(where: DeclarationWhereInput! = {}): Int
-  declarationVersions(where: DeclarationVersionWhereInput! = {}, orderBy: [DeclarationVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationVersionWhereUniqueInput): [DeclarationVersion!]
   declarationVersion(where: DeclarationVersionWhereUniqueInput!): DeclarationVersion
+  declarationVersions(where: DeclarationVersionWhereInput! = {}, orderBy: [DeclarationVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationVersionWhereUniqueInput): [DeclarationVersion!]
   declarationVersionsCount(where: DeclarationVersionWhereInput! = {}): Int
-  declarationModernSlaveries(where: DeclarationModernSlaveryWhereInput! = {}, orderBy: [DeclarationModernSlaveryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationModernSlaveryWhereUniqueInput): [DeclarationModernSlavery!]
   declarationModernSlavery(where: DeclarationModernSlaveryWhereUniqueInput!): DeclarationModernSlavery
+  declarationModernSlaveries(where: DeclarationModernSlaveryWhereInput! = {}, orderBy: [DeclarationModernSlaveryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationModernSlaveryWhereUniqueInput): [DeclarationModernSlavery!]
   declarationModernSlaveriesCount(where: DeclarationModernSlaveryWhereInput! = {}): Int
-  declarationModernSlaveryVersions(where: DeclarationModernSlaveryVersionWhereInput! = {}, orderBy: [DeclarationModernSlaveryVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationModernSlaveryVersionWhereUniqueInput): [DeclarationModernSlaveryVersion!]
   declarationModernSlaveryVersion(where: DeclarationModernSlaveryVersionWhereUniqueInput!): DeclarationModernSlaveryVersion
+  declarationModernSlaveryVersions(where: DeclarationModernSlaveryVersionWhereInput! = {}, orderBy: [DeclarationModernSlaveryVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationModernSlaveryVersionWhereUniqueInput): [DeclarationModernSlaveryVersion!]
   declarationModernSlaveryVersionsCount(where: DeclarationModernSlaveryVersionWhereInput! = {}): Int
-  pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   page(where: PageWhereUniqueInput!): Page
+  pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   pagesCount(where: PageWhereInput! = {}): Int
-  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int
-  feedbacks(where: FeedbackWhereInput! = {}, orderBy: [FeedbackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FeedbackWhereUniqueInput): [Feedback!]
   feedback(where: FeedbackWhereUniqueInput!): Feedback
+  feedbacks(where: FeedbackWhereInput! = {}, orderBy: [FeedbackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FeedbackWhereUniqueInput): [Feedback!]
   feedbacksCount(where: FeedbackWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
@@ -3608,23 +3640,25 @@ type KeystoneAdminMeta {
 
 type KeystoneAdminUIListMeta {
   key: String!
-  itemQueryName: String!
-  listQueryName: String!
-  hideCreate: Boolean!
-  hideDelete: Boolean!
   path: String!
   label: String!
   singular: String!
   plural: String!
   description: String
-  initialColumns: [String!]!
   pageSize: Int!
   labelField: String!
   fields: [KeystoneAdminUIFieldMeta!]!
   groups: [KeystoneAdminUIFieldGroupMeta!]!
+  graphql: KeystoneAdminUIGraphQL!
+  initialColumns: [String!]!
+  initialSearchFields: [String!]!
   initialSort: KeystoneAdminUISort
-  isHidden: Boolean!
   isSingleton: Boolean!
+  hideCreate: Boolean!
+  hideDelete: Boolean!
+  isHidden: Boolean!
+  itemQueryName: String!
+  listQueryName: String!
 }
 
 type KeystoneAdminUIFieldMeta {
@@ -3692,6 +3726,33 @@ type KeystoneAdminUIFieldGroupMeta {
   label: String!
   description: String
   fields: [KeystoneAdminUIFieldMeta!]!
+}
+
+type KeystoneAdminUIGraphQL {
+  names: KeystoneAdminUIGraphQLNames!
+}
+
+type KeystoneAdminUIGraphQLNames {
+  outputTypeName: String!
+  whereInputName: String!
+  whereUniqueInputName: String!
+  createInputName: String!
+  createMutationName: String!
+  createManyMutationName: String!
+  relateToOneForCreateInputName: String!
+  relateToManyForCreateInputName: String!
+  itemQueryName: String!
+  listOrderName: String!
+  listQueryCountName: String!
+  listQueryName: String!
+  updateInputName: String!
+  updateMutationName: String!
+  updateManyInputName: String!
+  updateManyMutationName: String!
+  relateToOneForUpdateInputName: String!
+  relateToManyForUpdateInputName: String!
+  deleteMutationName: String!
+  deleteManyMutationName: String!
 }
 
 type KeystoneAdminUISort {
