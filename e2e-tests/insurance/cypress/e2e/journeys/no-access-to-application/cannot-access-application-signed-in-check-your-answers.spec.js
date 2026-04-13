@@ -36,6 +36,7 @@ context('Insurance - no access to application page - signed in - check your answ
     });
 
     cy.deleteAccount(firstAccountEmail);
+
     cy.deleteAccount(secondAccountEmail);
   });
 
