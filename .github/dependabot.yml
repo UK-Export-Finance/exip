@@ -43,6 +43,8 @@ updates:
         versions: [">=4.0.0"]
       - dependency-name: "prettier"
         versions: [">=3.0.0"]
+      - dependency-name: "cspell"
+        versions: [">=10.0.0"]
     groups:
       npm-packages:
         patterns:
