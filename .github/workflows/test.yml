@@ -157,7 +157,7 @@ jobs:
         run: npm run unit-test
 
       - name: Coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit-test
