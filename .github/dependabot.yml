@@ -49,6 +49,8 @@ updates:
         versions: [">=30.0.0"]
       - dependency-name: "cspell"
         versions: [">=10.0.0"]
+      - dependency-name: "otplib"
+        versions: [">=13.0.0"]
     groups:
       npm-packages:
         patterns:
