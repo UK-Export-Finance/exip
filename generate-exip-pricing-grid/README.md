@@ -11,14 +11,23 @@ transforms it to a JSON file.
     - "Single Policy - Digital" should be the 1st sheet.
     - "Revolving Policy - Digital" should be the 2nd sheet.
   - Remove all introductory text from both the sheets.
-  - Copy all table cells, starting from the body and paste into the
+  - If provided with a spreadsheet with Strong Risk, Good Risk, Standard & High Risk, Very High Risk
+    then the following needs to be followed
+    - Standard Risk - rows from Standard & High Risk which have rating of
+      "B+ / 75%" in the last LGD row
+    - High Risk - rows from Standard & High Risk which have rating of
+      "B+ / 95%" in the last LGD row
+    - Very High Risk - rows from Very High Risk which have rating of
+      "B / 95%" in the last LGD row
+  - Copy all relevant table cells, starting from the body and paste into the
     first row, first cell of the spreadsheet.
   - Copy the first cell (risk category) and paste this into each
     appropriate column, so each section has the risk category as the
     first cell.
     - For example, "Standard Risk (S)" should be "Standard Risk" and
       present on every single row of this section.
-  - The spreadsheet should now look like below:
+  - The spreadsheet should now look like below
+    (minus the top row with the headings which should not be included):
   - Ensure only the below risk categories exists in the final
     spreadsheet.
 
