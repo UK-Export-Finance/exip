@@ -127,14 +127,11 @@ export const post = async (req: Request, res: Response) => {
      * redirect to a specific exit page.
      */
     if (country.ilcOfflineEFMSupportOnly) {
-      console.info('Country support - %s - no online insurance support available - ILC only', country.name);
+      console.info('Country support - %s - no online quote support available - ILC only', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
-      req.session.submittedData = {
-        ...req.session.submittedData,
-        insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
-      };
+      req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
       req.flash('exitReason', PAGE_VARIABLES.EXIT_REASON);
 

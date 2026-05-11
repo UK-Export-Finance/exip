@@ -202,12 +202,9 @@ describe('controllers/quote/buyer-country - redirects', () => {
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
-        const expected = {
-          ...req.session.submittedData,
-          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
-        };
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it('should add exitReason to req.flash', async () => {
