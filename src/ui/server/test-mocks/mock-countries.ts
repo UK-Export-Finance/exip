@@ -14,6 +14,7 @@ const baseCountry = {
   shortTermCover: false,
   esraClassification: RISK.STANDARD as RiskClassifications,
   isHighRisk: false,
+  ilcOfflineEFMSupportOnly: false,
 };
 
 export const mockCountryCannotGetAQuote: Country = {
@@ -66,6 +67,20 @@ export const mockHighRiskCountry: Country = {
   isHighRisk: true,
 };
 
-export const mockCountries = [mockCountryCannotGetAQuote, mockCountryCanGetAQuoteOnline, mockCountryCanGetAQuoteByEmail, mockHighRiskCountry] as Array<Country>;
+export const mockIlcOfflineEFMSupportOnlyCountry: Country = {
+  ...baseCountry,
+  name: 'Bahrain',
+  isoCode: 'BHR',
+  noOnlineSupport: false,
+  ilcOfflineEFMSupportOnly: true,
+};
+
+export const mockCountries = [
+  mockCountryCannotGetAQuote,
+  mockCountryCanGetAQuoteOnline,
+  mockCountryCanGetAQuoteByEmail,
+  mockHighRiskCountry,
+  mockIlcOfflineEFMSupportOnlyCountry,
+] as Array<Country>;
 
 export default mockCountries;

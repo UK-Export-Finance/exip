@@ -14,6 +14,7 @@ import {
   mockCountryCanApplyForInsuranceOnline,
   mockCountryNoInsuranceSupport,
   mockCountryNoOnlineSupport,
+  mockIlcOfflineEFMSupportOnlyCountry,
 } from '../../../../test-mocks';
 
 const {
@@ -187,6 +188,49 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_ROUTE);
+      });
+    });
+
+    describe('when the API returns an ilcOfflineEFMSupportOnly flag for the submitted country', () => {
+      const selectedCountryIsoCode = mockIlcOfflineEFMSupportOnlyCountry.isoCode;
+
+      beforeEach(() => {
+        mockCountriesResponse = [mockIlcOfflineEFMSupportOnlyCountry];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryIsoCode;
+      });
+
+      it('should update the session with populated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode);
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
+      it('should add exitReason to req.flash', async () => {
+        await post(req, res);
+
+        const expectedReason = PAGES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT.ILC_EXIT.REASON;
+
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+      });
+
+      it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
       });
     });
   });

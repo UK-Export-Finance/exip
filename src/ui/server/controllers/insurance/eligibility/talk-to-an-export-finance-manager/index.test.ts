@@ -31,6 +31,7 @@ describe('controllers/insurance/eligibility/talk-to-an-export-finance-manager', 
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
+        EXIT_REASON: req.flash('exitReason'),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

@@ -46,6 +46,7 @@ export interface MappedCisCountry {
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   noInsuranceSupport: boolean;
+  ilcOfflineEFMSupportOnly: boolean;
   isHighRisk: boolean;
 }
 

@@ -3129,6 +3129,7 @@ var typeDefs = `
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
     isHighRisk: Boolean
+    ilcOfflineEFMSupportOnly: Boolean
   }
 
   type MappedCurrency {
@@ -9833,6 +9834,15 @@ var {
 var isHighRiskCountry = (riskClassification) => riskClassification === HIGH4;
 var is_high_risk_country_default = isHighRiskCountry;
 
+// helpers/map-CIS-countries/map-CIS-country/has-ilc-only/index.ts
+var {
+  CIS: {
+    SHORT_TERM_COVER: { ILC: ILC3 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var hasILCOnly = ({ shortTermCover }) => shortTermCover === ILC3;
+var has_ilc_only_default = hasILCOnly;
+
 // helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (cisCountry) => {
   const { countryRatingDesc: countryRating, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc: shortTermCover } = cisCountry;
@@ -9842,6 +9852,7 @@ var mapCisCountry = (cisCountry) => {
     esraClassification: ESRAClassificationDesc,
     shortTermCover,
   });
+  const ilcOfflineEFMSupportOnly = has_ilc_only_default({ shortTermCover });
   const mapped = {
     countryRating,
     esraClassification,
@@ -9856,6 +9867,7 @@ var mapCisCountry = (cisCountry) => {
     cannotGetAQuote: noSupport,
     canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
     noInsuranceSupport: noSupport,
+    ilcOfflineEFMSupportOnly,
     isHighRisk: is_high_risk_country_default(esraClassification),
   };
   return mapped;

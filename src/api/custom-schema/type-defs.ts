@@ -231,6 +231,7 @@ const typeDefs = `
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
     isHighRisk: Boolean
+    ilcOfflineEFMSupportOnly: Boolean
   }
 
   type MappedCurrency {

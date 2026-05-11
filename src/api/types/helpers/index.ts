@@ -13,3 +13,7 @@ export interface NoInsuranceSupportParams {
   esraClassification: string;
   shortTermCover: string;
 }
+
+export interface HasILCOnlyParams {
+  shortTermCover: string;
+}
