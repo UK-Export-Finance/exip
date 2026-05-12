@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.46.0](https://github.com/UK-Export-Finance/exip/compare/v2.45.2...v2.46.0) (2026-05-12)
+
+
+### Features
+
+* **EMS-4240:** update pricing grid ([#3703](https://github.com/UK-Export-Finance/exip/issues/3703)) ([6a22c67](https://github.com/UK-Export-Finance/exip/commit/6a22c6705fc58ac657dafea6e25c8907e0f9c095))
+* **EMS-4241:** redirect to ilc exit when ILC only country entered ([#3715](https://github.com/UK-Export-Finance/exip/issues/3715)) ([e941477](https://github.com/UK-Export-Finance/exip/commit/e9414776bc2e1cf20fcf8e6040ec6ac3367109e1))
+
+
+### Bug Fixes
+
+* **EMS-4237:** added missing href to contact us link ([#3638](https://github.com/UK-Export-Finance/exip/issues/3638)) ([8e863da](https://github.com/UK-Export-Finance/exip/commit/8e863daee14d461f2f6dd358db6efd5d07b451ed))
+* **integrity-sha:** update GOVUK integrity ([#3637](https://github.com/UK-Export-Finance/exip/issues/3637)) ([46b0e8e](https://github.com/UK-Export-Finance/exip/commit/46b0e8e755d8e6cd2e59a2eed673fd73f88e2ea9))
+
 ## [2.45.2](https://github.com/UK-Export-Finance/exip/compare/v2.45.1...v2.45.2) (2025-10-07)
 
 ### Bug Fixes
