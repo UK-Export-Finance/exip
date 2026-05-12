@@ -69,8 +69,8 @@ export const mockHighRiskCountry: Country = {
 
 export const mockIlcOfflineEFMSupportOnlyCountry: Country = {
   ...baseCountry,
-  name: 'Bahrain',
-  isoCode: 'BHR',
+  name: 'Angola',
+  isoCode: 'AGO',
   noOnlineSupport: false,
   ilcOfflineEFMSupportOnly: true,
 };
