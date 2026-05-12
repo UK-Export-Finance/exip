@@ -19,6 +19,7 @@ export const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
+  EXIT_REASON: PAGES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT.ILC_EXIT.REASON,
 };
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
@@ -119,6 +120,22 @@ export const post = async (req: Request, res: Response) => {
 
     if (!country) {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
+    }
+
+    /**
+     * If a country is ILC only,
+     * redirect to a specific exit page.
+     */
+    if (country.ilcOfflineSupportOnly) {
+      console.info('Country support - %s - no online quote support available - ILC only', country.name);
+
+      const populatedData = mapSubmittedEligibilityCountry(country);
+
+      req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
+
+      req.flash('exitReason', PAGE_VARIABLES.EXIT_REASON);
+
+      return res.redirect(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     }
 
     /**

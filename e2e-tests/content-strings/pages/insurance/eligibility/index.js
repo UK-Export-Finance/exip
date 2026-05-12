@@ -1,7 +1,9 @@
-import { UKEF_CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE, APPLICATION } from '../../../../constants';
+import { UKEF_CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE, APPLICATION, ELIGIBILITY } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
+
+const { MAX_ILC_COVER } = ELIGIBILITY;
 
 export const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 
@@ -171,6 +173,9 @@ export const HAVE_AN_ACCOUNT = {
 export const TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT = {
   PAGE_TITLE: 'Talk to an export finance manager',
   INTRO: "We do not normally offer short term cover for the country you've selected.",
+  ILC_EXIT: {
+    REASON: `We do not normally offer short-term cover for the country you've selected, except in cases where the export value is below £${MAX_ILC_COVER}.`,
+  },
   CONTACT_EFM: {
     INTRO: 'You might still be able to apply for credit insurance through UKEF - contact',
     LINK: {

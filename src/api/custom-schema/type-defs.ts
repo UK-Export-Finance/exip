@@ -231,6 +231,8 @@ const typeDefs = `
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
     isHighRisk: Boolean
+    """ "ILC = Irrevocable Letter of Credit """
+    ilcOfflineSupportOnly: Boolean
   }
 
   type MappedCurrency {

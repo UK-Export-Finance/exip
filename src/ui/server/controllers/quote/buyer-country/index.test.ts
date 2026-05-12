@@ -41,6 +41,7 @@ describe('controllers/quote/buyer-country', () => {
       const expected = {
         FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
+        EXIT_REASON: PAGES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT.ILC_EXIT.REASON,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);

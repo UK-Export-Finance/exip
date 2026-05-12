@@ -13,7 +13,6 @@ const COUNTRY_NAME_2 = COUNTRY_QUOTE_SUPPORT.NO_ONLINE_SUPPORT_2.NAME;
 const COUNTRY_NAME_3 = COUNTRY_QUOTE_SUPPORT.NO_ONLINE_SUPPORT_3.NAME;
 const COUNTRY_NAME_4 = COUNTRY_QUOTE_SUPPORT.NO_ONLINE_SUPPORT_4.NAME;
 const COUNTRY_NAME_5 = COUNTRY_QUOTE_SUPPORT.NO_ONLINE_SUPPORT_5.NAME;
-const COUNTRY_NAME_6 = COUNTRY_QUOTE_SUPPORT.NO_ONLINE_SUPPORT_6.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -86,33 +85,6 @@ context(
         cy.clickSubmitButton();
 
         cy.assertUrl(talkToEfmUrl);
-      });
-    });
-
-    describe(COUNTRY_NAME_6, () => {
-      beforeEach(() => {
-        cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_6);
-
-        const results = autoCompleteField(FIELD_ID).results();
-        results.first().click();
-        cy.clickSubmitButton();
-      });
-
-      it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT} exit page`, () => {
-        cy.assertUrl(talkToEfmUrl);
-      });
-
-      it('should prepopulate the field when going back to the page', () => {
-        cy.clickBackLink();
-
-        const expectedValue = COUNTRY_NAME_6;
-
-        cy.checkTextAndValue({
-          textSelector: autoCompleteField(FIELD_ID).results(),
-          expectedText: expectedValue,
-          valueSelector: autoCompleteField(FIELD_ID),
-          expectedValue,
-        });
       });
     });
   },

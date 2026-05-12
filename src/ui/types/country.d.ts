@@ -12,6 +12,7 @@ interface Country {
   noOnlineSupport: boolean;
   noInsuranceSupport: boolean;
   isHighRisk: boolean;
+  ilcOfflineSupportOnly: boolean;
 }
 
 export { Country };

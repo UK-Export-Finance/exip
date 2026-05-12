@@ -12,6 +12,7 @@ import {
   mockCountryCannotGetAQuote,
   mockCountryCanGetAQuoteOnline,
   mockCountryCanGetAQuoteByEmail,
+  mockIlcOfflineEFMSupportOnlyCountry,
 } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -178,6 +179,46 @@ describe('controllers/quote/buyer-country - redirects', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
+      });
+    });
+
+    describe('when the API returns an ilcOfflineSupportOnly flag for the submitted country', () => {
+      const selectedCountryIsoCode = mockIlcOfflineEFMSupportOnlyCountry.isoCode;
+
+      beforeEach(() => {
+        mockCountriesResponse = [mockIlcOfflineEFMSupportOnlyCountry];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+
+        req.body[FIELD_ID] = selectedCountryIsoCode;
+      });
+
+      it('should update the session with populated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode);
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
+
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
+
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
+      });
+
+      it('should add exitReason to req.flash', async () => {
+        await post(req, res);
+
+        const expectedReason = PAGES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT.ILC_EXIT.REASON;
+
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+      });
+
+      it(`should redirect to ${ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
       });
     });
   });

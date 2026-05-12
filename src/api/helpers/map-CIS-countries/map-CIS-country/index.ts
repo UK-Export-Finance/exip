@@ -4,6 +4,7 @@ import hasNoOnlineSupport from './has-no-online-support';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import isHighRiskCountry from './is-high-risk-country';
+import hasILCOnly from './has-ilc-only';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
 /**
@@ -28,6 +29,8 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     shortTermCover,
   });
 
+  const ilcOfflineSupportOnly = hasILCOnly({ shortTermCover });
+
   const mapped: MappedCisCountry = {
     countryRating,
     esraClassification,
@@ -47,6 +50,8 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     canApplyForInsuranceOnline: canApplyForInsuranceOnline(cisCountry),
 
     noInsuranceSupport: noSupport,
+
+    ilcOfflineSupportOnly,
 
     isHighRisk: isHighRiskCountry(esraClassification),
   };

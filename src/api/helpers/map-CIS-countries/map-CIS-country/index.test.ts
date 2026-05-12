@@ -1,6 +1,7 @@
 import mapCisCountry from '.';
 import mapEsraClassification from './map-esra-classification';
 import hasNoOnlineSupport from './has-no-online-support';
+import hasILCOnly from './has-ilc-only';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import hasNoSupport from './has-no-support';
@@ -39,6 +40,8 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
         esraClassification: mockCisCountry.ESRAClassificationDesc,
         shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
       }),
+
+      ilcOfflineSupportOnly: hasILCOnly({ shortTermCover: mockCountryBase.shortTermCoverAvailabilityDesc }),
 
       canGetAQuoteOnline: canGetAQuoteOnline(mockCisCountry),
 
