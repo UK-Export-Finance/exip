@@ -126,7 +126,7 @@ export const post = async (req: Request, res: Response) => {
      * If a country is ILC only,
      * redirect to a specific exit page.
      */
-    if (country.ilcOfflineEFMSupportOnly) {
+    if (country.ilcOfflineSupportOnly) {
       console.info('Country support - %s - no online quote support available - ILC only', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);

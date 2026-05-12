@@ -14,7 +14,7 @@ const baseCountry = {
   shortTermCover: false,
   esraClassification: RISK.STANDARD as RiskClassifications,
   isHighRisk: false,
-  ilcOfflineEFMSupportOnly: false,
+  ilcOfflineSupportOnly: false,
 };
 
 export const mockCountryCannotGetAQuote: Country = {
@@ -72,7 +72,7 @@ export const mockIlcOfflineEFMSupportOnlyCountry: Country = {
   name: 'Angola',
   isoCode: 'AGO',
   noOnlineSupport: false,
-  ilcOfflineEFMSupportOnly: true,
+  ilcOfflineSupportOnly: true,
 };
 
 export const mockCountries = [

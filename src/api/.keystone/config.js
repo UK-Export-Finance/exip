@@ -3129,7 +3129,8 @@ var typeDefs = `
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
     isHighRisk: Boolean
-    ilcOfflineEFMSupportOnly: Boolean
+    """ "ILC = Irrevocable Letter of Credit """
+    ilcOfflineSupportOnly: Boolean
   }
 
   type MappedCurrency {
@@ -9852,7 +9853,7 @@ var mapCisCountry = (cisCountry) => {
     esraClassification: ESRAClassificationDesc,
     shortTermCover,
   });
-  const ilcOfflineEFMSupportOnly = has_ilc_only_default({ shortTermCover });
+  const ilcOfflineSupportOnly = has_ilc_only_default({ shortTermCover });
   const mapped = {
     countryRating,
     esraClassification,
@@ -9867,7 +9868,7 @@ var mapCisCountry = (cisCountry) => {
     cannotGetAQuote: noSupport,
     canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
     noInsuranceSupport: noSupport,
-    ilcOfflineEFMSupportOnly,
+    ilcOfflineSupportOnly,
     isHighRisk: is_high_risk_country_default(esraClassification),
   };
   return mapped;

@@ -60,8 +60,8 @@ describe('server/helpers/mappings/map-submitted-eligibility-country', () => {
     });
   });
 
-  describe('when a country has ilcOfflineEFMSupportOnly=true', () => {
-    it('should return an object with BUYER_COUNTRY object with ilcOfflineEFMSupportOnly=true', () => {
+  describe('when a country has ilcOfflineSupportOnly=true', () => {
+    it('should return an object with BUYER_COUNTRY object with ilcOfflineSupportOnly=true', () => {
       const result = mapSubmittedEligibilityCountry(mockIlcOfflineEFMSupportOnlyCountry);
 
       const expected = {
@@ -71,7 +71,7 @@ describe('server/helpers/mappings/map-submitted-eligibility-country', () => {
           esraClassification: mockIlcOfflineEFMSupportOnlyCountry.esraClassification,
           canApplyOnline: mockIlcOfflineEFMSupportOnlyCountry.canGetAQuoteOnline || mockIlcOfflineEFMSupportOnlyCountry.canApplyForInsuranceOnline,
           isHighRisk: mockIlcOfflineEFMSupportOnlyCountry.isHighRisk,
-          ilcOfflineEFMSupportOnly: true,
+          ilcOfflineSupportOnly: true,
         },
       };
 

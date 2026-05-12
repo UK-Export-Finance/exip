@@ -2,8 +2,10 @@ import INSURANCE_PAGES from './insurance';
 import QUOTE_PAGES from './quote';
 import { ACTIONS } from '../actions';
 import { LINKS } from '../links';
-import { ROUTES } from '../../constants';
+import { ROUTES, ELIGIBILITY } from '../../constants';
 import { CONTACT_DETAILS } from '../contact';
+
+const { MAX_ILC_COVER } = ELIGIBILITY;
 
 const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
@@ -34,7 +36,7 @@ const TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT = {
   PAGE_TITLE: 'Talk to an export finance manager',
   INTRO: "We do not normally offer short term cover for the country you've selected.",
   ILC_EXIT: {
-    REASON: `We do not normally offer short-term cover for the country you've selected, except in cases where the export value is below £100,000.`,
+    REASON: `We do not normally offer short-term cover for the country you've selected, except in cases where the export value is below £${MAX_ILC_COVER}.`,
   },
   CONTACT_EFM: {
     INTRO: 'You might still be able to apply for credit insurance through UKEF - contact',

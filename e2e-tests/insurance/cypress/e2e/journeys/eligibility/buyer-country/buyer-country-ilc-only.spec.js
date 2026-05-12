@@ -6,14 +6,14 @@ const {
   ELIGIBILITY: { TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = INSURANCE_ROUTES;
 
-const COUNTRY_NAME_1 = COUNTRY_APPLICATION_SUPPORT.ILC_ONLY_1.NAME;
+const COUNTRY_NAME_1 = COUNTRY_APPLICATION_SUPPORT.ILC_OFFLINE_SUPPORT_ONLY_1.NAME;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT;
 
 const { ILC_EXIT } = CONTENT_STRINGS;
 
 context(
-  'Insurance - Buyer country page - As an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based - submit countries that are ILC only - offline EFM support',
+  'Insurance - Buyer country page - As an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based - submit countries that are "ILC" - offline EFM support',
   () => {
     beforeEach(() => {
       cy.saveSession();

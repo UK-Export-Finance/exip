@@ -12,7 +12,7 @@ const getApimCisCountries = gql`
       noOnlineSupport
       noInsuranceSupport
       isHighRisk
-      ilcOfflineEFMSupportOnly
+      ilcOfflineSupportOnly
     }
   }
 `;

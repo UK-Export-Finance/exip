@@ -29,7 +29,7 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     shortTermCover,
   });
 
-  const ilcOfflineEFMSupportOnly = hasILCOnly({ shortTermCover });
+  const ilcOfflineSupportOnly = hasILCOnly({ shortTermCover });
 
   const mapped: MappedCisCountry = {
     countryRating,
@@ -51,7 +51,7 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
 
     noInsuranceSupport: noSupport,
 
-    ilcOfflineEFMSupportOnly,
+    ilcOfflineSupportOnly,
 
     isHighRisk: isHighRiskCountry(esraClassification),
   };

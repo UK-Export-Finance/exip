@@ -41,7 +41,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
         shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
       }),
 
-      ilcOfflineEFMSupportOnly: hasILCOnly({ shortTermCover: mockCountryBase.shortTermCoverAvailabilityDesc }),
+      ilcOfflineSupportOnly: hasILCOnly({ shortTermCover: mockCountryBase.shortTermCoverAvailabilityDesc }),
 
       canGetAQuoteOnline: canGetAQuoteOnline(mockCisCountry),
 

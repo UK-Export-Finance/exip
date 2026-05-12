@@ -9,7 +9,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME_1 = COUNTRY_QUOTE_SUPPORT.ILC_ONLY_1.NAME;
+const COUNTRY_NAME_1 = COUNTRY_QUOTE_SUPPORT.ILC_OFFLINE_SUPPORT_ONLY_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -18,7 +18,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MA
 const { ILC_EXIT } = CONTENT_STRINGS;
 
 context(
-  'Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based - submit countries that are ILC only - offline EFM support',
+  'Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based - submit countries that are "ILC" - offline EFM support',
   () => {
     const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
     const talkToEfmUrl = `${baseUrl}${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`;

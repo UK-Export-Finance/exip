@@ -182,7 +182,7 @@ describe('controllers/quote/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the API returns an ilcOfflineEFMSupportOnly flag for the submitted country', () => {
+    describe('when the API returns an ilcOfflineSupportOnly flag for the submitted country', () => {
       const selectedCountryIsoCode = mockIlcOfflineEFMSupportOnlyCountry.isoCode;
 
       beforeEach(() => {
