@@ -1,0 +1,244 @@
+# Release Workflow
+# ****************
+#
+# This GitHub Actions workflow automates the release process for deploying web apps to different environments.
+# It is triggered by the completion of the Quality Assurance - Tests workflow and runs when there is a push to a release branch (matching the pattern `release-*` but excluding `release-please*`).
+# The workflow handles the deployment of SQL migrations and web apps sequentially.
+#
+# Key Stages:
+# 1. Setup: Determines the appropriate environment based on the release branch and configures environment variables (e.g., timezone).
+# 2. Database Migration: Executes SQL migrations for the target environment if the `DATABASE` variable is set to `1`.
+# 3. WebApp Deployment: Sequentially deploys a list of web apps defined in the matrix (`ui` and `api`) to the target environment.
+#
+# Key Points:
+# - The workflow is triggered by the completion of the Quality Assurance - Tests workflow.
+# - The deployment environment is determined dynamically based on the release branch (e.g. staging or prod).
+# - Concurrency control is employed to ensure no simultaneous deployments for the same app/function.
+# - Temporary deployment slots are used to ensure minimal downtime during deployments.
+# - The workflow runs only if the preceding workflow (Quality Assurance - Tests) concludes successfully.
+#
+# Triggers: This workflow is triggered when the Quality Assurance - Tests workflow completes successfully for a release branch (`release-*`).
+#
+# Environment Variables:
+# - `PRODUCT`: The product being deployed (e.g., `exip`).
+# - `ENVIRONMENT`: The environment for deployment, dynamically set based on the release branch.
+# - `TIMEZONE`: The timezone for deployment, passed via GitHub actions variables.
+# - `FROM`: The base artifact to use for deployment (default is `latest`).
+
+name: Release
+run-name: 🚀 Deploying to ${{ github.event.workflow_run.head_branch }}
+
+permissions:
+  contents: read
+
+on:
+  workflow_run:
+    workflows: ['Quality Assurance - Tests']
+    types:
+      - completed
+    branches:
+      - release-*
+      - '!release-please*'
+
+env:
+  PRODUCT: exip
+  ENVIRONMENT: ${{ github.event.workflow_run.head_branch }}
+  TIMEZONE: ${{ vars.TIMEZONE }}
+  # Base artifact
+  FROM: latest
+
+jobs:
+  # 1. Base actions configrations
+  setup:
+    name: Setup 🔧
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: [self-hosted, EXIP, deployment]
+    outputs:
+      product: ${{ env.PRODUCT }}
+      environment: ${{ steps.environment.outputs.environment }}
+      timezone: ${{ env.TIMEZONE }}
+
+    steps:
+      - name: Environment 🧪
+        id: environment
+        run: |
+          if [[ "${{ env.ENVIRONMENT }}" =~ ^release-.*-rc$ ]]; then
+            echo "environment=production" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ env.ENVIRONMENT }}" == *release* ]]; then
+            echo "environment=staging" >> "$GITHUB_OUTPUT"
+          else
+            echo "environment=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.TIMEZONE }}"
+
+  # 2. Database schema migration
+  database:
+    name: MySQL 🗄️
+    needs: [setup]
+    environment: ${{ needs.setup.outputs.environment }}
+    runs-on: [self-hosted, EXIP, deployment]
+    if: ${{ '1' == vars.DATABASE }}
+    env:
+      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
+
+    steps:
+      - name: Repository 🗂️
+        uses: actions/checkout@v6
+
+      - name: Deploy ⚡
+        uses: ./.github/actions/mysql
+        with:
+          host: sqldb-${{ env.PRODUCT }}-${{ env.ENVIRONMENT }}-${{ vars.VERSION }}
+          username: ${{ secrets.MYSQL_USER }}
+          password: ${{ secrets.MYSQL_PASSWORD }}
+          database: ${{ env.PRODUCT }}
+          branch: ${{ github.event.workflow_run.head_branch }}
+          node: ${{ vars.NODE_VERSION }}
+          execute: ${{ vars.DATABASE }}
+
+  # 3. micro-serices WebApp deployments
+  webapp:
+    name: WebApp 🌐
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: [setup]
+    environment: ${{ needs.setup.outputs.environment }}
+    runs-on: [self-hosted, EXIP, deployment]
+    env:
+      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
+
+    strategy:
+      max-parallel: 1
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        webapp: ['api', 'ui']
+
+    concurrency:
+      group: deployment-webapp-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.webapp }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Repository 🗂️🌎
+        uses: actions/checkout@v6
+
+      - name: Port ⭕️
+        run: |
+          if [[ "${{ matrix.webapp }}" == "ui" ]]; then
+            echo "PORT=${{ vars.UI_PORT }}" >> "$GITHUB_ENV"
+          elif [[ "${{ matrix.webapp }}" == "api" ]]; then
+            echo "PORT=${{ vars.API_PORT }}" >> "$GITHUB_ENV"
+          fi
+
+      - name: Deploy ⚡
+        uses: ./.github/actions/webapp
+        with:
+          region: ${{ vars.REGION }}
+          group: rg-${{ env.PRODUCT }}-${{ env.ENVIRONMENT }}-${{ vars.VERSION }}
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          acr: ${{ secrets.ACR_PASSWORD }}
+          webapp: ${{ matrix.webapp }}
+          branch: ${{ github.event.workflow_run.head_branch }}
+          node: ${{ vars.NODE_ENV }}
+          port: ${{ env.PORT }}
+          session: ${{ secrets.SESSION_SECRET }}
+          notify: ${{ secrets.GOV_NOTIFY_API_KEY }}
+
+      - name: UI 🧱
+        uses: azure/cli@v3
+        if: ${{ 'ui' == matrix.webapp }}
+        with:
+          inlineScript: |
+            az webapp config appsettings set \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
+            --settings \
+            TZ='${{ vars.TIMEZONE }}' \
+            NODE_ENV='${{ vars.NODE_ENV }}' \
+            PORT='${{ vars.UI_PORT }}' \
+            WEBSITES_PORT='${{ vars.UI_PORT }}' \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
+            GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
+            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
+            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
+
+      - name: API 🧱
+        uses: azure/cli@v3
+        if: ${{ 'api' == matrix.webapp }}
+        with:
+          inlineScript: |
+            az webapp config appsettings set \
+            --name app-${{ env.PRODUCT }}-api-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
+            --settings \
+            TZ='${{ vars.TIMEZONE }}' \
+            NODE_ENV='${{ vars.NODE_ENV }}' \
+            PORT='${{ vars.API_PORT }}' \
+            WEBSITES_PORT='${{ vars.API_PORT }}' \
+            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
+            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}' \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
+            COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
+            COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
+            JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
+            UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
+            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}' \
+            EXCELJS_PROTECTION_PASSWORD='${{ secrets.EXCELJS_PROTECTION_PASSWORD }}' \
+            ORDNANCE_SURVEY_API_KEY='${{ secrets.ORDNANCE_SURVEY_API_KEY }}' \
+            ORDNANCE_SURVEY_API_URL='${{ secrets.ORDNANCE_SURVEY_API_URL }}'
+
+  # 4. Notification
+  notify:
+    name: Notification 🔔
+    needs: [setup, webapp]
+    environment: ${{ needs.setup.outputs.environment }}
+    runs-on: [self-hosted, EXIP, deployment]
+
+    env:
+      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
+      WEBHOOK: ${{ secrets.MSTEAMS_WEBHOOK }}
+
+    steps:
+      - name: Notification  🔔
+        uses: ./.github/actions/notify
+        with:
+          webhook: ${{ secrets.MSTEAMS_WEBHOOK }}
+          content: '{
+                "@type": "MessageCard",
+                "@context": "http://schema.org/extensions",
+                "themeColor": "00703c",
+                "title": "🚀 main : ${{ env.ENVIRONMENT }}",
+                "summary": "Deployed main branch to ${{ env.ENVIRONMENT }} EXIP environment",
+                "sections": [
+                  {
+                    "activityTitle": "Release deployment",
+                    "activitySubtitle": "Deploying **${{ github.event.workflow_run.head_branch }}** release branch to **${{ env.ENVIRONMENT }}** EXIP environment.",
+                    "facts": [
+                      { "name": "Branch", "value": "${{ github.event.workflow_run.head_branch }}" },
+                      { "name": "Environment", "value": "${{ env.ENVIRONMENT }}" },
+                      { "name": "Commit", "value": "${{ github.sha }}" },
+                      { "name": "Status", "value": "Successful" }
+                    ],
+                    "markdown": true
+                  }
+                ],
+                "potentialAction": [
+                  {
+                    "@type": "OpenUri",
+                    "name": "Deployment",
+                    "targets": [
+                      {
+                        "os": "default",
+                        "uri": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            '

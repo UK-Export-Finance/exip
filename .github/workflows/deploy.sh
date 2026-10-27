@@ -25,12 +25,6 @@ if [ -n "$selection" ]; then
         ############### DEVELOPMENT ###############
         if [ "$destination" = "dev" ]; then
             branch=main
-        ############### STAGING ###############
-        elif [ "$destination" = "staging" ]; then
-            branch=dev
-        ############### PRODUCTION ###############
-        elif [ "$destination" = "production" ]; then
-            branch=staging
         fi
     ############### ACR PURGE ###############
     elif [ "$selection" = "2" ]; then
@@ -65,6 +59,6 @@ else
 fi
 
 #######################################
-# UKEF deployment shell script v0.0.7
-# 03/01/2024
+# UKEF deployment shell script v0.0.8
+# 27/10/2026
 #######################################
