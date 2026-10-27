@@ -25,6 +25,7 @@ if [ -n "$selection" ]; then
         ############### DEVELOPMENT ###############
         if [ "$destination" = "dev" ]; then
             branch=main
+        fi
     ############### ACR PURGE ###############
     elif [ "$selection" = "2" ]; then
         destination=""

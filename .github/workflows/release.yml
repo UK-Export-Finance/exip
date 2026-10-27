@@ -94,15 +94,15 @@ jobs:
           username: ${{ secrets.MYSQL_USER }}
           password: ${{ secrets.MYSQL_PASSWORD }}
           database: ${{ env.PRODUCT }}
-          branch: ${{ github.ref_name }}
+          branch: ${{ github.event.workflow_run.head_branch }}
           node: ${{ vars.NODE_VERSION }}
-          execute: ${{ vars.DATABASE }}}
+          execute: ${{ vars.DATABASE }}
 
   # 3. micro-serices WebApp deployments
   webapp:
     name: WebApp 🌐
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    needs: [setup, database]
+    needs: [setup]
     environment: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
     env:
@@ -140,7 +140,7 @@ jobs:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           acr: ${{ secrets.ACR_PASSWORD }}
           webapp: ${{ matrix.webapp }}
-          branch: ${{ github.ref_name }}
+          branch: ${{ github.event.workflow_run.head_branch }}
           node: ${{ vars.NODE_ENV }}
           port: ${{ env.PORT }}
           session: ${{ secrets.SESSION_SECRET }}
@@ -163,8 +163,6 @@ jobs:
             GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
-            API_KEY='${{ secrets.API_KEY }}'
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
             API_KEY='${{ secrets.API_KEY }}'
 
