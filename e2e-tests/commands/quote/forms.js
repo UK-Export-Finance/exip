@@ -1,3 +1,4 @@
+import { QUOTE_ROUTES } from '../../constants/routes/quote';
 import { field } from '../../pages/shared';
 import { policyTypePage } from '../../pages/quote';
 import { FIELD_IDS } from '../../constants';
@@ -10,16 +11,22 @@ const {
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerBodyForm = () => {
+  cy.assertPathnameContains(QUOTE_ROUTES.TYPE_OF_BUYER);
+
   cy.clickNoRadioInput();
   cy.clickSubmitButton();
 };
 
 export const completeAndSubmitExporterLocationForm = () => {
+  cy.assertPathnameContains(QUOTE_ROUTES.EXPORTER_LOCATION);
+
   cy.clickYesRadioInput();
   cy.clickSubmitButton();
 };
 
 export const completeAndSubmitUkContentForm = () => {
+  cy.assertPathnameContains(QUOTE_ROUTES.UK_GOODS_OR_SERVICES);
+
   cy.clickYesRadioInput();
   cy.clickSubmitButton();
 };

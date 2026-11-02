@@ -1,4 +1,5 @@
 import { APPLICATION } from '../../constants';
+import { BUTTONS } from '../../content-strings';
 
 const { POLICY_TYPE } = APPLICATION;
 
@@ -98,7 +99,7 @@ const completePolicySection = ({
         cy.completeAndSubmitBrokerManualAddressForm({});
       } else {
         // submit the "confirm broker address" form
-        cy.clickSubmitButton();
+        cy.clickSubmitButton({ expectedText: BUTTONS.USE_THIS_ADDRESS });
       }
     } else {
       cy.completeAndSubmitBrokerManualAddressForm({});
@@ -120,7 +121,7 @@ const completePolicySection = ({
   }
 
   if (submitCheckYourAnswers) {
-    cy.clickSubmitButton();
+    cy.clickSubmitButton({ expectedText: BUTTONS.SAVE_AND_BACK });
   }
 };
 

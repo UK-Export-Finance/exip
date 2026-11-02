@@ -1,6 +1,11 @@
+import { ROUTES } from '../../../constants';
 import { field } from '../../../pages/shared';
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../fixtures/application';
+
+const {
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER },
+} = ROUTES.INSURANCE;
 
 const { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 
@@ -15,6 +20,7 @@ const completeCreditInsuranceCoverForm = ({
   hasHadCreditInsuranceCoverWithBuyer = false,
   creditInsuranceCoverDescription = application.BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
 }) => {
+  cy.assertPathnameContains(CREDIT_INSURANCE_COVER);
   const fieldId = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
   if (hasHadCreditInsuranceCoverWithBuyer) {

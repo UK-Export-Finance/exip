@@ -1,3 +1,4 @@
+import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import { field } from '../../pages/shared';
 import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
 import application from '../../fixtures/application';
@@ -13,6 +14,8 @@ const {
  * @param {boolean} agentIsCharging: Agent is charging
  */
 const completeAgentServiceForm = ({ serviceDescription = application.EXPORT_CONTRACT.AGENT_SERVICE[SERVICE_DESCRIPTION], agentIsCharging = false }) => {
+  cy.assertPathnameContains(INSURANCE_ROUTES.EXPORT_CONTRACT.AGENT_SERVICE);
+
   if (serviceDescription) {
     cy.keyboardInput(field(SERVICE_DESCRIPTION).textarea(), serviceDescription);
   }

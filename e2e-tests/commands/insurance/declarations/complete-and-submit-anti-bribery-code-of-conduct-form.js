@@ -1,3 +1,4 @@
+import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { FIELD_VALUES } from '../../../constants';
 
 /**
@@ -5,6 +6,8 @@ import { FIELD_VALUES } from '../../../constants';
  * @param {boolean} Yes/no answer
  */
 const completeAndSubmitDeclarationAntiBriberyCodeOfConduct = (answer) => {
+  cy.assertPathnameContains(INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT);
+
   if (answer === FIELD_VALUES.NO) {
     cy.clickNoRadioInput();
   } else {

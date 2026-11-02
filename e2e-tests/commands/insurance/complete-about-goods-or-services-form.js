@@ -1,3 +1,4 @@
+import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
 import { aboutGoodsOrServicesPage } from '../../pages/insurance/export-contract';
 import { autoCompleteField } from '../../pages/shared';
@@ -20,6 +21,8 @@ const completeAboutGoodsOrServicesForm = ({
   finalDestinationKnown = false,
   includeFinalDestination = true,
 }) => {
+  cy.assertPathnameContains(INSURANCE_ROUTES.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES);
+
   cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), description);
 
   if (finalDestinationKnown) {

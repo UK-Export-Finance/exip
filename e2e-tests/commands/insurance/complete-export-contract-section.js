@@ -1,3 +1,5 @@
+import { BUTTONS } from '../../content-strings';
+
 /**
  * completeExportContractSection
  * Complete the "Export contract" section
@@ -81,7 +83,7 @@ const completeExportContractSection = ({
   }
 
   if (submitCheckYourAnswers) {
-    cy.clickSubmitButton();
+    cy.clickSubmitButton({ expectedText: BUTTONS.SAVE_AND_BACK });
   }
 };
 

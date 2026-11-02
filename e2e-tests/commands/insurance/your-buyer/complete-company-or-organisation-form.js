@@ -1,6 +1,10 @@
-import { FIELD_IDS } from '../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../constants';
 import { field as fieldSelector } from '../../../pages/shared';
 import mockApplication from '../../../fixtures/application';
+
+const {
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
+} = ROUTES.INSURANCE;
 
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
@@ -15,6 +19,7 @@ const { BUYER } = mockApplication;
  * @param {string} buyerAddress: Buyer address
  */
 const completeCompanyOrOrganisationForm = ({ buyerName = BUYER[NAME], buyerAddress = BUYER[ADDRESS] }) => {
+  cy.assertPathnameContains(COMPANY_OR_ORGANISATION);
   cy.keyboardInput(fieldSelector(NAME).input(), buyerName);
 
   const textareaField = {
