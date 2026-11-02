@@ -17,7 +17,7 @@ const completeAndSubmitMultipleCheckYourAnswers = ({ count }) => {
   const arr = new Array(count).fill();
 
   arr.forEach((_, index) => {
-    const expectedText = index === count - 1 ? BUTTONS.SAVE_AND_BACK : BUTTONS.CONFIRM_AND_CONTINUE;
+    const expectedText = routes[index] === EXPORT_CONTRACT ? BUTTONS.SAVE_AND_BACK : BUTTONS.CONFIRM_AND_CONTINUE;
 
     cy.assertPathnameContains(routes[index]);
     cy.submitCheckYourAnswersForm({ expectedText });
