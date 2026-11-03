@@ -4,7 +4,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
-const { WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
+const WESTMINSTER_BRIDGE_STREET = { ...ADDRESS_LOOKUP_INPUT_EXAMPLES.WESTMINSTER_BRIDGE_STREET, BUILDING_NAME: 'ST' };
 const { UNDERGROUND_STATION } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
 
 const {

@@ -8,7 +8,7 @@ const {
   },
 } = ROUTES;
 
-const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 context('Insurance - Account - Create account - Create an account which already exists and is blocked, verify and sign in', () => {
   const baseUrl = Cypress.config('baseUrl');

@@ -14,7 +14,7 @@ const {
   ACCOUNT: { REACTIVATION_EXPIRY, REACTIVATION_HASH },
 } = INSURANCE_FIELD_IDS;
 
-const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 context('Insurance - Account - Suspended - Reactivate account after verification link has expired', () => {
   const baseUrl = Cypress.config('baseUrl');

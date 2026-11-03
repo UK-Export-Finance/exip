@@ -1,6 +1,6 @@
 import api from '../../api';
 
-const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 /**
  * deleteAccount

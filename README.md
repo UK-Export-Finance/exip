@@ -116,6 +116,11 @@ npm run unit-test
 
 ### Run the E2E Tests
 
+The insurance and quote Cypress configurations load `API_KEY` and
+`MOCK_ACCOUNT_PASSWORD` from the root `.env` file as `apiKey` and
+`mockAccountPassword`. Shared helpers must use these exact,
+case-sensitive names with `Cypress.config()`.
+
 E2E tests are located in the `/e2e-tests` directory. To run the entire
 E2E test suite, execute:
 
@@ -135,6 +140,24 @@ For live debugging, open the Cypress GUI and select the test:
 ```shell
 npx cypress open .
 ```
+
+#### Waiting for form submissions
+
+Use `cy.clickSubmitButton()` for forms that submit to the server.
+The helper captures the current document, clicks submit, waits for
+a different document using `pageLoadTimeout`, then checks that the
+response document's `readyState` is `complete`.
+
+Checking readiness before clicking is not sufficient: the old page
+can still be fully loaded while the submission is in progress.
+Without waiting for the response, consecutive forms with shared
+selectors (such as yes/no radios) can interact with the previous page,
+causing incorrect answers or missing fields on the next page.
+
+Document replacement also handles validation errors that render a
+new page at the same URL, unlike waiting for a URL change. This helper
+expects a full-page response; do not use it for client-side submissions
+that update the existing document without navigation.
 
 ### Linting :wrench:
 

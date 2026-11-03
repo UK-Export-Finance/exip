@@ -24,7 +24,7 @@ context(
     let referenceNumber;
 
     const newPosition = 'Boss';
-    const newEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
+    const newEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_2');
     const newFirstName = 'James';
     const newLastName = 'Jones';
 

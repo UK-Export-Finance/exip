@@ -33,7 +33,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
      * Get the account ID directly from the API,
      * so that we can assert that the URLs have the correct ID.
      */
-    const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+    const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
     cy.getAccountByEmail(accountEmail).then((responseData) => {
       const [firstAccount] = responseData;
