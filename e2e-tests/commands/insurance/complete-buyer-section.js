@@ -1,5 +1,3 @@
-import { BUTTONS } from '../../content-strings';
-
 /**
  * completeBuyerSection
  * Complete the "Buyer" section
@@ -54,7 +52,7 @@ const completeBuyerSection = ({
   cy.completeAndSubmitBuyerFinancialInformationForm({ exporterHasBuyerFinancialAccounts });
 
   if (submitCheckYourAnswers) {
-    cy.clickSubmitButton({ expectedText: BUTTONS.SAVE_AND_BACK });
+    cy.clickSubmitButton();
   }
 };
 

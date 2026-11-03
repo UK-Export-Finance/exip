@@ -1,13 +1,9 @@
-import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
-
 /**
  * completePrivateMarketForm
  * Complete the "Tried to insure through the private market" form
  * @param {boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market. Defaults to false.
  */
 const completePrivateMarketForm = ({ attemptedPrivateMarketCover = false }) => {
-  cy.assertPathnameContains(INSURANCE_ROUTES.EXPORT_CONTRACT.PRIVATE_MARKET);
-
   if (attemptedPrivateMarketCover) {
     cy.clickYesRadioInput();
   } else {

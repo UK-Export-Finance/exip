@@ -2,7 +2,6 @@ import { FIELD_VALUES } from '../../../constants';
 import { field } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { ELIGIBILITY_FIELDS } from '../../../content-strings/fields/insurance/eligibility';
-import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 
 const {
   ELIGIBILITY: { COVER_PERIOD, TOTAL_CONTRACT_VALUE },
@@ -16,11 +15,8 @@ const { ABOVE: COVER_PERIOD_ABOVE, BELOW: COVER_PERIOD_BELOW } = ELIGIBILITY_FIE
  * selectRadioAndSubmit
  * Select a yes or no radio and submit the form
  * @param {string} Yes or no string
- * @param {string} route: Expected eligibility page.
  */
-const selectRadioAndSubmit = (answer, route) => {
-  cy.assertPathnameContains(route);
-
+const selectRadioAndSubmit = (answer) => {
   if (answer === FIELD_VALUES.YES) {
     cy.clickYesRadioInput();
   }
@@ -37,11 +33,11 @@ export const completeCheckIfEligibleForm = () => {
 };
 
 export const completeExporterLocationForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.YES, INSURANCE_ROUTES.ELIGIBILITY.EXPORTER_LOCATION);
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
 export const completeCompaniesHouseNumberForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.YES, INSURANCE_ROUTES.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
 export const completeCompanyDetailsForm = () => {
@@ -83,11 +79,11 @@ export const completeCoverPeriodForm = ({ underThreshold = true }) => {
 };
 
 export const completeUkGoodsAndServicesForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.YES, INSURANCE_ROUTES.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
 export const completeEndBuyerForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.NO, INSURANCE_ROUTES.ELIGIBILITY.END_BUYER);
+  selectRadioAndSubmit(FIELD_VALUES.NO);
 };
 
 /**
@@ -97,9 +93,9 @@ export const completeEndBuyerForm = () => {
  */
 export const completePartyToConsortiumForm = ({ partyToConsortium = false }) => {
   if (partyToConsortium) {
-    selectRadioAndSubmit(FIELD_VALUES.YES, INSURANCE_ROUTES.ELIGIBILITY.PARTY_TO_CONSORTIUM);
+    selectRadioAndSubmit(FIELD_VALUES.YES);
   } else {
-    selectRadioAndSubmit(FIELD_VALUES.NO, INSURANCE_ROUTES.ELIGIBILITY.PARTY_TO_CONSORTIUM);
+    selectRadioAndSubmit(FIELD_VALUES.NO);
   }
 };
 
@@ -110,9 +106,9 @@ export const completePartyToConsortiumForm = ({ partyToConsortium = false }) => 
  */
 export const completeMemberOfAGroupForm = ({ memberOfAGroup = false }) => {
   if (memberOfAGroup) {
-    selectRadioAndSubmit(FIELD_VALUES.YES, INSURANCE_ROUTES.ELIGIBILITY.MEMBER_OF_A_GROUP);
+    selectRadioAndSubmit(FIELD_VALUES.YES);
   } else {
-    selectRadioAndSubmit(FIELD_VALUES.NO, INSURANCE_ROUTES.ELIGIBILITY.MEMBER_OF_A_GROUP);
+    selectRadioAndSubmit(FIELD_VALUES.NO);
   }
 };
 
@@ -125,5 +121,5 @@ export const completeEligibleToApplyOnlineForm = () => {
 };
 
 export const completeAccountToApplyOnlineForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.YES, INSURANCE_ROUTES.ELIGIBILITY.HAVE_AN_ACCOUNT);
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };

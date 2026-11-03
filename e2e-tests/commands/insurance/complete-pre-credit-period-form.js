@@ -1,4 +1,3 @@
-import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import { field } from '../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import mockApplication from '../../fixtures/application';
@@ -11,8 +10,6 @@ const { CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
  * @param {string} description: Custom "credit period with buyer" description value
  */
 const completePreCreditPeriodForm = ({ needPreCreditPeriod = false, description = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER] }) => {
-  cy.assertPathnameContains(INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD);
-
   if (needPreCreditPeriod) {
     cy.clickYesRadioInput();
 

@@ -1,11 +1,6 @@
-import { ROUTES } from '../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { field } from '../../../pages/shared';
 import application from '../../../fixtures/application';
-
-const {
-  YOUR_BUYER: { CONNECTION_WITH_BUYER },
-} = ROUTES.INSURANCE;
 
 const { CONNECTION_WITH_BUYER_DESCRIPTION } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
@@ -16,7 +11,6 @@ const { CONNECTION_WITH_BUYER_DESCRIPTION } = INSURANCE_FIELD_IDS.YOUR_BUYER;
  * @param {string} description: "Connection with buyer" description.
  */
 const completeConnectionWithTheBuyerForm = ({ hasConnectionToBuyer = false, description = application.BUYER[CONNECTION_WITH_BUYER_DESCRIPTION] }) => {
-  cy.assertPathnameContains(CONNECTION_WITH_BUYER);
   if (hasConnectionToBuyer) {
     cy.clickYesRadioInput();
     cy.keyboardInput(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), description);

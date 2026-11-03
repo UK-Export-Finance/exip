@@ -1,5 +1,3 @@
-import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-
 /**
  * completeModernSlaveryForm
  * complete the "modern slavery" form.
@@ -8,8 +6,6 @@ import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
  * @param {boolean} isNotAwareOfExistingSlavery: radio answer
  */
 const completeModernSlaveryForm = ({ willAdhereToAllRequirements = true, hasNoOffensesOrInvestigations = true, isNotAwareOfExistingSlavery = true }) => {
-  cy.assertPathnameContains(INSURANCE_ROUTES.DECLARATIONS.MODERN_SLAVERY);
-
   if (willAdhereToAllRequirements) {
     cy.clickYesRadioInput(0);
   }

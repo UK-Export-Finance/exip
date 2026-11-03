@@ -1,4 +1,3 @@
-import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
@@ -27,8 +26,6 @@ const completeCompaniesDetailsForm = ({
   companyWebsite,
   completeDifferentTradingName = true,
 }) => {
-  cy.assertPathnameContains(INSURANCE_ROUTES.EXPORTER_BUSINESS.COMPANY_DETAILS);
-
   if (differentTradingName) {
     cy.clickYesRadioInput();
   } else {

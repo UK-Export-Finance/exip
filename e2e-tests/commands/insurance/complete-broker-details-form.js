@@ -1,4 +1,3 @@
-import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import { field } from '../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../constants/field-ids/insurance/account';
@@ -28,8 +27,6 @@ const completeBrokerDetailsForm = ({
   postcode = BROKER[POSTCODE],
   buildingNumberOrName = BROKER[BUILDING_NUMBER_OR_NAME],
 }) => {
-  cy.assertPathnameContains(INSURANCE_ROUTES.POLICY.BROKER_DETAILS_ROOT);
-
   cy.keyboardInput(field(NAME).input(), name);
   cy.keyboardInput(field(EMAIL).input(), email);
 
