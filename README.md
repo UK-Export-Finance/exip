@@ -159,6 +159,27 @@ new page at the same URL, unlike waiting for a URL change. This helper
 expects a full-page response; do not use it for client-side submissions
 that update the existing document without navigation.
 
+`cy.completeAndSubmitCheckYourAnswers()` also waits for each review
+route before submitting, in order: your business, your buyer, policy,
+then export contract. It waits for the all-sections route afterward
+before subsequent commands can select the declarations task. These
+route checks use `pageLoadTimeout` rather than the default selector
+timeout and report an unexpected page at the review step that failed.
+
+#### Address lookup test data
+
+Broker journeys that require multiple addresses use the shared
+`WESTMINSTER_BRIDGE_STREET` example in
+`e2e-tests/constants/examples/address-lookup-input-examples.js`.
+The `ST` building-name search matches multiple addresses at `SW1A 2JR`,
+including Westminster Station. Searching for `Westminster` now matches
+only one address, which skips the address-selection page.
+
+These tests use live Ordnance Survey data. If results change, verify
+the lookup and update the shared input and expected addresses together,
+including address counts and the first radio used for error-summary
+focus assertions. Avoid spec-local overrides of the shared input.
+
 ### Linting :wrench:
 
 Linting can be run from the root of the repository or in specific
