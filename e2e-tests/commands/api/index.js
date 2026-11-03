@@ -3,7 +3,7 @@ import apollo from './apollo';
 
 const APOLLO_CONTEXT = {
   headers: {
-    'x-api-key': Cypress.env('API_KEY'),
+    'x-api-key': Cypress.config('apiKey'),
   },
 };
 
@@ -404,7 +404,7 @@ const addAndGetOTP = async (emailAddress) => {
   let email = emailAddress;
 
   if (!email) {
-    email = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+    email = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
   }
 
   try {
@@ -436,7 +436,7 @@ const addAndGetOTP = async (emailAddress) => {
  * @returns {string} Account password reset token
  */
 const getAccountPasswordResetToken = async () => {
-  const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+  const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
   try {
     const responseBody = await apollo

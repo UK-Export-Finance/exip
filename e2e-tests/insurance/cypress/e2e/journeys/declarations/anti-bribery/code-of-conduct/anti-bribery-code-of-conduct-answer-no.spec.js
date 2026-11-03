@@ -52,6 +52,9 @@ context(
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.clickBackLink();
 
+      // Wait for code of conduct so the assertion does not target modern-slavery radios.
+      cy.assertUrl(url);
+
       cy.assertNoRadioOptionIsChecked();
     });
 

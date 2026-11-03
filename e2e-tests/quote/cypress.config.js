@@ -21,6 +21,12 @@ const cypressConfig = defineConfig({
     runMode: 2,
     openMode: 0,
   },
+  expose: {
+    GOV_NOTIFY_EMAIL_RECIPIENT_1,
+    GOV_NOTIFY_EMAIL_RECIPIENT_2,
+  },
+  apiKey: API_KEY,
+  mockAccountPassword: MOCK_ACCOUNT_PASSWORD,
   e2e: {
     pageLoadTimeout: 120000,
     responseTimeout: 120000,

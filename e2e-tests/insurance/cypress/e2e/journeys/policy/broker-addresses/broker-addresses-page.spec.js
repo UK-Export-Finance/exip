@@ -8,7 +8,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 
 const { WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
-const { UNDERGROUND_STATION, W_H_SMITH } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
+const { UNDERGROUND_STATION, ST_STEPHENS_PUB } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
 
 const {
   PAGE_TITLE,
@@ -32,12 +32,12 @@ const field = fieldSelector(FIELD_ID);
 
 const optionValue = {
   UNDERGROUND_STATION: `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`,
-  W_H_SMITH: `${W_H_SMITH.ADDRESS_LINE_1} ${W_H_SMITH.ADDRESS_LINE_2}`,
+  ST_STEPHENS_PUB: `${ST_STEPHENS_PUB.ADDRESS_LINE_1} ${ST_STEPHENS_PUB.ADDRESS_LINE_2}`,
 };
 
 const optionDataCy = {
   UNDERGROUND_STATION: `${FIELD_ID}-${optionValue.UNDERGROUND_STATION}`,
-  W_H_SMITH: `${FIELD_ID}-${optionValue.W_H_SMITH}`,
+  ST_STEPHENS_PUB: `${FIELD_ID}-${optionValue.ST_STEPHENS_PUB}`,
 };
 
 context(
@@ -92,7 +92,7 @@ context(
         intro()
           .invoke('text')
           .then((text) => {
-            expect(text.trim()).includes(`2 ${ADDRESSES} ${FOUND_FOR} `);
+            expect(text.trim()).includes(`3 ${ADDRESSES} ${FOUND_FOR} `);
             expect(text.trim()).includes(WESTMINSTER_BRIDGE_STREET.POSTCODE);
             expect(text.trim()).includes(` ${SEPARATOR} `);
             expect(text.trim()).includes(`${WESTMINSTER_BRIDGE_STREET.BUILDING_NAME}.`);
@@ -121,9 +121,9 @@ context(
           });
 
           it('should render an `address` radio label and input - option 2', () => {
-            const { option } = radios(FIELD_ID, optionValue.W_H_SMITH);
+            const { option } = radios(FIELD_ID, optionValue.ST_STEPHENS_PUB);
 
-            cy.checkText(option.label(), optionValue.W_H_SMITH);
+            cy.checkText(option.label(), optionValue.ST_STEPHENS_PUB);
 
             option.input().should('exist');
           });
@@ -157,7 +157,7 @@ context(
         it('should focus on the first input when clicking summary error message', () => {
           errorSummaryListItemLinks().eq(errorIndex).click();
 
-          fieldSelector(optionDataCy.UNDERGROUND_STATION).input().should('have.focus');
+          fieldSelector(optionDataCy.ST_STEPHENS_PUB).input().should('have.focus');
         });
       });
 
@@ -166,7 +166,7 @@ context(
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitBrokerAddressesForm({
-            optionValue: optionValue.W_H_SMITH,
+            optionValue: optionValue.ST_STEPHENS_PUB,
           });
 
           cy.assertUrl(brokerConfirmAddressUrl);
@@ -176,7 +176,7 @@ context(
           it('should have the submitted value', () => {
             cy.navigateToUrl(url);
 
-            const { option } = radios(FIELD_ID, optionValue.W_H_SMITH);
+            const { option } = radios(FIELD_ID, optionValue.ST_STEPHENS_PUB);
 
             cy.assertRadioOptionIsChecked(option.input());
           });

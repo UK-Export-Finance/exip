@@ -1,6 +1,7 @@
 import { COOKIE } from '../constants';
 
 const cookies = [COOKIE.NAME.SESSION, COOKIE.NAME.CSRF];
+const savedCookies = new Map();
 
 const flags = {
   secure: true,
@@ -10,8 +11,7 @@ const flags = {
 };
 
 /**
- * Saves cookies to Cypress environment
- * variables for preservation.
+ * Saves cookies in memory for preservation between tests in a spec.
  * @returns {void}
  */
 const saveSession = () => {
@@ -19,15 +19,12 @@ const saveSession = () => {
   cookies.forEach((cookie) => {
     // Fetch Cypress cookie
     cy.getCookie(cookie).then((value) => {
-      // Cypress cookie name
-      const cypressCookie = `cookie_${cookie}`;
-
       if (value) {
-        // Cookie exists, save to the environment
-        Cypress.env(cypressCookie, value);
+        // Cookie exists, save to memory
+        savedCookies.set(cookie, value);
       } else {
-        // Fetch value from the environment
-        const saved = Cypress.env(cypressCookie);
+        // Fetch value from memory
+        const saved = savedCookies.get(cookie);
 
         if (saved?.value) {
           // Save Cypress cookie

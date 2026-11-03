@@ -116,6 +116,11 @@ npm run unit-test
 
 ### Run the E2E Tests
 
+The insurance and quote Cypress configurations load `API_KEY` and
+`MOCK_ACCOUNT_PASSWORD` from the root `.env` file as `apiKey` and
+`mockAccountPassword`. Shared helpers must use these exact,
+case-sensitive names with `Cypress.config()`.
+
 E2E tests are located in the `/e2e-tests` directory. To run the entire
 E2E test suite, execute:
 
@@ -135,6 +140,45 @@ For live debugging, open the Cypress GUI and select the test:
 ```shell
 npx cypress open .
 ```
+
+#### Waiting for form submissions
+
+Use `cy.clickSubmitButton()` for forms that submit to the server.
+The helper captures the current document, clicks submit, waits for
+a different document using `pageLoadTimeout`, then checks that the
+response document's `readyState` is `complete`.
+
+Checking readiness before clicking is not sufficient: the old page
+can still be fully loaded while the submission is in progress.
+Without waiting for the response, consecutive forms with shared
+selectors (such as yes/no radios) can interact with the previous page,
+causing incorrect answers or missing fields on the next page.
+
+Document replacement also handles validation errors that render a
+new page at the same URL, unlike waiting for a URL change. This helper
+expects a full-page response; do not use it for client-side submissions
+that update the existing document without navigation.
+
+`cy.completeAndSubmitCheckYourAnswers()` also waits for each review
+route before submitting, in order: your business, your buyer, policy,
+then export contract. It waits for the all-sections route afterward
+before subsequent commands can select the declarations task. These
+route checks use `pageLoadTimeout` rather than the default selector
+timeout and report an unexpected page at the review step that failed.
+
+#### Address lookup test data
+
+Broker journeys that require multiple addresses use the shared
+`WESTMINSTER_BRIDGE_STREET` example in
+`e2e-tests/constants/examples/address-lookup-input-examples.js`.
+The `ST` building-name search matches multiple addresses at `SW1A 2JR`,
+including Westminster Station. Searching for `Westminster` now matches
+only one address, which skips the address-selection page.
+
+These tests use live Ordnance Survey data. If results change, verify
+the lookup and update the shared input and expected addresses together,
+including address counts and the first radio used for error-summary
+focus assertions. Avoid spec-local overrides of the shared input.
 
 ### Linting :wrench:
 

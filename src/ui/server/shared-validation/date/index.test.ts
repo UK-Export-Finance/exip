@@ -19,15 +19,12 @@ const {
 } = ERROR_MESSAGES;
 
 describe('shared-validation/date', () => {
-  const date = new Date();
+  const today = new Date();
+  const futureDate = new Date(today.getFullYear(), today.getMonth() + 2, 1);
 
-  const month = date.getMonth() + 2;
-  const year = date.getFullYear();
-
-  const futureDate = new Date(date.setMonth(month));
-  const futureDateMonth = futureDate.getMonth();
-  const futureDateYear = futureDate.getFullYear();
-  const futureDateDay = getDaysInAMonth(futureDateMonth, futureDateYear);
+  const month = futureDate.getMonth() + 1;
+  const year = futureDate.getFullYear();
+  const day = getDaysInAMonth(month, year);
 
   const baseParams = {
     errors: mockErrors,
@@ -36,9 +33,9 @@ describe('shared-validation/date', () => {
   };
 
   const mockValidBody = {
-    [`${FIELD_ID}-day`]: futureDateDay,
-    [`${FIELD_ID}-month`]: futureDateMonth,
-    [`${FIELD_ID}-year`]: futureDateYear,
+    [`${FIELD_ID}-day`]: day,
+    [`${FIELD_ID}-month`]: month,
+    [`${FIELD_ID}-year`]: year,
   };
 
   describe('when a data has an invalid format', () => {
@@ -104,7 +101,6 @@ describe('shared-validation/date', () => {
 
   describe('when the date is in the past', () => {
     it('should a return validation error', () => {
-      const today = new Date();
       const todayDay = today.getDate();
       const yesterday = new Date(today.setDate(todayDay - 1));
 
@@ -124,11 +120,18 @@ describe('shared-validation/date', () => {
 
   describe('when the date is today', () => {
     it('should NOT return a validation error', () => {
-      const today = new Date();
+      const currentMonth = today.getMonth() + 1;
+      let futureMonth: number;
+
+      if (currentMonth === 12) {
+        futureMonth = 1;
+      } else {
+        futureMonth = currentMonth + 1;
+      }
 
       const mockSubmittedData = {
         [`${FIELD_ID}-day`]: today.getDate(),
-        [`${FIELD_ID}-month`]: today.getMonth() + 1,
+        [`${FIELD_ID}-month`]: futureMonth,
         [`${FIELD_ID}-year`]: today.getFullYear(),
       };
 

@@ -49,7 +49,7 @@ context(`Insurance - Account - Sign in - expired verification and ${IS_INACTIVE}
        * Get the account so that we can use the ID
        * to update the verification period.
        */
-      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+      const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
