@@ -120,19 +120,12 @@ describe('shared-validation/date', () => {
 
   describe('when the date is today', () => {
     it('should NOT return a validation error', () => {
-      const currentMonth = today.getMonth() + 1;
-      let futureMonth: number;
-
-      if (currentMonth === 12) {
-        futureMonth = 1;
-      } else {
-        futureMonth = currentMonth + 1;
-      }
+      const currentDate = new Date();
 
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: today.getDate(),
-        [`${FIELD_ID}-month`]: futureMonth,
-        [`${FIELD_ID}-year`]: today.getFullYear(),
+        [`${FIELD_ID}-day`]: currentDate.getDate(),
+        [`${FIELD_ID}-month`]: currentDate.getMonth() + 1,
+        [`${FIELD_ID}-year`]: currentDate.getFullYear(),
       };
 
       const result = dateRules({ ...baseParams, formBody: mockSubmittedData });

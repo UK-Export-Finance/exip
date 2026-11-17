@@ -21,7 +21,9 @@ const completeAndSubmitCheckYourAnswers = () => {
   cy.clickTaskCheckAnswers();
 
   [YOUR_BUSINESS, YOUR_BUYER, TYPE_OF_POLICY, EXPORT_CONTRACT].forEach((route) => {
-    cy.location('pathname', { timeout: Cypress.config('pageLoadTimeout') }).should('include', route);
+    cy.location('pathname', {
+      timeout: Cypress.config('pageLoadTimeout'),
+    }).should('include', route);
     cy.submitCheckYourAnswersForm();
   });
 

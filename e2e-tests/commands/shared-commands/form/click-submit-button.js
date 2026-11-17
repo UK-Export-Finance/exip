@@ -7,8 +7,10 @@ import { submitButton } from '../../../pages/shared';
 const clickSubmitButton = () => {
   cy.document().then((document) => {
     submitButton().click();
+
     // Wait for the response, including validation rerenders at the same URL.
     cy.document({ timeout: Cypress.config('pageLoadTimeout') }).should('not.eq', document);
+
     cy.document().its('readyState').should('eq', 'complete');
   });
 };
