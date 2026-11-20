@@ -11,8 +11,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const firstAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
-const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
+const firstAccountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const secondAccountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_2');
 
 const baseUrl = Cypress.config('baseUrl');
 const insuranceRoute = `${baseUrl}${INSURANCE_ROOT}`;

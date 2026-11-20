@@ -47,7 +47,7 @@ context('Insurance - Account - Password reset - expired link page - send new lin
        * Get the account so that we can use the ID
        * to update the password reset verification period.
        */
-      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+      const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 

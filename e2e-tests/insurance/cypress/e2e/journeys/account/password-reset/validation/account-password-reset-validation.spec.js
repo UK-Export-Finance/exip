@@ -39,7 +39,7 @@ context('Insurance - Account - Password reset page - form validation', () => {
   it('should render a validation error when email is valid, but the account does not exist', () => {
     cy.submitAndAssertFieldErrors({
       field: field(FIELD_ID),
-      value: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2'),
+      value: Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_2'),
       expectedErrorMessage: ERROR_MESSAGES_OBJECT.ACCOUNT_DOES_NOT_EXIST,
     });
   });
