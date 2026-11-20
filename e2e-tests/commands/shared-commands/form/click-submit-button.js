@@ -8,7 +8,12 @@ const clickSubmitButton = () => {
   cy.document().then((document) => {
     submitButton().click();
 
-    // Wait for the response, including validation rerenders at the same URL.
+    /**
+     * Wait for the previous document to be replaced with the new response document.
+     * This ensures that Cypress waits for the new page to load completely before proceeding.
+     * Otherwise, Cypress might proceed before the new page has fully loaded and cause a test failure
+     * caused by race conditions.
+     */
     cy.document({ timeout: Cypress.config('pageLoadTimeout') }).should('not.eq', document);
 
     cy.document().its('readyState').should('eq', 'complete');
