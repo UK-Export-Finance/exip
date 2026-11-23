@@ -12,7 +12,7 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 context(
   'Insurance - Account - Create - Confirm email page - invalid link - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF',

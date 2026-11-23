@@ -13,4 +13,4 @@ export const INVALID_EMAILS = {
   ABOVE_MAXIMUM,
 };
 
-export const VALID_EMAIL = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+export const VALID_EMAIL = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');

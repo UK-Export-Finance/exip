@@ -200,7 +200,7 @@ const application = {
   BROKER: {
     [USING_BROKER]: true,
     [NAME]: 'Mock broker name',
-    [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
+    [EMAIL]: Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
     [BROKER_FULL_ADDRESS]: 'Mock full broker address',
     [BUILDING_NUMBER_OR_NAME]: '1',
     [POSTCODE]: VALID_POSTCODES.WITH_SPACE,
@@ -224,7 +224,7 @@ const application = {
   POLICY_CONTACT: {
     [ACCOUNT_FIRST_NAME]: 'Bob',
     [ACCOUNT_LAST_NAME]: 'Smith',
-    [ACCOUNT_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
+    [ACCOUNT_EMAIL]: Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
     [CONTACT_POSITION]: 'CEO',
   },
   DIFFERENT_TRADING_ADDRESS: {
