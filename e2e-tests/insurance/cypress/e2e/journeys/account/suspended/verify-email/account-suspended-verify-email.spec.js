@@ -7,7 +7,7 @@ const {
   },
 } = ROUTES;
 
-const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const accountEmail = Cypress.expose('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 context(
   'Insurance - Account - Suspended - Verify email - As an Exporter - I want to reactivate my suspended digital service account , So that I can securely access my account and applications with UKEF',

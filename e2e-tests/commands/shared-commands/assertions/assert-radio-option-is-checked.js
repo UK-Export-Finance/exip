@@ -7,13 +7,14 @@
  * @param {number} index: Optional radio index
  */
 const assertRadioOptionIsChecked = (input, index) => {
-  let radioSelector = input;
+  // A query alias lets Cypress requery the input if navigation detaches the original element.
+  input.as('radioOptionToCheck');
 
-  if (index) {
-    radioSelector = input.eq(index);
+  if (index !== undefined) {
+    return cy.get('@radioOptionToCheck').eq(index).should('be.checked');
   }
 
-  radioSelector.should('be.checked');
+  return cy.get('@radioOptionToCheck').should('be.checked');
 };
 
 export default assertRadioOptionIsChecked;
