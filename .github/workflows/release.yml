@@ -51,7 +51,7 @@ jobs:
   # 1. Base actions configrations
   setup:
     name: Setup 🔧
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' }}
     runs-on: [self-hosted, EXIP, deployment]
     outputs:
       product: ${{ env.PRODUCT }}
@@ -62,12 +62,12 @@ jobs:
       - name: Environment 🧪
         id: environment
         run: |
-          if [[ "${{ env.ENVIRONMENT }}" =~ ^release-.*-rc$ ]]; then
+          if [[ "$ENVIRONMENT" =~ ^release-.*-rc$ ]]; then
             echo "environment=production" >> "$GITHUB_OUTPUT"
-          elif [[ "${{ env.ENVIRONMENT }}" == *release* ]]; then
+          elif [[ "$ENVIRONMENT" == *release* ]]; then
             echo "environment=staging" >> "$GITHUB_OUTPUT"
           else
-            echo "environment=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
+            echo "environment=$ENVIRONMENT" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Timezone 🌐
@@ -117,7 +117,7 @@ jobs:
         webapp: ['api', 'ui']
 
     concurrency:
-      group: deployment-webapp-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.webapp }}
+      group: deployment-webapp-${{ github.workflow }}-${{ github.workflow_ref }}-${{ needs.setup.outputs.environment }}-${{ matrix.webapp }}
       cancel-in-progress: true
 
     steps:
@@ -205,6 +205,9 @@ jobs:
       WEBHOOK: ${{ secrets.MSTEAMS_WEBHOOK }}
 
     steps:
+      - name: Repository 🗂️
+        uses: actions/checkout@v6
+
       - name: Notification  🔔
         uses: ./.github/actions/notify
         with:
@@ -213,8 +216,8 @@ jobs:
                 "@type": "MessageCard",
                 "@context": "http://schema.org/extensions",
                 "themeColor": "00703c",
-                "title": "🚀 main : ${{ env.ENVIRONMENT }}",
-                "summary": "Deployed main branch to ${{ env.ENVIRONMENT }} EXIP environment",
+                "title": "🚀 ${{ github.event.workflow_run.head_branch }} : ${{ env.ENVIRONMENT }}",
+                "summary": "Deployed ${{ github.event.workflow_run.head_branch }} branch to ${{ env.ENVIRONMENT }} EXIP environment",
                 "sections": [
                   {
                     "activityTitle": "Release deployment",
