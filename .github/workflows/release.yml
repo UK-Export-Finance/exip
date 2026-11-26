@@ -39,6 +39,7 @@ on:
     branches:
       - release-*
       - '!release-please*'
+      - 'chore/EMS-4244-fix'
 
 env:
   PRODUCT: exip
@@ -65,6 +66,8 @@ jobs:
           if [[ "$ENVIRONMENT" =~ ^release-.*-rc$ ]]; then
             echo "environment=production" >> "$GITHUB_OUTPUT"
           elif [[ "$ENVIRONMENT" == *release* ]]; then
+            echo "environment=staging" >> "$GITHUB_OUTPUT"
+          elif [[ "$ENVIRONMENT" == "chore/EMS-4244-fix" ]]; then
             echo "environment=staging" >> "$GITHUB_OUTPUT"
           else
             echo "environment=$ENVIRONMENT" >> "$GITHUB_OUTPUT"
