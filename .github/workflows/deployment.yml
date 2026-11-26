@@ -14,7 +14,7 @@
 # Execution
 # *********
 # GHA is only invoked when following conditions are satisfied:
-# 1. Push to the `dev`, `staging` and `production` branches only.
+# 1. Push to the `dev` branch only.
 # 2. Any modifications to atleast one of the `paths` targets.
 
 name: Deployment
@@ -31,8 +31,6 @@ on:
     branches:
       # Manual deployment
       - dev
-      - staging
-      - production
 
     paths:
       - 'src/**'
@@ -57,12 +55,7 @@ jobs:
     steps:
       - name: Environment 🧪
         id: environment
-        run: |
-          if [[ "${{ env.ENVIRONMENT }}" == "main" ]]; then
-            echo "environment=dev" >> "$GITHUB_OUTPUT"
-          else
-            echo "environment=${{ env.ENVIRONMENT }}" >> "$GITHUB_OUTPUT"
-          fi
+        run: echo "environment=dev" >> "$GITHUB_OUTPUT"
 
       - name: Timezone 🌐
         run: echo "Timezone set to ${{ env.TIMEZONE }}"

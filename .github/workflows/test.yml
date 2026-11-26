@@ -12,7 +12,30 @@ permissions:
 
 on:
   pull_request:
-    branches: [main, main-*]
+    branches: 
+      - main
+      - main-*
+      - release-*
+    paths:
+      - '.github/workflows/**'
+      - 'docker-compose.yml'
+      - 'package*.json'
+      - 'src/**'
+      - 'e2e-tests/**'
+      - 'generate-exip-pricing-grid/**'
+      - 'database/**'
+
+  push:
+    branches:
+      # Staging ready release
+      - release-*
+      - '!release-please*'
+
+  create:
+    branches:
+      # Production ready release candidates
+      - release-*-rc
+
     paths:
       - '.github/workflows/**'
       - 'docker-compose.yml'
