@@ -16,6 +16,7 @@
 # - Concurrency control is employed to ensure no simultaneous deployments for the same app/function.
 # - Temporary deployment slots are used to ensure minimal downtime during deployments.
 # - The workflow runs only if the preceding workflow (Quality Assurance - Tests) concludes successfully.
+# - Web app deployment logs show the checked-out branch and commit.
 #
 # Triggers: This workflow is triggered when the Quality Assurance - Tests workflow completes successfully for a release branch (`release-*`).
 #

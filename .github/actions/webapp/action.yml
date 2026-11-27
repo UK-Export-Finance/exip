@@ -47,6 +47,17 @@ runs:
       with:
         ref: ${{ inputs.branch }}
 
+    - name: Deployment source
+      shell: bash
+      run: |
+        branch=$(git branch --show-current)
+        commit=$(git rev-parse --verify HEAD)
+        if [[ -n "$branch" ]]; then
+          echo "Deploying branch $branch to $ENVIRONMENT (commit $commit)"
+        else
+          echo "Deploying detached HEAD to $ENVIRONMENT (commit $commit)"
+        fi
+
     # Step 2: Set up Azure CLI defaults.
     - name: Defaults ✨
       uses: azure/cli@v3
