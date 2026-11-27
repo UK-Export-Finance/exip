@@ -139,12 +139,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -168,7 +168,7 @@ jobs:
         run: npm run unit-test
 
       - name: Coverage
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit-test
@@ -210,12 +210,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -279,12 +279,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -356,12 +356,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -440,12 +440,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -506,12 +506,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -589,12 +589,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -671,12 +671,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -764,12 +764,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -835,12 +835,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -909,12 +909,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -984,12 +984,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -1044,12 +1044,12 @@ jobs:
 
     steps:
       - name: Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
